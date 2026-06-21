@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.cbm
+data/raw/match_*.json
+vct_match_ids.json
+.ipynb_checkpoints/
