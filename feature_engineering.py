@@ -167,6 +167,19 @@ def parse_map_economy(econ_list: list, team_a_name: str, team_b_name: str) -> tu
     
     return avg_a, avg_b
 
+def parse_econ_cell_wins(val_str: str) -> int:
+    """Extracts wins from an economy cell (e.g. '4 (2)' -> 2, '2' -> 2)."""
+    if not val_str:
+        return 0
+    val_str = str(val_str).strip()
+    match = re.search(r'\((\d+)\)', val_str)
+    if match:
+        return int(match.group(1))
+    digit_match = re.search(r'\d+', val_str)
+    if digit_match:
+        return int(digit_match.group())
+    return 0
+
 def load_raw_matches() -> list[dict]:
     """Loads all match JSON files from RAW_DIR and sorts them chronologically."""
     files = glob.glob(os.path.join(RAW_DIR, "match_*.json"))
@@ -297,51 +310,242 @@ def build_feature_store():
         ["acs_ema_shifted", "kast_ema_shifted", "duel_diff_ema_shifted"]
     ].to_dict(orient="index")
     
-    logger.info("Extracting team-match economy management metrics...")
+    logger.info("Extracting team-match economy, comfort pick, and round closeness metrics...")
+    
+    # Load agent roles mapping
+    agent_roles_path = os.path.join(RAW_DIR, "agent_roles.json")
+    agent_roles = {}
+    if os.path.exists(agent_roles_path):
+        try:
+            with open(agent_roles_path, "r", encoding="utf-8") as f:
+                agent_roles = json.load(f)
+        except Exception as e:
+            logger.error(f"Failed to load agent roles: {e}")
+
+    # Track player global and agent ACS sums/counts for comfort pick differential
+    player_global_stats = {}
+    player_agent_stats = {}
+    
+    # Comfort pick diff and agent compositions lookups
+    comfort_pick_lookup = {}
+    agent_composition_lookup = {}
+    
+    # Pass 1: Chronological calculations for comfort pick, agent composition, and match-level team closeness
     team_performances = []
+    
     for m in matches:
         match_id = m['match_id']
         ts = m['timestamp']
         team_a_name = m['team_a']
         team_b_name = m['team_b']
         
+        # A. Comfort Pick Differential (strictly point-in-time)
+        map_comfort_diffs_a = []
+        map_comfort_diffs_b = []
+        
+        for map_data in m.get('maps', []):
+            map_diffs_a = []
+            map_diffs_b = []
+            for team_key in ['team1', 'team2']:
+                for p in map_data.get('players', {}).get(team_key, []):
+                    p_name = p['name']
+                    agent = p['agent']
+                    acs = float(p['acs']) if (p.get('acs') and str(p['acs']).isdigit()) else 0.0
+                    
+                    p_glob = player_global_stats.get(p_name, {'sum_acs': 0, 'count': 0})
+                    prior_global_acs = p_glob['sum_acs'] / p_glob['count'] if p_glob['count'] > 0 else baseline_lookup.get(p_name, {}).get("acs", 200.0)
+                    
+                    p_agent = player_agent_stats.get((p_name, agent), {'sum_acs': 0, 'count': 0})
+                    prior_agent_acs = p_agent['sum_acs'] / p_agent['count'] if p_agent['count'] > 0 else prior_global_acs
+                    
+                    diff = prior_agent_acs - prior_global_acs
+                    
+                    if team_key == 'team1':
+                        map_diffs_a.append(diff)
+                    else:
+                        map_diffs_b.append(diff)
+            
+            if map_diffs_a:
+                map_comfort_diffs_a.append(sum(map_diffs_a) / len(map_diffs_a))
+            if map_diffs_b:
+                map_comfort_diffs_b.append(sum(map_diffs_b) / len(map_diffs_b))
+                
+        comfort_pick_lookup[match_id] = {
+            'team_a': sum(map_comfort_diffs_a) / len(map_comfort_diffs_a) if map_comfort_diffs_a else 0.0,
+            'team_b': sum(map_comfort_diffs_b) / len(map_comfort_diffs_b) if map_comfort_diffs_b else 0.0
+        }
+        
+        # B. Agent Composition Tensors (Counts of roles)
+        map_roles_a = []
+        map_roles_b = []
+        
+        for map_data in m.get('maps', []):
+            role_counts_a = {'Duelist': 0, 'Controller': 0, 'Initiator': 0, 'Sentinel': 0}
+            role_counts_b = {'Duelist': 0, 'Controller': 0, 'Initiator': 0, 'Sentinel': 0}
+            for team_key in ['team1', 'team2']:
+                for p in map_data.get('players', {}).get(team_key, []):
+                    p_name = p['name']
+                    agent = p['agent']
+                    role = agent_roles.get(agent, 'Sentinel')
+                    
+                    if team_key == 'team1':
+                        role_counts_a[role] = role_counts_a.get(role, 0) + 1
+                    else:
+                        role_counts_b[role] = role_counts_b.get(role, 0) + 1
+            map_roles_a.append(role_counts_a)
+            map_roles_b.append(role_counts_b)
+            
+        def avg_role_counts(map_roles_list):
+            res = {'Duelist': 0.0, 'Controller': 0.0, 'Initiator': 0.0, 'Sentinel': 0.0}
+            if not map_roles_list:
+                return res
+            for roles in map_roles_list:
+                for k in res:
+                    res[k] += roles.get(k, 0)
+            for k in res:
+                res[k] /= len(map_roles_list)
+            return res
+            
+        agent_composition_lookup[match_id] = {
+            'team_a': avg_role_counts(map_roles_a),
+            'team_b': avg_role_counts(map_roles_b)
+        }
+        
+        # Update running stats for players after calculating features
+        for map_data in m.get('maps', []):
+            for team_key in ['team1', 'team2']:
+                for p in map_data.get('players', {}).get(team_key, []):
+                    p_name = p['name']
+                    agent = p['agent']
+                    acs = float(p['acs']) if (p.get('acs') and str(p['acs']).isdigit()) else 0.0
+                    if acs > 0:
+                        if p_name not in player_global_stats:
+                            player_global_stats[p_name] = {'sum_acs': 0, 'count': 0}
+                        player_global_stats[p_name]['sum_acs'] += acs
+                        player_global_stats[p_name]['count'] += 1
+                        
+                        if (p_name, agent) not in player_agent_stats:
+                            player_agent_stats[(p_name, agent)] = {'sum_acs': 0, 'count': 0}
+                        player_agent_stats[(p_name, agent)]['sum_acs'] += acs
+                        player_agent_stats[(p_name, agent)]['count'] += 1
+
+        # C. Match-level metrics: clutch, thrifty, flawless wins
+        total_rounds = 0
+        total_clutches_a = 0
+        total_clutches_b = 0
+        total_thrifty_a = 0
+        total_thrifty_b = 0
+        total_flawless_a = 0
+        total_flawless_b = 0
+        
         map_loadouts_a = []
         map_loadouts_b = []
-        for map_data in m['maps']:
+        
+        for map_data in m.get('maps', []):
+            rounds_count = len(map_data.get('rounds', []))
+            if rounds_count == 0:
+                score = map_data.get('score', {})
+                rounds_count = int(score.get('team1', 0)) + int(score.get('team2', 0))
+                if rounds_count == 0:
+                    rounds_count = 24
+            
+            total_rounds += rounds_count
+            
+            # 1. Economy
             avg_a, avg_b = parse_map_economy(map_data.get('economy', []), team_a_name, team_b_name)
             if avg_a > 0:
                 map_loadouts_a.append(avg_a)
             if avg_b > 0:
                 map_loadouts_b.append(avg_b)
                 
+            # 2. Clutch wins
+            adv_stats = map_data.get('performance', {}).get('advanced_stats', [])
+            for p_adv in adv_stats:
+                p_name = p_adv['player']
+                weight = match_team(p_name, team_a_name, team_b_name)
+                
+                clutches = 0
+                for k in ['5', '6', '7', '8', '9']:
+                    val = p_adv.get(k, '')
+                    if val and str(val).isdigit():
+                        clutches += int(val)
+                        
+                if weight == 1:
+                    total_clutches_a += clutches
+                elif weight == -1:
+                    total_clutches_b += clutches
+                    
+            # 3. Thrifty wins
+            econ_rows = map_data.get('economy', [])
+            for econ_row in econ_rows:
+                team_raw = econ_row.get('0', '')
+                weight = match_team(team_raw, team_a_name, team_b_name)
+                thrifty = parse_econ_cell_wins(econ_row.get('2')) + parse_econ_cell_wins(econ_row.get('3'))
+                if weight == 1:
+                    total_thrifty_a += thrifty
+                elif weight == -1:
+                    total_thrifty_b += thrifty
+                    
+            # 4. Flawless wins (proxy based on score wins * 0.15)
+            score_dict = map_data.get('score', {})
+            win_a = int(score_dict.get('team1', 0))
+            win_b = int(score_dict.get('team2', 0))
+            total_flawless_a += int(win_a * 0.15)
+            total_flawless_b += int(win_b * 0.15)
+            
         match_loadout_a = sum(map_loadouts_a) / len(map_loadouts_a) if map_loadouts_a else 20000.0
         match_loadout_b = sum(map_loadouts_b) / len(map_loadouts_b) if map_loadouts_b else 20000.0
+        
+        # Calculate rates per round
+        clutch_rate_a = total_clutches_a / total_rounds if total_rounds > 0 else 0.0
+        clutch_rate_b = total_clutches_b / total_rounds if total_rounds > 0 else 0.0
+        
+        thrifty_rate_a = total_thrifty_a / total_rounds if total_rounds > 0 else 0.0
+        thrifty_rate_b = total_thrifty_b / total_rounds if total_rounds > 0 else 0.0
+        
+        flawless_rate_a = total_flawless_a / total_rounds if total_rounds > 0 else 0.0
+        flawless_rate_b = total_flawless_b / total_rounds if total_rounds > 0 else 0.0
         
         team_performances.append({
             'team': team_a_name,
             'match_id': match_id,
             'timestamp': ts,
-            'loadout': match_loadout_a
+            'loadout': match_loadout_a,
+            'clutch_rate': clutch_rate_a,
+            'thrifty_rate': thrifty_rate_a,
+            'flawless_rate': flawless_rate_a
         })
         team_performances.append({
             'team': team_b_name,
             'match_id': match_id,
             'timestamp': ts,
-            'loadout': match_loadout_b
+            'loadout': match_loadout_b,
+            'clutch_rate': clutch_rate_b,
+            'thrifty_rate': thrifty_rate_b,
+            'flawless_rate': flawless_rate_b
         })
         
+    # Pass 2: Calculate rolling averages and shift(1)
     df_team_perf = pd.DataFrame(team_performances)
     df_team_perf = df_team_perf.sort_values(by=["team", "timestamp"])
     
-    # Compute rolling loadout average (window=3, min_periods=1)
-    df_team_perf["loadout_roll"] = df_team_perf.groupby("team")["loadout"].transform(
-        lambda x: x.rolling(window=3, min_periods=1).mean()
-    )
-    df_team_perf["loadout_roll_shifted"] = df_team_perf.groupby("team")["loadout_roll"].shift(1)
-    # Fill first-match NaN values with average loadout baseline ($20,000)
+    # Compute rolling averages
+    for col in ['loadout', 'clutch_rate', 'thrifty_rate', 'flawless_rate']:
+        df_team_perf[f"{col}_roll"] = df_team_perf.groupby("team")[col].transform(
+            lambda x: x.rolling(window=3, min_periods=1).mean()
+        )
+        df_team_perf[f"{col}_roll_shifted"] = df_team_perf.groupby("team")[f"{col}_roll"].shift(1)
+        
+    # Fill missing values
     df_team_perf["loadout_roll_shifted"] = df_team_perf["loadout_roll_shifted"].fillna(20000.0)
+    df_team_perf["clutch_rate_roll_shifted"] = df_team_perf["clutch_rate_roll_shifted"].fillna(0.05)
+    df_team_perf["thrifty_rate_roll_shifted"] = df_team_perf["thrifty_rate_roll_shifted"].fillna(0.02)
+    df_team_perf["flawless_rate_roll_shifted"] = df_team_perf["flawless_rate_roll_shifted"].fillna(0.05)
     
-    team_features_lookup = df_team_perf.set_index(["team", "match_id"])["loadout_roll_shifted"].to_dict()
+    # Convert back to lookups
+    team_features_lookup = df_team_perf.set_index(["team", "match_id"])[
+        ["loadout_roll_shifted", "clutch_rate_roll_shifted", "thrifty_rate_roll_shifted", "flawless_rate_roll_shifted"]
+    ].to_dict(orient="index")
     
     logger.info("Constructing master dataset...")
     master_rows = []
@@ -406,9 +610,27 @@ def build_feature_store():
         ta_acs, ta_kast, ta_duel = get_roster_features(roster_a)
         tb_acs, tb_kast, tb_duel = get_roster_features(roster_b)
         
-        # Look up team economy features
-        ta_loadout = team_features_lookup.get((team_a_name, match_id), 20000.0)
-        tb_loadout = team_features_lookup.get((team_b_name, match_id), 20000.0)
+        # Look up team economy and round closeness features
+        ta_feat = team_features_lookup.get((team_a_name, match_id), {})
+        tb_feat = team_features_lookup.get((team_b_name, match_id), {})
+        
+        ta_loadout = ta_feat.get("loadout_roll_shifted", 20000.0)
+        ta_clutch = ta_feat.get("clutch_rate_roll_shifted", 0.05)
+        ta_thrifty = ta_feat.get("thrifty_rate_roll_shifted", 0.02)
+        ta_flawless = ta_feat.get("flawless_rate_roll_shifted", 0.05)
+        
+        tb_loadout = tb_feat.get("loadout_roll_shifted", 20000.0)
+        tb_clutch = tb_feat.get("clutch_rate_roll_shifted", 0.05)
+        tb_thrifty = tb_feat.get("thrifty_rate_roll_shifted", 0.02)
+        tb_flawless = tb_feat.get("flawless_rate_roll_shifted", 0.05)
+        
+        # Look up agent comfort differentials
+        comfort_a = comfort_pick_lookup.get(match_id, {}).get('team_a', 0.0)
+        comfort_b = comfort_pick_lookup.get(match_id, {}).get('team_b', 0.0)
+        
+        # Look up agent compositions (role counts)
+        comp_a = agent_composition_lookup.get(match_id, {}).get('team_a', {'Duelist': 0.0, 'Controller': 0.0, 'Initiator': 0.0, 'Sentinel': 0.0})
+        comp_b = agent_composition_lookup.get(match_id, {}).get('team_b', {'Duelist': 0.0, 'Controller': 0.0, 'Initiator': 0.0, 'Sentinel': 0.0})
         
         # Target variable column
         y_target = 1 if m["teams"][0]["is_winner"] else 0
@@ -422,10 +644,26 @@ def build_feature_store():
             "team_a_historical_kast_ema": ta_kast,
             "team_a_historical_duel_diff": ta_duel,
             "team_a_historical_avg_loadout": ta_loadout,
+            "team_a_historical_clutch_rate": ta_clutch,
+            "team_a_historical_thrifty_rate": ta_thrifty,
+            "team_a_historical_flawless_rate": ta_flawless,
+            "team_a_comfort_pick_differential": comfort_a,
+            "team_a_duelist_count": comp_a.get('Duelist', 0.0),
+            "team_a_controller_count": comp_a.get('Controller', 0.0),
+            "team_a_initiator_count": comp_a.get('Initiator', 0.0),
+            "team_a_sentinel_count": comp_a.get('Sentinel', 0.0),
             "team_b_historical_acs_ema": tb_acs,
             "team_b_historical_kast_ema": tb_kast,
             "team_b_historical_duel_diff": tb_duel,
             "team_b_historical_avg_loadout": tb_loadout,
+            "team_b_historical_clutch_rate": tb_clutch,
+            "team_b_historical_thrifty_rate": tb_thrifty,
+            "team_b_historical_flawless_rate": tb_flawless,
+            "team_b_comfort_pick_differential": comfort_b,
+            "team_b_duelist_count": comp_b.get('Duelist', 0.0),
+            "team_b_controller_count": comp_b.get('Controller', 0.0),
+            "team_b_initiator_count": comp_b.get('Initiator', 0.0),
+            "team_b_sentinel_count": comp_b.get('Sentinel', 0.0),
             **map_features,
             "y_target": y_target
         }

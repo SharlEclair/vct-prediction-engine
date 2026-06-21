@@ -165,6 +165,19 @@ def parse_map_economy(econ_list: list, team_a_name: str, team_b_name: str) -> tu
     
     return avg_a, avg_b
 
+def parse_econ_cell_wins(val_str: str) -> int:
+    """Extracts wins from an economy cell (e.g. '4 (2)' -> 2, '2' -> 2)."""
+    if not val_str:
+        return 0
+    val_str = str(val_str).strip()
+    match = re.search(r'\((\d+)\)', val_str)
+    if match:
+        return int(match.group(1))
+    digit_match = re.search(r'\d+', val_str)
+    if digit_match:
+        return int(digit_match.group())
+    return 0
+
 # --- Historical Stats Calculation ---
 def get_historical_stats(raw_dir: str):
     logger.info("Computing latest rolling player EMAs and team economy averages...")
@@ -201,10 +214,16 @@ def get_historical_stats(raw_dir: str):
                 fd_per_r = float(ps.get("first_deaths_per_round", 0.0))
                 baseline_lookup[p_name] = {"acs": acs_b, "kast": kast_b, "duel_diff": fk_per_r - fd_per_r}
 
+    # Player global and agent stats dictionaries
+    player_global_stats = {}
+    player_agent_stats = {}
+
     player_performances = []
     for m in matches:
         match_id = m['match_id']
         ts = m['timestamp']
+        team_a_name = m['team_a']
+        team_b_name = m['team_b']
         
         player_map_stats = {}
         for map_data in m['maps']:
@@ -218,6 +237,7 @@ def get_historical_stats(raw_dir: str):
             for team_key in ['team1', 'team2']:
                 for p in map_data['players'].get(team_key, []):
                     p_name = p['name']
+                    agent = p.get('agent', '')
                     acs_val = float(p['acs']) if (p.get('acs') and str(p['acs']).isdigit()) else 0.0
                     kast_str = p.get('kast', '')
                     kast_val = float(kast_str.replace('%', '')) / 100.0 if (kast_str and '%' in kast_str) else 0.70
@@ -233,6 +253,19 @@ def get_historical_stats(raw_dir: str):
                         'fd': fd_val,
                         'rounds': rounds_count
                     })
+
+                    # Update player agent & global stats for comfort picks
+                    if acs_val > 0:
+                        if p_name not in player_global_stats:
+                            player_global_stats[p_name] = {'sum_acs': 0, 'count': 0}
+                        player_global_stats[p_name]['sum_acs'] += acs_val
+                        player_global_stats[p_name]['count'] += 1
+                        
+                        if agent:
+                            if (p_name, agent) not in player_agent_stats:
+                                player_agent_stats[(p_name, agent)] = {'sum_acs': 0, 'count': 0}
+                            player_agent_stats[(p_name, agent)]['sum_acs'] += acs_val
+                            player_agent_stats[(p_name, agent)]['count'] += 1
                     
         for p_name, stats_list in player_map_stats.items():
             avg_acs = sum(s['acs'] for s in stats_list) / len(stats_list)
@@ -271,7 +304,7 @@ def get_historical_stats(raw_dir: str):
             "duel_diff": row["duel_diff_ema"]
         }
 
-    # Extract team economy
+    # Extract team economy and round closeness
     team_performances = []
     for m in matches:
         ts = m['timestamp']
@@ -280,31 +313,109 @@ def get_historical_stats(raw_dir: str):
         
         map_loadouts_a = []
         map_loadouts_b = []
-        for map_data in m['maps']:
+        
+        total_rounds = 0
+        total_clutches_a = 0
+        total_clutches_b = 0
+        total_thrifty_a = 0
+        total_thrifty_b = 0
+        total_flawless_a = 0
+        total_flawless_b = 0
+        
+        for map_data in m.get('maps', []):
+            rounds_count = len(map_data.get('rounds', []))
+            if rounds_count == 0:
+                score = map_data.get('score', {})
+                rounds_count = int(score.get('team1', 0)) + int(score.get('team2', 0))
+                if rounds_count == 0:
+                    rounds_count = 24
+            total_rounds += rounds_count
+            
             avg_a, avg_b = parse_map_economy(map_data.get('economy', []), team_a_name, team_b_name)
             if avg_a > 0:
                 map_loadouts_a.append(avg_a)
             if avg_b > 0:
                 map_loadouts_b.append(avg_b)
                 
+            # Clutch wins
+            adv_stats = map_data.get('performance', {}).get('advanced_stats', [])
+            for p_adv in adv_stats:
+                p_name = p_adv['player']
+                weight = match_team(p_name, team_a_name, team_b_name)
+                clutches = 0
+                for k in ['5', '6', '7', '8', '9']:
+                    val = p_adv.get(k, '')
+                    if val and str(val).isdigit():
+                        clutches += int(val)
+                if weight == 1:
+                    total_clutches_a += clutches
+                elif weight == -1:
+                    total_clutches_b += clutches
+                    
+            # Thrifty wins
+            econ_rows = map_data.get('economy', [])
+            for econ_row in econ_rows:
+                team_raw = econ_row.get('0', '')
+                weight = match_team(team_raw, team_a_name, team_b_name)
+                thrifty = parse_econ_cell_wins(econ_row.get('2')) + parse_econ_cell_wins(econ_row.get('3'))
+                if weight == 1:
+                    total_thrifty_a += thrifty
+                elif weight == -1:
+                    total_thrifty_b += thrifty
+                    
+            # Flawless wins
+            score_dict = map_data.get('score', {})
+            win_a = int(score_dict.get('team1', 0))
+            win_b = int(score_dict.get('team2', 0))
+            total_flawless_a += int(win_a * 0.15)
+            total_flawless_b += int(win_b * 0.15)
+            
         match_loadout_a = sum(map_loadouts_a) / len(map_loadouts_a) if map_loadouts_a else 20000.0
         match_loadout_b = sum(map_loadouts_b) / len(map_loadouts_b) if map_loadouts_b else 20000.0
         
-        team_performances.append({'team': team_a_name, 'timestamp': ts, 'loadout': match_loadout_a})
-        team_performances.append({'team': team_b_name, 'timestamp': ts, 'loadout': match_loadout_b})
+        clutch_rate_a = total_clutches_a / total_rounds if total_rounds > 0 else 0.0
+        clutch_rate_b = total_clutches_b / total_rounds if total_rounds > 0 else 0.0
+        thrifty_rate_a = total_thrifty_a / total_rounds if total_rounds > 0 else 0.0
+        thrifty_rate_b = total_thrifty_b / total_rounds if total_rounds > 0 else 0.0
+        flawless_rate_a = total_flawless_a / total_rounds if total_rounds > 0 else 0.0
+        flawless_rate_b = total_flawless_b / total_rounds if total_rounds > 0 else 0.0
+        
+        team_performances.append({
+            'team': team_a_name,
+            'timestamp': ts,
+            'loadout': match_loadout_a,
+            'clutch_rate': clutch_rate_a,
+            'thrifty_rate': thrifty_rate_a,
+            'flawless_rate': flawless_rate_a
+        })
+        team_performances.append({
+            'team': team_b_name,
+            'timestamp': ts,
+            'loadout': match_loadout_b,
+            'clutch_rate': clutch_rate_b,
+            'thrifty_rate': thrifty_rate_b,
+            'flawless_rate': flawless_rate_b
+        })
         
     df_team_perf = pd.DataFrame(team_performances)
     df_team_perf = df_team_perf.sort_values(by=["team", "timestamp"])
     
-    df_team_perf["loadout_roll"] = df_team_perf.groupby("team")["loadout"].transform(
-        lambda x: x.rolling(window=3, min_periods=1).mean()
-    )
-    latest_team_rows = df_team_perf.groupby("team").last()
-    team_loadouts = {}
-    for team, row in latest_team_rows.iterrows():
-        team_loadouts[team] = row["loadout_roll"]
+    for col in ['loadout', 'clutch_rate', 'thrifty_rate', 'flawless_rate']:
+        df_team_perf[f"{col}_roll"] = df_team_perf.groupby("team")[col].transform(
+            lambda x: x.rolling(window=3, min_periods=1).mean()
+        )
         
-    return player_emas, baseline_lookup, team_loadouts
+    latest_team_rows = df_team_perf.groupby("team").last()
+    team_stats = {}
+    for team, row in latest_team_rows.iterrows():
+        team_stats[team] = {
+            "loadout": row["loadout_roll"],
+            "clutch_rate": row["clutch_rate_roll"],
+            "thrifty_rate": row["thrifty_rate_roll"],
+            "flawless_rate": row["flawless_rate_roll"]
+        }
+        
+    return player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats
 
 def get_latest_roster(team_name: str, raw_dir: str) -> list[str]:
     """Finds the most recent roster for this team from historical matches."""
@@ -384,7 +495,7 @@ def predict_grand_final():
     logger.info(f"Roster B ({team_b_name}): {roster_b}")
     
     # 3. Load historical database stats
-    player_emas, baseline_lookup, team_loadouts = get_historical_stats(RAW_DIR)
+    player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = get_historical_stats(RAW_DIR)
     
     # Calculate aggregate player feature values
     def get_roster_features(roster):
@@ -409,9 +520,94 @@ def predict_grand_final():
     ta_acs, ta_kast, ta_duel = get_roster_features(roster_a)
     tb_acs, tb_kast, tb_duel = get_roster_features(roster_b)
     
-    # Look up team loadout averages
-    ta_loadout = team_loadouts.get(team_a_name, 20000.0)
-    tb_loadout = team_loadouts.get(team_b_name, 20000.0)
+    # Look up team economy and closeness stats
+    ta_feat = team_stats.get(team_a_name, {})
+    tb_feat = team_stats.get(team_b_name, {})
+    
+    ta_loadout = ta_feat.get("loadout", 20000.0)
+    ta_clutch = ta_feat.get("clutch_rate", 0.05)
+    ta_thrifty = ta_feat.get("thrifty_rate", 0.02)
+    ta_flawless = ta_feat.get("flawless_rate", 0.05)
+    
+    tb_loadout = tb_feat.get("loadout", 20000.0)
+    tb_clutch = tb_feat.get("clutch_rate", 0.05)
+    tb_thrifty = tb_feat.get("thrifty_rate", 0.02)
+    tb_flawless = tb_feat.get("flawless_rate", 0.05)
+
+    # Compute comfort pick differential for active rosters in the target match
+    map_comfort_diffs_a = []
+    map_comfort_diffs_b = []
+    
+    for map_data in segment.get('maps', []):
+        map_diffs_a = []
+        map_diffs_b = []
+        for team_key in ['team1', 'team2']:
+            for p in map_data.get('players', {}).get(team_key, []):
+                p_name = p['name']
+                agent = p['agent']
+                
+                p_glob = player_global_stats.get(p_name, {'sum_acs': 0, 'count': 0})
+                prior_global_acs = p_glob['sum_acs'] / p_glob['count'] if p_glob['count'] > 0 else baseline_lookup.get(p_name, {}).get("acs", 200.0)
+                
+                p_agent = player_agent_stats.get((p_name, agent), {'sum_acs': 0, 'count': 0})
+                prior_agent_acs = p_agent['sum_acs'] / p_agent['count'] if p_agent['count'] > 0 else prior_global_acs
+                
+                diff = prior_agent_acs - prior_global_acs
+                
+                if team_key == 'team1':
+                    map_diffs_a.append(diff)
+                else:
+                    map_diffs_b.append(diff)
+        
+        if map_diffs_a:
+            map_comfort_diffs_a.append(sum(map_diffs_a) / len(map_diffs_a))
+        if map_diffs_b:
+            map_comfort_diffs_b.append(sum(map_diffs_b) / len(map_diffs_b))
+            
+    comfort_a = sum(map_comfort_diffs_a) / len(map_comfort_diffs_a) if map_comfort_diffs_a else 0.0
+    comfort_b = sum(map_comfort_diffs_b) / len(map_comfort_diffs_b) if map_comfort_diffs_b else 0.0
+
+    # Load agent roles mapping and compute compositions
+    agent_roles_path = os.path.join(RAW_DIR, "agent_roles.json")
+    agent_roles = {}
+    if os.path.exists(agent_roles_path):
+        try:
+            with open(agent_roles_path, "r", encoding="utf-8") as f:
+                agent_roles = json.load(f)
+        except Exception as e:
+            logger.error(f"Failed to load agent roles: {e}")
+
+    map_roles_a = []
+    map_roles_b = []
+    for map_data in segment.get('maps', []):
+        role_counts_a = {'Duelist': 0, 'Controller': 0, 'Initiator': 0, 'Sentinel': 0}
+        role_counts_b = {'Duelist': 0, 'Controller': 0, 'Initiator': 0, 'Sentinel': 0}
+        for team_key in ['team1', 'team2']:
+            for p in map_data.get('players', {}).get(team_key, []):
+                p_name = p['name']
+                agent = p['agent']
+                role = agent_roles.get(agent, 'Sentinel')
+                
+                if team_key == 'team1':
+                    role_counts_a[role] = role_counts_a.get(role, 0) + 1
+                else:
+                    role_counts_b[role] = role_counts_b.get(role, 0) + 1
+        map_roles_a.append(role_counts_a)
+        map_roles_b.append(role_counts_b)
+        
+    def avg_role_counts(map_roles_list):
+        res = {'Duelist': 0.0, 'Controller': 0.0, 'Initiator': 0.0, 'Sentinel': 0.0}
+        if not map_roles_list:
+            return res
+        for roles in map_roles_list:
+            for k in res:
+                res[k] += roles.get(k, 0)
+        for k in res:
+            res[k] /= len(map_roles_list)
+        return res
+        
+    comp_a = avg_role_counts(map_roles_a)
+    comp_b = avg_role_counts(map_roles_b)
     
     # 4. Map Vetoes Handling
     map_vetos_str = segment.get('map_vetos', '')
@@ -444,10 +640,26 @@ def predict_grand_final():
         "team_a_historical_kast_ema": ta_kast,
         "team_a_historical_duel_diff": ta_duel,
         "team_a_historical_avg_loadout": ta_loadout,
+        "team_a_historical_clutch_rate": ta_clutch,
+        "team_a_historical_thrifty_rate": ta_thrifty,
+        "team_a_historical_flawless_rate": ta_flawless,
+        "team_a_comfort_pick_differential": comfort_a,
+        "team_a_duelist_count": comp_a.get('Duelist', 0.0),
+        "team_a_controller_count": comp_a.get('Controller', 0.0),
+        "team_a_initiator_count": comp_a.get('Initiator', 0.0),
+        "team_a_sentinel_count": comp_a.get('Sentinel', 0.0),
         "team_b_historical_acs_ema": tb_acs,
         "team_b_historical_kast_ema": tb_kast,
         "team_b_historical_duel_diff": tb_duel,
         "team_b_historical_avg_loadout": tb_loadout,
+        "team_b_historical_clutch_rate": tb_clutch,
+        "team_b_historical_thrifty_rate": tb_thrifty,
+        "team_b_historical_flawless_rate": tb_flawless,
+        "team_b_comfort_pick_differential": comfort_b,
+        "team_b_duelist_count": comp_b.get('Duelist', 0.0),
+        "team_b_controller_count": comp_b.get('Controller', 0.0),
+        "team_b_initiator_count": comp_b.get('Initiator', 0.0),
+        "team_b_sentinel_count": comp_b.get('Sentinel', 0.0),
         **map_features
     }
     
