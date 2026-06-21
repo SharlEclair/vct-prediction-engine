@@ -184,12 +184,14 @@ def get_historical_stats(raw_dir: str):
     files = glob.glob(os.path.join(raw_dir, "match_*.json"))
     matches = []
     for f in files:
-        if TARGET_MATCH_ID in f:
+        if TARGET_MATCH_ID in f or "670471" in f:
             continue
         try:
             with open(f, "r", encoding="utf-8") as file:
                 content = json.load(file)
                 segment = content["data"]["segments"][0]
+                if str(segment.get("match_id")) == "670471":
+                    continue
                 segment["timestamp"] = parse_match_date(segment["date"])
                 segment["team_a"] = segment["teams"][0]["name"]
                 segment["team_b"] = segment["teams"][1]["name"]
@@ -287,6 +289,7 @@ def get_historical_stats(raw_dir: str):
             })
             
     df_player_perf = pd.DataFrame(player_performances)
+    df_player_perf = df_player_perf[df_player_perf["match_id"].astype(str) != "670471"]
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
     # Calculate EMA
@@ -382,6 +385,7 @@ def get_historical_stats(raw_dir: str):
         
         team_performances.append({
             'team': team_a_name,
+            'match_id': match_id,
             'timestamp': ts,
             'loadout': match_loadout_a,
             'clutch_rate': clutch_rate_a,
@@ -390,6 +394,7 @@ def get_historical_stats(raw_dir: str):
         })
         team_performances.append({
             'team': team_b_name,
+            'match_id': match_id,
             'timestamp': ts,
             'loadout': match_loadout_b,
             'clutch_rate': clutch_rate_b,
@@ -398,6 +403,7 @@ def get_historical_stats(raw_dir: str):
         })
         
     df_team_perf = pd.DataFrame(team_performances)
+    df_team_perf = df_team_perf[df_team_perf["match_id"].astype(str) != "670471"]
     df_team_perf = df_team_perf.sort_values(by=["team", "timestamp"])
     
     for col in ['loadout', 'clutch_rate', 'thrifty_rate', 'flawless_rate']:
@@ -422,12 +428,14 @@ def get_latest_roster(team_name: str, raw_dir: str) -> list[str]:
     files = glob.glob(os.path.join(raw_dir, "match_*.json"))
     matches_with_team = []
     for f in files:
-        if TARGET_MATCH_ID in f:
+        if TARGET_MATCH_ID in f or "670471" in f:
             continue
         try:
             with open(f, "r", encoding="utf-8") as file:
                 content = json.load(file)
                 segment = content["data"]["segments"][0]
+                if str(segment.get("match_id")) == "670471":
+                    continue
                 ta = segment["teams"][0]["name"]
                 tb = segment["teams"][1]["name"]
                 ts = parse_match_date(segment["date"])
