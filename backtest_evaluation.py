@@ -53,7 +53,7 @@ def run_backtest():
             raise KeyError(f"Feature {col} not found in X_features.csv")
             
     # Categorical features list
-    all_cats = ['team_a_name', 'team_b_name', 'map_1_name', 'map_2_name', 'map_3_name']
+    all_cats = ['team_a_name', 'team_b_name', 'map_1_name', 'map_2_name', 'map_3_name', 'map_4_name', 'map_5_name']
     cat_v1 = [col for col in v1_features if col in all_cats]
     cat_v2 = [col for col in v2_features if col in all_cats]
     

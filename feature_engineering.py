@@ -562,7 +562,7 @@ def build_feature_store():
         # Identify the maps played in the match and populate names/veto weights
         maps_played = m.get('maps', [])
         map_features = {}
-        for idx in range(3):
+        for idx in range(5):
             map_key_name = f"map_{idx+1}_name"
             map_key_veto = f"map_{idx+1}_veto_weight"
             
