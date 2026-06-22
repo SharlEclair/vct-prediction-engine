@@ -97,8 +97,8 @@ class MapVetoBandit:
             return np.clip(raw_ips * 0.8 + 0.1, 0.1, 0.9)
         return 0.5
 
-    def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3") -> dict:
-        """Simulates veto picks/bans using IPS map win rate preferences."""
+    def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3", stochastic: bool = False) -> dict:
+        """Simulates veto picks/bans using IPS map win rate preferences, with optional stochasticity."""
         available_maps = list(self.map_pool)
         banned_maps = []
         picked_maps = []
@@ -108,6 +108,11 @@ class MapVetoBandit:
         # Scores represent expected map win rates for Team A
         scores_a = {m: self.predict_map_win_rate_ips(team_a, team_b, m) for m in available_maps}
         scores_b = {m: self.predict_map_win_rate_ips(team_b, team_a, m) for m in available_maps}
+        
+        if stochastic:
+            # Inject small random noise representing tactical variability
+            scores_a = {m: val + np.random.normal(0, 0.05) for m, val in scores_a.items()}
+            scores_b = {m: val + np.random.normal(0, 0.05) for m, val in scores_b.items()}
         
         # Team A prefers maps where scores_a is highest.
         # Team B prefers maps where scores_b is highest (i.e. scores_a is lowest).
@@ -427,10 +432,70 @@ class VCTv5SimulationEngine:
         self.player_emas, self.baseline_lookup, self.team_stats, self.player_global_stats, self.player_agent_stats = get_simulation_historical_stats(self.raw_dir)
         self.agent_transformer.fit_comfort(self.player_agent_stats)
         
-    def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000) -> dict:
+    def sample_deaths(self, roster: list[str], agents: list[str], total_deaths: int) -> dict:
+        """
+        Samples individual player deaths matching total_deaths constraint exactly.
+        Prior alpha parameters set from agent role and historical comfort.
+        """
+        alphas = []
+        for idx, player in enumerate(roster):
+            agent = agents[idx]
+            role = self.agent_transformer.agent_roles.get(agent, "Sentinel")
+            alpha_0 = {"Duelist": 2.8, "Initiator": 2.2, "Controller": 1.9, "Sentinel": 1.6}.get(role, 2.0)
+            feat = self.player_emas.get(player, self.baseline_lookup.get(player, {"duel_diff": 0.0}))
+            duel_diff = feat.get("duel_diff", 0.0)
+            alpha_scaled = alpha_0 * np.exp(-0.2 * duel_diff)
+            alphas.append(max(alpha_scaled, 0.1))
+            
+        proportions = np.random.dirichlet(alphas)
+        deaths = np.floor(proportions * total_deaths).astype(int)
+        remainder = total_deaths - np.sum(deaths)
+        
+        fractional_parts = (proportions * total_deaths) - deaths
+        indices = np.argsort(fractional_parts)[::-1]
+        for i in range(int(remainder)):
+            deaths[indices[i]] += 1
+            
+        return {roster[i]: int(deaths[i]) for i in range(len(roster))}
+
+    def sample_assists(self, roster: list[str], agents: list[str], total_assists: int) -> dict:
+        """
+        Samples individual player assists matching total_assists constraint exactly.
+        Priors favor Initiators and Controllers.
+        """
+        alphas = []
+        for idx, player in enumerate(roster):
+            agent = agents[idx]
+            role = self.agent_transformer.agent_roles.get(agent, "Sentinel")
+            alpha_0 = {"Initiator": 3.2, "Controller": 2.8, "Sentinel": 1.6, "Duelist": 1.2}.get(role, 2.0)
+            alphas.append(max(alpha_0, 0.1))
+            
+        proportions = np.random.dirichlet(alphas)
+        assists = np.floor(proportions * total_assists).astype(int)
+        remainder = total_assists - np.sum(assists)
+        
+        fractional_parts = (proportions * total_assists) - assists
+        indices = np.argsort(fractional_parts)[::-1]
+        for i in range(int(remainder)):
+            assists[indices[i]] += 1
+            
+        return {roster[i]: int(assists[i]) for i in range(len(roster))}
+
+    def calculate_acs(self, player: str, kills: int, assists: int, rounds: int) -> int:
+        """
+        Estimates map-level ACS based on round performance and historical EMA baseline.
+        """
+        feat = self.player_emas.get(player, self.baseline_lookup.get(player, {"acs": 200.0}))
+        base_acs = feat.get("acs", 200.0)
+        kpr = kills / rounds if rounds > 0 else 0.0
+        apr = assists / rounds if rounds > 0 else 0.0
+        estimated_acs = 170.0 * kpr + 45.0 * apr + base_acs * 0.35 + np.random.normal(0, 12.0)
+        return int(max(estimated_acs, 30.0))
+
+    def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000, override_maps: list[str] = None) -> dict:
         """
         Runs Monte Carlo pipeline (10,000 iterations) with Probabilistic Beam Search
-        to generate player EV fantasy projections.
+        to generate player EV fantasy projections. Supports manual map overrides.
         """
         logger.info(f"V5 Engine: Starting {num_iterations} Monte Carlo iterations for {team_a} vs {team_b}...")
         
@@ -443,14 +508,52 @@ class VCTv5SimulationEngine:
             roster_a = roster_a or ["something", "aspas", "zekken", "wo0t", "Derke"]
             roster_b = roster_b or ["Leo", "trent", "chronicle", "Sacy", "Boaster"]
             
-        # 2. Predict map veto
-        veto_res = self.veto_bandit.predict_veto(team_a, team_b, series_type)
-        series_maps = veto_res["maps"]
+        # 2. Predict map veto or use override
+        from collections import defaultdict
+        if override_maps:
+            series_maps = override_maps
+            veto_res = {
+                "maps": override_maps,
+                "veto_weights": {m: 0 for m in override_maps},
+                "veto_str": "Manual Override: " + ", ".join(override_maps)
+            }
+            veto_confidences = [(f"Force Play {m}", 1.0) for m in override_maps]
+        else:
+            # Deterministic base veto prediction
+            veto_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=False)
+            series_maps = veto_res["maps"]
+            
+            # Stochastic veto simulations to calculate veto confidences
+            veto_step_counts = defaultdict(lambda: defaultdict(int))
+            num_veto_sims = 1000
+            for _ in range(num_veto_sims):
+                v_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=True)
+                steps = v_res["veto_str"].split("; ")
+                for step_idx, step in enumerate(steps):
+                    veto_step_counts[step_idx][step] += 1
+            
+            veto_steps = veto_res["veto_str"].split("; ")
+            veto_confidences = []
+            for step_idx, step in enumerate(veto_steps):
+                total_count = sum(veto_step_counts[step_idx].values())
+                step_count = veto_step_counts[step_idx].get(step, 0)
+                conf = (step_count / total_count) if total_count > 0 else 1.0
+                veto_confidences.append((step, conf))
         
         # Expected value accumulators
         player_points_sum = {p: 0.0 for p in roster_a + roster_b}
         player_sim_counts = {p: 0 for p in roster_a + roster_b}
         
+        # Track map-by-map statistics
+        map_raw_stats = {}
+        for map_name in series_maps:
+            map_raw_stats[map_name] = {
+                "scorelines": [],
+                "agent_picks_a": {p: [] for p in roster_a},
+                "agent_picks_b": {p: [] for p in roster_b},
+                "player_perf": {p: {"kills": [], "deaths": [], "assists": [], "acs": [], "points": []} for p in roster_a + roster_b}
+            }
+            
         # Team wins tracker
         team_a_wins = 0
         team_b_wins = 0
@@ -496,35 +599,77 @@ class VCTv5SimulationEngine:
                 else:
                     iter_wins_b += 1
                     
-                # Total kills simulation
-                # Team A kills is based on Team B rounds won (deaths of enemy) and Team A rounds won
+                # Total kills/deaths/assists simulation
                 total_kills_a = int(4.7 * score_b + 2.1 * score_a)
                 total_kills_b = int(4.7 * score_a + 2.1 * score_b)
                 
+                total_deaths_a = total_kills_b
+                total_deaths_b = total_kills_a
+                
+                total_assists_a = int(round(np.clip(np.random.normal(0.40, 0.08) * total_kills_a, 0, total_kills_a)))
+                total_assists_b = int(round(np.clip(np.random.normal(0.40, 0.08) * total_kills_b, 0, total_kills_b)))
+                
                 comp_a, comp_b = map_compositions[map_name]
                 
-                # Dirichlet kills
+                # Sample statistics matching constraints
                 kills_a = self.kill_dirichlet.sample_kills(roster_a, comp_a, total_kills_a, self.player_emas, self.baseline_lookup)
                 kills_b = self.kill_dirichlet.sample_kills(roster_b, comp_b, total_kills_b, self.player_emas, self.baseline_lookup)
                 
+                deaths_a = self.sample_deaths(roster_a, comp_a, total_deaths_a)
+                deaths_b = self.sample_deaths(roster_b, comp_b, total_deaths_b)
+                
+                assists_a = self.sample_assists(roster_a, comp_a, total_assists_a)
+                assists_b = self.sample_assists(roster_b, comp_b, total_assists_b)
+                
+                rounds_played = score_a + score_b
+                
                 # Calculate map fantasy points according to VFL rules
-                # Map Score Margin pts
                 margin_pts_a = calculate_vfl_margin_points(score_a, score_b)
                 margin_pts_b = calculate_vfl_margin_points(score_b, score_a)
                 
-                for p in roster_a:
+                # Record iteration stats for Team A
+                for idx_p, p in enumerate(roster_a):
                     k = kills_a[p]
+                    d = deaths_a[p]
+                    a = assists_a[p]
+                    acs = self.calculate_acs(p, k, a, rounds_played)
+                    
                     k_pts = calculate_vfl_kill_points(k)
                     pts = k_pts + margin_pts_a
                     player_points_sum[p] += pts
                     player_sim_counts[p] += 1
-                for p in roster_b:
+                    
+                    # Store raw map performance
+                    map_raw_stats[map_name]["player_perf"][p]["kills"].append(k)
+                    map_raw_stats[map_name]["player_perf"][p]["deaths"].append(d)
+                    map_raw_stats[map_name]["player_perf"][p]["assists"].append(a)
+                    map_raw_stats[map_name]["player_perf"][p]["acs"].append(acs)
+                    map_raw_stats[map_name]["player_perf"][p]["points"].append(pts)
+                    map_raw_stats[map_name]["agent_picks_a"][p].append(comp_a[idx_p])
+                    
+                # Record iteration stats for Team B
+                for idx_p, p in enumerate(roster_b):
                     k = kills_b[p]
+                    d = deaths_b[p]
+                    a = assists_b[p]
+                    acs = self.calculate_acs(p, k, a, rounds_played)
+                    
                     k_pts = calculate_vfl_kill_points(k)
                     pts = k_pts + margin_pts_b
                     player_points_sum[p] += pts
                     player_sim_counts[p] += 1
                     
+                    # Store raw map performance
+                    map_raw_stats[map_name]["player_perf"][p]["kills"].append(k)
+                    map_raw_stats[map_name]["player_perf"][p]["deaths"].append(d)
+                    map_raw_stats[map_name]["player_perf"][p]["assists"].append(a)
+                    map_raw_stats[map_name]["player_perf"][p]["acs"].append(acs)
+                    map_raw_stats[map_name]["player_perf"][p]["points"].append(pts)
+                    map_raw_stats[map_name]["agent_picks_b"][p].append(comp_b[idx_p])
+                    
+                # Record scoreline
+                map_raw_stats[map_name]["scorelines"].append((score_a, score_b))
+                
                 # Break if Bo3/Bo5 has decider already settled
                 req_wins = 2 if series_type == "Bo3" else 3
                 if iter_wins_a == req_wins or iter_wins_b == req_wins:
@@ -549,7 +694,6 @@ class VCTv5SimulationEngine:
             sum_pts = player_points_sum[p]
             count = player_sim_counts[p]
             ev_points = sum_pts / count if count > 0 else 0.0
-            # Scale slightly based on player general stats (standard rating placement and scaling bonuses)
             feat = self.player_emas.get(p, self.baseline_lookup.get(p, {"acs": 200.0}))
             acs = feat.get("acs", 200.0)
             rating_bonus = 1.0 if acs > 220.0 else (0.5 if acs > 200.0 else 0.0)
@@ -558,6 +702,106 @@ class VCTv5SimulationEngine:
         win_prob_a = team_a_wins / num_iterations
         win_prob_b = team_b_wins / num_iterations
         
+        # Compile map details dictionary
+        map_details = {}
+        for map_name in series_maps:
+            raw = map_raw_stats[map_name]
+            map_play_count = len(raw["scorelines"])
+            
+            if map_play_count == 0:
+                map_details[map_name] = {
+                    "played": False,
+                    "play_probability": 0.0,
+                    "most_probable_score": "N/A",
+                    "score_confidence": 0.0,
+                    "score_distribution": {},
+                    "player_agents": {},
+                    "player_stats": []
+                }
+                continue
+                
+            # 1. Most probable scoreline
+            scoreline_counts = defaultdict(int)
+            for sc in raw["scorelines"]:
+                scoreline_counts[sc] += 1
+            sorted_scores = sorted(scoreline_counts.items(), key=lambda x: x[1], reverse=True)
+            best_sc, best_count = sorted_scores[0]
+            score_confidence = best_count / map_play_count
+            
+            # Format score distribution
+            score_distribution = {f"{sc[0]} - {sc[1]}": count for sc, count in sorted_scores[:10]}
+            
+            # 2. Player agents pick probability
+            player_agents_info = {}
+            for p in roster_a:
+                picks = raw["agent_picks_a"][p]
+                pick_counts = defaultdict(int)
+                for a in picks:
+                    pick_counts[a] += 1
+                sorted_picks = sorted(pick_counts.items(), key=lambda x: x[1], reverse=True)
+                best_agent, best_agent_count = sorted_picks[0]
+                player_agents_info[p] = {
+                    "agent": best_agent,
+                    "pick_probability": round((best_agent_count / map_play_count) * 100, 1)
+                }
+            for p in roster_b:
+                picks = raw["agent_picks_b"][p]
+                pick_counts = defaultdict(int)
+                for a in picks:
+                    pick_counts[a] += 1
+                sorted_picks = sorted(pick_counts.items(), key=lambda x: x[1], reverse=True)
+                best_agent, best_agent_count = sorted_picks[0]
+                player_agents_info[p] = {
+                    "agent": best_agent,
+                    "pick_probability": round((best_agent_count / map_play_count) * 100, 1)
+                }
+                
+            # 3. Player performance stats table
+            player_stats_table = []
+            for p in roster_a + roster_b:
+                perf = raw["player_perf"][p]
+                if not perf["kills"]:
+                    continue
+                kills_mean = np.mean(perf["kills"])
+                kills_p10 = np.percentile(perf["kills"], 10)
+                kills_p90 = np.percentile(perf["kills"], 90)
+                
+                deaths_mean = np.mean(perf["deaths"])
+                deaths_p10 = np.percentile(perf["deaths"], 10)
+                deaths_p90 = np.percentile(perf["deaths"], 90)
+                
+                assists_mean = np.mean(perf["assists"])
+                assists_p10 = np.percentile(perf["assists"], 10)
+                assists_p90 = np.percentile(perf["assists"], 90)
+                
+                acs_mean = np.mean(perf["acs"])
+                acs_p10 = np.percentile(perf["acs"], 10)
+                acs_p90 = np.percentile(perf["acs"], 90)
+                
+                ev_points = np.mean(perf["points"])
+                role = self.agent_transformer.agent_roles.get(player_agents_info[p]["agent"], "Sentinel")
+                
+                player_stats_table.append({
+                    "Player": p,
+                    "Team": team_a if p in roster_a else team_b,
+                    "Role": role,
+                    "Kills": f"{kills_mean:.1f} ({kills_p10:.0f} - {kills_p90:.0f})",
+                    "Deaths": f"{deaths_mean:.1f} ({deaths_p10:.0f} - {deaths_p90:.0f})",
+                    "Assists": f"{assists_mean:.1f} ({assists_p10:.0f} - {assists_p90:.0f})",
+                    "ACS": f"{acs_mean:.1f} ({acs_p10:.0f} - {acs_p90:.0f})",
+                    "Expected VFL Points": round(ev_points, 2)
+                })
+                
+            map_details[map_name] = {
+                "played": True,
+                "play_probability": round((map_play_count / num_iterations) * 100, 1),
+                "most_probable_score": f"{best_sc[0]} - {best_sc[1]}",
+                "score_confidence": round(score_confidence * 100, 1),
+                "score_distribution": score_distribution,
+                "player_agents": player_agents_info,
+                "player_stats": player_stats_table
+            }
+            
         return {
             "team_a": team_a,
             "team_b": team_b,
@@ -565,9 +809,11 @@ class VCTv5SimulationEngine:
             "win_prob_b": win_prob_b,
             "predicted_maps": series_maps,
             "veto_str": veto_res["veto_str"],
+            "veto_confidences": veto_confidences,
             "projections": projections,
             "roster_a": roster_a,
-            "roster_b": roster_b
+            "roster_b": roster_b,
+            "map_details": map_details
         }
 
 

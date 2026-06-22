@@ -757,11 +757,23 @@ with tab_sim:
     with sim_col3:
         sim_ref_date = st.date_input("Reference Date (for time-decay)", value=datetime(2026, 6, 22), key="sim_ref_date")
     with sim_col4:
-        sim_map_pool = st.multiselect("Map Pool Override (optional)", all_maps, default=[], key="sim_map_pool")
+        enable_override = st.checkbox("Enable Manual Map Veto Override", value=False, key="enable_override_checkbox")
+        
+    if enable_override:
+        override_maps = st.multiselect(
+            "Select Exact Maps to Force Run (in sequence)",
+            options=all_maps,
+            default=[],
+            key="override_maps_select"
+        )
+    else:
+        override_maps = None
     
     if st.button("🚀 Run Simulation", key="btn_run_sim", type="primary"):
         if sim_team_a == sim_team_b:
             st.error("Please select two different teams.")
+        elif enable_override and not override_maps:
+            st.error("Please select at least one override map to simulate.")
         else:
             with st.spinner(f"Running V5 Bottom-Up Micro-Simulation (10,000 iterations) for {sim_team_a} vs {sim_team_b}..."):
                 v5_engine = get_v5_simulation_engine()
@@ -770,7 +782,8 @@ with tab_sim:
                     team_b=sim_team_b,
                     series_type="Bo3",
                     target_patch="9.02",
-                    num_iterations=10000
+                    num_iterations=10000,
+                    override_maps=override_maps if enable_override else None
                 )
             
             # Display results
@@ -793,14 +806,68 @@ with tab_sim:
             sim_conf = max(sim_result['win_prob_a'], sim_result['win_prob_b'])
             st.markdown(f'<div class="winner-box">🏆 Predicted Winner: {sim_winner} ({sim_conf:.1%})</div>', unsafe_allow_html=True)
             
-            # Predicted maps
-            if sim_result.get('predicted_maps'):
-                st.markdown("**Predicted Map Sequence:** " + " → ".join(sim_result['predicted_maps']))
+            # Map veto sequence / overrides
+            if enable_override:
+                st.markdown(f"**Manual Map Override Forced:** {', '.join(override_maps)}")
+            else:
+                if "veto_confidences" in sim_result:
+                    st.markdown("#### 🗺️ Map Veto Sequence & Probabilities")
+                    veto_data = []
+                    for action, conf in sim_result["veto_confidences"]:
+                        veto_data.append({"Veto Action": action, "Confidence": f"{conf*100:.1f}%"})
+                    st.dataframe(pd.DataFrame(veto_data), use_container_width=True, hide_index=True)
             
             st.markdown('</div>', unsafe_allow_html=True)
             
+            # Map-by-map predictions (tabs)
+            st.markdown("### 📊 V5 Deep Simulation Analytics")
+            final_maps = sim_result["predicted_maps"]
+            map_tabs = st.tabs([f"🗺️ Map {i+1}: {map_name} (Play Prob: {sim_result['map_details'][map_name]['play_probability']}%)" for i, map_name in enumerate(final_maps)])
+            
+            for idx, tab in enumerate(map_tabs):
+                map_name = final_maps[idx]
+                details = sim_result["map_details"][map_name]
+                
+                with tab:
+                    if not details["played"]:
+                        st.info(f"Map '{map_name}' was never played (series settled early).")
+                        continue
+                        
+                    col_score, col_composition = st.columns([1, 2])
+                    
+                    with col_score:
+                        st.markdown("#### 🎯 Predicted Scoreline")
+                        st.metric(
+                            "Most Likely Score",
+                            details["most_probable_score"],
+                            f"Confidence: {details['score_confidence']}%"
+                        )
+                        # Mini chart showing score distribution
+                        dist_data = details["score_distribution"]
+                        if dist_data:
+                            dist_df = pd.DataFrame(list(dist_data.items()), columns=["Scoreline", "Frequency"])
+                            st.bar_chart(dist_df.set_index("Scoreline"))
+                            
+                    with col_composition:
+                        st.markdown("#### 🤖 Expected Agent Assignments")
+                        comp_rows = []
+                        for player, info in details["player_agents"].items():
+                            team = sim_team_a if player in sim_result["roster_a"] else sim_team_b
+                            comp_rows.append({
+                                "Player": player,
+                                "Team": team,
+                                "Expected Agent": info["agent"],
+                                "Pick Probability": f"{info['pick_probability']}%"
+                            })
+                        comp_df = pd.DataFrame(comp_rows)
+                        st.dataframe(comp_df, use_container_width=True, hide_index=True)
+                        
+                    st.markdown("#### 🔫 Player Performance Projections (80% Confidence Bounds)")
+                    perf_df = pd.DataFrame(details["player_stats"])
+                    st.dataframe(perf_df, use_container_width=True, hide_index=True)
+            
             # EV projections expander
-            with st.expander("📊 V5 Roster EV Projections"):
+            with st.expander("📊 V5 Roster EV Projections (Series-Level)"):
                 if "projections" in sim_result:
                     proj_data = []
                     for p, ev in sim_result["projections"].items():
@@ -950,6 +1017,28 @@ with tab_optimizer:
             key="transfer_current_roster_new"
         )
         
+        # Resolve current roster objects to compute default bank balance
+        current_roster_objs = []
+        for name in current_roster_names:
+            for p in vfl_players_data:
+                if p["player_name"] == name:
+                    current_roster_objs.append(p)
+                    break
+        
+        current_roster_value = sum(p["price"] for p in current_roster_objs)
+        default_bank = 50.0 - current_roster_value
+        
+        st.markdown(f"**Roster Value:** `{current_roster_value} VP` | **Bank Balance:** `{default_bank:.1f} VP`")
+        
+        remaining_bank_balance = st.number_input(
+            "User's Remaining Bank Balance (VP)", 
+            min_value=0.0, 
+            max_value=50.0, 
+            value=float(max(0.0, default_bank)), 
+            step=0.5,
+            key="remaining_bank_balance_input"
+        )
+        
         manual_igl_toggle = st.checkbox("Select IGL Manually?", value=False, key="manual_igl_toggle")
         forced_igl_name = None
         if manual_igl_toggle and len(current_roster_names) > 0:
@@ -959,84 +1048,91 @@ with tab_optimizer:
             if len(current_roster_names) != 6:
                 st.error("Please select exactly 6 players currently in your roster.")
             else:
-                current_roster_objs = []
-                for name in current_roster_names:
-                    for p in vfl_players_data:
-                        if p["player_name"] == name:
-                            current_roster_objs.append(p)
-                            break
-                            
                 with st.spinner("Analyzing transfer combinations..."):
-                    transfer_result = suggest_transfers(current_roster_objs, vfl_players_data, salary_cap=salary_cap, forced_igl_name=forced_igl_name)
+                    transfer_result = suggest_transfers(
+                        current_roster_objs, 
+                        vfl_players_data, 
+                        remaining_bank_balance=remaining_bank_balance, 
+                        forced_igl_name=forced_igl_name
+                    )
                     
                 if transfer_result["solver_status"] == "optimal":
-                    if transfer_result["projected_gain"] > 0:
-                        st.markdown(f"""
-                            <div class="optimizer-card" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
-                                <div style="font-weight: 700; font-size: 1.1rem; color: #4ade80;">
-                                    📈 Projected Score Velocity: +{transfer_result['projected_gain']:.1f} pts
-                                </div>
-                            </div>
-                        """, unsafe_allow_html=True)
-                        
-                        st.markdown("**Suggested Swaps (Max 3 Trades):**")
-                        
-                        for p in transfer_result["transfers_out"]:
-                            p_name = p["player_name"]
-                            p_name_clean = p_name.lower().strip()
-                            primary_agent = None
-                            max_count = -1
-                            for (name, agent), info in player_agent_stats.items():
-                                if name.lower().strip() == p_name_clean:
-                                    if info['count'] > max_count:
-                                        max_count = info['count']
-                                        primary_agent = agent
-                            
-                            reason = "Transfer Reason: Budget optimization and roster rebalancing to maximize score velocity."
-                            if primary_agent:
-                                penalty = active_penalties.get(primary_agent, 0.0)
-                                if penalty > 0.10:
-                                    reason = f"Transfer Reason: Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
+                    recs = transfer_result.get("recommendations", [])
+                    if recs:
+                        tabs = st.tabs([f"Option {idx+1} (+{rec['projected_gain']:.1f} pts)" for idx, rec in enumerate(recs)])
+                        for idx, rec in enumerate(recs):
+                            with tabs[idx]:
+                                if rec["projected_gain"] > 0:
+                                    st.markdown(f"""
+                                        <div class="optimizer-card" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2); padding: 15px; border-radius: 8px; border: 1px solid; margin-bottom: 15px;">
+                                            <div style="font-weight: 700; font-size: 1.1rem; color: #4ade80;">
+                                                📈 Projected Score Velocity: +{rec['projected_gain']:.1f} pts
+                                            </div>
+                                        </div>
+                                    """, unsafe_allow_html=True)
                                     
-                            st.markdown(f"""
-                                <div class="transfer-out" style="padding: 10px 14px; margin-bottom: 8px;">
-                                    <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
-                                    <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}</span>
-                                    <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
-                                    <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
-                                </div>
-                            """, unsafe_allow_html=True)
-                            
-                        for p in transfer_result["transfers_in"]:
-                            igl_tag = " 👑" if p["is_igl"] else ""
-                            p_name = p["player_name"]
-                            p_name_clean = p_name.lower().strip()
-                            primary_agent = None
-                            max_count = -1
-                            for (name, agent), info in player_agent_stats.items():
-                                if name.lower().strip() == p_name_clean:
-                                    if info['count'] > max_count:
-                                        max_count = info['count']
-                                        primary_agent = agent
-                            
-                            if primary_agent:
-                                reason = f"Transfer Reason: High-performing meta asset on comfort agent ({primary_agent}) with 0.00 penalty."
-                            else:
-                                reason = "Transfer Reason: Optimal target pickup to maximize projected score under budget cap."
-                                
-                            st.markdown(f"""
-                                <div class="transfer-in" style="padding: 10px 14px; margin-bottom: 8px;">
-                                    <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
-                                    <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}{igl_tag}</span>
-                                    <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
-                                    <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
-                                </div>
-                            """, unsafe_allow_html=True)
-                        st.markdown(f"""
-                            <div style="margin-top: 10px; color: #94a3b8; font-size: 0.8rem; text-align: right;">
-                                New Total Cost: <b>{transfer_result['new_total_cost']} VP</b> | New Projected Points: <b>{transfer_result['new_projected_points']:.1f} pts</b>
-                            </div>
-                        """, unsafe_allow_html=True)
+                                    st.markdown("**Suggested Swaps (Max 3 Trades):**")
+                                    
+                                    for p in rec["transfers_out"]:
+                                        p_name = p["player_name"]
+                                        p_name_clean = p_name.lower().strip()
+                                        primary_agent = None
+                                        max_count = -1
+                                        for (name, agent), info in player_agent_stats.items():
+                                            if name.lower().strip() == p_name_clean:
+                                                if info['count'] > max_count:
+                                                    max_count = info['count']
+                                                    primary_agent = agent
+                                        
+                                        reason = "Transfer Reason: Budget optimization and roster rebalancing to maximize score velocity."
+                                        if primary_agent:
+                                            penalty = active_penalties.get(primary_agent, 0.0)
+                                            if penalty > 0.10:
+                                                reason = f"Transfer Reason: Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
+                                                
+                                        st.markdown(f"""
+                                            <div class="transfer-out" style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05);">
+                                                <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
+                                                <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}</span>
+                                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
+                                                <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
+                                            </div>
+                                        """, unsafe_allow_html=True)
+                                        
+                                    for p in rec["transfers_in"]:
+                                        igl_tag = " 👑" if p["is_igl"] else ""
+                                        p_name = p["player_name"]
+                                        p_name_clean = p_name.lower().strip()
+                                        primary_agent = None
+                                        max_count = -1
+                                        for (name, agent), info in player_agent_stats.items():
+                                            if name.lower().strip() == p_name_clean:
+                                                if info['count'] > max_count:
+                                                    max_count = info['count']
+                                                    primary_agent = agent
+                                        
+                                        if primary_agent:
+                                            reason = f"Transfer Reason: High-performing meta asset on comfort agent ({primary_agent}) with 0.00 penalty."
+                                        else:
+                                            reason = "Transfer Reason: Optimal target pickup to maximize projected score under budget cap."
+                                            
+                                        st.markdown(f"""
+                                            <div class="transfer-in" style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05);">
+                                                <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
+                                                <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}{igl_tag}</span>
+                                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
+                                                <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
+                                            </div>
+                                        """, unsafe_allow_html=True)
+                                    st.markdown(f"""
+                                        <div style="margin-top: 10px; color: #94a3b8; font-size: 0.8rem; text-align: right;">
+                                            New Total Cost: <b>{rec['new_total_cost']} VP</b> | New Projected Points: <b>{rec['new_projected_points']:.1f} pts</b>
+                                        </div>
+                                    """, unsafe_allow_html=True)
+                                else:
+                                    st.success("✅ Your current roster is already optimally positioned! No transfers recommended.")
+                        else:
+                            st.success("✅ Your current roster is already optimally positioned! No transfers recommended.")
                     else:
                         st.success("✅ Your current roster is already optimally positioned! No transfers recommended.")
                 else:

@@ -378,7 +378,8 @@ def optimize_roster(
     team_win_rates: dict[int, float] = None,
     player_stats: dict[str, dict] = None,
     transfer_constraint: dict = None,  # Contains 'current_roster' and 'max_transfers'
-    forced_igl_name: str = None
+    forced_igl_name: str = None,
+    excluded_rosters: list[list[str]] = None
 ) -> dict:
     """
     Solves VFL roster selection as a Mixed-Integer Linear Program (MILP).
@@ -398,14 +399,20 @@ def optimize_roster(
     if player_stats is None:
         player_stats = compute_all_players_historical_stats(RAW_DIR)
 
-    # 1. Filter out players below the survival win rate threshold
+    # 1. Filter out players below the survival win rate threshold, unless in current roster
+    curr_names_set = set()
+    if transfer_constraint is not None:
+        curr_names_set = set(p["player_name"].lower().strip() for p in transfer_constraint["current_roster"])
+
     filtered_players = []
     for p in vfl_players:
+        pname = p.get("player_name", "")
+        is_in_curr = pname.lower().strip() in curr_names_set
+        
         tid = p.get("vlr_team_id")
         wr = team_win_rates.get(tid, 0.50) if tid is not None else 0.50
-        if wr >= survival_threshold:
+        if wr >= survival_threshold or is_in_curr:
             # Enrich player data with stats database lookup
-            pname = p.get("player_name", "")
             stats = player_stats.get(pname, {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
             p["computed_ppg"] = stats.get("ppg", p.get("ppg", 10.0))
             p["computed_sigma"] = stats.get("sigma", 3.0)
@@ -455,15 +462,18 @@ def optimize_roster(
     
     costs = np.array([p["price"] for p in filtered_players], dtype=float)
     
-    # Resolve IGL candidates (restrict to forced player if specified)
-    igl_candidates = range(n)
+    # Identify forced IGL index if any
+    forced_idx = None
     if forced_igl_name:
-        matched_k = [i for i, p in enumerate(filtered_players) if p["player_name"].lower().strip() == forced_igl_name.lower().strip()]
-        if matched_k:
-            igl_candidates = [matched_k[0]]
+        matched = [i for i, p in enumerate(filtered_players) if p["player_name"].lower().strip() == forced_igl_name.lower().strip()]
+        if matched:
+            forced_idx = matched[0]
 
-    # Loop over IGL candidates
-    for k in igl_candidates:
+    # Loop over all players as potential IGL candidates
+    for k in range(n):
+        is_forced_igl_run = (forced_idx is not None and k == forced_idx)
+        is_other_igl_run = (forced_idx is not None and k != forced_idx)
+        
         # Candidate IGL floor
         igl_floor = filtered_players[k]["floor"]
         
@@ -477,7 +487,8 @@ def optimize_roster(
         c[k] -= pts[k]        # Add extra -pts[k] for natural selection IGL (since x_k_nat + x_k_wild = 1)
         c[n + k] -= pts[k]    # Add extra -pts[k] for wildcard selection IGL
         
-        c[2*n] = 0.5          # soft penalty coefficient for cost > 48 VP (add 0.5 per VP above 48)
+        # No soft penalty - VFL ruleset strictly capped at 50 VP
+        c[2*n] = 0.0          
         c[2*n + 1:] = 20.0    # head-to-head matchup penalty of 20 points
         
         # Build constraints
@@ -498,14 +509,37 @@ def optimize_roster(
             b_ub_upper.append(1.0)
             
         # 2. Hard selection check: IGL candidate k must be drafted
-        row = np.zeros(num_vars)
-        row[k] = 1.0
-        row[n + k] = 1.0
-        A_eq_rows.append(row)
-        b_eq.append(1.0)
+        if is_forced_igl_run:
+            # Candidate k (the forced IGL) must be selected
+            row = np.zeros(num_vars)
+            row[k] = 1.0
+            row[n + k] = 1.0
+            A_eq_rows.append(row)
+            b_eq.append(1.0)
+        elif is_other_igl_run:
+            # Candidate k is the selected IGL (must be in the roster)
+            row = np.zeros(num_vars)
+            row[k] = 1.0
+            row[n + k] = 1.0
+            A_eq_rows.append(row)
+            b_eq.append(1.0)
+            
+            # The forced IGL player (forced_idx) must be NOT selected (swapped out)
+            row = np.zeros(num_vars)
+            row[forced_idx] = 1.0
+            row[n + forced_idx] = 1.0
+            A_eq_rows.append(row)
+            b_eq.append(0.0)
+        else:
+            # Normal run: candidate k must be selected
+            row = np.zeros(num_vars)
+            row[k] = 1.0
+            row[n + k] = 1.0
+            A_eq_rows.append(row)
+            b_eq.append(1.0)
         
         # 3. IGL floor constraint: any player i with floor > igl_floor cannot be selected (bypassed if forced manually)
-        if not forced_igl_name:
+        if not is_forced_igl_run:
             for i in range(n):
                 if filtered_players[i]["floor"] > igl_floor:
                     row = np.zeros(num_vars)
@@ -592,14 +626,33 @@ def optimize_roster(
         if transfer_constraint is not None:
             curr_names = set(p["player_name"] for p in transfer_constraint["current_roster"])
             max_tr = transfer_constraint["max_transfers"]
-            # Number of selected players NOT in current roster <= max_transfers
+            exact_tr = transfer_constraint.get("exact", False)
+            # Number of selected players NOT in current roster
             non_curr_indicator = np.array([1.0 if p["player_name"] not in curr_names else 0.0 for p in filtered_players])
             row = np.zeros(num_vars)
             row[:n] = non_curr_indicator
             row[n:2*n] = non_curr_indicator
-            A_ub_rows.append(row)
-            b_ub_lower.append(0.0)
-            b_ub_upper.append(float(max_tr))
+            if exact_tr:
+                A_eq_rows.append(row)
+                b_eq.append(float(max_tr))
+            else:
+                A_ub_rows.append(row)
+                b_ub_lower.append(0.0)
+                b_ub_upper.append(float(max_tr))
+            
+        # 10. Roster exclusion constraints (to find alternative suggestions)
+        if excluded_rosters is not None:
+            for excl in excluded_rosters:
+                excl_set = set(name.lower().strip() for name in excl)
+                idxs = [i for i, p in enumerate(filtered_players) if p["player_name"].lower().strip() in excl_set]
+                if len(idxs) == 6:
+                    row = np.zeros(num_vars)
+                    for idx in idxs:
+                        row[idx] = 1.0
+                        row[n + idx] = 1.0
+                    A_ub_rows.append(row)
+                    b_ub_lower.append(-np.inf)
+                    b_ub_upper.append(5.0)
             
         # Define bounds and integrality
         bounds_lower = np.zeros(num_vars)
@@ -678,9 +731,7 @@ def optimize_roster(
             pts *= 2.0
         projected_points += pts
         
-    # Apply soft cost penalty to final score
-    if total_cost > 48:
-        projected_points -= 0.5 * (total_cost - 48)
+    # Soft cost penalty removed to enforce strict budget VFL limits
         
     # Check if head-to-head occurred
     h2h_occurred = []
@@ -711,91 +762,147 @@ def generate_stage_2_baseline(vfl_players: list[dict]) -> dict:
     )
 
 
-def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], salary_cap: int = 50, forced_igl_name: str = None) -> dict:
+def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remaining_bank_balance: float = 0.0, forced_igl_name: str = None) -> dict:
     """
-    Transfer Advisor component. Capped at exactly 3 swaps.
-    Runs optimization with transfer limit <= 3 and computes best transactions.
+    Transfer Advisor component. Enforces VFL ruleset.
+    Calculates salary_cap based on current roster cost + remaining bank balance, up to 50 VP max.
+    Finds up to 3 distinct optimal transfer recommendations.
     """
-    logger.info("Running Transfer Advisor with a hard cap of 3 trades...")
+    current_roster_value = sum(p["price"] for p in current_roster)
+    salary_cap = min(50.0, current_roster_value + remaining_bank_balance)
     
-    # Solve optimization with transfer constraint
-    transfer_constraint = {
-        "current_roster": current_roster,
-        "max_transfers": 3
-    }
+    logger.info(f"Running VFL Transfer Advisor: Current roster value: {current_roster_value} VP | Bank balance: {remaining_bank_balance} VP | Combined limit: {salary_cap} VP")
     
-    result = optimize_roster(
-        vfl_players=vfl_players,
-        salary_cap=salary_cap,
-        survival_threshold=0.35,
-        transfer_constraint=transfer_constraint,
-        forced_igl_name=forced_igl_name
-    )
+    recommendations = []
+    excluded_rosters = []
     
-    if result["solver_status"] != "optimal":
-        return {
-            "transfers_in": [],
-            "transfers_out": [],
-            "projected_gain": 0.0,
-            "new_roster": current_roster,
-            "solver_status": result["solver_status"]
+    # Generate up to 3 distinct recommendations
+    for opt_idx in range(3):
+        result = None
+        
+        # Try exact 3 transfers
+        transfer_constraint = {
+            "current_roster": current_roster,
+            "max_transfers": 3,
+            "exact": True
         }
-        
-    new_roster = result["optimal_roster"]
-    
-    curr_names = set(p["player_name"] for p in current_roster)
-    new_names = set(p["player_name"] for p in new_roster)
-    
-    transfers_out = [p for p in current_roster if p["player_name"] not in new_names]
-    transfers_in = [p for p in new_roster if p["player_name"] not in curr_names]
-    
-    # Calculate projected gain (difference in points)
-    # Re-calculate current points including IGL multiplier
-    current_roster_enriched = []
-    player_stats = compute_all_players_historical_stats(RAW_DIR)
-    
-    for p in current_roster:
-        stats = player_stats.get(p["player_name"], {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
-        p_enriched = p.copy()
-        p_enriched["ppg"] = stats.get("ppg", p.get("ppg", 10.0))
-        p_enriched["sigma"] = stats.get("sigma", 3.0)
-        p_enriched["floor"] = p_enriched["ppg"] - 1.0 * p_enriched["sigma"]
-        current_roster_enriched.append(p_enriched)
-        
-    # Determine IGL index in current roster
-    igl_index = 0
-    if forced_igl_name:
-        matched_curr = [idx for idx, p in enumerate(current_roster_enriched) if p["player_name"].lower().strip() == forced_igl_name.lower().strip()]
-        if matched_curr:
-            igl_index = matched_curr[0]
-        else:
-            current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
+        res = optimize_roster(
+            vfl_players=vfl_players,
+            salary_cap=salary_cap,
+            survival_threshold=0.35,
+            transfer_constraint=transfer_constraint,
+            forced_igl_name=forced_igl_name,
+            excluded_rosters=excluded_rosters
+        )
+        if res["solver_status"] == "optimal":
+            result = res
+            
+        # Fallback to exact 2 transfers
+        if result is None or result["solver_status"] != "optimal":
+            logger.info(f"Option {opt_idx+1}: Exact 3 transfers infeasible or already found. Trying exact 2 transfers...")
+            transfer_constraint["max_transfers"] = 2
+            res = optimize_roster(
+                vfl_players=vfl_players,
+                salary_cap=salary_cap,
+                survival_threshold=0.35,
+                transfer_constraint=transfer_constraint,
+                forced_igl_name=forced_igl_name,
+                excluded_rosters=excluded_rosters
+            )
+            if res["solver_status"] == "optimal":
+                result = res
+                
+        # Fallback to exact 1 transfer
+        if result is None or result["solver_status"] != "optimal":
+            logger.info(f"Option {opt_idx+1}: Exact 2 transfers infeasible. Trying exact 1 transfer...")
+            transfer_constraint["max_transfers"] = 1
+            res = optimize_roster(
+                vfl_players=vfl_players,
+                salary_cap=salary_cap,
+                survival_threshold=0.35,
+                transfer_constraint=transfer_constraint,
+                forced_igl_name=forced_igl_name,
+                excluded_rosters=excluded_rosters
+            )
+            if res["solver_status"] == "optimal":
+                result = res
+                
+        # Fallback to <= 3 transfers
+        if result is None or result["solver_status"] != "optimal":
+            logger.info(f"Option {opt_idx+1}: Exact transfers infeasible. Falling back to <= 3 transfers...")
+            transfer_constraint["exact"] = False
+            transfer_constraint["max_transfers"] = 3
+            res = optimize_roster(
+                vfl_players=vfl_players,
+                salary_cap=salary_cap,
+                survival_threshold=0.35,
+                transfer_constraint=transfer_constraint,
+                forced_igl_name=forced_igl_name,
+                excluded_rosters=excluded_rosters
+            )
+            if res["solver_status"] == "optimal":
+                result = res
+                
+        if result is not None and result["solver_status"] == "optimal":
+            new_roster = result["optimal_roster"]
+            # Exclude this roster combination from subsequent option searches
+            roster_names = [p["player_name"] for p in new_roster]
+            excluded_rosters.append(roster_names)
+            
+            curr_names = set(p["player_name"] for p in current_roster)
+            new_names = set(p["player_name"] for p in new_roster)
+            
+            transfers_out = [p for p in current_roster if p["player_name"] not in new_names]
+            transfers_in = [p for p in new_roster if p["player_name"] not in curr_names]
+            
+            # Calculate projected gain (difference in points)
+            current_roster_enriched = []
+            player_stats = compute_all_players_historical_stats(RAW_DIR)
+            
+            for p in current_roster:
+                stats = player_stats.get(p["player_name"], {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
+                p_enriched = p.copy()
+                p_enriched["ppg"] = stats.get("ppg", p.get("ppg", 10.0))
+                p_enriched["sigma"] = stats.get("sigma", 3.0)
+                p_enriched["floor"] = p_enriched["ppg"] - 1.0 * p_enriched["sigma"]
+                current_roster_enriched.append(p_enriched)
+                
+            # Determine IGL index in current roster
             igl_index = 0
-    else:
-        current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
-        igl_index = 0
-    
-    current_points = 0.0
-    for idx, p in enumerate(current_roster_enriched):
-        pts = p["ppg"]
-        if idx == igl_index:  # Active IGL is doubled
-            pts *= 2.0
-        current_points += pts
-        
-    current_cost = sum(p["price"] for p in current_roster_enriched)
-    if current_cost > 48:
-        current_points -= 0.5 * (current_cost - 48)
-        
-    projected_gain = result["projected_points"] - current_points
-    
+            if forced_igl_name:
+                matched_curr = [idx for idx, p in enumerate(current_roster_enriched) if p["player_name"].lower().strip() == forced_igl_name.lower().strip()]
+                if matched_curr:
+                    igl_index = matched_curr[0]
+                else:
+                    current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
+                    igl_index = 0
+            else:
+                current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
+                igl_index = 0
+            
+            current_points = 0.0
+            for idx, p in enumerate(current_roster_enriched):
+                pts = p["ppg"]
+                if idx == igl_index:  # Active IGL is doubled
+                    pts *= 2.0
+                current_points += pts
+                
+            projected_gain = result["projected_points"] - current_points
+            
+            recommendations.append({
+                "transfers_in": transfers_in,
+                "transfers_out": transfers_out,
+                "projected_gain": round(max(projected_gain, 0.0), 2),
+                "new_roster": new_roster,
+                "new_total_cost": result["total_cost"],
+                "new_projected_points": result["projected_points"]
+            })
+        else:
+            break
+            
     return {
-        "transfers_in": transfers_in,
-        "transfers_out": transfers_out,
-        "projected_gain": round(max(projected_gain, 0.0), 2),
-        "new_roster": new_roster,
-        "new_total_cost": result["total_cost"],
-        "new_projected_points": result["projected_points"],
-        "solver_status": "optimal"
+        "recommendations": recommendations,
+        "solver_status": "optimal" if recommendations else "infeasible"
     }
 
 
@@ -825,21 +932,24 @@ if __name__ == "__main__":
     print("TRANSFER ADVISOR TEST")
     print("=" * 60)
     
-    # Sample current roster from the optimal lineup with 3 swaps made manually
+    # Sample current roster from the database
     curr = [
-        {"player_name": "something", "price": 10},
-        {"player_name": "mindfreak", "price": 8},
-        {"player_name": "C0M", "price": 8},
-        {"player_name": "zekken", "price": 10},
-        {"player_name": "Boo", "price": 8},
-        {"player_name": "Boaster", "price": 8}
+        {"player_name": "something", "price": 10, "role": "Duelist"},
+        {"player_name": "Boo", "price": 8, "role": "Controller"},
+        {"player_name": "Keiko", "price": 10, "role": "Controller"},
+        {"player_name": "CHICHOO", "price": 8, "role": "Sentinel"},
+        {"player_name": "invy", "price": 9, "role": "Initiator"},
+        {"player_name": "d4v41", "price": 9, "role": "Initiator"}
     ]
     
     transfer_res = suggest_transfers(curr, players)
-    print(f"Projected Gain: +{transfer_res['projected_gain']} points")
-    print("\nTransfers Out:")
-    for p in transfer_res["transfers_out"]:
-        print(f"  - {p['player_name']}")
-    print("\nTransfers In:")
-    for p in transfer_res["transfers_in"]:
-        print(f"  - {p['player_name']}")
+    print(f"Solver Status: {transfer_res['solver_status']}")
+    if transfer_res["solver_status"] == "optimal":
+        for idx, rec in enumerate(transfer_res["recommendations"]):
+            print(f"\n--- Recommendation {idx+1} (+{rec['projected_gain']} pts) ---")
+            print("Transfers Out:")
+            for p in rec["transfers_out"]:
+                print(f"  - {p['player_name']} (${p['price']} VP)")
+            print("Transfers In:")
+            for p in rec["transfers_in"]:
+                print(f"  - {p['player_name']} (${p['price']} VP)")
