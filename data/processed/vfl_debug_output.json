@@ -1,0 +1,12 @@
+{
+  "props": {
+    "pageProps": {}
+  },
+  "page": "/playerstats",
+  "query": {},
+  "buildId": "UMlQqSeI0TNJ_6iwXH2H5",
+  "nextExport": true,
+  "autoExport": true,
+  "isFallback": false,
+  "scriptLoader": []
+}

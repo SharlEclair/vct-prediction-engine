@@ -4,16 +4,16 @@
 - [x] Decouple `predict_match.py` from fixed historical match IDs to simulate an arbitrary match between any two selected teams using their latest form up to June 2026.
 - [x] Align exponential patch decay ($W = e^{-0.02 \cdot t}$) relative to the current date (June 2026) to heavily prioritize recent performance vectors.
 
-## [x] Phase 3.1.2: VFL Table Scraper & Player Database Configuration
-- [x] Create `vfl_scraper.py` using `httpx` and `selectolax` to target `https://www.valorantfantasyleague.net/playerstats`.
-- [x] Parse the exact HTML table structure identifying class `w-full text-left border-collapse min-w-[700px]`.
-- [x] Map the exact target columns to local database fields:
-  - `Player_Data` $\rightarrow$ Target the nested `<span class="... uppercase tracking-widest ...">` inside the table cell to extract the raw Player Name string (e.g., "WsLeo"). *(Optional: Extract the `vfl_player_id` from the embedded `img src` if needed for UI mapping)*.
-  - `Org` $\rightarrow$ Parse the `src` attribute of the team image asset (e.g., `https://api.valorantfantasyleague.net/static/team/{team_id}.png`) using regex to isolate the true VLR Team ID.
-  - `Role` $\rightarrow$ Store player role assignment (Duelist, Initiator, Controller, Sentinel).
-  - `Price` $\rightarrow$ Parse static integer cost value (VP).
-  - `GW_Pts`, `Tot_Pts`, `PPG` $\rightarrow$ Save historic points data, prioritizing `PPG` (Points Per Game) as a major baseline projection weight.
+## [x] Phase 3.1.2: VFL Table Scraper → API-First Player Database ✅ COMPLETE (API Migration)
+- [x] ~~Create `vfl_scraper.py` using `httpx` and `selectolax` to target HTML~~ → **SUPERSEDED**: Rewrote `vfl_scraper.py` to use the VFL REST API directly (no DOM parsing).
+- [x] **Step A**: `GET /api/event/currentevent` → resolves active `event_id` (currently `9` = "VCT 2026: Masters London")
+- [x] **Step B**: `GET /api/player/allplayers?eventId={id}` → 60-player roster JSON
+- [x] Confirmed correct `playerRole` integer mapping: `0=Duelist, 1=Initiator, 2=Controller, 3=Sentinel`
+- [x] Extracts: `player_name`, `vlr_team_id`, `team_name`, `team_short`, `role`, `price`, `gw_pts`, `tot_pts`, `ppg` (computed from history)
+- [x] Cache envelope saved to `./data/processed/vfl_players_db.json` with `_meta` timestamp and player count.
 - [x] Build a local database cache `./data/processed/vfl_players_db.json` and create a Streamlit sidebar button to re-trigger compilation when VCT 2026 Stage 2 updates drop.
+- [x] **DB Shape**: 60 players, 12 teams (NRG, LEV, PRX, FUT, VIT, DRG, GE, XLG, FS, EDG, G2, TH), 5 per team
+- [x] MILP optimizer confirmed `optimal` (78.06 pts, 50 VP, 6 players, IGL: Keiko)
 
 ## [x] Phase 3.1.3: Integer Linear Programming Roster Solver (`fantasy_engine.py`)
 - [x] Implement a Bounded Knapsack or Mixed-Integer Linear Programming (MILP) solver mapped to these parameters:

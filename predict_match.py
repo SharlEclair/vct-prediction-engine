@@ -188,7 +188,7 @@ def parse_econ_cell_wins(val_str: str) -> int:
     return 0
 
 # --- Historical Stats Calculation ---
-def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference_date: datetime = None):
+def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference_date: datetime = None, target_agents: dict = None, target_patch: str = None):
     logger.info("Computing latest rolling player EMAs and team economy averages...")
     if exclude_match_ids is None:
         exclude_match_ids = []
@@ -215,6 +215,9 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
                 if str(segment.get("match_id")) in exclude_set:
                     continue
                 segment["timestamp"] = parse_match_date(segment["date"])
+                # Extract patch if present
+                patch_match = re.search(r'Patch\s+([0-9.]+)', segment["date"])
+                segment["patch"] = patch_match.group(1).strip() if patch_match else None
                 segment["team_a"] = segment["teams"][0]["name"]
                 segment["team_b"] = segment["teams"][1]["name"]
                 matches.append(segment)
@@ -223,6 +226,22 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
             
     matches.sort(key=lambda x: x["timestamp"])
     
+    # Forward fill missing patches
+    last_patch = None
+    for m in matches:
+        if m.get("patch") is None:
+            m["patch"] = last_patch
+        else:
+            last_patch = m["patch"]
+            
+    # Backward fill missing patches (fallback)
+    last_patch = None
+    for m in reversed(matches):
+        if m.get("patch") is None:
+            m["patch"] = last_patch
+        else:
+            last_patch = m["patch"]
+            
     # Load player stats baseline lookup
     player_stats_path = os.path.join(raw_dir, "player_stats.json")
     baseline_lookup = {}
@@ -275,7 +294,8 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
                         'kast': kast_val,
                         'fk': fk_val,
                         'fd': fd_val,
-                        'rounds': rounds_count
+                        'rounds': rounds_count,
+                        'agent': p.get('agent', '')
                     })
 
                     # Update player agent & global stats for comfort picks
@@ -301,10 +321,16 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
             fk_per_round = total_fk / total_rounds if total_rounds > 0 else 0.0
             fd_per_round = total_fd / total_rounds if total_rounds > 0 else 0.0
             
+            from collections import Counter
+            agent_counts = Counter(s['agent'] for s in stats_list if s.get('agent'))
+            most_common_agent = agent_counts.most_common(1)[0][0] if agent_counts else ""
+            
             player_performances.append({
                 'player': p_name,
                 'match_id': match_id,
                 'timestamp': ts,
+                'patch': m.get('patch', ''),
+                'agent': most_common_agent,
                 'acs': avg_acs,
                 'kast': avg_kast,
                 'duel_diff': fk_per_round - fd_per_round
@@ -316,33 +342,128 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
         df_player_perf = df_player_perf[~df_player_perf["match_id"].astype(str).isin(exclude_set)]
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
-    # Apply exponential time-decay weights based on reference_date
+    # 2D Composite WMA calculation
+    # Resolve target_patch and target_agents
+    if not target_patch:
+        if not df_player_perf.empty:
+            target_patch = df_player_perf["patch"].iloc[-1]
+        else:
+            target_patch = "12.10"
+            
+    if not target_agents:
+        target_agents = {}
+        
+    most_played_agents = {}
     if not df_player_perf.empty:
-        df_player_perf["decay_weight"] = df_player_perf["timestamp"].apply(
-            lambda ts: np.exp(-DECAY_LAMBDA * max((reference_date - ts).days, 0))
+        most_played_agents = df_player_perf.groupby("player")["agent"].agg(
+            lambda x: x.mode().iloc[0] if not x.mode().empty else ""
+        ).to_dict()
+        
+    # Load patch release dates
+    patch_dates = {}
+    csv_path = os.path.join(raw_dir, "patch_notes.csv")
+    if os.path.exists(csv_path):
+        try:
+            df_patches = pd.read_csv(csv_path)
+            for _, row in df_patches.iterrows():
+                version = str(row['patch_version']).strip().lower()
+                if version.startswith('v'):
+                    version = version[1:]
+                date_str_val = str(row['release_date'])
+                clean_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_str_val)
+                parsed_dt = datetime.strptime(clean_date, '%B %d, %Y')
+                patch_dates[version] = parsed_dt
+        except Exception as e:
+            logger.error(f"Failed to load patch notes: {e}")
+            
+    # Load patch nerf registry and patch distance matrix
+    nerf_registry_path = os.path.join(PROCESSED_DIR, "patch_nerf_registry.json")
+    with open(nerf_registry_path, "r", encoding="utf-8") as f:
+        nerf_registry = json.load(f)
+        
+    distance_matrix_path = os.path.join(PROCESSED_DIR, "patch_distance_matrix.json")
+    with open(distance_matrix_path, "r", encoding="utf-8") as f:
+        patch_distance_matrix = json.load(f)
+        
+    def get_agent_nerf_penalty(agent: str, p_hist: str, p_target: str) -> float:
+        if p_hist == p_target:
+            return 0.0
+        dt_hist = patch_dates.get(p_hist.lower() if p_hist else '')
+        dt_target = patch_dates.get(p_target.lower() if p_target else '')
+        if dt_hist is None or dt_target is None:
+            return 0.0
+        if dt_hist >= dt_target:
+            return 0.0
+        penalty = 0.0
+        for patch, nerf_agents in nerf_registry.items():
+            dt_patch = patch_dates.get(patch.lower())
+            if dt_patch is not None:
+                if dt_hist < dt_patch <= dt_target:
+                    penalty += nerf_agents.get(agent, 0.0)
+        return penalty
+        
+    unique_agents = sorted(list(df_player_perf["agent"].unique())) if not df_player_perf.empty else []
+    unique_patches = sorted(list(df_player_perf["patch"].unique())) if not df_player_perf.empty else []
+    
+    agent_nerf_lookup = {}
+    for agent in unique_agents:
+        for p_hist in unique_patches:
+            agent_nerf_lookup[(agent, p_hist, target_patch)] = get_agent_nerf_penalty(agent, p_hist, target_patch)
+                
+    jsd_lookup = {}
+    for p_hist in unique_patches:
+        jsd_lookup[(p_hist, target_patch)] = patch_distance_matrix.get(p_hist, {}).get(target_patch, 0.0)
+        
+    df_hist = df_player_perf[df_player_perf["timestamp"] < reference_date].copy()
+    
+    if not df_hist.empty:
+        df_hist["agent_target"] = df_hist["player"].map(lambda p: target_agents.get(p) or most_played_agents.get(p, ""))
+        df_hist["patch_target"] = target_patch
+        
+        df_hist["delta_days"] = (reference_date - df_hist["timestamp"]).dt.total_seconds() / 86400.0
+        df_hist["time_decay"] = np.exp(-0.02 * df_hist["delta_days"])
+        df_hist["is_same_agent"] = (df_hist["agent"] == df_hist["agent_target"]).astype(int)
+        
+        target_keys = list(zip(df_hist["agent_target"], df_hist["patch"], df_hist["patch_target"]))
+        df_hist["delta_p_agent"] = [agent_nerf_lookup.get(k, 0.0) for k in target_keys]
+        
+        global_keys = list(zip(df_hist["patch"], df_hist["patch_target"]))
+        df_hist["delta_p_global"] = [jsd_lookup.get(k, 0.0) for k in global_keys]
+        
+        df_hist["state_penalty"] = (
+            df_hist["is_same_agent"] * np.exp(-2.0 * df_hist["delta_p_agent"]) +
+            (1 - df_hist["is_same_agent"]) * np.exp(-0.5 * df_hist["delta_p_global"])
         )
+        df_hist["final_weight"] = df_hist["time_decay"] * df_hist["state_penalty"]
+        
+        df_hist["acs_weighted"] = df_hist["acs"] * df_hist["final_weight"]
+        df_hist["kast_weighted"] = df_hist["kast"] * df_hist["final_weight"]
+        df_hist["duel_diff_weighted"] = df_hist["duel_diff"] * df_hist["final_weight"]
+        
+        df_wma = df_hist.groupby("player").agg(
+            acs_weighted_sum=("acs_weighted", "sum"),
+            kast_weighted_sum=("kast_weighted", "sum"),
+            duel_diff_weighted_sum=("duel_diff_weighted", "sum"),
+            weight_sum=("final_weight", "sum")
+        ).reset_index()
+        
+        df_wma["weight_sum_clean"] = df_wma["weight_sum"].replace(0, 1.0)
+        df_wma["acs_ema"] = df_wma["acs_weighted_sum"] / df_wma["weight_sum_clean"]
+        df_wma["kast_ema"] = df_wma["kast_weighted_sum"] / df_wma["weight_sum_clean"]
+        df_wma["duel_diff_ema"] = df_wma["duel_diff_weighted_sum"] / df_wma["weight_sum_clean"]
     else:
-        df_player_perf["decay_weight"] = 1.0
-    
-    # Calculate time-decay weighted EMA
-    df_player_perf["acs_weighted"] = df_player_perf["acs"] * df_player_perf["decay_weight"]
-    df_player_perf["kast_weighted"] = df_player_perf["kast"] * df_player_perf["decay_weight"]
-    df_player_perf["duel_diff_weighted"] = df_player_perf["duel_diff"] * df_player_perf["decay_weight"]
-    
-    df_player_perf["acs_ema"] = df_player_perf.groupby("player")["acs_weighted"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    df_player_perf["kast_ema"] = df_player_perf.groupby("player")["kast_weighted"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    df_player_perf["duel_diff_ema"] = df_player_perf.groupby("player")["duel_diff_weighted"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    
-    # Normalize EMAs back by dividing by decay weight to restore scale
-    df_player_perf["acs_ema"] = df_player_perf["acs_ema"] / df_player_perf["decay_weight"].replace(0, 1)
-    df_player_perf["kast_ema"] = df_player_perf["kast_ema"] / df_player_perf["decay_weight"].replace(0, 1)
-    df_player_perf["duel_diff_ema"] = df_player_perf["duel_diff_ema"] / df_player_perf["decay_weight"].replace(0, 1)
-    
-    # Extract latest computed EMA row for each player
-    latest_player_rows = df_player_perf.sort_values('timestamp').groupby('player').last()
+        df_wma = pd.DataFrame(columns=["player", "acs_ema", "kast_ema", "duel_diff_ema"])
+        
     player_emas = {}
-    for p_name, row in latest_player_rows.iterrows():
+    for p_name in baseline_lookup.keys():
         player_emas[p_name] = {
+            "acs": baseline_lookup[p_name]["acs"],
+            "kast": baseline_lookup[p_name]["kast"],
+            "duel_diff": baseline_lookup[p_name]["duel_diff"]
+        }
+        
+    for _, row in df_wma.iterrows():
+        player_emas[row["player"]] = {
             "acs": row["acs_ema"],
             "kast": row["kast_ema"],
             "duel_diff": row["duel_diff_ema"]
@@ -557,7 +678,8 @@ def simulate_arbitrary_match(
     player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = get_historical_stats(
         RAW_DIR,
         exclude_match_ids=exclude_match_ids,
-        reference_date=reference_date
+        reference_date=reference_date,
+        target_patch=patch_override
     )
     
     # 2. Dynamically resolve rosters from latest historical appearances
@@ -777,6 +899,7 @@ def predict_grand_final():
         match_data = json.load(f)
         
     segment = match_data["data"]["segments"][0]
+    segment["timestamp"] = parse_match_date(segment["date"])
     team_a_name = segment["teams"][0]["name"]
     team_b_name = segment["teams"][1]["name"]
     
@@ -805,8 +928,31 @@ def predict_grand_final():
     logger.info(f"Roster A ({team_a_name}): {roster_a}")
     logger.info(f"Roster B ({team_b_name}): {roster_b}")
     
+    # Extract target patch and target agents for player composite weight calculations
+    patch_match = re.search(r'Patch\s+([0-9.]+)', segment.get("date", ""))
+    target_patch = patch_match.group(1).strip() if patch_match else "12.10"
+    
+    target_agents = {}
+    from collections import Counter
+    for map_data in segment.get('maps', []):
+        for team_key in ['team1', 'team2']:
+            for p in map_data.get('players', {}).get(team_key, []):
+                p_name = p['name']
+                agent = p['agent']
+                if p_name not in target_agents:
+                    target_agents[p_name] = []
+                target_agents[p_name].append(agent)
+    for p_name, agents in target_agents.items():
+        target_agents[p_name] = Counter(agents).most_common(1)[0][0]
+        
     # 3. Load historical database stats
-    player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = get_historical_stats(RAW_DIR)
+    player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = get_historical_stats(
+        RAW_DIR,
+        exclude_match_ids=[TARGET_MATCH_ID],
+        reference_date=segment["timestamp"],
+        target_agents=target_agents,
+        target_patch=target_patch
+    )
     
     # Calculate aggregate player feature values
     def get_roster_features(roster):

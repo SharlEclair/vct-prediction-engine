@@ -190,12 +190,32 @@ def load_raw_matches() -> list[dict]:
             segment = content["data"]["segments"][0]
             # Parse datetime
             segment["timestamp"] = parse_match_date(segment["date"])
+            # Extract patch if present
+            patch_match = re.search(r'Patch\s+([0-9.]+)', segment["date"])
+            segment["patch"] = patch_match.group(1).strip() if patch_match else None
             # Extract team names
             segment["team_a"] = segment["teams"][0]["name"]
             segment["team_b"] = segment["teams"][1]["name"]
             matches.append(segment)
             
     matches.sort(key=lambda x: x["timestamp"])
+    
+    # Forward fill missing patches
+    last_patch = None
+    for m in matches:
+        if m.get("patch") is None:
+            m["patch"] = last_patch
+        else:
+            last_patch = m["patch"]
+            
+    # Backward fill missing patches (fallback)
+    last_patch = None
+    for m in reversed(matches):
+        if m.get("patch") is None:
+            m["patch"] = last_patch
+        else:
+            last_patch = m["patch"]
+            
     return matches
 
 def build_feature_store():
@@ -250,7 +270,8 @@ def build_feature_store():
                         'kast': kast_val,
                         'fk': fk_val,
                         'fd': fd_val,
-                        'rounds': rounds_count
+                        'rounds': rounds_count,
+                        'agent': p.get('agent', '')
                     })
                     
         for p_name, stats_list in player_map_stats.items():
@@ -263,10 +284,16 @@ def build_feature_store():
             fk_per_round = total_fk / total_rounds if total_rounds > 0 else 0.0
             fd_per_round = total_fd / total_rounds if total_rounds > 0 else 0.0
             
+            from collections import Counter
+            agent_counts = Counter(s['agent'] for s in stats_list if s.get('agent'))
+            most_common_agent = agent_counts.most_common(1)[0][0] if agent_counts else ""
+            
             player_performances.append({
                 'player': p_name,
                 'match_id': match_id,
                 'timestamp': ts,
+                'patch': m.get('patch', ''),
+                'agent': most_common_agent,
                 'acs': avg_acs,
                 'kast': avg_kast,
                 'duel_diff': fk_per_round - fd_per_round
@@ -275,35 +302,120 @@ def build_feature_store():
     df_player_perf = pd.DataFrame(player_performances)
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
-    # Calculate rolling player EMAs (span=3 to align with short match windows)
-    df_player_perf["acs_ema"] = df_player_perf.groupby("player")["acs"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    df_player_perf["kast_ema"] = df_player_perf.groupby("player")["kast"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    df_player_perf["duel_diff_ema"] = df_player_perf.groupby("player")["duel_diff"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
+    # 2D Composite Decay WMA calculation
+    # Load patch release dates
+    patch_dates = {}
+    csv_path = os.path.join(RAW_DIR, "patch_notes.csv")
+    if os.path.exists(csv_path):
+        try:
+            df_patches = pd.read_csv(csv_path)
+            for _, row in df_patches.iterrows():
+                version = str(row['patch_version']).strip().lower()
+                if version.startswith('v'):
+                    version = version[1:]
+                date_str_val = str(row['release_date'])
+                clean_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_str_val)
+                parsed_dt = datetime.strptime(clean_date, '%B %d, %Y')
+                patch_dates[version] = parsed_dt
+        except Exception as e:
+            logger.error(f"Failed to load patch notes: {e}")
+            
+    # Load patch nerf registry and patch distance matrix
+    nerf_registry_path = os.path.join(PROCESSED_DIR, "patch_nerf_registry.json")
+    with open(nerf_registry_path, "r", encoding="utf-8") as f:
+        nerf_registry = json.load(f)
+        
+    distance_matrix_path = os.path.join(PROCESSED_DIR, "patch_distance_matrix.json")
+    with open(distance_matrix_path, "r", encoding="utf-8") as f:
+        patch_distance_matrix = json.load(f)
+        
+    def get_agent_nerf_penalty(agent: str, p_hist: str, p_target: str) -> float:
+        if p_hist == p_target:
+            return 0.0
+        dt_hist = patch_dates.get(p_hist.lower() if p_hist else '')
+        dt_target = patch_dates.get(p_target.lower() if p_target else '')
+        if dt_hist is None or dt_target is None:
+            return 0.0
+        if dt_hist >= dt_target:
+            return 0.0
+        penalty = 0.0
+        for patch, nerf_agents in nerf_registry.items():
+            dt_patch = patch_dates.get(patch.lower())
+            if dt_patch is not None:
+                if dt_hist < dt_patch <= dt_target:
+                    penalty += nerf_agents.get(agent, 0.0)
+        return penalty
+        
+    unique_agents = sorted(list(df_player_perf["agent"].unique()))
+    unique_patches = sorted(list(df_player_perf["patch"].unique()))
     
-    # Strictly shift(1) to avoid temporal leakage
-    df_player_perf["acs_ema_shifted"] = df_player_perf.groupby("player")["acs_ema"].shift(1)
-    df_player_perf["kast_ema_shifted"] = df_player_perf.groupby("player")["kast_ema"].shift(1)
-    df_player_perf["duel_diff_ema_shifted"] = df_player_perf.groupby("player")["duel_diff_ema"].shift(1)
+    agent_nerf_lookup = {}
+    for agent in unique_agents:
+        for p_hist in unique_patches:
+            for p_target in unique_patches:
+                agent_nerf_lookup[(agent, p_hist, p_target)] = get_agent_nerf_penalty(agent, p_hist, p_target)
+                
+    jsd_lookup = {}
+    for p1 in unique_patches:
+        for p2 in unique_patches:
+            jsd_lookup[(p1, p2)] = patch_distance_matrix.get(p1, {}).get(p2, 0.0)
+            
+    df_merged = pd.merge(
+        df_player_perf,
+        df_player_perf,
+        on="player",
+        suffixes=("_target", "_hist")
+    )
+    df_merged = df_merged[df_merged["timestamp_hist"] < df_merged["timestamp_target"]]
     
-    # Fill missing priors with baseline stats
-    def fill_baseline_acs(row):
-        if pd.isna(row["acs_ema_shifted"]):
-            return baseline_lookup.get(row["player"], {}).get("acs", 200.0)
-        return row["acs_ema_shifted"]
-        
-    def fill_baseline_kast(row):
-        if pd.isna(row["kast_ema_shifted"]):
-            return baseline_lookup.get(row["player"], {}).get("kast", 0.70)
-        return row["kast_ema_shifted"]
-        
-    def fill_baseline_duel(row):
-        if pd.isna(row["duel_diff_ema_shifted"]):
-            return baseline_lookup.get(row["player"], {}).get("duel_diff", 0.0)
-        return row["duel_diff_ema_shifted"]
-        
-    df_player_perf["acs_ema_shifted"] = df_player_perf.apply(fill_baseline_acs, axis=1)
-    df_player_perf["kast_ema_shifted"] = df_player_perf.apply(fill_baseline_kast, axis=1)
-    df_player_perf["duel_diff_ema_shifted"] = df_player_perf.apply(fill_baseline_duel, axis=1)
+    df_merged["delta_days"] = (df_merged["timestamp_target"] - df_merged["timestamp_hist"]).dt.total_seconds() / 86400.0
+    df_merged["time_decay"] = np.exp(-0.02 * df_merged["delta_days"])
+    df_merged["is_same_agent"] = (df_merged["agent_hist"] == df_merged["agent_target"]).astype(int)
+    
+    target_keys = list(zip(df_merged["agent_target"], df_merged["patch_hist"], df_merged["patch_target"]))
+    df_merged["delta_p_agent"] = [agent_nerf_lookup.get(k, 0.0) for k in target_keys]
+    
+    global_keys = list(zip(df_merged["patch_hist"], df_merged["patch_target"]))
+    df_merged["delta_p_global"] = [jsd_lookup.get(k, 0.0) for k in global_keys]
+    
+    df_merged["state_penalty"] = (
+        df_merged["is_same_agent"] * np.exp(-2.0 * df_merged["delta_p_agent"]) +
+        (1 - df_merged["is_same_agent"]) * np.exp(-0.5 * df_merged["delta_p_global"])
+    )
+    df_merged["final_weight"] = df_merged["time_decay"] * df_merged["state_penalty"]
+    
+    df_merged["acs_weighted"] = df_merged["acs_hist"] * df_merged["final_weight"]
+    df_merged["kast_weighted"] = df_merged["kast_hist"] * df_merged["final_weight"]
+    df_merged["duel_diff_weighted"] = df_merged["duel_diff_hist"] * df_merged["final_weight"]
+    
+    df_wma = df_merged.groupby(["player", "match_id_target"]).agg(
+        acs_weighted_sum=("acs_weighted", "sum"),
+        kast_weighted_sum=("kast_weighted", "sum"),
+        duel_diff_weighted_sum=("duel_diff_weighted", "sum"),
+        weight_sum=("final_weight", "sum")
+    ).reset_index()
+    
+    df_wma["weight_sum_clean"] = df_wma["weight_sum"].replace(0, 1.0)
+    df_wma["acs_ema_shifted"] = df_wma["acs_weighted_sum"] / df_wma["weight_sum_clean"]
+    df_wma["kast_ema_shifted"] = df_wma["kast_weighted_sum"] / df_wma["weight_sum_clean"]
+    df_wma["duel_diff_ema_shifted"] = df_wma["duel_diff_weighted_sum"] / df_wma["weight_sum_clean"]
+    
+    df_wma = df_wma.rename(columns={"match_id_target": "match_id"})
+    
+    df_player_perf = pd.merge(
+        df_player_perf,
+        df_wma[["player", "match_id", "acs_ema_shifted", "kast_ema_shifted", "duel_diff_ema_shifted"]],
+        on=["player", "match_id"],
+        how="left"
+    )
+    
+    baseline_acs = df_player_perf["player"].map(lambda p: baseline_lookup.get(p, {}).get("acs", 200.0))
+    baseline_kast = df_player_perf["player"].map(lambda p: baseline_lookup.get(p, {}).get("kast", 0.70))
+    baseline_duel = df_player_perf["player"].map(lambda p: baseline_lookup.get(p, {}).get("duel_diff", 0.0))
+    
+    df_player_perf["acs_ema_shifted"] = df_player_perf["acs_ema_shifted"].fillna(baseline_acs)
+    df_player_perf["kast_ema_shifted"] = df_player_perf["kast_ema_shifted"].fillna(baseline_kast)
+    df_player_perf["duel_diff_ema_shifted"] = df_player_perf["duel_diff_ema_shifted"].fillna(baseline_duel)
     
     # Create player feature lookup mapping
     player_features_lookup = df_player_perf.set_index(["player", "match_id"])[

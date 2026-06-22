@@ -1,8 +1,11 @@
 import os
 import logging
+import re
+import json
+from datetime import datetime
 import pandas as pd
 import numpy as np
-from catboost import CatBoostClassifier
+from catboost import CatBoostClassifier, Pool, cv
 import shap
 import matplotlib.pyplot as plt
 
@@ -38,15 +41,111 @@ def run_modeling_pipeline():
     data = data.sort_values('timestamp').reset_index(drop=True)
     logger.info(f"Total dataset size after merge: {len(data)} matches.")
     
-    # 2. Implement exponential time-decay weights
-    # Calculate time delta in days relative to the most recent match in the dataset
-    max_timestamp = data['timestamp'].max()
-    data['delta_days'] = (max_timestamp - data['timestamp']).dt.total_seconds() / 86400.0
+    # 2. Implement 2D composite decay weights relative to the target match (the last match in the dataset)
+    # Load raw matches to get player agent details
+    from feature_engineering import load_raw_matches
+    matches = load_raw_matches()
     
-    decay_constant = 0.02
-    data['sample_weight'] = np.exp(-decay_constant * data['delta_days'])
+    # Target match is the last match
+    target_match = matches[-1]
+    target_timestamp = target_match["timestamp"]
+    target_patch = target_match["patch"]
     
-    logger.info("Calculated time deltas and exponential weights:")
+    # Extract target agents
+    from collections import Counter
+    target_agents = {}
+    for map_data in target_match.get("maps", []):
+        for team_key in ["team1", "team2"]:
+            for p in map_data.get("players", {}).get(team_key, []):
+                p_name = p["name"]
+                agent = p["agent"]
+                if p_name not in target_agents:
+                    target_agents[p_name] = []
+                target_agents[p_name].append(agent)
+    for p_name, agents in target_agents.items():
+        target_agents[p_name] = Counter(agents).most_common(1)[0][0]
+        
+    # Load patch release dates
+    patch_dates = {}
+    csv_path = os.path.join(".", "data", "raw", "patch_notes.csv")
+    if os.path.exists(csv_path):
+        try:
+            df_patches = pd.read_csv(csv_path)
+            for _, row in df_patches.iterrows():
+                version = str(row['patch_version']).strip().lower()
+                if version.startswith('v'):
+                    version = version[1:]
+                date_str_val = str(row['release_date'])
+                clean_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_str_val)
+                parsed_dt = datetime.strptime(clean_date, '%B %d, %Y')
+                patch_dates[version] = parsed_dt
+        except Exception as e:
+            logger.error(f"Failed to load patch notes: {e}")
+            
+    # Load patch nerf registry and patch distance matrix
+    nerf_registry_path = os.path.join(processed_dir, "patch_nerf_registry.json")
+    with open(nerf_registry_path, "r", encoding="utf-8") as f:
+        nerf_registry = json.load(f)
+        
+    distance_matrix_path = os.path.join(processed_dir, "patch_distance_matrix.json")
+    with open(distance_matrix_path, "r", encoding="utf-8") as f:
+        patch_distance_matrix = json.load(f)
+        
+    def get_agent_nerf_penalty(agent: str, p_hist: str, p_target: str) -> float:
+        if p_hist == p_target:
+            return 0.0
+        dt_hist = patch_dates.get(p_hist.lower() if p_hist else '')
+        dt_target = patch_dates.get(p_target.lower() if p_target else '')
+        if dt_hist is None or dt_target is None:
+            return 0.0
+        if dt_hist >= dt_target:
+            return 0.0
+        penalty = 0.0
+        for patch, nerf_agents in nerf_registry.items():
+            dt_patch = patch_dates.get(patch.lower())
+            if dt_patch is not None:
+                if dt_hist < dt_patch <= dt_target:
+                    penalty += nerf_agents.get(agent, 0.0)
+        return penalty
+        
+    match_weights = {}
+    for m in matches:
+        m_id = m["match_id"]
+        m_patch = m["patch"]
+        m_ts = m["timestamp"]
+        
+        delta_days = (target_timestamp - m_ts).total_seconds() / 86400.0
+        time_decay = np.exp(-0.02 * delta_days)
+        
+        # JSD distance
+        delta_p_global = patch_distance_matrix.get(m_patch, {}).get(target_patch, 0.0)
+        
+        # Player-level weights
+        player_weights = []
+        for map_data in m.get("maps", []):
+            for team_key in ["team1", "team2"]:
+                for p in map_data.get("players", {}).get(team_key, []):
+                    p_name = p["name"]
+                    agent = p["agent"]
+                    
+                    target_agent = target_agents.get(p_name)
+                    is_same_agent = 1 if (target_agent and agent == target_agent) else 0
+                    
+                    delta_p_agent = get_agent_nerf_penalty(target_agent, m_patch, target_patch) if is_same_agent else 0.0
+                    
+                    state_penalty = is_same_agent * np.exp(-2.0 * delta_p_agent) + (1 - is_same_agent) * np.exp(-0.5 * delta_p_global)
+                    player_weights.append(time_decay * state_penalty)
+                    
+        if player_weights:
+            match_weights[m_id] = float(np.mean(player_weights))
+        else:
+            match_weights[m_id] = float(time_decay * np.exp(-0.5 * delta_p_global))
+            
+    # Apply weights to data
+    data['sample_weight'] = data['match_id'].map(match_weights).fillna(1.0)
+    data['delta_days'] = (target_timestamp - data['timestamp']).dt.total_seconds() / 86400.0
+    
+    logger.info("Calculated time deltas and 2D composite weights:")
     for idx, row in data.iterrows():
         logger.info(
             f"  Match {row['match_id']} | Date: {row['timestamp']} | "
@@ -68,7 +167,6 @@ def run_modeling_pipeline():
         X[col] = X[col].astype(str).fillna('None')
         
     # 3. Chronological Train/Test Split
-    # The last match in the dataset is the test set, all preceding matches are the training set
     X_train = X.iloc[:-1].reset_index(drop=True)
     y_train = y.iloc[:-1].reset_index(drop=True)
     w_train = weights.iloc[:-1].reset_index(drop=True)
@@ -80,18 +178,50 @@ def run_modeling_pipeline():
     logger.info(f"Split data: Train shape={X_train.shape}, Test shape={X_test.shape}")
     logger.info(f"Test Match ID: {test_match_id}")
     
-    # 4. CatBoost Classifier Training
-    logger.info("Initializing and training CatBoostClassifier...")
+    # 4. Instantiate CatBoost Pools and run cross-validation
+    logger.info("Instantiating CatBoost Pools...")
+    train_pool = Pool(
+        data=X_train,
+        label=y_train,
+        cat_features=cat_features,
+        weight=w_train
+    )
+    
+    cv_params = {
+        'iterations': 100,
+        'learning_rate': 0.05,
+        'depth': 4,
+        'loss_function': 'Logloss',
+        'random_seed': 42,
+        'verbose': 0
+    }
+    
+    logger.info("Running TimeSeries cross-validation to prevent temporal leakage...")
+    cv_results = cv(
+        pool=train_pool,
+        params=cv_params,
+        fold_count=5,
+        type='TimeSeries',
+        early_stopping_rounds=50,
+        verbose=False
+    )
+    
+    # Log CV results
+    best_loss_idx = np.argmin(cv_results['test-Logloss-mean'])
+    best_loss = cv_results['test-Logloss-mean'][best_loss_idx]
+    logger.info(f"Cross-validation completed. Best CV Logloss: {best_loss:.4f} at iteration {best_loss_idx}")
+    
+    # 5. CatBoost Classifier Training
+    logger.info("Initializing and training CatBoostClassifier on training pool...")
     model = CatBoostClassifier(
         iterations=100,
         learning_rate=0.05,
         depth=4,
-        cat_features=cat_features,
         random_seed=42,
         verbose=0
     )
     
-    model.fit(X_train, y_train, sample_weight=w_train)
+    model.fit(train_pool)
     logger.info("Model training completed successfully.")
     
     # Save the trained model to vct_model.cbm
