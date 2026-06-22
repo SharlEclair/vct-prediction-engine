@@ -52,10 +52,17 @@ def parse_mediawiki_tree(raw_wiki_text):
                 penalty_weight = 0.8 if change_type == "nerf" else (0.2 if change_type == "adjustment" else 0.0)
                 
                 old_v, new_v = 0.0, 0.0
+                feature_name = "unknown"
                 if val_match:
                     old_v, new_v = float(val_match.group(1)), float(val_match.group(2))
+                    # Extract the word right before the value as the feature name
+                    line_before_val = line_str[:val_match.start()].strip()
+                    parts = line_before_val.split()
+                    if parts:
+                        feature_name = parts[-1].replace('}}', '')
                 
                 patch_data[current_category][current_subject].append({
+                    "feature_name": feature_name,
                     "type": change_type,
                     "weight": penalty_weight,
                     "values": {"old": old_v, "new": new_v}

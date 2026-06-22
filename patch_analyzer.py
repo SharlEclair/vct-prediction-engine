@@ -15,17 +15,7 @@ logger = logging.getLogger("patch_analyzer")
 RAW_DIR = os.path.join(".", "data", "raw")
 PROCESSED_DIR = os.path.join(".", "data", "processed")
 
-# Mock Riot Patch Notes for 9.02 to prove the pipeline works
-MOCK_PATCH_NOTES_9_02 = """
->>> VALORANT PATCH NOTES 9.02 <<<
-Weapons updates:
-- Operator cost 4700 >>> 5000
-- Operator fireRate 0.75 >>> 0.6
-- Outlaw cost 2400 >>> 2600
-Agents updates:
-- Neon slideCount 2 >>> 1
-- Neon runSpeedMultiplier 1.15 >>> 1.10
-"""
+from patch_ingestor import ingest_latest_patches
 
 def build_weapon_dependency_matrix():
     logger.info("Scanning raw matches to build Weapon Dependency Matrix P(w|a)...")
@@ -149,14 +139,13 @@ def generate_patch_distances():
     weapon_weights = np.array([1.0, 1.0, 1.0, 1.0, 1.0])
     agent_weights = np.array([1.0, 1.0])
 
-    # Parse NLP deltas
-    logger.info("Parsing mock patch notes text block using NLP and RegEx...")
-    deltas = parse_patch_deltas(MOCK_PATCH_NOTES_9_02)
-    cleaned_deltas = {}
-    for metric, (old_val, new_val) in deltas.items():
-        clean_metric = re.sub(r'^[-\s*]+', '', metric).strip()
-        cleaned_deltas[clean_metric] = (old_val, new_val)
+    # Build weapon dependency matrix once
+    weapon_dependency_matrix = build_weapon_dependency_matrix()
 
+    # Parse NLP deltas using ingest_latest_patches
+    logger.info("Ingesting live patch notes using Fandom Wiki...")
+    ingested_data = ingest_latest_patches(limit=5)
+    
     # Feature indices
     weapon_feature_indices = {
         "cost": 0,
@@ -170,52 +159,50 @@ def generate_patch_distances():
         "runSpeedMultiplier": 1
     }
 
-    # Construct past and current vectors
-    past_weapon_vectors = {k: v.copy() for k, v in weapon_vectors.items()}
-    current_weapon_vectors = {k: v.copy() for k, v in weapon_vectors.items()}
-    
-    past_agent_vectors = {k: v.copy() for k, v in agent_vectors.items()}
-    current_agent_vectors = {k: v.copy() for k, v in agent_vectors.items()}
+    automated_nerf_registry = {}
 
-    # Update current vectors from parsed deltas
-    for metric, (old_val, new_val) in cleaned_deltas.items():
-        parts = metric.split()
-        if len(parts) >= 2:
-            target_name = parts[0]
-            feature_name = parts[1]
-            if target_name in current_weapon_vectors and feature_name in weapon_feature_indices:
-                idx = weapon_feature_indices[feature_name]
-                current_weapon_vectors[target_name][idx] = new_val
-                logger.info(f"Updated Weapon '{target_name}' {feature_name}: {old_val} -> {new_val}")
-            elif target_name in current_agent_vectors and feature_name in agent_feature_indices:
-                idx = agent_feature_indices[feature_name]
-                current_agent_vectors[target_name][idx] = new_val
-                logger.info(f"Updated Agent '{target_name}' {feature_name}: {old_val} -> {new_val}")
+    for patch_version, patch_tree in ingested_data.items():
+        automated_nerf_registry[patch_version] = {}
+        
+        # Construct past and current vectors for this patch
+        past_weapon_vectors = {k: v.copy() for k, v in weapon_vectors.items()}
+        current_weapon_vectors = {k: v.copy() for k, v in weapon_vectors.items()}
+        past_agent_vectors = {k: v.copy() for k, v in agent_vectors.items()}
+        current_agent_vectors = {k: v.copy() for k, v in agent_vectors.items()}
 
-    # Build weapon dependency matrix
-    weapon_dependency_matrix = build_weapon_dependency_matrix()
+        # Update current vectors from parsed tree
+        for agent_name, changes in patch_tree.get("Agent Updates", {}).items():
+            for change in changes:
+                feature_name = change.get("feature_name")
+                if agent_name in current_agent_vectors and feature_name in agent_feature_indices:
+                    idx = agent_feature_indices[feature_name]
+                    current_agent_vectors[agent_name][idx] = change["values"]["new"]
+                    logger.info(f"[{patch_version}] Updated Agent '{agent_name}' {feature_name}: -> {change['values']['new']}")
 
-    # Calculate penalties for each agent
-    automated_nerf_registry = {"9.02": {}}
-    
-    for agent in sorted(list(agent_vectors.keys())):
-        # Calculate Delta P_agent
-        v_past_agent = past_agent_vectors[agent]
-        v_curr_agent = current_agent_vectors[agent]
-        delta_p_agent = compute_delta_p_agent(v_past_agent, v_curr_agent, agent_scaler, agent_weights)
+        for weapon_name, changes in patch_tree.get("Weapon Updates", {}).items():
+            for change in changes:
+                feature_name = change.get("feature_name")
+                if weapon_name in current_weapon_vectors and feature_name in weapon_feature_indices:
+                    idx = weapon_feature_indices[feature_name]
+                    current_weapon_vectors[weapon_name][idx] = change["values"]["new"]
+                    logger.info(f"[{patch_version}] Updated Weapon '{weapon_name}' {feature_name}: -> {change['values']['new']}")
 
-        # Calculate Delta P_ghost (weapon nerf penalty)
-        delta_p_ghost = compute_ghost_nerf(
-            agent, current_weapon_vectors, past_weapon_vectors,
-            weapon_dependency_matrix, weapon_scaler, weapon_weights
-        )
+        # Calculate penalties for each agent
+        for agent in sorted(list(agent_vectors.keys())):
+            v_past_agent = past_agent_vectors[agent]
+            v_curr_agent = current_agent_vectors[agent]
+            delta_p_agent = compute_delta_p_agent(v_past_agent, v_curr_agent, agent_scaler, agent_weights)
 
-        # Final penalty = max(delta_p_agent, delta_p_ghost)
-        delta_p_final = max(delta_p_agent, delta_p_ghost)
+            delta_p_ghost = compute_ghost_nerf(
+                agent, current_weapon_vectors, past_weapon_vectors,
+                weapon_dependency_matrix, weapon_scaler, weapon_weights
+            )
 
-        if delta_p_final > 0.01: # Store non-trivial values
-            automated_nerf_registry["9.02"][agent] = float(delta_p_final)
-            logger.info(f"Agent '{agent}' Nerf Penalty: {delta_p_final:.4f} (Agent Nerf: {delta_p_agent:.4f}, Ghost Nerf: {delta_p_ghost:.4f})")
+            delta_p_final = max(delta_p_agent, delta_p_ghost)
+
+            if delta_p_final > 0.01:
+                automated_nerf_registry[patch_version][agent] = float(delta_p_final)
+                logger.info(f"[{patch_version}] Agent '{agent}' Nerf Penalty: {delta_p_final:.4f}")
 
     # Export registry
     os.makedirs(PROCESSED_DIR, exist_ok=True)
