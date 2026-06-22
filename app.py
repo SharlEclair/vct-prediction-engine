@@ -29,6 +29,44 @@ try:
 except Exception:
     id_to_team_name = {}
 
+@st.cache_data
+def load_automated_registry():
+    path = os.path.join(PROCESSED_DIR, "automated_patch_nerf_registry.json")
+    if not os.path.exists(path):
+        return "None", {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if not data:
+            return "None", {}
+        # Sort versions properly (e.g. 9.02, 10.00, etc.)
+        sorted_patches = sorted(list(data.keys()), key=lambda x: [int(i) if i.isdigit() else i for i in x.split('.')])
+        if not sorted_patches:
+            return "None", {}
+        latest_patch = sorted_patches[-1]
+        return latest_patch, data[latest_patch]
+    except Exception as e:
+        logger.error(f"Failed to load automated patch registry: {e}")
+        return "None", {}
+
+def get_meta_penalty_badge(player_name, player_agent_stats, active_penalties):
+    p_name_clean = player_name.lower().strip()
+    primary_agent = None
+    max_count = -1
+    for (name, agent), info in player_agent_stats.items():
+        if name.lower().strip() == p_name_clean:
+            if info['count'] > max_count:
+                max_count = info['count']
+                primary_agent = agent
+                
+    if not primary_agent:
+        return ""
+        
+    penalty = active_penalties.get(primary_agent, 0.0)
+    if penalty > 0.10:
+        return f'<span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); color: #ef4444; margin-left: 8px;">⚠️ Meta Penalty: {penalty:.2f} ({primary_agent})</span>'
+    return ""
+
 # Cache historical statistics to speed up dashboard loading
 @st.cache_resource
 def load_cached_historical_data():
@@ -313,6 +351,30 @@ vfl_rules = {
 # MAIN CONTENT — TABS
 # ============================================================
 
+# Load automated patch nerf registry on startup
+latest_patch, active_penalties = load_automated_registry()
+
+# Globally load historical data for all tabs
+player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = load_cached_historical_data()
+
+# Apply meta penalties and enrich players database
+for p in vfl_players_data:
+    p_name = p["player_name"]
+    p_name_clean = p_name.lower().strip()
+    primary_agent = None
+    max_count = -1
+    for (name, agent), info in player_agent_stats.items():
+        if name.lower().strip() == p_name_clean:
+            if info['count'] > max_count:
+                max_count = info['count']
+                primary_agent = agent
+    
+    p["primary_agent"] = primary_agent
+    p["meta_penalty"] = active_penalties.get(primary_agent, 0.0) if primary_agent else 0.0
+    if p["meta_penalty"] > 0:
+        # Scale the player's PPG dynamically based on the penalty severity
+        p["ppg"] = p["ppg"] * (1.0 - p["meta_penalty"])
+
 tab_match, tab_sim, tab_optimizer, tab_vfl = st.tabs([
     "📊 Match Analysis",
     "⚡ Open Simulation",
@@ -325,7 +387,7 @@ tab_match, tab_sim, tab_optimizer, tab_vfl = st.tabs([
 # ============================================================
 with tab_match:
     # Run classification inference to get match winner probability
-    player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = load_cached_historical_data()
+    # (Using globally loaded data)
     
     def get_roster_features(roster):
         acs_list, kast_list, duel_list = [], [], []
@@ -721,6 +783,37 @@ with tab_sim:
 with tab_optimizer:
     st.markdown("### 🧠 VFL Fantasy Manager Hub")
     
+    # Task 2: Live Meta Radar Component
+    st.markdown(f"#### 📡 Live Meta Radar (Patch {latest_patch})")
+    if active_penalties:
+        # Sort penalties descending
+        sorted_penalties = sorted(active_penalties.items(), key=lambda x: x[1], reverse=True)
+        top_3 = sorted_penalties[:3]
+        
+        cols = st.columns(3)
+        for idx, (agent_name, score) in enumerate(top_3):
+            with cols[idx]:
+                if score >= 0.5:
+                    color = "#ef4444" # red
+                    severity = "CRITICAL NERF"
+                else:
+                    color = "#f97316" # orange
+                    severity = "MODERATE NERF"
+                
+                icon_url = AGENT_ICONS.get(agent_name, "https://media.valorant-api.com/agents/add6443a-41da-e1c3-d774-4598a6c7e2ca/displayicon.png")
+                st.markdown(f"""
+                    <div style="background: rgba(26, 29, 36, 0.6); border-left: 5px solid {color}; border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <img src="{icon_url}" width="42" height="42" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
+                        <div>
+                            <div style="font-size: 0.75rem; font-weight: 700; color: {color}; text-transform: uppercase; letter-spacing: 0.05em;">{severity}</div>
+                            <div style="font-weight: 600; font-size: 1.1rem; color: #f8fafc;">{agent_name}</div>
+                            <div style="font-weight: 700; font-size: 1.4rem; color: {color}; margin-top: 2px;">-{score:.2f}</div>
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
+    else:
+        st.info("No active patch nerfs registered in the automated registry.")
+
     # Grid: Stage 2 Optimal Roster and Transfer Advisor
     col_roster, col_transfer = st.columns([3, 2])
     
@@ -772,6 +865,7 @@ with tab_optimizer:
                 role_emoji = {"Duelist": "⚔️", "Controller": "🌀", "Initiator": "🔍", "Sentinel": "🛡️", "Flex": "🔄"}.get(p["role"], "🎮")
                 igl_badge = '<span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; margin-left: 8px;">👑 IGL (2x Multiplier)</span>' if p["is_igl"] else ""
                 wc_badge = '<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: #facc15; margin-left: 8px;">Wildcard</span>' if p["is_wildcard"] else f'<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: #a78bfa; margin-left: 8px;">{p["role"]}</span>'
+                penalty_badge = get_meta_penalty_badge(p["player_name"], player_agent_stats, active_penalties)
                 
                 st.markdown(f"""
                     <div class="glass-card" style="padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
@@ -779,7 +873,7 @@ with tab_optimizer:
                             <span style="font-size: 1.3rem; font-weight: 700; color: #6366f1;">#{idx+1}</span>
                             <div>
                                 <div style="font-weight: 600; font-size: 1.0rem; display: flex; align-items: center;">
-                                    {p['player_name']} {igl_badge}
+                                    {p['player_name']} {igl_badge} {penalty_badge}
                                 </div>
                                 <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 2px;">
                                     Role: {role_emoji} {wc_badge} · Team: <span style="color: #4ade80;">{id_to_team_name.get(p['vlr_team_id'], f"ID: {p['vlr_team_id']}")}</span>
@@ -846,24 +940,56 @@ with tab_optimizer:
                         st.markdown("**Suggested Swaps (Max 3 Trades):**")
                         
                         for p in transfer_result["transfers_out"]:
+                            p_name = p["player_name"]
+                            p_name_clean = p_name.lower().strip()
+                            primary_agent = None
+                            max_count = -1
+                            for (name, agent), info in player_agent_stats.items():
+                                if name.lower().strip() == p_name_clean:
+                                    if info['count'] > max_count:
+                                        max_count = info['count']
+                                        primary_agent = agent
+                            
+                            reason = "Transfer Reason: Budget optimization and roster rebalancing to maximize score velocity."
+                            if primary_agent:
+                                penalty = active_penalties.get(primary_agent, 0.0)
+                                if penalty > 0.10:
+                                    reason = f"Transfer Reason: Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
+                                    
                             st.markdown(f"""
                                 <div class="transfer-out" style="padding: 10px 14px; margin-bottom: 8px;">
                                     <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
                                     <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}</span>
                                     <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
+                                    <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
                                 </div>
                             """, unsafe_allow_html=True)
                             
                         for p in transfer_result["transfers_in"]:
                             igl_tag = " 👑" if p["is_igl"] else ""
+                            p_name = p["player_name"]
+                            p_name_clean = p_name.lower().strip()
+                            primary_agent = None
+                            max_count = -1
+                            for (name, agent), info in player_agent_stats.items():
+                                if name.lower().strip() == p_name_clean:
+                                    if info['count'] > max_count:
+                                        max_count = info['count']
+                                        primary_agent = agent
+                            
+                            if primary_agent:
+                                reason = f"Transfer Reason: High-performing meta asset on comfort agent ({primary_agent}) with 0.00 penalty."
+                            else:
+                                reason = "Transfer Reason: Optimal target pickup to maximize projected score under budget cap."
+                                
                             st.markdown(f"""
                                 <div class="transfer-in" style="padding: 10px 14px; margin-bottom: 8px;">
                                     <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
                                     <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}{igl_tag}</span>
                                     <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
+                                    <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
                                 </div>
                             """, unsafe_allow_html=True)
-                            
                         st.markdown(f"""
                             <div style="margin-top: 10px; color: #94a3b8; font-size: 0.8rem; text-align: right;">
                                 New Total Cost: <b>{transfer_result['new_total_cost']} VP</b> | New Projected Points: <b>{transfer_result['new_projected_points']:.1f} pts</b>

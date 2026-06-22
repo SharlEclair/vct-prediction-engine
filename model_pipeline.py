@@ -83,7 +83,7 @@ def run_modeling_pipeline():
             logger.error(f"Failed to load patch notes: {e}")
             
     # Load patch nerf registry and patch distance matrix
-    nerf_registry_path = os.path.join(processed_dir, "patch_nerf_registry.json")
+    nerf_registry_path = os.path.join(processed_dir, "automated_patch_nerf_registry.json")
     with open(nerf_registry_path, "r", encoding="utf-8") as f:
         nerf_registry = json.load(f)
         
