@@ -1,0 +1,272 @@
+[
+  {
+    "player_name": "Jinggg",
+    "team": "Paper Rex",
+    "role": "Duelist",
+    "cost": 10500,
+    "total_points": 142.5,
+    "avg_points": 14.3,
+    "ownership_pct": 45.2
+  },
+  {
+    "player_name": "f0rsakeN",
+    "team": "Paper Rex",
+    "role": "Flex",
+    "cost": 10000,
+    "total_points": 138.0,
+    "avg_points": 13.8,
+    "ownership_pct": 42.1
+  },
+  {
+    "player_name": "d4v41",
+    "team": "Paper Rex",
+    "role": "Initiator",
+    "cost": 8500,
+    "total_points": 118.2,
+    "avg_points": 11.8,
+    "ownership_pct": 28.5
+  },
+  {
+    "player_name": "something",
+    "team": "Paper Rex",
+    "role": "Controller",
+    "cost": 8000,
+    "total_points": 112.0,
+    "avg_points": 11.2,
+    "ownership_pct": 22.3
+  },
+  {
+    "player_name": "invy",
+    "team": "Paper Rex",
+    "role": "Sentinel",
+    "cost": 7500,
+    "total_points": 95.5,
+    "avg_points": 9.6,
+    "ownership_pct": 15.8
+  },
+  {
+    "player_name": "kiNgg",
+    "team": "LEVIATÁN",
+    "role": "Duelist",
+    "cost": 10000,
+    "total_points": 136.8,
+    "avg_points": 13.7,
+    "ownership_pct": 38.9
+  },
+  {
+    "player_name": "Sato",
+    "team": "LEVIATÁN",
+    "role": "Flex",
+    "cost": 9500,
+    "total_points": 128.4,
+    "avg_points": 12.8,
+    "ownership_pct": 32.1
+  },
+  {
+    "player_name": "Neon",
+    "team": "LEVIATÁN",
+    "role": "Initiator",
+    "cost": 9000,
+    "total_points": 122.5,
+    "avg_points": 12.3,
+    "ownership_pct": 29.4
+  },
+  {
+    "player_name": "blowz",
+    "team": "LEVIATÁN",
+    "role": "Controller",
+    "cost": 8000,
+    "total_points": 105.0,
+    "avg_points": 10.5,
+    "ownership_pct": 18.7
+  },
+  {
+    "player_name": "spike",
+    "team": "LEVIATÁN",
+    "role": "Sentinel",
+    "cost": 7500,
+    "total_points": 98.0,
+    "avg_points": 9.8,
+    "ownership_pct": 14.2
+  },
+  {
+    "player_name": "TenZ",
+    "team": "Sentinels",
+    "role": "Duelist",
+    "cost": 11000,
+    "total_points": 148.5,
+    "avg_points": 14.9,
+    "ownership_pct": 52.3
+  },
+  {
+    "player_name": "zekken",
+    "team": "Sentinels",
+    "role": "Flex",
+    "cost": 10500,
+    "total_points": 141.2,
+    "avg_points": 14.1,
+    "ownership_pct": 44.8
+  },
+  {
+    "player_name": "Sacy",
+    "team": "Sentinels",
+    "role": "Initiator",
+    "cost": 8500,
+    "total_points": 115.8,
+    "avg_points": 11.6,
+    "ownership_pct": 25.6
+  },
+  {
+    "player_name": "johnqt",
+    "team": "Sentinels",
+    "role": "Controller",
+    "cost": 8000,
+    "total_points": 108.0,
+    "avg_points": 10.8,
+    "ownership_pct": 20.1
+  },
+  {
+    "player_name": "N4RRATE",
+    "team": "Sentinels",
+    "role": "Sentinel",
+    "cost": 7000,
+    "total_points": 88.5,
+    "avg_points": 8.9,
+    "ownership_pct": 11.5
+  },
+  {
+    "player_name": "Chronicle",
+    "team": "Team Heretics",
+    "role": "Sentinel",
+    "cost": 9500,
+    "total_points": 130.2,
+    "avg_points": 13.0,
+    "ownership_pct": 34.2
+  },
+  {
+    "player_name": "Jamppi",
+    "team": "Team Heretics",
+    "role": "Duelist",
+    "cost": 10000,
+    "total_points": 135.5,
+    "avg_points": 13.6,
+    "ownership_pct": 36.8
+  },
+  {
+    "player_name": "RieNs",
+    "team": "Team Heretics",
+    "role": "Flex",
+    "cost": 8500,
+    "total_points": 112.0,
+    "avg_points": 11.2,
+    "ownership_pct": 22.5
+  },
+  {
+    "player_name": "benjyfishy",
+    "team": "Team Heretics",
+    "role": "Controller",
+    "cost": 8000,
+    "total_points": 106.5,
+    "avg_points": 10.7,
+    "ownership_pct": 19.8
+  },
+  {
+    "player_name": "wo0t",
+    "team": "Team Heretics",
+    "role": "Initiator",
+    "cost": 7500,
+    "total_points": 95.0,
+    "avg_points": 9.5,
+    "ownership_pct": 13.4
+  },
+  {
+    "player_name": "Derke",
+    "team": "Fnatic",
+    "role": "Duelist",
+    "cost": 10500,
+    "total_points": 145.0,
+    "avg_points": 14.5,
+    "ownership_pct": 48.5
+  },
+  {
+    "player_name": "Alfajer",
+    "team": "Fnatic",
+    "role": "Flex",
+    "cost": 10000,
+    "total_points": 138.8,
+    "avg_points": 13.9,
+    "ownership_pct": 41.2
+  },
+  {
+    "player_name": "Leo",
+    "team": "Fnatic",
+    "role": "Initiator",
+    "cost": 8500,
+    "total_points": 118.5,
+    "avg_points": 11.9,
+    "ownership_pct": 26.3
+  },
+  {
+    "player_name": "Boaster",
+    "team": "Fnatic",
+    "role": "Controller",
+    "cost": 7500,
+    "total_points": 92.0,
+    "avg_points": 9.2,
+    "ownership_pct": 12.8
+  },
+  {
+    "player_name": "Chronicle_FNC",
+    "team": "Fnatic",
+    "role": "Sentinel",
+    "cost": 9000,
+    "total_points": 125.0,
+    "avg_points": 12.5,
+    "ownership_pct": 30.5
+  },
+  {
+    "player_name": "BuZz",
+    "team": "DRX",
+    "role": "Duelist",
+    "cost": 9500,
+    "total_points": 128.0,
+    "avg_points": 12.8,
+    "ownership_pct": 33.5
+  },
+  {
+    "player_name": "MaKo",
+    "team": "DRX",
+    "role": "Controller",
+    "cost": 9000,
+    "total_points": 120.5,
+    "avg_points": 12.1,
+    "ownership_pct": 28.4
+  },
+  {
+    "player_name": "Rb",
+    "team": "DRX",
+    "role": "Flex",
+    "cost": 8500,
+    "total_points": 115.0,
+    "avg_points": 11.5,
+    "ownership_pct": 24.1
+  },
+  {
+    "player_name": "stax",
+    "team": "DRX",
+    "role": "Initiator",
+    "cost": 8000,
+    "total_points": 108.5,
+    "avg_points": 10.9,
+    "ownership_pct": 19.7
+  },
+  {
+    "player_name": "Flashback",
+    "team": "DRX",
+    "role": "Sentinel",
+    "cost": 7000,
+    "total_points": 85.0,
+    "avg_points": 8.5,
+    "ownership_pct": 10.2
+  }
+]

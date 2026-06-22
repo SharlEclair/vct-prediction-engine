@@ -1,0 +1,29 @@
+{
+  "salary_cap": 50000,
+  "max_players": 5,
+  "max_per_team": 3,
+  "max_transfers_per_gameweek": 2,
+  "role_constraints": {
+    "min_duelists": 1,
+    "max_duelists": 2,
+    "min_controllers": 1,
+    "max_controllers": 1,
+    "min_initiators": 1,
+    "max_initiators": 2,
+    "min_sentinels": 0,
+    "max_sentinels": 2,
+    "min_flex": 0,
+    "max_flex": 2
+  },
+  "scoring_rules": {
+    "kills_per_point": 0.5,
+    "assists_per_point": 0.25,
+    "deaths_per_point": -0.25,
+    "first_blood_bonus": 2,
+    "ace_bonus": 5,
+    "clutch_bonus": 3,
+    "map_win_bonus": 2,
+    "series_win_bonus": 3
+  },
+  "last_updated": "2026-06-22T07:20:34.974178"
+}

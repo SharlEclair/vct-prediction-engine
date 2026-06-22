@@ -6,7 +6,7 @@ import logging
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, timedelta
 from catboost import CatBoostClassifier
 import shap
 
@@ -16,7 +16,16 @@ logger = logging.getLogger("predict_match")
 
 RAW_DIR = os.path.join(".", "data", "raw")
 PROCESSED_DIR = os.path.join(".", "data", "processed")
-TARGET_MATCH_ID = "670471"
+TARGET_MATCH_ID = "670471"  # Legacy constant, kept for backward compatibility
+
+# Dynamic time-decay constants
+DECAY_LAMBDA = 0.02
+# Use system time if in June 2026, otherwise anchor to June 22, 2026
+system_now = datetime.now()
+if system_now.year == 2026 and system_now.month == 6:
+    REFERENCE_DATE = system_now
+else:
+    REFERENCE_DATE = datetime(2026, 6, 22)
 
 # --- Date Parser Helpers ---
 PATCH_YEARS = {}
@@ -179,18 +188,31 @@ def parse_econ_cell_wins(val_str: str) -> int:
     return 0
 
 # --- Historical Stats Calculation ---
-def get_historical_stats(raw_dir: str):
+def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference_date: datetime = None):
     logger.info("Computing latest rolling player EMAs and team economy averages...")
+    if exclude_match_ids is None:
+        exclude_match_ids = []
+    if reference_date is None:
+        reference_date = REFERENCE_DATE
+    
+    exclude_set = set(str(mid) for mid in exclude_match_ids)
+    
     files = glob.glob(os.path.join(raw_dir, "match_*.json"))
     matches = []
     for f in files:
-        if TARGET_MATCH_ID in f or "670471" in f:
+        # Check if any excluded match ID appears in the filename
+        skip = False
+        for eid in exclude_set:
+            if eid in f:
+                skip = True
+                break
+        if skip:
             continue
         try:
             with open(f, "r", encoding="utf-8") as file:
                 content = json.load(file)
                 segment = content["data"]["segments"][0]
-                if str(segment.get("match_id")) == "670471":
+                if str(segment.get("match_id")) in exclude_set:
                     continue
                 segment["timestamp"] = parse_match_date(segment["date"])
                 segment["team_a"] = segment["teams"][0]["name"]
@@ -289,13 +311,32 @@ def get_historical_stats(raw_dir: str):
             })
             
     df_player_perf = pd.DataFrame(player_performances)
-    df_player_perf = df_player_perf[df_player_perf["match_id"].astype(str) != "670471"]
+    # Filter out excluded match IDs
+    if exclude_set:
+        df_player_perf = df_player_perf[~df_player_perf["match_id"].astype(str).isin(exclude_set)]
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
-    # Calculate EMA
-    df_player_perf["acs_ema"] = df_player_perf.groupby("player")["acs"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    df_player_perf["kast_ema"] = df_player_perf.groupby("player")["kast"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
-    df_player_perf["duel_diff_ema"] = df_player_perf.groupby("player")["duel_diff"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
+    # Apply exponential time-decay weights based on reference_date
+    if not df_player_perf.empty:
+        df_player_perf["decay_weight"] = df_player_perf["timestamp"].apply(
+            lambda ts: np.exp(-DECAY_LAMBDA * max((reference_date - ts).days, 0))
+        )
+    else:
+        df_player_perf["decay_weight"] = 1.0
+    
+    # Calculate time-decay weighted EMA
+    df_player_perf["acs_weighted"] = df_player_perf["acs"] * df_player_perf["decay_weight"]
+    df_player_perf["kast_weighted"] = df_player_perf["kast"] * df_player_perf["decay_weight"]
+    df_player_perf["duel_diff_weighted"] = df_player_perf["duel_diff"] * df_player_perf["decay_weight"]
+    
+    df_player_perf["acs_ema"] = df_player_perf.groupby("player")["acs_weighted"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
+    df_player_perf["kast_ema"] = df_player_perf.groupby("player")["kast_weighted"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
+    df_player_perf["duel_diff_ema"] = df_player_perf.groupby("player")["duel_diff_weighted"].transform(lambda x: x.ewm(span=3, adjust=False).mean())
+    
+    # Normalize EMAs back by dividing by decay weight to restore scale
+    df_player_perf["acs_ema"] = df_player_perf["acs_ema"] / df_player_perf["decay_weight"].replace(0, 1)
+    df_player_perf["kast_ema"] = df_player_perf["kast_ema"] / df_player_perf["decay_weight"].replace(0, 1)
+    df_player_perf["duel_diff_ema"] = df_player_perf["duel_diff_ema"] / df_player_perf["decay_weight"].replace(0, 1)
     
     # Extract latest computed EMA row for each player
     latest_player_rows = df_player_perf.sort_values('timestamp').groupby('player').last()
@@ -403,8 +444,17 @@ def get_historical_stats(raw_dir: str):
         })
         
     df_team_perf = pd.DataFrame(team_performances)
-    df_team_perf = df_team_perf[df_team_perf["match_id"].astype(str) != "670471"]
+    if exclude_set:
+        df_team_perf = df_team_perf[~df_team_perf["match_id"].astype(str).isin(exclude_set)]
     df_team_perf = df_team_perf.sort_values(by=["team", "timestamp"])
+    
+    # Apply time-decay to team performance metrics
+    if not df_team_perf.empty:
+        df_team_perf["decay_weight"] = df_team_perf["timestamp"].apply(
+            lambda ts: np.exp(-DECAY_LAMBDA * max((reference_date - ts).days, 0))
+        )
+        for col in ['loadout', 'clutch_rate', 'thrifty_rate', 'flawless_rate']:
+            df_team_perf[col] = df_team_perf[col] * df_team_perf["decay_weight"]
     
     for col in ['loadout', 'clutch_rate', 'thrifty_rate', 'flawless_rate']:
         df_team_perf[f"{col}_roll"] = df_team_perf.groupby("team")[col].transform(
@@ -423,24 +473,34 @@ def get_historical_stats(raw_dir: str):
         
     return player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats
 
-def get_latest_roster(team_name: str, raw_dir: str) -> list[str]:
+def get_latest_roster(team_name: str, raw_dir: str, exclude_match_ids: list = None) -> list[str]:
     """Finds the most recent roster for this team from historical matches."""
+    if exclude_match_ids is None:
+        exclude_match_ids = []
+    exclude_set = set(str(mid) for mid in exclude_match_ids)
+    
     files = glob.glob(os.path.join(raw_dir, "match_*.json"))
     matches_with_team = []
     for f in files:
-        if TARGET_MATCH_ID in f or "670471" in f:
+        skip = False
+        for eid in exclude_set:
+            if eid in f:
+                skip = True
+                break
+        if skip:
             continue
         try:
             with open(f, "r", encoding="utf-8") as file:
                 content = json.load(file)
                 segment = content["data"]["segments"][0]
-                if str(segment.get("match_id")) == "670471":
+                if str(segment.get("match_id")) in exclude_set:
                     continue
                 ta = segment["teams"][0]["name"]
                 tb = segment["teams"][1]["name"]
                 ts = parse_match_date(segment["date"])
-                if team_name.lower() in [ta.lower(), tb.lower()]:
-                    matches_with_team.append((ts, segment, ta, tb))
+                weight = match_team(team_name, ta, tb)
+                if weight != 0:
+                    matches_with_team.append((ts, segment, ta, tb, weight))
         except Exception as e:
             pass
             
@@ -449,10 +509,9 @@ def get_latest_roster(team_name: str, raw_dir: str) -> list[str]:
         
     matches_with_team.sort(key=lambda x: x[0], reverse=True)
     latest_segment = matches_with_team[0][1]
-    ta_name = matches_with_team[0][2]
+    weight = matches_with_team[0][4]
     
-    is_team1 = (team_name.lower() in ta_name.lower())
-    team_key = 'team1' if is_team1 else 'team2'
+    team_key = 'team1' if weight == 1 else 'team2'
     
     roster = set()
     for map_data in latest_segment.get('maps', []):
@@ -461,7 +520,251 @@ def get_latest_roster(team_name: str, raw_dir: str) -> list[str]:
             
     return list(roster)
 
-# --- Predict Match ---
+# --- Arbitrary Match Simulation ---
+def simulate_arbitrary_match(
+    team_a_name: str,
+    team_b_name: str,
+    patch_override: str = None,
+    map_pool_override: list = None,
+    reference_date: datetime = None,
+    exclude_match_ids: list = None
+) -> dict:
+    """
+    Simulate an arbitrary match between any two teams using the latest
+    historical data up to the reference_date. Fully decoupled from
+    fixed match IDs.
+    
+    Args:
+        team_a_name: Name of team A (e.g., "Paper Rex")
+        team_b_name: Name of team B (e.g., "LEVIATÁN")
+        patch_override: Optional patch version string to filter data
+        map_pool_override: Optional list of map names to restrict veto predictions
+        reference_date: Date to use for time-decay (defaults to 2026-06-22)
+        exclude_match_ids: List of match IDs to exclude from historical data
+    
+    Returns:
+        dict with team_a, team_b, win_prob_a, win_prob_b, predicted_maps, feature_vector
+    """
+    if reference_date is None:
+        reference_date = REFERENCE_DATE
+    if exclude_match_ids is None:
+        exclude_match_ids = []
+    
+    logger.info(f"Simulating arbitrary match: {team_a_name} vs {team_b_name}")
+    logger.info(f"Reference date: {reference_date.isoformat()}, Decay λ={DECAY_LAMBDA}")
+    
+    # 1. Load historical database with time-decay weighting
+    player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats = get_historical_stats(
+        RAW_DIR,
+        exclude_match_ids=exclude_match_ids,
+        reference_date=reference_date
+    )
+    
+    # 2. Dynamically resolve rosters from latest historical appearances
+    roster_a = get_latest_roster(team_a_name, RAW_DIR, exclude_match_ids=exclude_match_ids)
+    roster_b = get_latest_roster(team_b_name, RAW_DIR, exclude_match_ids=exclude_match_ids)
+    
+    if not roster_a:
+        logger.warning(f"Could not find historical roster for {team_a_name}. Using empty roster.")
+    if not roster_b:
+        logger.warning(f"Could not find historical roster for {team_b_name}. Using empty roster.")
+    
+    logger.info(f"Roster A ({team_a_name}): {roster_a}")
+    logger.info(f"Roster B ({team_b_name}): {roster_b}")
+    
+    # 3. Calculate aggregate player features
+    def get_roster_features(roster):
+        acs_list, kast_list, duel_list = [], [], []
+        for p_name in roster:
+            p_feat = player_emas.get(p_name)
+            if p_feat is not None:
+                acs_list.append(p_feat["acs"])
+                kast_list.append(p_feat["kast"])
+                duel_list.append(p_feat["duel_diff"])
+            else:
+                p_base = baseline_lookup.get(p_name, {"acs": 200.0, "kast": 0.70, "duel_diff": 0.0})
+                acs_list.append(p_base["acs"])
+                kast_list.append(p_base["kast"])
+                duel_list.append(p_base["duel_diff"])
+        return (
+            sum(acs_list) / len(acs_list) if acs_list else 200.0,
+            sum(kast_list) / len(kast_list) if kast_list else 0.70,
+            sum(duel_list) / len(duel_list) if duel_list else 0.0
+        )
+    
+    ta_acs, ta_kast, ta_duel = get_roster_features(roster_a)
+    tb_acs, tb_kast, tb_duel = get_roster_features(roster_b)
+    
+    # 4. Team economy stats
+    ta_feat = team_stats.get(team_a_name, {})
+    tb_feat = team_stats.get(team_b_name, {})
+    
+    ta_loadout = ta_feat.get("loadout", 20000.0)
+    ta_clutch = ta_feat.get("clutch_rate", 0.05)
+    ta_thrifty = ta_feat.get("thrifty_rate", 0.02)
+    ta_flawless = ta_feat.get("flawless_rate", 0.05)
+    
+    tb_loadout = tb_feat.get("loadout", 20000.0)
+    tb_clutch = tb_feat.get("clutch_rate", 0.05)
+    tb_thrifty = tb_feat.get("thrifty_rate", 0.02)
+    tb_flawless = tb_feat.get("flawless_rate", 0.05)
+    
+    # 5. Comfort pick differentials from historical data
+    comfort_a = 0.0
+    comfort_b = 0.0
+    for p_name in roster_a:
+        p_glob = player_global_stats.get(p_name, {'sum_acs': 0, 'count': 0})
+        prior_global_acs = p_glob['sum_acs'] / p_glob['count'] if p_glob['count'] > 0 else baseline_lookup.get(p_name, {}).get("acs", 200.0)
+        # Average across all agent appearances for this player
+        agent_diffs = []
+        for (pn, agent), stats in player_agent_stats.items():
+            if pn == p_name and stats['count'] > 0:
+                agent_acs = stats['sum_acs'] / stats['count']
+                agent_diffs.append(agent_acs - prior_global_acs)
+        if agent_diffs:
+            comfort_a += max(agent_diffs)  # Best comfort agent
+    if roster_a:
+        comfort_a /= len(roster_a)
+    
+    for p_name in roster_b:
+        p_glob = player_global_stats.get(p_name, {'sum_acs': 0, 'count': 0})
+        prior_global_acs = p_glob['sum_acs'] / p_glob['count'] if p_glob['count'] > 0 else baseline_lookup.get(p_name, {}).get("acs", 200.0)
+        agent_diffs = []
+        for (pn, agent), stats in player_agent_stats.items():
+            if pn == p_name and stats['count'] > 0:
+                agent_acs = stats['sum_acs'] / stats['count']
+                agent_diffs.append(agent_acs - prior_global_acs)
+        if agent_diffs:
+            comfort_b += max(agent_diffs)
+    if roster_b:
+        comfort_b /= len(roster_b)
+    
+    # 6. Predict map veto sequence
+    try:
+        from veto_predictor import VCTMapVetoPredictor
+        veto_pred = VCTMapVetoPredictor(RAW_DIR)
+        veto_pred.fit()
+        if map_pool_override:
+            veto_pred.map_pool = set(map_pool_override)
+        predicted_veto = veto_pred.predict_veto(team_a_name, team_b_name, "Bo3")
+    except Exception as e:
+        logger.warning(f"Veto predictor failed: {e}. Using neutral defaults.")
+        default_maps = map_pool_override or ["Ascent", "Bind", "Haven"]
+        predicted_veto = {
+            "maps": default_maps[:3],
+            "veto_weights": {m: 0 for m in default_maps[:3]},
+            "veto_str": "Default (veto predictor unavailable)"
+        }
+    
+    # 7. Agent composition role counts (use defaults since we don't have match-specific data)
+    comp_a = {'Duelist': 1.0, 'Controller': 1.0, 'Initiator': 2.0, 'Sentinel': 1.0}
+    comp_b = {'Duelist': 1.0, 'Controller': 1.0, 'Initiator': 2.0, 'Sentinel': 1.0}
+    
+    # 8. Build feature vector
+    map_features = {}
+    for idx in range(5):
+        map_key_name = f"map_{idx+1}_name"
+        map_key_veto = f"map_{idx+1}_veto_weight"
+        if idx < len(predicted_veto["maps"]):
+            m_name = predicted_veto["maps"][idx]
+            map_features[map_key_name] = m_name
+            map_features[map_key_veto] = predicted_veto["veto_weights"].get(m_name, 0)
+        else:
+            map_features[map_key_name] = "None"
+            map_features[map_key_veto] = 0
+    
+    row = {
+        "team_a_name": team_a_name,
+        "team_b_name": team_b_name,
+        "team_a_historical_acs_ema": ta_acs,
+        "team_a_historical_kast_ema": ta_kast,
+        "team_a_historical_duel_diff": ta_duel,
+        "team_a_historical_avg_loadout": ta_loadout,
+        "team_a_historical_clutch_rate": ta_clutch,
+        "team_a_historical_thrifty_rate": ta_thrifty,
+        "team_a_historical_flawless_rate": ta_flawless,
+        "team_a_comfort_pick_differential": comfort_a,
+        "team_a_duelist_count": comp_a.get('Duelist', 0.0),
+        "team_a_controller_count": comp_a.get('Controller', 0.0),
+        "team_a_initiator_count": comp_a.get('Initiator', 0.0),
+        "team_a_sentinel_count": comp_a.get('Sentinel', 0.0),
+        "team_b_historical_acs_ema": tb_acs,
+        "team_b_historical_kast_ema": tb_kast,
+        "team_b_historical_duel_diff": tb_duel,
+        "team_b_historical_avg_loadout": tb_loadout,
+        "team_b_historical_clutch_rate": tb_clutch,
+        "team_b_historical_thrifty_rate": tb_thrifty,
+        "team_b_historical_flawless_rate": tb_flawless,
+        "team_b_comfort_pick_differential": comfort_b,
+        "team_b_duelist_count": comp_b.get('Duelist', 0.0),
+        "team_b_controller_count": comp_b.get('Controller', 0.0),
+        "team_b_initiator_count": comp_b.get('Initiator', 0.0),
+        "team_b_sentinel_count": comp_b.get('Sentinel', 0.0),
+        **map_features
+    }
+    
+    X_inference = pd.DataFrame([row])
+    
+    # 9. Load persisted CatBoost model and run inference
+    model_path = os.path.join(PROCESSED_DIR, "vct_model.cbm")
+    if not os.path.exists(model_path):
+        logger.error(f"Model file not found at {model_path}. Returning 50/50 probabilities.")
+        return {
+            "team_a": team_a_name,
+            "team_b": team_b_name,
+            "win_prob_a": 0.50,
+            "win_prob_b": 0.50,
+            "predicted_maps": predicted_veto["maps"],
+            "veto_str": predicted_veto.get("veto_str", ""),
+            "feature_vector": row,
+            "roster_a": roster_a,
+            "roster_b": roster_b
+        }
+    
+    logger.info(f"Loading trained CatBoost model from {model_path}...")
+    model = CatBoostClassifier()
+    model.load_model(model_path)
+    
+    # Reorder features to match model training order
+    try:
+        X_inference = X_inference[model.feature_names_]
+    except KeyError as e:
+        logger.warning(f"Feature mismatch: {e}. Adding missing columns with defaults.")
+        for feat in model.feature_names_:
+            if feat not in X_inference.columns:
+                X_inference[feat] = 0
+        X_inference = X_inference[model.feature_names_]
+    
+    # Ensure categorical columns are clean
+    cat_cols = [c for c in X_inference.columns if 'name' in c]
+    for col in cat_cols:
+        X_inference[col] = X_inference[col].astype(str).fillna('None')
+    
+    logger.info("Inference Feature Vector:")
+    logger.info(X_inference.to_dict(orient='records')[0])
+    
+    # 10. Run prediction
+    probs = model.predict_proba(X_inference)[0]
+    win_prob_a = probs[1]
+    win_prob_b = probs[0]
+    
+    result = {
+        "team_a": team_a_name,
+        "team_b": team_b_name,
+        "win_prob_a": float(win_prob_a),
+        "win_prob_b": float(win_prob_b),
+        "predicted_maps": predicted_veto["maps"],
+        "veto_str": predicted_veto.get("veto_str", ""),
+        "feature_vector": row,
+        "roster_a": roster_a,
+        "roster_b": roster_b
+    }
+    
+    logger.info(f"Simulation Result: {team_a_name} {win_prob_a:.2%} vs {team_b_name} {win_prob_b:.2%}")
+    return result
+
+
+# --- Legacy Predict Match (backward-compatible wrapper) ---
 def predict_grand_final():
     logger.info("Starting real-time Grand Final prediction orchestrator...")
     

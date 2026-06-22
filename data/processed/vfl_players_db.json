@@ -1,0 +1,227 @@
+[
+  {
+    "player_name": "something",
+    "vlr_team_id": 624,
+    "role": "Duelist",
+    "price": 10,
+    "gw_pts": 15.0,
+    "tot_pts": 145.0,
+    "ppg": 14.5
+  },
+  {
+    "player_name": "f0rsakeN",
+    "vlr_team_id": 624,
+    "role": "Initiator",
+    "price": 9,
+    "gw_pts": 12.0,
+    "tot_pts": 138.0,
+    "ppg": 13.8
+  },
+  {
+    "player_name": "d4v41",
+    "vlr_team_id": 624,
+    "role": "Controller",
+    "price": 8,
+    "gw_pts": 11.5,
+    "tot_pts": 118.0,
+    "ppg": 11.8
+  },
+  {
+    "player_name": "Jinggg",
+    "vlr_team_id": 624,
+    "role": "Duelist",
+    "price": 9,
+    "gw_pts": 13.0,
+    "tot_pts": 125.0,
+    "ppg": 12.5
+  },
+  {
+    "player_name": "mindfreak",
+    "vlr_team_id": 624,
+    "role": "Controller",
+    "price": 8,
+    "gw_pts": 9.5,
+    "tot_pts": 102.0,
+    "ppg": 10.2
+  },
+  {
+    "player_name": "aspas",
+    "vlr_team_id": 2359,
+    "role": "Duelist",
+    "price": 11,
+    "gw_pts": 16.5,
+    "tot_pts": 152.0,
+    "ppg": 15.2
+  },
+  {
+    "player_name": "kiNgg",
+    "vlr_team_id": 2359,
+    "role": "Controller",
+    "price": 9,
+    "gw_pts": 14.0,
+    "tot_pts": 135.0,
+    "ppg": 13.5
+  },
+  {
+    "player_name": "mazin",
+    "vlr_team_id": 2359,
+    "role": "Initiator",
+    "price": 8,
+    "gw_pts": 10.5,
+    "tot_pts": 112.0,
+    "ppg": 11.2
+  },
+  {
+    "player_name": "C0M",
+    "vlr_team_id": 2359,
+    "role": "Sentinel",
+    "price": 8,
+    "gw_pts": 11.0,
+    "tot_pts": 105.0,
+    "ppg": 10.5
+  },
+  {
+    "player_name": "Tex",
+    "vlr_team_id": 2359,
+    "role": "Duelist",
+    "price": 8,
+    "gw_pts": 10.0,
+    "tot_pts": 110.0,
+    "ppg": 11.0
+  },
+  {
+    "player_name": "zekken",
+    "vlr_team_id": 2,
+    "role": "Duelist",
+    "price": 10,
+    "gw_pts": 14.0,
+    "tot_pts": 142.0,
+    "ppg": 14.2
+  },
+  {
+    "player_name": "johnqt",
+    "vlr_team_id": 2,
+    "role": "Controller",
+    "price": 9,
+    "gw_pts": 11.5,
+    "tot_pts": 128.0,
+    "ppg": 12.8
+  },
+  {
+    "player_name": "Sacy",
+    "vlr_team_id": 2,
+    "role": "Initiator",
+    "price": 8,
+    "gw_pts": 10.0,
+    "tot_pts": 115.0,
+    "ppg": 11.5
+  },
+  {
+    "player_name": "TenZ",
+    "vlr_team_id": 2,
+    "role": "Controller",
+    "price": 10,
+    "gw_pts": 13.5,
+    "tot_pts": 139.0,
+    "ppg": 13.9
+  },
+  {
+    "player_name": "N4RRATE",
+    "vlr_team_id": 2,
+    "role": "Initiator",
+    "price": 9,
+    "gw_pts": 12.5,
+    "tot_pts": 126.0,
+    "ppg": 12.6
+  },
+  {
+    "player_name": "wo0t",
+    "vlr_team_id": 1001,
+    "role": "Duelist",
+    "price": 9,
+    "gw_pts": 12.0,
+    "tot_pts": 130.0,
+    "ppg": 13.0
+  },
+  {
+    "player_name": "RieNs",
+    "vlr_team_id": 1001,
+    "role": "Initiator",
+    "price": 8,
+    "gw_pts": 11.0,
+    "tot_pts": 121.0,
+    "ppg": 12.1
+  },
+  {
+    "player_name": "benjyfishy",
+    "vlr_team_id": 1001,
+    "role": "Sentinel",
+    "price": 8,
+    "gw_pts": 11.5,
+    "tot_pts": 114.0,
+    "ppg": 11.4
+  },
+  {
+    "player_name": "Miniboo",
+    "vlr_team_id": 1001,
+    "role": "Duelist",
+    "price": 9,
+    "gw_pts": 12.5,
+    "tot_pts": 128.0,
+    "ppg": 12.8
+  },
+  {
+    "player_name": "Boo",
+    "vlr_team_id": 1001,
+    "role": "Controller",
+    "price": 8,
+    "gw_pts": 10.0,
+    "tot_pts": 109.0,
+    "ppg": 10.9
+  },
+  {
+    "player_name": "Derke",
+    "vlr_team_id": 2596,
+    "role": "Duelist",
+    "price": 10,
+    "gw_pts": 14.5,
+    "tot_pts": 140.0,
+    "ppg": 14.0
+  },
+  {
+    "player_name": "Boaster",
+    "vlr_team_id": 2596,
+    "role": "Controller",
+    "price": 8,
+    "gw_pts": 9.0,
+    "tot_pts": 101.0,
+    "ppg": 10.1
+  },
+  {
+    "player_name": "Leo",
+    "vlr_team_id": 2596,
+    "role": "Initiator",
+    "price": 9,
+    "gw_pts": 13.5,
+    "tot_pts": 132.0,
+    "ppg": 13.2
+  },
+  {
+    "player_name": "Chronicle",
+    "vlr_team_id": 2596,
+    "role": "Initiator",
+    "price": 9,
+    "gw_pts": 12.0,
+    "tot_pts": 129.0,
+    "ppg": 12.9
+  },
+  {
+    "player_name": "Alfajer",
+    "vlr_team_id": 2596,
+    "role": "Sentinel",
+    "price": 9,
+    "gw_pts": 13.0,
+    "tot_pts": 131.0,
+    "ppg": 13.1
+  }
+]
