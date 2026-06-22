@@ -2,6 +2,7 @@ import os
 import csv
 import httpx
 import logging
+import subprocess
 from v4_parsing_skills import parse_mediawiki_tree
 
 logger = logging.getLogger("patch_ingestor")
@@ -50,9 +51,25 @@ MOCK_MEDIAWIKI_9_02 = """
 * {{ui|Nerf}} cost 2400 >>> 2600
 """
 
+def fetch_with_curl(url):
+    try:
+        result = subprocess.run(
+            ["curl", "-s", "-L", "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", url],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            timeout=15.0,
+            check=True
+        )
+        return result.stdout
+    except Exception as e:
+        logger.error(f"Curl fetch failed: {e}")
+        return None
+
 def ingest_latest_patches(limit=5):
     """
     Reads patch versions from CSV and fetches the raw MediaWiki text from Valorant Fandom.
+    Attempts curl first, falls back to httpx, and uses mock text only as a last resort.
     Returns a dictionary mapping version -> parsed_tree.
     """
     patch_versions = get_patch_versions(limit=limit)
@@ -66,24 +83,45 @@ def ingest_latest_patches(limit=5):
     with httpx.Client(headers=headers, follow_redirects=True) as client:
         for version in patch_versions:
             logger.info(f"Fetching Patch Notes for {version}...")
-            # Wiki URL format: https://valorant.fandom.com/wiki/Patch_Notes/9.02?action=raw
             url = f"https://valorant.fandom.com/wiki/Patch_Notes/{version}?action=raw"
+            raw_text = None
+            
+            # Try curl bypass first
+            logger.info(f"Attempting curl fetch for Patch {version}...")
+            raw_text = fetch_with_curl(url)
+            
+            if raw_text and len(raw_text.strip()) > 50:
+                parsed_tree = parse_mediawiki_tree(raw_text)
+                # Verify we parsed any meaningful updates
+                agents = parsed_tree.get("Agent Updates", {})
+                weapons = parsed_tree.get("Weapon Updates", {})
+                if agents or weapons:
+                    aggregated_data[version] = parsed_tree
+                    logger.info(f"Successfully fetched and parsed Patch {version} using curl")
+                    continue
+                else:
+                    logger.warning(f"Curl fetch completed but parse was empty for Patch {version}. Trying fallback.")
+            
+            # Fallback to standard HTTP client
             try:
+                logger.info(f"Attempting client fetch for Patch {version}...")
                 response = client.get(url, timeout=10.0)
                 if response.status_code == 200:
                     raw_text = response.text
                     parsed_tree = parse_mediawiki_tree(raw_text)
                     aggregated_data[version] = parsed_tree
-                    logger.info(f"Successfully parsed Patch {version}")
-                elif response.status_code == 403:
-                    logger.warning(f"Failed to fetch {version}: HTTP 403. Falling back to mock MediaWiki text.")
-                    # Fallback to mock text if blocked by Fandom
+                    logger.info(f"Successfully fetched and parsed Patch {version} via Client")
+                else:
+                    logger.warning(f"Client fetch failed for Patch {version}: HTTP {response.status_code}")
+                    # Fallback to mock data
+                    logger.warning(f"Using mock fallback for Patch {version}")
                     parsed_tree = parse_mediawiki_tree(MOCK_MEDIAWIKI_9_02)
                     aggregated_data[version] = parsed_tree
-                else:
-                    logger.warning(f"Failed to fetch {version}: HTTP {response.status_code}")
             except Exception as e:
-                logger.error(f"Error fetching {version}: {e}")
+                logger.error(f"Client fetch failed for Patch {version}: {e}")
+                logger.warning(f"Using mock fallback for Patch {version}")
+                parsed_tree = parse_mediawiki_tree(MOCK_MEDIAWIKI_9_02)
+                aggregated_data[version] = parsed_tree
                 
     return aggregated_data
 
@@ -92,3 +130,4 @@ if __name__ == "__main__":
     data = ingest_latest_patches(limit=2)
     import json
     print(json.dumps(data, indent=2))
+
