@@ -14,6 +14,11 @@ from generative_pipeline import MapScoreRegressor, AgentCompositionGenerator
 from fantasy_engine import VCTFantasyEngine, optimize_roster, suggest_transfers, generate_stage_2_baseline, get_team_win_rates_by_id
 from predict_match import get_historical_stats, get_latest_roster, simulate_arbitrary_match
 from vfl_scraper import VFLScraper
+from v5_simulation_engine import VCTv5SimulationEngine
+
+@st.cache_resource
+def get_v5_simulation_engine():
+    return VCTv5SimulationEngine()
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -543,18 +548,11 @@ with tab_match:
         **map_features
     }
     
-    X_inf = pd.DataFrame([row])
-    if clf_model is not None:
-        X_inf = X_inf[clf_model.feature_names_]
-        for col in ['team_a_name', 'team_b_name', 'map_1_name', 'map_2_name', 'map_3_name', 'map_4_name', 'map_5_name']:
-            if col in X_inf.columns:
-                X_inf[col] = X_inf[col].astype(str).fillna('None')
-        probs = clf_model.predict_proba(X_inf)[0]
-        win_prob_a = probs[1]
-        win_prob_b = probs[0]
-    else:
-        win_prob_a = 0.50
-        win_prob_b = 0.50
+    v5_engine = get_v5_simulation_engine()
+    with st.spinner("Running V5 Bottom-Up Micro-Simulation (2,000 iterations)..."):
+        v5_res = v5_engine.simulate_match(team_a, team_b, series_type, target_patch="9.02", num_iterations=2000)
+    win_prob_a = v5_res["win_prob_a"]
+    win_prob_b = v5_res["win_prob_b"]
     
     # Match Winner Projection Card
     col1, col2 = st.columns([2, 1])
@@ -698,6 +696,19 @@ with tab_match:
         st.info("Leaderboard scores currently unavailable for this match.")
         
     st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown("### V5 Projected Fantasy Points (Expected Value)")
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    if "projections" in v5_res:
+        proj_data = []
+        for p, ev in v5_res["projections"].items():
+            team = team_a if p in v5_res["roster_a"] else team_b
+            proj_data.append({"Player": p, "Team": team, "Expected Value (EV) Points": ev})
+        proj_df = pd.DataFrame(proj_data).sort_values("Expected Value (EV) Points", ascending=False)
+        st.dataframe(proj_df, use_container_width=True, hide_index=True)
+    else:
+        st.info("EV Projections unavailable.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================
 # TAB 2: OPEN SIMULATION
@@ -737,12 +748,14 @@ with tab_sim:
         if sim_team_a == sim_team_b:
             st.error("Please select two different teams.")
         else:
-            with st.spinner(f"Simulating {sim_team_a} vs {sim_team_b}..."):
-                sim_result = simulate_arbitrary_match(
-                    team_a_name=sim_team_a,
-                    team_b_name=sim_team_b,
-                    reference_date=datetime.combine(sim_ref_date, datetime.min.time()),
-                    map_pool_override=sim_map_pool if sim_map_pool else None
+            with st.spinner(f"Running V5 Bottom-Up Micro-Simulation (10,000 iterations) for {sim_team_a} vs {sim_team_b}..."):
+                v5_engine = get_v5_simulation_engine()
+                sim_result = v5_engine.simulate_match(
+                    team_a=sim_team_a,
+                    team_b=sim_team_b,
+                    series_type="Bo3",
+                    target_patch="9.02",
+                    num_iterations=10000
                 )
             
             # Display results
@@ -771,11 +784,17 @@ with tab_sim:
             
             st.markdown('</div>', unsafe_allow_html=True)
             
-            # Feature vector expander
-            with st.expander("📊 Full Feature Vector"):
-                fv = sim_result.get('feature_vector', {})
-                fv_df = pd.DataFrame([fv])
-                st.dataframe(fv_df, use_container_width=True)
+            # EV projections expander
+            with st.expander("📊 V5 Roster EV Projections"):
+                if "projections" in sim_result:
+                    proj_data = []
+                    for p, ev in sim_result["projections"].items():
+                        team = sim_team_a if p in sim_result["roster_a"] else sim_team_b
+                        proj_data.append({"Player": p, "Team": team, "Expected Value (EV) Points": ev})
+                    proj_df = pd.DataFrame(proj_data).sort_values("Expected Value (EV) Points", ascending=False)
+                    st.dataframe(proj_df, use_container_width=True, hide_index=True)
+                else:
+                    st.info("EV Projections unavailable.")
 
 # ============================================================
 # TAB 3: ROSTER OPTIMIZER
@@ -814,6 +833,9 @@ with tab_optimizer:
     else:
         st.info("No active patch nerfs registered in the automated registry.")
 
+    # Global budget cap control
+    salary_cap = st.slider("Available Fantasy Budget (VP)", min_value=35.0, max_value=60.0, value=50.0, step=0.5, key="global_salary_cap")
+
     # Grid: Stage 2 Optimal Roster and Transfer Advisor
     col_roster, col_transfer = st.columns([3, 2])
     
@@ -826,7 +848,7 @@ with tab_optimizer:
         """, unsafe_allow_html=True)
         
         with st.spinner("Computing optimal Stage 2 baseline roster..."):
-            baseline_result = generate_stage_2_baseline(vfl_players_data)
+            baseline_result = optimize_roster(vfl_players_data, salary_cap=salary_cap, survival_threshold=0.35)
             
         if baseline_result["solver_status"] == "optimal":
             # Show summary stats card
@@ -850,7 +872,7 @@ with tab_optimizer:
                         </div>
                         <div>
                             <span style="color: #94a3b8; font-size: 0.8rem;">Buffer Float</span>
-                            <div style="font-weight: 600; color: #4ade80;">{50 - baseline_result['total_cost']} VP</div>
+                            <div style="font-weight: 600; color: #4ade80;">{salary_cap - baseline_result['total_cost']} VP</div>
                         </div>
                         <div>
                             <span style="color: #94a3b8; font-size: 0.8rem;">Active IGL</span>
@@ -913,6 +935,11 @@ with tab_optimizer:
             key="transfer_current_roster_new"
         )
         
+        manual_igl_toggle = st.checkbox("Select IGL Manually?", value=False, key="manual_igl_toggle")
+        forced_igl_name = None
+        if manual_igl_toggle and len(current_roster_names) > 0:
+            forced_igl_name = st.selectbox("Force IGL Player", current_roster_names, key="forced_igl_name_select")
+            
         if st.button("🔮 Calculate Optimal Trades", key="btn_suggest_transfers_new", type="primary"):
             if len(current_roster_names) != 6:
                 st.error("Please select exactly 6 players currently in your roster.")
@@ -925,7 +952,7 @@ with tab_optimizer:
                             break
                             
                 with st.spinner("Analyzing transfer combinations..."):
-                    transfer_result = suggest_transfers(current_roster_objs, vfl_players_data)
+                    transfer_result = suggest_transfers(current_roster_objs, vfl_players_data, salary_cap=salary_cap, forced_igl_name=forced_igl_name)
                     
                 if transfer_result["solver_status"] == "optimal":
                     if transfer_result["projected_gain"] > 0:

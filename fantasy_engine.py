@@ -377,7 +377,8 @@ def optimize_roster(
     upcoming_matchups: list[tuple[int, int]] = None,
     team_win_rates: dict[int, float] = None,
     player_stats: dict[str, dict] = None,
-    transfer_constraint: dict = None  # Contains 'current_roster' and 'max_transfers'
+    transfer_constraint: dict = None,  # Contains 'current_roster' and 'max_transfers'
+    forced_igl_name: str = None
 ) -> dict:
     """
     Solves VFL roster selection as a Mixed-Integer Linear Program (MILP).
@@ -454,8 +455,15 @@ def optimize_roster(
     
     costs = np.array([p["price"] for p in filtered_players], dtype=float)
     
-    # Loop over all players as potential IGL candidates
-    for k in range(n):
+    # Resolve IGL candidates (restrict to forced player if specified)
+    igl_candidates = range(n)
+    if forced_igl_name:
+        matched_k = [i for i, p in enumerate(filtered_players) if p["player_name"].lower().strip() == forced_igl_name.lower().strip()]
+        if matched_k:
+            igl_candidates = [matched_k[0]]
+
+    # Loop over IGL candidates
+    for k in igl_candidates:
         # Candidate IGL floor
         igl_floor = filtered_players[k]["floor"]
         
@@ -496,14 +504,15 @@ def optimize_roster(
         A_eq_rows.append(row)
         b_eq.append(1.0)
         
-        # 3. IGL floor constraint: any player i with floor > igl_floor cannot be selected
-        for i in range(n):
-            if filtered_players[i]["floor"] > igl_floor:
-                row = np.zeros(num_vars)
-                row[i] = 1.0
-                row[n + i] = 1.0
-                A_eq_rows.append(row)
-                b_eq.append(0.0)
+        # 3. IGL floor constraint: any player i with floor > igl_floor cannot be selected (bypassed if forced manually)
+        if not forced_igl_name:
+            for i in range(n):
+                if filtered_players[i]["floor"] > igl_floor:
+                    row = np.zeros(num_vars)
+                    row[i] = 1.0
+                    row[n + i] = 1.0
+                    A_eq_rows.append(row)
+                    b_eq.append(0.0)
                 
         # 4. Role natural counts
         # sum_{i in Duelist} x_i_nat = 1
@@ -702,7 +711,7 @@ def generate_stage_2_baseline(vfl_players: list[dict]) -> dict:
     )
 
 
-def suggest_transfers(current_roster: list[dict], vfl_players: list[dict]) -> dict:
+def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], salary_cap: int = 50, forced_igl_name: str = None) -> dict:
     """
     Transfer Advisor component. Capped at exactly 3 swaps.
     Runs optimization with transfer limit <= 3 and computes best transactions.
@@ -717,9 +726,10 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict]) -> di
     
     result = optimize_roster(
         vfl_players=vfl_players,
-        salary_cap=50,
+        salary_cap=salary_cap,
         survival_threshold=0.35,
-        transfer_constraint=transfer_constraint
+        transfer_constraint=transfer_constraint,
+        forced_igl_name=forced_igl_name
     )
     
     if result["solver_status"] != "optimal":
@@ -741,7 +751,6 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict]) -> di
     
     # Calculate projected gain (difference in points)
     # Re-calculate current points including IGL multiplier
-    # Identify current IGL (player in current roster with highest floor)
     current_roster_enriched = []
     player_stats = compute_all_players_historical_stats(RAW_DIR)
     
@@ -753,12 +762,23 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict]) -> di
         p_enriched["floor"] = p_enriched["ppg"] - 1.0 * p_enriched["sigma"]
         current_roster_enriched.append(p_enriched)
         
-    current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
+    # Determine IGL index in current roster
+    igl_index = 0
+    if forced_igl_name:
+        matched_curr = [idx for idx, p in enumerate(current_roster_enriched) if p["player_name"].lower().strip() == forced_igl_name.lower().strip()]
+        if matched_curr:
+            igl_index = matched_curr[0]
+        else:
+            current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
+            igl_index = 0
+    else:
+        current_roster_enriched.sort(key=lambda x: x["floor"], reverse=True)
+        igl_index = 0
     
     current_points = 0.0
-    for i, p in enumerate(current_roster_enriched):
+    for idx, p in enumerate(current_roster_enriched):
         pts = p["ppg"]
-        if i == 0:  # Highest floor is IGL
+        if idx == igl_index:  # Active IGL is doubled
             pts *= 2.0
         current_points += pts
         
