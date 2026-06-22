@@ -9,6 +9,21 @@ from catboost import CatBoostClassifier, CatBoostRegressor
 from datetime import datetime
 
 # Import local modules
+import importlib
+import veto_predictor
+import generative_pipeline
+import fantasy_engine
+import predict_match
+import vfl_scraper
+import v5_simulation_engine
+
+importlib.reload(veto_predictor)
+importlib.reload(generative_pipeline)
+importlib.reload(fantasy_engine)
+importlib.reload(predict_match)
+importlib.reload(vfl_scraper)
+importlib.reload(v5_simulation_engine)
+
 from veto_predictor import VCTMapVetoPredictor
 from generative_pipeline import MapScoreRegressor, AgentCompositionGenerator
 from fantasy_engine import VCTFantasyEngine, optimize_roster, suggest_transfers, generate_stage_2_baseline, get_team_win_rates_by_id
