@@ -1,7 +1,7 @@
 import os
 import json
 import logging
-import httpx
+from curl_cffi import requests
 import numpy as np
 from feature_engineering import load_raw_matches
 from v4_skills import parse_patch_deltas, compute_feature_shock, compute_ghost_nerf
@@ -67,7 +67,7 @@ def build_weapon_dependency_matrix():
 def generate_patch_distances():
     logger.info("Fetching Valorant API structural data...")
     try:
-        agents_api = httpx.get("https://valorant-api.com/v1/agents").json()["data"]
+        agents_api = requests.get("https://valorant-api.com/v1/agents", impersonate="chrome").json()["data"]
     except Exception as e:
         logger.error(f"Failed to fetch from Valorant API: {e}. Falling back to default lists.")
         raise e

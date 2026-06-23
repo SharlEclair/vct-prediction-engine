@@ -2,7 +2,9 @@ import os
 import re
 import json
 import logging
-import subprocess
+import random
+import time
+from curl_cffi import requests
 from selectolax.parser import HTMLParser
 
 logger = logging.getLogger("vlr_scraper")
@@ -11,19 +13,20 @@ logging.basicConfig(level=logging.INFO)
 VLR_BASE_URL = "https://www.vlr.gg"
 
 def fetch_url_with_curl(url: str) -> str:
-    """Fetch URL using system curl to bypass Cloudflare WAF."""
+    """Fetch URL using curl_cffi to bypass Cloudflare WAF, with randomized jitter."""
+    # Randomized jitter delay: 3.0s + U(0, 2.0s)
+    sleep_time = 3.0 + random.uniform(0.0, 2.0)
+    logger.info(f"Sleeping for {sleep_time:.2f}s to prevent IP throttling/shadow-bans...")
+    time.sleep(sleep_time)
+    
     try:
-        result = subprocess.run(
-            ["curl", "-s", "-L", "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36", url],
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            timeout=20.0,
-            check=True
-        )
-        return result.stdout
+        response = requests.get(url, impersonate="chrome", timeout=20.0)
+        if response.status_code != 200:
+            logger.error(f"HTTP request returned status {response.status_code} for URL {url}")
+            return ""
+        return response.text
     except Exception as e:
-        logger.error(f"Curl fetch failed for URL {url}: {e}")
+        logger.error(f"curl_cffi fetch failed for URL {url}: {e}")
         return ""
 
 def clean_text(text: str) -> str:
@@ -86,6 +89,17 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
         elif "winner" in cls1:
             winner = team2
             
+    # Extract Vetoes
+    vetoes = []
+    note_elems = parser.css(".match-header-note")
+    for el in note_elems:
+        txt = clean_text(el.text())
+        parts = re.split(r'[;\n\r]', txt)
+        for part in parts:
+            part = part.strip()
+            if any(w in part.lower() for w in ["ban", "pick", "remains", "decider"]):
+                vetoes.append(part)
+
     # Game IDs for tabs
     game_ids = []
     for item in parser.css(".vm-stats-gamesnav-item"):
@@ -279,7 +293,8 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
             "players": players_list,
             "round_history": round_history,
             "performance": performance_data,
-            "economy": economy_data
+            "economy": economy_data,
+            "vetoes": vetoes
         })
         
     return map_segments

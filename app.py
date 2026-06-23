@@ -1257,11 +1257,15 @@ with tab_optimizer:
             key="remaining_bank_balance_input"
         )
         
-        manual_igl_toggle = st.checkbox("Select IGL Manually?", value=False, key="manual_igl_toggle")
         forced_igl_name = None
-        if manual_igl_toggle and len(current_roster_names) > 0:
-            forced_igl_name = st.selectbox("Force IGL Player", current_roster_names, key="forced_igl_name_select")
-            
+        if len(current_roster_names) > 0:
+            igl_options = ["Auto-Detect (Highest Floor)"] + current_roster_names
+            selected_igl_opt = st.selectbox("Select IGL (2x Multiplier)", igl_options, key="igl_selector_v5")
+            if selected_igl_opt != "Auto-Detect (Highest Floor)":
+                forced_igl_name = selected_igl_opt
+        else:
+            st.info("Select players to enable IGL selection.")
+        
         if st.button("🔮 Calculate Optimal Trades", key="btn_suggest_transfers_new", type="primary"):
             if len(current_roster_names) != 6:
                 st.error("Please select exactly 6 players currently in your roster.")
