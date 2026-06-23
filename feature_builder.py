@@ -70,22 +70,57 @@ def get_weight_for_type(change_type):
         return 0.2
     return 0.0
 
-def standardize_feature_name(extracted_name, description=""):
-    """Standardizes arbitrary feature text to keys recognized by patch_analyzer."""
+def map_semantic_feature(extracted_name, description=""):
+    """Maps arbitrary text to strict schema categories and features using a priority-aware regex/token mapper."""
     combined = (extracted_name + " " + description).lower()
-    if "cost" in combined or "credits" in combined:
-        return "cost"
+    
+    # Priority 1: Exact explicit phrases (multi-word)
+    if "ultimate cost" in combined or "ult points" in combined:
+        return "economy", "ultimate_cost"
+    if "cast speed" in combined or "windup" in combined or "equip time" in combined:
+        return "ability", "cast_time"
+    if "weapon reload" in combined or "reload speed" in combined or "reload time" in combined:
+        return "combat", "reload"
+    if "projectile speed" in combined or "projectile velocity" in combined:
+        return "projectile", "velocity"
+    if "damage falloff" in combined or "falloff" in combined:
+        return "combat", "damage_falloff"
     if "fire rate" in combined or "firerate" in combined:
-        return "fireRate"
-    if "magazine" in combined:
-        return "magazineSize"
-    if "reload" in combined:
-        return "reloadTimeSeconds"
-    if "speed" in combined or "velocity" in combined or "movement" in combined:
-        return "runSpeedMultiplier"
+        return "combat", "fire_rate"
+    
+    # Priority 2: High-specificity single tokens
+    if "duration" in combined or "time" in combined and not ("reload" in combined or "cast" in combined or "charge" in combined):
+        return "ability", "duration"
+    if "cooldown" in combined or "cd" in combined:
+        return "ability", "cooldown"
+    if "charge" in combined:
+        return "ability", "charges"
+    if "width" in combined or "size" in combined or "radius" in combined:
+        return "ability", "size"
+    if "health" in combined or "hp" in combined:
+        return "ability", "health"
     if "slide" in combined:
-        return "slideCount"
-    return extracted_name
+        return "movement", "slide_count"
+    
+    # Priority 3: Broad tokens
+    if "damage" in combined:
+        return "combat", "damage"
+    if "magazine" in combined or "ammo" in combined:
+        return "combat", "ammo"
+    if "cost" in combined or "credits" in combined:
+        return "economy", "cost"
+    if "movement" in combined or "speed" in combined or "velocity" in combined:
+        return "movement", "movement_speed"
+        
+    # Priority 4: Qualitative changes
+    if "rework" in combined or "remove" in combined or "mechanic" in combined or "logic" in combined:
+        clean_name = extracted_name.strip() if extracted_name else "mechanic_change"
+        return "general", clean_name
+        
+    # Fallback: Unknown feature
+    clean_name = extracted_name.strip() if extracted_name else "raw_text"
+    logger.warning(f"Unknown feature extracted: '{clean_name}'. Falling back to general category.")
+    return "general", clean_name
 
 def extract_feature_name(description, ability=None):
     """Extracts a candidate feature name from description string."""
@@ -150,32 +185,36 @@ def build_features(version):
         if trans:
             old_val, new_val = trans
             feat_raw = extract_feature_name(desc, ability)
-            feat_name = standardize_feature_name(feat_raw, desc)
+            category, feat_name = map_semantic_feature(feat_raw, desc)
             change_type = infer_change_type(feat_name, old_val, new_val, change_type_init)
             stats["numeric_features"] += 1
             stats["total_extracted"] += 1
             
             payload = {
+                "agent": agent,
+                "ability": ability,
+                "category": category,
                 "feature_name": feat_name,
                 "type": change_type,
                 "weight": get_weight_for_type(change_type),
-                "values": {"old": old_val, "new": new_val},
-                "ability": ability
+                "values": {"old": old_val, "new": new_val}
             }
         else:
             # Non-numeric change
-            feat_raw = "signature_reset" if "signature" in desc.lower() else "general"
-            feat_name = standardize_feature_name(feat_raw, desc)
+            feat_raw = extract_feature_name(desc, ability)
+            category, feat_name = map_semantic_feature(feat_raw, desc)
             change_type = infer_change_type(feat_name, None, None, change_type_init)
             stats["text_only_features"] += 1
             stats["total_extracted"] += 1
             
             payload = {
+                "agent": agent,
+                "ability": ability,
+                "category": category,
                 "feature_name": feat_name,
                 "type": change_type,
                 "weight": get_weight_for_type(change_type),
-                "values": None,
-                "ability": ability
+                "values": None
             }
             
         if agent not in feature_data["Agent Updates"]:
@@ -191,14 +230,17 @@ def build_features(version):
         new_val = change.get("new_value")
         change_type_init = change.get("change_type", "Adjustment")
         
-        feat_name = standardize_feature_name(stat, desc)
+        feat_raw = extract_feature_name(desc, stat)
+        category, feat_name = map_semantic_feature(feat_raw, desc)
         
         if old_val is not None and new_val is not None:
-            change_type = infer_change_type(feat_name, old_val, new_val, change_type_init)
+            change_type = infer_change_type(feat_name, float(old_val), float(new_val), change_type_init)
             stats["numeric_features"] += 1
             stats["total_extracted"] += 1
             
             payload = {
+                "weapon": weapon,
+                "category": category,
                 "feature_name": feat_name,
                 "type": change_type,
                 "weight": get_weight_for_type(change_type),
@@ -213,6 +255,8 @@ def build_features(version):
                 stats["numeric_features"] += 1
                 stats["total_extracted"] += 1
                 payload = {
+                    "weapon": weapon,
+                    "category": category,
                     "feature_name": feat_name,
                     "type": change_type,
                     "weight": get_weight_for_type(change_type),
@@ -223,6 +267,8 @@ def build_features(version):
                 stats["text_only_features"] += 1
                 stats["total_extracted"] += 1
                 payload = {
+                    "weapon": weapon,
+                    "category": category,
                     "feature_name": feat_name,
                     "type": change_type,
                     "weight": get_weight_for_type(change_type),
