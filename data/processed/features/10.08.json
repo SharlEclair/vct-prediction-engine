@@ -1,0 +1,48 @@
+{
+    "Agent Updates": {
+        "Brimstone": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Incendiary"
+            }
+        ],
+        "Astra": [
+            {
+                "feature_name": "duration",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 4.0,
+                    "new": 3.5
+                },
+                "ability": "Nova Pulse"
+            }
+        ],
+        "Yoru": [
+            {
+                "feature_name": "duration",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 12.0,
+                    "new": 10.0
+                },
+                "ability": "Dimensional Drift"
+            },
+            {
+                "feature_name": "cost",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 7.0,
+                    "new": 8.0
+                },
+                "ability": "Dimensional Drift"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

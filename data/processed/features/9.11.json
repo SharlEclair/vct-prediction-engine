@@ -1,0 +1,226 @@
+{
+    "Agent Updates": {
+        "Neon": [
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "slideCount",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "slideCount",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.0,
+                    "new": 1.0
+                },
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "slideCount",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Overdrive"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 20.0,
+                    "new": 10.0
+                },
+                "ability": "Overdrive"
+            },
+            {
+                "feature_name": "points",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 7.0,
+                    "new": 8.0
+                },
+                "ability": "Overdrive"
+            }
+        ],
+        "Vyse": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Razorvine"
+            },
+            {
+                "feature_name": "tick",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 6.0,
+                    "new": 10.0
+                },
+                "ability": "Razorvine"
+            },
+            {
+                "feature_name": "height",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 450.0,
+                    "new": 300.0
+                },
+                "ability": "Razorvine"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Razorvine"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Razorvine"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            }
+        ],
+        "Client Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Ping System": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Modes Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Team Deathmatch"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Team Deathmatch"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Team Deathmatch"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

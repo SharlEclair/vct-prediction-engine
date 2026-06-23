@@ -1,0 +1,61 @@
+{
+    "Agent Updates": {
+        "Omen": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Chamber": [
+            {
+                "feature_name": "rendezvous",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 13.0,
+                    "new": 18.0
+                },
+                "ability": "Rendezvous"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Rendezvous"
+            }
+        ],
+        "Astra": [
+            {
+                "feature_name": "stars",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 4.0,
+                    "new": 5.0
+                },
+                "ability": "Stars"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Stars"
+            }
+        ],
+        "Stim Behavior": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Empress"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

@@ -1,0 +1,102 @@
+{
+    "Agent Updates": {
+        "General": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Neon"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Neon"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            }
+        ],
+        "Map Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Social Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

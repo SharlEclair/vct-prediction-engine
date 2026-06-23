@@ -1,0 +1,411 @@
+{
+    "Agent Updates": {
+        "Waylay": [
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Refract"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Lightspeed"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "fireRate",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "reloadTimeSeconds",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Convergent Paths"
+            }
+        ],
+        "Clove": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Meddle"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Meddle"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 30.0,
+                    "new": 40.0
+                },
+                "ability": "Ruse"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 8.0,
+                    "new": 10.0
+                },
+                "ability": "Pick-me-up"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 8.0,
+                    "new": 3.0
+                },
+                "ability": "Pick-me-up"
+            }
+        ],
+        "Deadlock": [
+            {
+                "feature_name": "signature_reset",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Barrier Mesh"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Barrier Mesh"
+            },
+            {
+                "feature_name": "signature_reset",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "GravNet"
+            },
+            {
+                "feature_name": "size",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 16.0,
+                    "new": 13.0
+                },
+                "ability": "GravNet"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "GravNet"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "GravNet"
+            }
+        ],
+        "Iso": [
+            {
+                "feature_name": "undercut",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.0,
+                    "new": 1.0
+                },
+                "ability": "Undercut"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 200.0,
+                    "new": 300.0
+                },
+                "ability": "Undercut"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Undercut"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Contingency"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Contingency"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Double Tap"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Kill Contract"
+            }
+        ],
+        "Tejo": [
+            {
+                "feature_name": "damage",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 70.0,
+                    "new": 65.0
+                },
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Guided Salvo"
+            }
+        ],
+        "Map Rotation": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Ascent": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "B Main"
+            }
+        ],
+        "Gameplay Systems Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Combat Report"
+            }
+        ],
+        "Neon": [
+            {
+                "feature_name": "multiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.5,
+                    "new": 3.0
+                },
+                "ability": "Overdrive"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Overdrive"
+            },
+            {
+                "feature_name": "multiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.75,
+                    "new": 0.85
+                },
+                "ability": "Overdrive"
+            },
+            {
+                "feature_name": "second",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.11,
+                    "new": 0.1
+                },
+                "ability": "Energy"
+            }
+        ],
+        "Yoru": [
+            {
+                "feature_name": "delay",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 1.2,
+                    "new": 0.8
+                },
+                "ability": "Dimensional Drift"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.0,
+                    "new": 3.0
+                },
+                "ability": "Fakeout"
+            },
+            {
+                "feature_name": "delay",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.6,
+                    "new": 0.8
+                },
+                "ability": "Fakeout"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Fakeout"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 1.25,
+                    "new": 1.75
+                },
+                "ability": "Blindside"
+            },
+            {
+                "feature_name": "delay",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.7,
+                    "new": 0.6
+                },
+                "ability": "Blindside"
+            }
+        ],
+        "Reyna": [
+            {
+                "feature_name": "health",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 40.0,
+                    "new": 100.0
+                },
+                "ability": "Leer"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Leer"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

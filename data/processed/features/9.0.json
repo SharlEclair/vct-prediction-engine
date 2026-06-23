@@ -1,0 +1,40 @@
+{
+    "Agent Updates": {
+        "Iso": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Double Tap"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 20.0,
+                    "new": 12.0
+                },
+                "ability": "Double Tap"
+            },
+            {
+                "feature_name": "signature_reset",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Double Tap"
+            }
+        ],
+        "Console": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Owl Drone"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

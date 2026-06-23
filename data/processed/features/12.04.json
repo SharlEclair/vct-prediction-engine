@@ -1,0 +1,14 @@
+{
+    "Agent Updates": {
+        "Killjoy": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Turret"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

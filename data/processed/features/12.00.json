@@ -1,0 +1,450 @@
+{
+    "Agent Updates": {
+        "Breach": [
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 2000.0,
+                    "new": 2400.0
+                },
+                "ability": "Flashpoint"
+            },
+            {
+                "feature_name": "width",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 7.5,
+                    "new": 8.0
+                },
+                "ability": "Fault Line"
+            }
+        ],
+        "Brimstone": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sky Smoke"
+            }
+        ],
+        "Harbor": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Storm Surge"
+            },
+            {
+                "feature_name": "windup",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.8,
+                    "new": 0.6
+                },
+                "ability": "Storm Surge"
+            },
+            {
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.6,
+                    "new": 2.0
+                },
+                "ability": "Storm Surge"
+            },
+            {
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.6,
+                    "new": 2.0
+                },
+                "ability": "Reckoning"
+            }
+        ],
+        "Sage": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Healing Orb"
+            }
+        ],
+        "Tejo": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Special Delivery"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Special Delivery"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Special Delivery"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Stealth Drone"
+            },
+            {
+                "feature_name": "radius",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 30.0,
+                    "new": 16.0
+                },
+                "ability": "Stealth Drone"
+            }
+        ],
+        "Vyse": [
+            {
+                "feature_name": "radius",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 26.0,
+                    "new": 28.0
+                },
+                "ability": "Steel Garden"
+            },
+            {
+                "feature_name": "width",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 7.5,
+                    "new": 8.0
+                },
+                "ability": "Steel Garden"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Steel Garden"
+            }
+        ],
+        "Breeze": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Haven and Corrode": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Haven"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Haven"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Corrode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Corrode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Corrode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Corrode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Corrode"
+            }
+        ],
+        "Map Pool Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "All Random One Site": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "New Limited Time Mode"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Leaving Limited Time Mode"
+            }
+        ]
+    },
+    "Weapon Updates": {
+        "Bandit": [
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "magazineSize",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "reloadTimeSeconds",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ]
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "Agent Updates": {
+        "Harbor": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Reckoning"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Cove"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

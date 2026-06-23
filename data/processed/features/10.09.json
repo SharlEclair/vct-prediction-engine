@@ -1,0 +1,130 @@
+{
+    "Agent Updates": {
+        "Tejo": [
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "cost",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "range",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 55.0,
+                    "new": 45.0
+                },
+                "ability": "Guided Salvo"
+            },
+            {
+                "feature_name": "cost",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 300.0,
+                    "new": 400.0
+                },
+                "ability": "Stealth Drone"
+            },
+            {
+                "feature_name": "cost",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 300.0,
+                    "new": 200.0
+                },
+                "ability": "Special Delivery"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Armageddon"
+            },
+            {
+                "feature_name": "points",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 8.0,
+                    "new": 9.0
+                },
+                "ability": "Armageddon"
+            }
+        ],
+        "Breach": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Fault Line"
+            }
+        ],
+        "Swiftplay": [
+            {
+                "feature_name": "points",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 2.0,
+                    "new": 3.0
+                },
+                "ability": "Breach"
+            },
+            {
+                "feature_name": "points",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 2.0,
+                    "new": 3.0
+                },
+                "ability": "Killjoy"
+            },
+            {
+                "feature_name": "points",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 2.0,
+                    "new": 3.0
+                },
+                "ability": "Viper"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

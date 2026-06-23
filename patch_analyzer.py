@@ -15,7 +15,6 @@ logger = logging.getLogger("patch_analyzer")
 RAW_DIR = os.path.join(".", "data", "raw")
 PROCESSED_DIR = os.path.join(".", "data", "processed")
 
-from patch_ingestor import ingest_latest_patches
 
 def build_weapon_dependency_matrix():
     logger.info("Scanning raw matches to build Weapon Dependency Matrix P(w|a)...")
@@ -142,9 +141,24 @@ def generate_patch_distances():
     # Build weapon dependency matrix once
     weapon_dependency_matrix = build_weapon_dependency_matrix()
 
-    # Parse NLP deltas using ingest_latest_patches
-    logger.info("Ingesting live patch notes using Fandom Wiki...")
-    ingested_data = ingest_latest_patches(limit=5)
+    # Load feature trees for all available versions
+    logger.info("Loading patch feature trees...")
+    import glob
+    from feature_builder import build_features
+    
+    patch_files = glob.glob(os.path.join(".", "data", "processed", "patches", "*.json"))
+    versions = sorted([os.path.basename(f).replace(".json", "") for f in patch_files], 
+                      key=lambda x: [int(v) for v in x.split('.')])
+    
+    ingested_data = {}
+    for version in versions:
+        feature_path = os.path.join(".", "data", "processed", "features", f"{version}.json")
+        if not os.path.exists(feature_path):
+            build_features(version)
+            
+        if os.path.exists(feature_path):
+            with open(feature_path, "r", encoding="utf-8") as f:
+                ingested_data[version] = json.load(f)
     
     # Feature indices
     weapon_feature_indices = {
@@ -176,16 +190,24 @@ def generate_patch_distances():
                 feature_name = change.get("feature_name")
                 if agent_name in current_agent_vectors and feature_name in agent_feature_indices:
                     idx = agent_feature_indices[feature_name]
-                    current_agent_vectors[agent_name][idx] = change["values"]["new"]
-                    logger.info(f"[{patch_version}] Updated Agent '{agent_name}' {feature_name}: -> {change['values']['new']}")
+                    # Only apply if values are numeric
+                    if change.get("values") is not None:
+                        new_val = change["values"].get("new")
+                        if new_val is not None:
+                            current_agent_vectors[agent_name][idx] = float(new_val)
+                            logger.info(f"[{patch_version}] Updated Agent '{agent_name}' {feature_name}: -> {new_val}")
 
         for weapon_name, changes in patch_tree.get("Weapon Updates", {}).items():
             for change in changes:
                 feature_name = change.get("feature_name")
                 if weapon_name in current_weapon_vectors and feature_name in weapon_feature_indices:
                     idx = weapon_feature_indices[feature_name]
-                    current_weapon_vectors[weapon_name][idx] = change["values"]["new"]
-                    logger.info(f"[{patch_version}] Updated Weapon '{weapon_name}' {feature_name}: -> {change['values']['new']}")
+                    # Only apply if values are numeric
+                    if change.get("values") is not None:
+                        new_val = change["values"].get("new")
+                        if new_val is not None:
+                            current_weapon_vectors[weapon_name][idx] = float(new_val)
+                            logger.info(f"[{patch_version}] Updated Weapon '{weapon_name}' {feature_name}: -> {new_val}")
 
         # Calculate penalties for each agent
         for agent in sorted(list(agent_vectors.keys())):

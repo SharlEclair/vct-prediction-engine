@@ -1,0 +1,21 @@
+{
+    "Agent Updates": {
+        "Gekko": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Globules"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Mosh Pit"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

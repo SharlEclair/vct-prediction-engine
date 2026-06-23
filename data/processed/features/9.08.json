@@ -1,0 +1,155 @@
+{
+    "Agent Updates": {
+        "Gekko": [
+            {
+                "feature_name": "globules",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 20.0,
+                    "new": 15.0
+                },
+                "ability": "Globules"
+            },
+            {
+                "feature_name": "time",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 1.0,
+                    "new": 1.5
+                },
+                "ability": "Globules"
+            },
+            {
+                "feature_name": "is",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 1.5,
+                    "new": 1.0
+                },
+                "ability": "Dizzy"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Dizzy"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Dizzy"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Wingman"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Wingman"
+            },
+            {
+                "feature_name": "points",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 7.0,
+                    "new": 8.0
+                },
+                "ability": "Thrash"
+            }
+        ],
+        "Yoru": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Neural Theft"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Meddle"
+            }
+        ],
+        "Skye and Jett": [
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Tailwind"
+            }
+        ],
+        "Cosmetic Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Glitch": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Map Rotations": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

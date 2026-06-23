@@ -1,0 +1,1079 @@
+{
+    "Agent Updates": {
+        "General": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "radius",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 5.0,
+                    "new": 7.0
+                },
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "reloadTimeSeconds",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Breach": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Fault Line"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Fault Line"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Fault Line"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Flashpoint"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Rolling Thunder"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Rolling Thunder"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Rolling Thunder"
+            }
+        ],
+        "Fade": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Haunt"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Haunt"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Prowler"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Nightfall"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Nightfall"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Nightfall"
+            }
+        ],
+        "Gekko": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Globules"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Wingman"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Wingman"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Thrash"
+            }
+        ],
+        "KAY/O": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "ZERO/point"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "FLASH/drive"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NULL/cmd"
+            },
+            {
+                "feature_name": "fireRate",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "NULL/cmd"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NULL/cmd"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NULL/cmd"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NULL/cmd"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NULL/cmd"
+            }
+        ],
+        "Sova": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Recon Bolt"
+            }
+        ],
+        "Iso": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Kill Contract"
+            }
+        ],
+        "Neon": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Energy"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Energy"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Relay Bolt"
+            }
+        ],
+        "Reyna": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Leer"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Empress"
+            },
+            {
+                "feature_name": "reloadTimeSeconds",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Empress"
+            },
+            {
+                "feature_name": "fireRate",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Empress"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Empress"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Empress"
+            }
+        ],
+        "Waylay": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Convergent Paths"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Convergent Paths"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Convergent Paths"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Convergent Paths"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Convergent Paths"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Convergent Paths"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Convergent Paths"
+            }
+        ],
+        "Yoru": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Gatecrash"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Gatecrash"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Fakeout"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Blindside"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Blindside"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Dimensional Drift"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Dimensional Drift"
+            }
+        ],
+        "Raze": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Blast Pack"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Blast Pack"
+            }
+        ],
+        "Astra": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Gravity Well"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Gravity Well"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Nova Pulse"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Nova Pulse"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Nebula/Dissipate"
+            }
+        ],
+        "Brimstone": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Stim Beacon"
+            },
+            {
+                "feature_name": "fireRate",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Stim Beacon"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Stim Beacon"
+            }
+        ],
+        "Omen": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Dark Cover"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Paranoia"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Paranoia"
+            }
+        ],
+        "Viper": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Toxin"
+            }
+        ],
+        "Vyse": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Arc Rose"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Shear"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Razorvine"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Steel Garden"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Steel Garden"
+            }
+        ],
+        "Cypher": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Spycam"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Spycam"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Spycam"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Spycam"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trapwire"
+            }
+        ],
+        "Killjoy": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Turret"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Turret"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Turret"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Turret"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Alarmbot"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Alarmbot"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Alarmbot"
+            }
+        ],
+        "Deadlock": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "GravNet"
+            },
+            {
+                "feature_name": "cost",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Barrier Mesh"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Barrier Mesh"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Sonic Sensor"
+            }
+        ],
+        "Sage": [
+            {
+                "feature_name": "cost",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Barrier Orb"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Barrier Orb"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Barrier Orb"
+            }
+        ],
+        "Pearl": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "B-Site"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "B-Site"
+            }
+        ],
+        "Abyss": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "B-Site"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Mid"
+            }
+        ],
+        "Map Pool Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Rifles": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Bulldog": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Phantom": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Vandal": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "time",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.5,
+                    "new": 0.6
+                },
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Spectre": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Stinger": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Full Auto"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Full Auto"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Full Auto"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Full Auto"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Full Auto"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Full Auto"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

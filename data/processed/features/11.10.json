@@ -1,0 +1,88 @@
+{
+    "Agent Updates": {
+        "Harbor": [
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Cove"
+            },
+            {
+                "feature_name": "reloadTimeSeconds",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Cove"
+            },
+            {
+                "feature_name": "signature_reset",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "High Tide"
+            },
+            {
+                "feature_name": "cost",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "High Tide"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Storm Surge"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Storm Surge"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Reckoning"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Reckoning"
+            }
+        ],
+        "Clove": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Ruse"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Pick-me-up"
+            }
+        ],
+        "Omen": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

@@ -1,0 +1,287 @@
+{
+    "Agent Updates": {
+        "Neon": [
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "slideCount",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "High Gear"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Energy"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Energy"
+            }
+        ]
+    },
+    "Weapon Updates": {
+        "All shotguns": [
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "Bucky crouch accuracy modifier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 10.0,
+                    "new": 15.0
+                }
+            },
+            {
+                "feature_name": "Judge/Shorty crouch accuracy modifier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 25.0,
+                    "new": 15.0
+                }
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "Stationary Accuracy multiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.075,
+                    "new": 0.75
+                }
+            },
+            {
+                "feature_name": "Walking Accuracy multiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.09,
+                    "new": 1.5
+                }
+            },
+            {
+                "feature_name": "Running Accuracy multiplier",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.1,
+                    "new": 3.0
+                }
+            }
+        ],
+        "Bucky": [
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "Head",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 40.0,
+                    "new": 34.0
+                }
+            },
+            {
+                "feature_name": "Body",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 20.0,
+                    "new": 17.0
+                }
+            },
+            {
+                "feature_name": "Legs",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 17.0,
+                    "new": 14.0
+                }
+            },
+            {
+                "feature_name": "Minimum spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 2.6,
+                    "new": 3.0
+                }
+            },
+            {
+                "feature_name": "Walking spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.075,
+                    "new": 1.0
+                }
+            },
+            {
+                "feature_name": "Running spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.1,
+                    "new": 2.0
+                }
+            },
+            {
+                "feature_name": "Crouch-walk spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.05,
+                    "new": 0.5
+                }
+            },
+            {
+                "feature_name": "Jump spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 1.25,
+                    "new": 4.0
+                }
+            }
+        ],
+        "Judge": [
+            {
+                "feature_name": "Minimum spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 2.25,
+                    "new": 2.5
+                }
+            },
+            {
+                "feature_name": "General",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "feature_name": "Walking spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.075,
+                    "new": 1.0
+                }
+            },
+            {
+                "feature_name": "Running spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.75,
+                    "new": 2.0
+                }
+            },
+            {
+                "feature_name": "Crouch-walk spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.05,
+                    "new": 0.5
+                }
+            },
+            {
+                "feature_name": "Jump spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 2.25,
+                    "new": 4.0
+                }
+            }
+        ],
+        "Shorty": [
+            {
+                "feature_name": "fireRate",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 3.33,
+                    "new": 3.0
+                }
+            },
+            {
+                "feature_name": "Walking spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.075,
+                    "new": 1.0
+                }
+            },
+            {
+                "feature_name": "Running spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.1,
+                    "new": 2.0
+                }
+            },
+            {
+                "feature_name": "Crouch-walk spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.05,
+                    "new": 0.5
+                }
+            },
+            {
+                "feature_name": "Jump spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 1.25,
+                    "new": 4.0
+                }
+            }
+        ]
+    }
+}

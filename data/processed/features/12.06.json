@@ -1,0 +1,39 @@
+{
+    "Agent Updates": {
+        "Waylay": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Saturate"
+            }
+        ],
+        "Viper": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Viper's Pit"
+            }
+        ],
+        "Cosmetics Updates": [
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

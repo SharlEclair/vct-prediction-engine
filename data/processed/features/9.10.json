@@ -1,0 +1,603 @@
+{
+    "Agent Updates": {
+        "Cypher": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trapwire"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 6.0,
+                    "new": 7.0
+                },
+                "ability": "Neural Theft"
+            }
+        ],
+        "Sage": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Healing Orb"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Healing Orb"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Slow Orb"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 8.0,
+                    "new": 7.0
+                },
+                "ability": "Resurrection"
+            }
+        ],
+        "Deadlock": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Annihilation"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Barrier Mesh"
+            }
+        ],
+        "Omen": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Dark Cover"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Dark Cover"
+            }
+        ],
+        "Clove": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Ruse"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Ruse"
+            },
+            {
+                "feature_name": "time",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 12.0,
+                    "new": 10.0
+                },
+                "ability": "Not Dead Yet"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Not Dead Yet"
+            }
+        ],
+        "Phoenix": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Heating Up"
+            },
+            {
+                "feature_name": "signature_reset",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Curveball"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Curveball"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Curveball"
+            },
+            {
+                "feature_name": "signature_reset",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Hot Hands"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Hot Hands"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Blaze"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Blaze"
+            }
+        ],
+        "Jett": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Drift (Passive)"
+            }
+        ],
+        "Map Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sunset"
+            }
+        ],
+        "Gameplay Systems Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Combat Report"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Combat Report"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Combat Report"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Combat Report"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Combat Report"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Concusses"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Concusses"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Concusses"
+            },
+            {
+                "feature_name": "slideCount",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Concusses"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Overheal UI Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Overheal UI Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Smoke Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Smoke Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Smoke Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Smoke Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Smoke Visual Update"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Smoke Visual Update"
+            }
+        ],
+        "Weapons Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Pistol Inaccuracy Changes": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.1,
+                    "new": 0.5
+                },
+                "ability": "General"
+            }
+        ],
+        "Classic": [
+            {
+                "feature_name": "inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 1.3,
+                    "new": 1.5
+                },
+                "ability": "General"
+            },
+            {
+                "feature_name": "inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.1,
+                    "new": 2.25
+                },
+                "ability": "General"
+            },
+            {
+                "feature_name": "walking_inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.84,
+                    "new": 1.1
+                },
+                "ability": "General"
+            }
+        ],
+        "Ghost": [
+            {
+                "feature_name": "walking_inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.84,
+                    "new": 1.1
+                },
+                "ability": "General"
+            }
+        ],
+        "Rifles": [
+            {
+                "feature_name": "walk_inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.0,
+                    "new": 3.0
+                },
+                "ability": "All Rifles"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "All Rifles"
+            }
+        ],
+        "Machine Guns": [
+            {
+                "feature_name": "walk_inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 2.4,
+                    "new": 3.0
+                },
+                "ability": "All Machine Guns"
+            },
+            {
+                "feature_name": "run_inaccuracy",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 6.0,
+                    "new": 6.5
+                },
+                "ability": "All Machine Guns"
+            }
+        ],
+        "Pistol Bullet Count Changes": [
+            {
+                "feature_name": "count",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 13.0,
+                    "new": 15.0
+                },
+                "ability": "Frenzy"
+            },
+            {
+                "feature_name": "count",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 15.0,
+                    "new": 13.0
+                },
+                "ability": "Ghost"
+            }
+        ],
+        "Phantom": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

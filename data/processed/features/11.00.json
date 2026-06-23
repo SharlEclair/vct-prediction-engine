@@ -1,0 +1,324 @@
+{
+    "Agent Updates": {
+        "Waylay": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Refract"
+            },
+            {
+                "feature_name": "refract",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.5,
+                    "new": 0.35
+                },
+                "ability": "Refract"
+            },
+            {
+                "feature_name": "refract",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 3.0,
+                    "new": 2.0
+                },
+                "ability": "Refract"
+            },
+            {
+                "feature_name": "time",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 1.0,
+                    "new": 0.8
+                },
+                "ability": "Refract"
+            },
+            {
+                "feature_name": "reactivation",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.1,
+                    "new": 0.05
+                },
+                "ability": "Refract"
+            },
+            {
+                "feature_name": "delay",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.8,
+                    "new": 0.6
+                },
+                "ability": "Lightspeed"
+            },
+            {
+                "feature_name": "explosion",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.75,
+                    "new": 0.6
+                },
+                "ability": "Saturate"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Saturate"
+            }
+        ],
+        "Reyna": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Leer"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Leer"
+            }
+        ],
+        "Neon & Phoenix": [
+            {
+                "feature_name": "windup",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.8,
+                    "new": 1.0
+                },
+                "ability": "Neon"
+            },
+            {
+                "feature_name": "windup",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.5,
+                    "new": 0.6
+                },
+                "ability": "Phoenix"
+            }
+        ],
+        "Clarity and Consistency Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Breach"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Breach"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Sova"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Clove"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Clove"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Killjoy"
+            },
+            {
+                "feature_name": "delay",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.5,
+                    "new": 0.15
+                },
+                "ability": "Killjoy"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Killjoy"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Cypher"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Cypher"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Omen"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Omen"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Brimstone"
+            }
+        ],
+        "Map Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NEW MAP: CORRODE"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "NEW MAP: CORRODE"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "MAP POOL UPDATES"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "MAP POOL UPDATES"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "MAP POOL UPDATES"
+            }
+        ],
+        "Modes Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "CORRODE QUEUE"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "CORRODE QUEUE"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Escalation"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Escalation"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

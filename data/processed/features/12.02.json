@@ -1,0 +1,148 @@
+{
+    "Agent Updates": {
+        "General": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "General"
+            }
+        ],
+        "Harbor": [
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Cove"
+            },
+            {
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 15.0,
+                    "new": 19.25
+                },
+                "ability": "Cove"
+            },
+            {
+                "feature_name": "health",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 500.0,
+                    "new": 680.0
+                },
+                "ability": "Cove"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Cove"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Storm Surge"
+            },
+            {
+                "feature_name": "general",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "High Tide"
+            },
+            {
+                "feature_name": "length",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 50.0,
+                    "new": 60.0
+                },
+                "ability": "High Tide"
+            },
+            {
+                "feature_name": "runSpeedMultiplier",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null,
+                "ability": "Reckoning"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Reckoning"
+            }
+        ],
+        "Reyna": [
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Soul Orbs (Passive)"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Soul Orbs (Passive)"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Devour"
+            },
+            {
+                "feature_name": "general",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null,
+                "ability": "Empress"
+            }
+        ],
+        "Gameplay Systems Updates": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Trailblazer"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}

@@ -1,0 +1,189 @@
+{
+    "Agent Updates": {
+        "General": [
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 1.25,
+                    "new": 1.5
+                },
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "range",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 20.0,
+                    "new": 50.0
+                },
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "time",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 0.85,
+                    "new": 0.6
+                },
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "time",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 3.0,
+                    "new": 1.5
+                },
+                "ability": "KAY/O"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Yoru"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Yoru"
+            },
+            {
+                "feature_name": "cost",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 100.0,
+                    "new": 200.0
+                },
+                "ability": "Yoru"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Vyse"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Vyse"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 10.0,
+                    "new": 6.0
+                },
+                "ability": "Vyse"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Vyse"
+            },
+            {
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null,
+                "ability": "Vyse"
+            },
+            {
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": {
+                    "old": 8.0,
+                    "new": 6.0
+                },
+                "ability": "Vyse"
+            }
+        ]
+    },
+    "Weapon Updates": {}
+}
