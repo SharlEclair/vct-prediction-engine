@@ -3,6 +3,18 @@
     "date": "June 25th, 2024",
     "agent_changes": [
         {
+            "agent": "All Platforms",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "We've added new conversation voice lines between Agents that includes: Phoenix, Harbor, Brimstone, Yoru, Raze, Iso, Sage, Neon, Gekko, Skye, Deadlock, Omen, KAY/O, and Reyna."
+        },
+        {
+            "agent": "Iso",
+            "ability": "Double Tap",
+            "change_type": "Adjustment",
+            "description": "Double Tap (E):"
+        },
+        {
             "agent": "Iso",
             "ability": "Double Tap",
             "change_type": "Adjustment",
@@ -13,6 +25,12 @@
             "ability": "Double Tap",
             "change_type": "Adjustment",
             "description": "Signature kill reset removed"
+        },
+        {
+            "agent": "Console",
+            "ability": "Owl Drone",
+            "change_type": "Adjustment",
+            "description": "Sova's Owl Drone's HP is now 100, up from 60."
         }
     ],
     "weapon_changes": [],

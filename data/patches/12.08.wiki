@@ -1,0 +1,121 @@
+{{PatchNav|previous=12.07|next=12.09}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.08.jpg
+|date    = April 28th, 2026
+|act     = [[Season 2026: Act 3]]
+|changes = '''All Platforms:'''
+*[[Game Modes]]
+*[[Maps#Map rotations|Map rotation update]]
+'''PC only:'''
+*[[Premier]]
+|bundle  = <!--{{collection|}}-->
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-08/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.08'''.
+----
+{{Quote1|It’s Ash again! Patch 12.08 is bringing you an exciting new update to Skirmish called Skirmish: Ascension as well as another map rotation. Here’s the TLDR;
+*Skirmish: Ascension - a new, experimental ranked experience with its own competitive leaderboard on our FTW site
+*Ascent is in, Bind is out
+*[PC only] Premier is back!
+*More bug fixes}}
+
+==All Platforms==
+===Map Updates===
+====Map Pool Updates====
+*[[Ascent]] is IN the [[Competitive]] and [[Deathmatch]] queues.
+*[[Bind]] is OUT of the Competitive and Deathmatch queues.
+
+===Modes Updates===
+====[[Skirmish/Ascension|Skirmish: Ascension]]====
+*'''NEW LIMITED TIME MODE 
+**Introducing Skirmish: Ascension, a new limited ranked experience for Skirmish. 
+**We designed this mode as a fast, skill-forward competitive experience where gunplay stays primary, but selected abilities create more tactical decisions and replayable duels. Pick from a curated roster of Agents, each equipped with a single ability, and fight through staged weapon rounds in 1v1 or 2v2. Compete on the [https://ftw.riotgames.com/en-us/valorant/challenges/skirmish FTW ranked ladder] to earn rewards and prove you are better. Available for Act 3. 
+***Mode Details 
+****Agents & Abilities 
+*****Choose from 14 [[Agents]], each with one [[ability]] from their kit 
+******{{ai|Jett}} ({{abi text|Tailwind}}) 
+******{{ai|Waylay}} ({{abi text|Refract}})
+******{{ai|Chamber}} ({{abi text|Rendezvous}}) 
+******{{ai|Cypher}} ({{abi text|Cyber Cage}})
+******{{ai|Omen}} ({{abi text|Shrouded Step}}) 
+******{{ai|Phoenix}} ({{abi text|Curveball}})
+******{{ai|Yoru}} ({{abi text|Fakeout}})
+******{{ai|Iso}} ({{abi text|Contingency}}) 
+******{{ai|Sage}} ({{abi text|Barrier Orb}}) 
+******{{ai|Raze}} ({{abi text|Blast Pack}}) 
+******{{ai|Vyse}} ({{abi text|Arc Rose}}) 
+******{{ai|KAY/O}} ({{abi text|FLASH/drive}}) 
+******{{ai|Breach}} ({{abi text|Flashpoint}}) 
+******{{ai|Veto}} ({{abi text|Crosscut}}) 
+****Staged [[Weapons]]
+*****No economy. Weapons escalate through stages as the match progresses 
+******Rounds 1-4: Pistols ([[Bandit]], [[Sheriff]])
+******Rounds 5-8: Low-tier rifles ([[Guardian]], [[Bulldog]]) 
+******Round 9+: [[Vandal]] and [[Phantom]]
+****Queues 
+*****1v1 and 2v2 with separate matchmaking 
+****Round Structure 
+*****First to 10 rounds wins 
+****FTW Ranked Ladder 
+*****Competitive leaderboard segmented by server, region, and platform 
+*****Separate leaderboards for 1v1 and 2v2, tracked independently 
+*****Rank Tiers
+******Iron: 0 
+******Bronze: 700
+******Silver: 1100
+******Gold: 1500
+******Platinum: 1800
+******Diamond: 2100
+******Ascendant: 2400
+******Immortal: 2700
+******Radiant: Top 100
+****Rewards 
+*****Combat Ready [[player card]]: Complete 3 Skirmish: Ascension matches 
+*****Trade Me player card: Complete 15 Skirmish: Ascension matches
+*****Titles awarded by highest rank achieved on either ladder 
+******Skirmish Competitor: Gold to Platinum 
+******Skirmish Expert: Diamond to Immortal 
+******Skirmish Radiant: Radiant
+
+====[[Knockout]]====
+*LEAVING LIMITED TIME MODES 
+**Knockout is heading out. Thanks for playing!
+
+===Bug Fixes===
+*Agent 
+**These were fixed in Patch {{patch|12.07}} but missed the notes. 
+***{{ui|Bugfix}} Fixed a bug where using {{ai|Miks}}’ {{abi text|Bassquake}} would cause the minimap cone to blink on use. 
+***{{ui|Bugfix Nerf}} Fixed a bug where {{ai|Veto}}’s {{abi text|Chokehold}} could detect enemies behind rotating doors on Lotus. 
+***{{ui|Bugfix}} Fixed a bug where {{ai|KAY/O}}’s ability VFX were not appearing if used right after KAY/O casts {{abi text|NULL/cmd}}. 
+***{{ui|Bugfix}} Fixed a bug where {{ai|Neon}}’s {{abi text|High Gear}} slide was not playing SFX for moving across different surface types. 
+***{{ui|Bugfix}} Fixed a bug where {{ai|Tejo}}’s agent select animation would sometimes cut off the smoke from the explosion. 
+***{{ui|Bugfix Buff}} Fixed a bug where {{ai|Gekko}}’s {{abi text|Dizzy}} would only target an enemy if their head was visible. 
+***{{ui|Bugfix Buff}} Fixed a bug where during {{abi text|Dimensional Drift}}, {{ai|Yoru}} could not see invisible abilities like [[Vyse]]’s [[Shear]] or [[Cypher]]'s [[Trapwire]] even if he was close enough to them. 
+**These are new fixes in Patch 12.08. 
+***{{ui|Bugfix}} Fixed a bug where [[Viper]]'s [[Toxic Screen]] SFX would activate repeatedly when {{ai|Veto}} walked into it with {{abi text|Evolution}} active 
+***{{ui|Bugfix Buff}} Fixed a bug where players [[Resurrection|resurrected]] by [[Sage]] inside of {{ai|Viper}}’s Decaying abilities would not gain Decay. 
+***{{ui|Bugfix Buff}} Fixed a bug where {{ai|Tejo}}'s {{abi text|Armageddon}} would sometimes cast targeting spawn instead of the intended location. 
+
+==PC Only==
+===[[Premier]] Updates=== 
+*Welcome to Stage V26A3! Matches start on May 6. 
+**Contender and Invite Division schedule changes: 
+***There are only 6 weeks of matches this stage – the matches are still each Saturday from May 9 - June 13. 
+***Playoffs now take place across multiple days. 
+****The first round of playoffs takes place on June 20. 
+****Teams that advance from the first round return on June 21 for their next matchup. 
+****Make sure to check the schedule in the client for round start times for your zone! 
+
+===Bug Fixes===
+*General 
+**Fixed an issue in settings where audio sliders weren’t moving correctly 
+**Fixed an issue where trying to exit the client while a replay was paused wasn’t working 
+
+==Console Only==
+===Known Issues===
+*Modes 
+**Skirmish 2v2: Ascension and Skirmish 1v1: Ascension - Timer is stuck at 00.50 sec when during Overtime phase. 
+**Skirmish 2v2: Ascension and Skirmish 1v1: Ascension - Agent abilities do not show up on the Combat Report in the following round after affecting enemies 
+
+[[Category:Patch Notes]]

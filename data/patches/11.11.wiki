@@ -1,0 +1,86 @@
+{{PatchNav|previous=11.10|next=12.00}}
+{{Infobox patch
+|image   = Patch Notes Highlights 11.11.png
+|date    = December 2nd, 2025
+|act     = [[Season 2025: Act 6]]
+|changes = '''All Platforms:'''
+*[[Snowball Fight]] re-release
+'''PC-only:'''
+*[[Gifting]]
+|bundle  = *{{collection|Mystbloom}} (V25)
+*{{capsule|Cookie Kit}}
+*{{collection|Run It Back}} // V25
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-11/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v11.11'''.
+----
+{{Quote1|Hey, everyone! Kenny, here.
+
+If this patch looks tiny to you, well, that’s because it is. ''Or is it…?'' There might just be [[Snowball Fight|a lil’ festive surprise]] around the corner that we’re not listing here quite yet. Hehe.
+
+Other than that, we’ve got:
+
+*UI improvements to the Agents page
+*A way to gift VP to your friends. Just in time for the holidays.
+*More bug fixes.
+*And a small Ranked Gun Buddy issue for you to be aware of.
+*This will be the last patch of 2025! Riot will be on Holiday break when our next patch would normally come out, so we’ll see you all back here next year with…a few more surprises up our sleeve.
+
+Until then, Happy New Year and GL HF GGs in 2026!}}
+
+==All Platforms==
+===Bug Fixes===
+*[[Agents]]
+**{{ai|Chamber}}
+***{{ui|Bugfix}} Fixed a bug where {{abi text|Rendezvous}}’s audio would end abruptly near the end of the teleport animation
+**{{ai|Clove}}
+***{{ui|Bugfix}} Fixed a bug where killing Clove right after they use {{abi text|Not Dead Yet}} would cause some [[weapon skins|finishers]] to have erratic behavior 
+***{{ui|Bugfix}} Fixed a bug where Clove’s agent icon in the top team composition bar would not update properly when Clove was killed inside of a smoke after using Not Dead Yet 
+***{{ui|Bugfix Buff}} Fixed a bug where Clove would revive in spawn with Not Dead Yet if their body had too many players standing over it 
+***{{ui|Bugfix}} Fixed a bug where Clove’s {{abi text|Pick-me-up}} overheal UI effects would persist on the HUD even after the overheal had been reduced to 0 
+**{{ai|Cypher}} 
+***{{ui|Bugfix Nerf}} Fixed a bug where enemy player positions could be briefly revealed on the minimap while they are hidden by Cypher's {{abi text|Cyber Cage}} 
+***{{ui|Bugfix}} Fixed a bug where Cypher’s {{abi text|Spycam}} would appear to be recovered even if the camera was destroyed while being recovered 
+***{{ui|Bugfix}} Fixed a bug where {{abi text|Trapwire}} would appear to be visually active if Cypher was killed just before it finished arming 
+**{{ai|Jett}}
+***{{ui|Bugfix Buff}} Fixed a bug where Jett could get stuck in midair near ledges/box corners
+**{{ai|Harbor}}
+***{{ui|Bugfix Nerf}} Fixed a bug where Harbor’s {{abi text|Storm Surge}} could affect [[Yoru]] during [[Dimensional Drift]] 
+***{{ui|Bugfix}} Fixed a bug where Harbor’s Storm Surge would cause a dead [[Clove]] to see a Nearsight HUD effect if the Storm Surge hit their corpse.
+***{{ui|Bugfix Buff}} Fixed a bug where Harbor’s {{abi text|Cove}} would snap rotate 180 degrees when looking upwards or downwards 
+***{{ui|Bugfix Buff}} Fixed a bug where Harbor’s {{abi text|Reckoning}} minimap indicator would briefly linger and block vision cones
+***{{ui|Bugfix}} Fixed a bug where Harbor’s Storm Surge and Reckoning would display colored boxes on a spectator’s screen if they changed perspectives to someone who was just hit by one of the abilities 
+**{{ai|Iso}}
+***{{ui|Bugfix Nerf}} Fixed a bug where [[Clove]] and [[Reyna]] would not enter Iso’s {{abi text|Kill Contract}} at full health and with full [[shields]] or [[overheal]] if they entered with damaged overheal.
+***{{ui|Bugfix Nerf}} Fixed a bug where [[Phoenix]] would not get his original health and armor back when is in [[Run it Back]] and has left Iso’s Kill Contract
+**{{ai|Phoenix}}
+***{{ui|Bugfix}} Fixed a bug where Phoenix’s {{abi text|Hot Hands}} would show inaccurate healing done in the combat report
+**{{ai|Reyna}}
+***{{ui|Bugfix Buff}} Fixed a bug where Reyna’s HUD UI prompts for {{abi text|Devour}} and {{abi text|Dismiss}} would linger on screen even if Reyna has no ability charges left
+***{{ui|Bugfix}} Fixed a bug where Reyna’s overheal health was not being displayed accurately on the HUD for spectators 
+**{{ai|Skye}}
+***{{ui|Bugfix Nerf}} Fixed a bug where Skye’s {{abi text|Regrowth}} was healing certain deployable abilities
+**{{ai|Tejo}}
+***{{ui|Bugfix Nerf}} Fixed a bug where Tejo’s {{abi text|Stealth Drone}} could push players and give them a speed boost
+**{{ai|Veto}}
+***{{ui|Bugfix Buff}} Fixed a bug where Veto's {{abi text|Crosscut}} could sometimes be shot through non-penetrable walls
+**{{ai|Vyse}}
+***{{ui|Bugfix Buff}} Fixed a bug where [[Sova]]’s [[Recon Bolt]] and [[KAYO|KAY/O]]’s [[ZERO-point|ZERO/point]] would get stuck inside an activated {{abi text|Shear}} wall instead of being destroyed 
+*[[Maps]]
+**[[Haven]] 
+***{{ui|Bugfix Nerf}} Fixed a bug on A Link near A Site that allowed for wall penetration where that should not have been possible.
+
+===Known Issues===
+*V25A3 [[Competitive|ranked]] gun [[buddies]] will temporarily be shown in your collection with the incorrect name of “V25A6.” 
+**Don’t worry! Your buddy for the first three Acts of Season 2025 is safe. 
+**It will go back to its correct name and you’ll also receive your V25A6 gun buddy (if you earned an Act rank in the last three Acts of Season 2025) in the 12.00 patch. 
+
+==PC Only==
+===General Updates===
+*[[VALORANT Points|VP]] [[Gifting]] is now live! 
+**Ever wanted to gift a friend something but not sure what exactly they want? Well you’re in luck! VP Gifting is NOW HERE and will be rolled out in a staggered release starting December 3rd PT! Check it out on the VP purchase page in the Store. 
+*Agents Page UI Updates 
+**The Agents page has been updated to show the full roster of Agents in a grid view. You can use your mouse or arrow keys to view each Agent. It’s like before, but better, because it’s different, which is better.
+*Collections UI updates from Patch {{patchv|11.10}} are now live in Korea!
+[[Category:Patch Notes]]

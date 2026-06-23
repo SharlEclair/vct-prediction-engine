@@ -1,0 +1,184 @@
+{
+    "version": "9.11",
+    "date": "December 10th, 2024",
+    "agent_changes": [
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Adjustment",
+            "description": "We believe Neon\u2019s slide is correctly positioned as an aggressive combat tool, but making a call around when to  cast should be more important than it is currently, and that she should pay more of a cost when she slides."
+        },
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Adjustment",
+            "description": "Additionally, we want to sharpen the slide as a close-quarters combat tool to reward Neon for sprinting up to her opponents rather than consistently beaming opponents at long ranges."
+        },
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Adjustment",
+            "description": "Slides 2 >>> 1"
+        },
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Adjustment",
+            "description": "Accuracy during slide"
+        },
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Adjustment",
+            "description": "Full accuracy >>> Crouch-walking accuracy"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Overdrive",
+            "change_type": "Adjustment",
+            "description": "We want to increase counterplay for Overdrive\u2014giving opponents a potential window to stall Neon out or disengage. The amount of average round impact with her ultimate also justifies an 8 point cost."
+        },
+        {
+            "agent": "Neon",
+            "ability": "Overdrive",
+            "change_type": "Adjustment",
+            "description": "Duration of ultimate: 20s >>> 10s (via Energy passive)"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Overdrive",
+            "change_type": "Adjustment",
+            "description": "Ultimate points 7 >>> 8"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Razorvine",
+            "change_type": "Adjustment",
+            "description": "We want to increase Razorvine\u2019s ability to hold space as well as clean up some unclear gameplay situations where Razorvines that land on high objects could affect opponents with poor visual feedback."
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Razorvine",
+            "change_type": "Adjustment",
+            "description": "Damage per tick of moving through Razorvine: 6 >>> 10"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Razorvine",
+            "change_type": "Adjustment",
+            "description": "Vertical drop spawn height: 450 >>> 300"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Razorvine",
+            "change_type": "Adjustment",
+            "description": "This means Razorvine will no longer affect players as far under it when spawning high up on objects/level geometry"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Razorvine",
+            "change_type": "Adjustment",
+            "description": "Now slows enemy dashes similar to Sage\u2019s Slow Orb and concusses."
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Arc Rose is getting some minor quality of life updates that should make aggressing off its initial placement easier."
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Equip speed after cast"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Normal >>> Fast"
+        },
+        {
+            "agent": "Client Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "You can now upgrade your weapon skins quickly"
+        },
+        {
+            "agent": "Client Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Added the ability to unlock multiple available skin levels in a single transaction."
+        },
+        {
+            "agent": "Client Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Variants will require a separate unlock."
+        },
+        {
+            "agent": "Ping System",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "The in-game ping system was created with the simple goal of allowing players to communicate with one another without using their mic. Over the years, unintended use cases of the ping system have emerged that give players in-the-moment combat advantages that go beyond the intended use of the system."
+        },
+        {
+            "agent": "Ping System",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "With that in mind, we\u2019re making two changes to the ping system."
+        },
+        {
+            "agent": "Ping System",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Smokes will block your in-world pings from traveling through them and instead land on the smoke."
+        },
+        {
+            "agent": "Ping System",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Pings made on your map will no longer appear in the world and only display on the minimap."
+        },
+        {
+            "agent": "Ping System",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "To help you differentiate these ping behaviors in game we\u2019re introducing new ping visuals and new ping sound for pings made on the map."
+        },
+        {
+            "agent": "Ping System",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "We\u2019ll introduce a cheat function for allowing map pings to show in-world during custom games to aid labbing and lineups, but this will come in a future patch."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "Team Deathmatch",
+            "change_type": "Adjustment",
+            "description": "The Regen Shield has been added to Team Deathmatch in Stage 1. When using the Classic in Stage 1 you will now have the Regen Shield instead of Light Armor."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "Team Deathmatch",
+            "change_type": "Adjustment",
+            "description": "Stage 1 Classic"
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "Team Deathmatch",
+            "change_type": "Adjustment",
+            "description": "Light Armor >>> Regen Shield"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Progression",
+        "Fixed a bug that incorrectly required 100 matches played to complete the Play A Match weekly mission.",
+        "Updated the color of Party chat messages from Team chat messages.",
+        "Updated the appearance of Party flags in the Social Panel."
+    ],
+    "player_behavior_changes": []
+}

@@ -1,0 +1,107 @@
+{
+    "version": "10.09",
+    "date": "May 13th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "Guided Salvo: We\u2019ve changed the Guided Salvo to be more flexible but have adopted the no recharge model (like on Skye) to maintain the power of the rockets while also increasing cost per cast. We\u2019ve also reduced the ability to easily stall across the map in a handful of scenarios we felt wasn\u2019t healthy."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Nerf",
+            "description": "Cost: 150"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "Grants a free charge on round start"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "Each individual rocket used will consume 1 charge."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Nerf",
+            "description": "The cooldown has been removed."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Nerf",
+            "description": "Map Targeting Range decreased from 55m to 45m."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Stealth Drone",
+            "change_type": "Nerf",
+            "description": "Cost: 300 >>> 400"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Special Delivery",
+            "change_type": "Buff",
+            "description": "Cost: 300 >>> 200"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Armageddon",
+            "change_type": "Adjustment",
+            "description": "Armageddon: We're raising the cost to put it in line with other ultimates that are in a similar power profile.."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Armageddon",
+            "change_type": "Nerf",
+            "description": "Ult points increased from 8 to 9"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Fault Line",
+            "change_type": "Nerf",
+            "description": "Time until Fault Line detonates after its cast increased from 1 second >>> 1.2 seconds"
+        },
+        {
+            "agent": "Swiftplay",
+            "ability": "Breach",
+            "change_type": "Buff",
+            "description": "Rolling Thunder starting points 2 >>> 3"
+        },
+        {
+            "agent": "Swiftplay",
+            "ability": "Killjoy",
+            "change_type": "Buff",
+            "description": "Lockdown starting points 2 >>> 3"
+        },
+        {
+            "agent": "Swiftplay",
+            "ability": "Viper",
+            "change_type": "Buff",
+            "description": "Viper's Pit starting points 2 >>> 3"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Cosmetics",
+        "Bugfix In Patch 10.08, we fixed a visual bug that was found in the Bolt skinline that caused the skins to glow brighter than intended after equipping and inspecting the Bolt Flex.",
+        "We initially thought this bug could cause potential issues for photosensitive players. But after conducting extensive photosensitivity testing, we've concluded that there is no substantial risk. So we've decided to revert that bug fix and leave it as an Easter egg.",
+        "Bugfix Fixed a bug where Kill Banners for certain skins (Oni, Evori Dreamwings, EX.O, Prelude to Chaos, Mystbloom, and more) were appearing smaller than normal after the first kill.",
+        "Cosmetics",
+        "We're aware of a bug with the Bolt skinline that is causing the skins to glow far brighter than normal.",
+        "This is separate from the previous Bolt bug that was found, fixed, and reverted in this patch. This new bug causes Bolt skins to glow at an unacceptable brightness which could cause issues for photosensitive players and also affect competitive integrity.",
+        "We will be fixing this bug with patch 10.11.",
+        "Agents",
+        "We're aware of an issue where Omen can enter his smoke targeting mode for Dark Cover, allowing dead allies to be able to see through Viper's Pit or other nearsight effects",
+        "We will be fixing this bug with patch 10.10"
+    ],
+    "player_behavior_changes": []
+}

@@ -1,0 +1,22 @@
+{
+    "version": "11.06",
+    "date": "September 16th, 2025",
+    "agent_changes": [],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Our last banwave hit 40,000 bots over the last 6 months!"
+    ],
+    "performance_changes": [
+        "The RawInputBuffer setting has been removed and is no longer configurable. The setting will be enabled at all times for players because it is more performant.",
+        "The highlight behavior for dropped weapons and the Spike is incorrect and will highlight when players are merely nearby rather than when directly looking at them. This will be resolved in Patch 11.07!"
+    ],
+    "bug_fixes": [
+        "Agents",
+        "Bugfix Buff We have fixed a rare bug where in a very very specific set of circumstances, Yoru (via Dimensional Drift) and Reyna (via Dismiss thru Empress), after turning invisible, would reappear in their original location after the invisibility ended.",
+        "Wiki editor note: This fix was also mentioned in 11.05",
+        "Replays",
+        "Replays are now available for your Competitive, Unrated, Swiftplay and Premier games. Jump over [https://playvalorant.com/en-us/news/dev/replays-everything-you-need-to-know here] for more details!",
+        "Fixed an issue with how New Player Tips were displayed on console."
+    ],
+    "player_behavior_changes": []
+}

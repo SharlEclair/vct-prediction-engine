@@ -1,0 +1,63 @@
+{
+    "version": "11.05",
+    "date": "September 3rd, 2025",
+    "agent_changes": [
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Adjustment",
+            "description": "Reduced visual noise. Updated ground indicator to more clearly show its impact range. The yellow wisp is now closer to the Agent being hit, so it\u2019s easier to see where someone is hiding before the concuss comes down. Shortened water splash on the ground for visibility."
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Adjustment",
+            "description": "Improved visual clarity of shield health states. The health state is now more reflected in the visual water animation."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Added Updated leaderboards to display Immortal+ ranked rating thresholds"
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "General",
+        "Improved the backend technology around detection abilities (i.e. Prowler, Wingman, Dizzy, etc) so they can more reliably detect opponents within their field of view.",
+        "Added audio cleanup logic to make sure unexpected audio events don't continue playing across round transitions.",
+        "Agents",
+        "Astra",
+        "Bugfix Buff Fixed an issue where bullet tracers pass through Astra's Cosmic Divide.",
+        "Bugfix Nerf This fix does reintroduce an audio bug where there is a slight audio hitch when passing through Astra wall.",
+        "Chamber",
+        "Bugfix Fixed an issue where Chamber's Trademark in-world icon would not change color when aimed at.",
+        "Clove",
+        "Bugfix Nerf Fixed an issue where Clove's Pick-me-up cast sound was silent for enemies.",
+        "Cypher",
+        "Bugfix Buff Fixed an issue where Cypher's Trapwire was more difficult to place than intended.",
+        "Deadlock",
+        "Bugfix Buff Fixed an issue where Deadlock's Sonic Sensor was more difficult to place than intended.",
+        "Bugfix Fixed a Spectator bug with Deadlock's Annihilation deafen where audio processing was not cleaning up as expected after a spectated player was impacted by the ability.",
+        "Bugfix Nerf Fixed issue where use of Deadlock's Annihilation on Yoru's Fakeout clone would apply audio effects to the real Yoru.",
+        "Gekko",
+        "Bugfix Fixed a bug where \"Spike Down\" VO would play if Wingman was destroyed right after planting the Spike.",
+        "Jett",
+        "Bugfix Fixed a bug where Jett\u2019s Tailwind audio would continue into the next round.",
+        "Sova",
+        "Bugfix Nerf Fixed audio issue where the \u201cbeing watched\u201d sonic feedback of Sova\u2019s Owl Drone wouldn't trigger if the drone had line-of-sight to the player when the drone spawned.",
+        "Vyse",
+        "Bugfix Fixed issue where Vyse\u2019s Steel Garden audio could trigger twice after Observers swap targets.",
+        "Bugfix Fixed a bug where Vyse's Razorvine would leave circles on the minimap for observers when Vyse died.",
+        "Waylay",
+        "Bugfix Nerf Fixed a bug where Waylay's Saturate could affect enemies after they left the range of the area of effect.",
+        "Yoru",
+        "Bugfix Fixed an issue where Yoru's Gatecrash in-world icon would not change color when aimed at.",
+        "Bugfix Buff Fixed a bug where in some cases after turning invisible, Yoru (via Dimensional Drift and Reyna (via Dismiss thru Empress) would reappear in their original location when the invisibility ends.",
+        "Premier",
+        "Bugfix Fixed an issue on the Awards tab where long names were not displayed correctly in some languages.",
+        "New Player Tips have been switched off while we fix an issue where they are being displayed for a much shorter time than intended to new players. We are actively investigating having the feature switched back on as soon as possible."
+    ],
+    "player_behavior_changes": [
+        "We have adjusted our behavior system to address Remake Abuse and Gameplay Participation.",
+        "Penalties will increase for those who repeatedly AFK and dodge queues. This affects those who consistently abuse and disrupt our systems so don\u2019t worry, we won\u2019t be unfairly penalizing players who are genuinely trying to play."
+    ]
+}

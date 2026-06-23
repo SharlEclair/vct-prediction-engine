@@ -1,0 +1,317 @@
+[
+    {
+        "version": "10.00",
+        "agent_changes": 22,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 22
+    },
+    {
+        "version": "10.01",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 9,
+        "bug_fixes": 19
+    },
+    {
+        "version": "10.02",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 18
+    },
+    {
+        "version": "10.03",
+        "agent_changes": 4,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 15
+    },
+    {
+        "version": "10.04",
+        "agent_changes": 48,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 9
+    },
+    {
+        "version": "10.05",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 7,
+        "bug_fixes": 25
+    },
+    {
+        "version": "10.06",
+        "agent_changes": 23,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 33
+    },
+    {
+        "version": "10.07",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 4,
+        "bug_fixes": 17
+    },
+    {
+        "version": "10.08",
+        "agent_changes": 4,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 37
+    },
+    {
+        "version": "10.09",
+        "agent_changes": 14,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 11
+    },
+    {
+        "version": "10.10",
+        "agent_changes": 6,
+        "weapon_changes": 0,
+        "competitive_changes": 7,
+        "bug_fixes": 27
+    },
+    {
+        "version": "10.11",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 1,
+        "bug_fixes": 13
+    },
+    {
+        "version": "11.00",
+        "agent_changes": 40,
+        "weapon_changes": 0,
+        "competitive_changes": 8,
+        "bug_fixes": 24
+    },
+    {
+        "version": "11.01",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 0
+    },
+    {
+        "version": "11.02",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 31
+    },
+    {
+        "version": "11.04",
+        "agent_changes": 12,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 21
+    },
+    {
+        "version": "11.05",
+        "agent_changes": 2,
+        "weapon_changes": 0,
+        "competitive_changes": 1,
+        "bug_fixes": 34
+    },
+    {
+        "version": "11.06",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 1,
+        "bug_fixes": 6
+    },
+    {
+        "version": "11.07",
+        "agent_changes": 32,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 12
+    },
+    {
+        "version": "11.08",
+        "agent_changes": 144,
+        "weapon_changes": 0,
+        "competitive_changes": 2,
+        "bug_fixes": 0
+    },
+    {
+        "version": "11.09",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 6,
+        "bug_fixes": 47
+    },
+    {
+        "version": "11.10",
+        "agent_changes": 11,
+        "weapon_changes": 0,
+        "competitive_changes": 5,
+        "bug_fixes": 62
+    },
+    {
+        "version": "11.11",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 47
+    },
+    {
+        "version": "12.00",
+        "agent_changes": 50,
+        "weapon_changes": 8,
+        "competitive_changes": 5,
+        "bug_fixes": 58
+    },
+    {
+        "version": "12.01",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 2,
+        "bug_fixes": 36
+    },
+    {
+        "version": "12.02",
+        "agent_changes": 19,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 24
+    },
+    {
+        "version": "12.03",
+        "agent_changes": 4,
+        "weapon_changes": 0,
+        "competitive_changes": 23,
+        "bug_fixes": 11
+    },
+    {
+        "version": "12.04",
+        "agent_changes": 1,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 41
+    },
+    {
+        "version": "12.05",
+        "agent_changes": 57,
+        "weapon_changes": 0,
+        "competitive_changes": 4,
+        "bug_fixes": 19
+    },
+    {
+        "version": "12.06",
+        "agent_changes": 4,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 38
+    },
+    {
+        "version": "12.07",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 26
+    },
+    {
+        "version": "12.08",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 26
+    },
+    {
+        "version": "12.09",
+        "agent_changes": 4,
+        "weapon_changes": 29,
+        "competitive_changes": 1,
+        "bug_fixes": 25
+    },
+    {
+        "version": "9.0",
+        "agent_changes": 5,
+        "weapon_changes": 0,
+        "competitive_changes": 11,
+        "bug_fixes": 19
+    },
+    {
+        "version": "9.01",
+        "agent_changes": 10,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 55
+    },
+    {
+        "version": "9.02",
+        "agent_changes": 13,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 49
+    },
+    {
+        "version": "9.03",
+        "agent_changes": 5,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 22
+    },
+    {
+        "version": "9.04",
+        "agent_changes": 9,
+        "weapon_changes": 0,
+        "competitive_changes": 1,
+        "bug_fixes": 52
+    },
+    {
+        "version": "9.05",
+        "agent_changes": 6,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 27
+    },
+    {
+        "version": "9.06",
+        "agent_changes": 8,
+        "weapon_changes": 1,
+        "competitive_changes": 0,
+        "bug_fixes": 35
+    },
+    {
+        "version": "9.07",
+        "agent_changes": 10,
+        "weapon_changes": 0,
+        "competitive_changes": 11,
+        "bug_fixes": 15
+    },
+    {
+        "version": "9.08",
+        "agent_changes": 18,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 17
+    },
+    {
+        "version": "9.09",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 25
+    },
+    {
+        "version": "9.10",
+        "agent_changes": 75,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 18
+    },
+    {
+        "version": "9.11",
+        "agent_changes": 28,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 4
+    }
+]

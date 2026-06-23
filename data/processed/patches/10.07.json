@@ -1,0 +1,38 @@
+{
+    "version": "10.07",
+    "date": "April 15th, 2025",
+    "agent_changes": [],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Fixed an issue in Match History and End of Game screens where hover text was missing from the Rank Shield icon if you had no Rank Shields remaining.",
+        "We\u2019ve added the Timeline view as part of the End of Game and Match Details screens where you can review the events of the match round by round.",
+        "This view is only available for Competitive, Swiftplay, and Unrated matches.",
+        "Fixed an issue on the leaderboard page where repeatedly switching between the filters and scrolling through entries on the page could cause you to lose the ability to select a different entry."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Fixed an issue where Reyna\u2019s ultimate visuals could show through nearsights.",
+        "Fixed an issue so Waylay will teleport properly back if she activates her Refract while picking up an ult orb.",
+        "Fixed an issue where Waylay could activate Refract outside of the playable space on Abyss.",
+        "Fixed an issue so Waylay should no longer end looking straight up in the air when she triggers Refract return when she's directly above the teleport point.",
+        "Fixed an issue where KAY/O\u2019s revive SFX would persist after being killed while being resurrected by an ally during NULL/cmd.",
+        "Fixed an issue where enemies could get stuck inside Vyse\u2019s wall if the wall was overlapping with a smoke ability at specific times.",
+        "Fixed an issue where enemies could get stuck in Vyse\u2019s Shear if they jumped when it was triggered.",
+        "Fixed an issue where Vyse\u2019s Shear\u2019s SFX could get stuck playing for enemies after moving out of range or if Vyse dies.",
+        "Fixed an issue where Clove\u2019s Ruse battlefield view could be seen from underneath elevated locations while they have it equipped.",
+        "Fixed an issue where Clove\u2019s Pick-me-up duration was incorrect for observer/spectator clients.",
+        "Fixed an issue where opponents who teleported out of the Trapwire after being hit could run through the same reactivated wire without getting tethered.",
+        "Fixed an issue where Armageddon\u2019s floor indicator persisted across rounds.",
+        "Fixed an issue where Omen could not see properly when casting Dark Cover if he was overlapping another dense smoke (smokes that obscure vision inside, e.g. Jett Cloudburst, Brimstone Sky Smoke, etc.).",
+        "Fixed an issue where Deadlock\u2019s netted VFX could show through thin walls.",
+        "Fixed an issue where Sova\u2019s arm and Drone overlapped each other in Agent Select.",
+        "Fixed an issue where Chamber\u2019s watch and glasses could be seen while nearsighted.",
+        "Fixed an issue where Omen\u2019s Dark Cover targeting sensitivity could get stuck at a lower value until his next smoke cast if he died while attempting to cast Dark Cover."
+    ],
+    "player_behavior_changes": [
+        "Fixed an issue where Riot IDs written in certain languages were displayed with a cutoff in the Social Panel.",
+        "Fixed an issue where text sometimes did not fit in dropdowns on the Standings page.",
+        "Fixed an issue where players with long usernames overlapped with console logos in the Social Panel.",
+        "Fixed an issue where sending a party invite to an Invalid Riot ID would lock the invite window until it was closed and reopened."
+    ]
+}

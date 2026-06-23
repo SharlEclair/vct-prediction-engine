@@ -1,0 +1,62 @@
+{{PatchNav|previous=9.08|next=9.10}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 09.jpg
+|date    = November 5th, 2024
+|act     = [[Episode 09: COLLISION: Act 3|EP 09 Act 3]]
+|changes = '''PC-only:'''
+*[[Premier]]
+|bundle  = {{collection|Arcane}} (EP 9)
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-09/ Patch Notes]
+}}
+
+The following is a list with all the changes made in patch v9.09.
+
+<i>Hi folks! It's Ash and I'm here to talk about Patch 9.09.
+
+We fixed various bugs with Agents, such as Deadlock's ANNIHILATION sometimes getting stuck at ledges, players being able to outrun Fade's Prowler, and now Gekko's Thrash won't have as much difficulty making some small jumps.
+
+There's more to come with these year-end patches so stay tuned!</i>
+==All Platforms==
+===Bug Fixes===
+====General====
+*Fixed a bug where the locking in animation in the Agent Select would not play immediately when instalocking. 
+*Fixed a bug where you would see a blank screen as a tournament coach during Agent Select. 
+====[[Agents]]====
+*{{ai|Astra}}
+**Fixed a bug where Astra would not receive the alert sound effect when being watched by [[Cypher]]'s {{abi text|Spycam}}.  
+*{{ai|Deadlock}}
+**Fixed a bug where players pulled by Deadlock's {{abi text|Annihilation}} would sometimes get stuck at the top of ledges.
+*{{ai|Fade}}
+**Fixed a bug where players could outrun Fade's {{abi text|Prowler}} during its Bite. Prowlers should now continue to track its target during the Bite unless the target teleports outside its line of sight.
+*{{ai|Gekko}}
+**Fixed a bug where Gekko's {{abi text|Thrash}} had difficulty making some small jumps. Thrash should now jump more similarly to a player. 
+*{{ai|Killjoy}}
+**Fixed a bug where Killjoy's {{abi text|Turret}} would not display the deactivation range on the minimap after switching between her Turret and other abilities or weapons.
+*{{ai|Yoru}}
+**Fixed a bug where Yoru would hold the [[Nocturnum Collection|Nocturnum]] scythe incorrectly after using {{abi text|Dimensional Drift}}. 
+**Fixed a bug where [[KAYO|KAY/O]] with {{abi text|NULL/cmd}} active could be picked up by Yoru during Dimensional Drift.
+
+====Maps====
+*[[Abyss]]
+**Fixed a bug that allowed the breakable doors in mid to be destroyed when shot from a certain angle.
+==PC==
+===[[Premier]] Updates===
+*Updated dropdowns on the standings tab to include Invite division in the division list for all zones. Selecting an Invite division to view will change your zone dropdown to the appropriate zone.
+===Bug Fixes===
+====General====
+*Fixed an issue where you could load into Agent Select early by leaving your party as the “Match Found” popup appeared.
+*Removed an exploit that resulted in a stretched FOV, when using windowed-mode at a 4:3 resolution.
+====[[Premier]]====
+*Fixed an issue where the Competitor Crest title was not displayed on the Premier career page after earning that Crest.
+==Console==
+===General Updates===
+*Buttons that behave like radio buttons now look like radio buttons (instead of checkboxes).
+===Bug Fixes===
+====Social====
+*Fixed a bug where if you have a long console block list, you would sometimes fail to join voice chat.
+*Fixed a bug where you could sometimes send a friend request to a player you had blocked.
+*Fixed a bug where sending a friend request to a player in the console-friends tab sometimes wouldn't work.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.09]]

@@ -1,0 +1,100 @@
+{{PatchNav|previous=12.01|next=12.03}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.02.jpg
+|date    = February 3rd, 2026
+|act     = [[Season 2026: Act 1]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+|bundle  = *{{collection|Solarstride}}
+*[[Run It Back Collection|Run It Back: Lunar 26]]
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-02/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.02'''.
+----
+{{Quote1|Hey folks! It’s Ash and here’s the TLDR; for patch 12.02.
+*Harbor ability adjustments
+*Reyna ability adjustments
+*Certain Agent ability deployables can now be concussed
+*There are new UI damage indicators that display for objects that take damage while controlled by a player
+*Adjusted the appearance of the Social Panel
+*You’ll no longer see an XP/AP Denial under Active Interventions when you leave a Deathmatch.
+*Loads of bug fixes}}
+
+==All Platforms==
+===Agent Updates===
+====General====
+*{{ui|Nerf}} Certain Agent ability deployables can now be concussed.
+**{{ai|Gekko}}’s {{abi text|Wingman}} 
+**{{ai|Skye}}'s {{abi text|Seekers}} 
+**{{ai|Raze}}’s {{abi text|Boom Bot}}
+
+===={{ai|Harbor}}====
+Harbor could use a little bit more power compared to other Controllers. We’re looking to increase the baseline power of his abilities as well as increase the amount of options Harbor has whether that is in Cove uptime, High Tide coverage, or Reckoning placement. We want players to feel confident about the strategies Harbor can offer through his abilities.
+*{{abi text|Cove}}
+**{{ui|Buff}} Cooldown decreased 40s >> 30s 
+**{{ui|Buff}} Smoke duration increased from 15s >>> 19.25s 
+**{{ui|Buff}} Health increased from 500 to 680
+**{{ui|Buff}} Harbor now re-equips his gun faster after activating Cove 
+*{{abi text|Storm Surge}}
+**{{ui|Added}} {{ui|Buff}} Storm Surge now plays audio in world if enemies are hit 
+*{{abi text|High Tide}}
+**{{ui|Buff}} Wall height increased 6m >> 8m 
+**{{ui|Buff}} Max wall length increased from 50m to 60m 
+*{{abi text|Reckoning}}
+**{{ui|Buff}} Wave speed increased by 25% 
+**{{ui|Added}} Can now re-use the ultimate to stop it in place for 7s.
+
+===={{ai|Reyna}}====
+Reyna has been ever present and dominating pickrates in ranked for a long time. We’re looking to increase proactive requirements on Reyna after she gets a kill to encourage continued aggression. 
+*[[Soul Harvest|Soul Orbs]] (Passive) 
+**{{ui|Nerf}} Duration in world decreased from 4s >> 3s 
+*** ''*The ability description had incorrectly listed the duration at 3s while they were lasting 4s. The duration now accurately matches the description.  
+*{{abi text|Devour}}
+**{{ui|Nerf}} Overheal applied by Devour is now temporary and lasts 10s. Healing applied while in [[Empress]] is still permanent.
+*{{abi text|Empress}} 
+**{{ui|Nerf}} Ult points increased 6 >> 7
+
+===General Updates===
+*Adjusted the appearance of the Social Panel
+
+===Gameplay Systems Updates===
+*UI damage indicators now display for objects that take damage while controlled by a player (i.e. {{ai|Skye}}’s {{abi text|Trailblazer}}, {{ai|Tejo}}’s {{abi text|Stealth Drone}}, etc) 
+
+===Player Behavior Updates===
+*Behavior Standing 
+**We made some tweaks to what shows up and when to make things more clear. You’ll no longer see an XP/AP Denial under Active Interventions when you leave a [[Deathmatch]]. 
+
+===Bug Fixes===
+*[[Cosmetics]]
+**A visual bug with the gold VFX trail on the {{collection|Champions 2021}} Karambit is now fixed! 
+*Gameplay Systems 
+**Fixed an issue where player names were misaligned in the Combat Report 
+*[[Game Modes|Modes]]
+**[[All Random One Site]] 
+***{{ui|Bugfix}} Hot Fixed a bug where players selected loadouts would reset in certain disconnect scenarios. 
+***{{ui|Bugfix Nerf}} Fixed a bug where certain Agents would drop Ult Orbs when they shouldn’t. 
+***{{ui|Bugfix}} Fixed an issue where glass breaking audio would play in an out of bounds area on [[Ascent]]. ''(wiki editor note: this was also mentioned in the {{patch|12.01}} notes.)
+***{{ui|Bugfix}} Fixed a bug where text would overrun on the Next Random Agent UI in certain localizations.
+
+==PC Only==
+===Bug Fixes===
+*[[Agent]] 
+**Fixed bugs where ability HUDs were missing in [[replays]] for [[Brimstone]], [[Clove]], [[Omen]], and [[Tejo]]. 
+**{{ui|Bugfix Nerf}} Fixed a bug where {{ai|Vyse}}'s {{abi text|Shear}} was sometimes destroying [[Gekko]]’s [[Thrash]], [[Skye]]’s [[Trailblazer]], [[Sova]]’s [[Owl Drone]], and [[Tejo]]’s [[Stealth Drone]] instead of pushing them aside. 
+**{{ui|Bugfix Nerf}} Fixed a bug where {{ai|Cypher}}'s {{abi text|Spycam}} dart could hit players in unexpected locations when going through the [[Bind]] teleporters 
+**{{ui|Bugfix}} Fixed a bug where {{ai|Harbor}}’s {{abi text|Reckoning}} VFX indicator lines were not lined up with the hit box. 
+**{{ui|Bugfix}} Fixed a bug where Harbor’s Reckoning SFX would persist between rounds 
+**{{ui|Bugfix Buff}} Fixed a bug where in [[Team Deathmatch]], {{ai|Clove}}’s {{abi text|Pick-me-up}} overheal would sometimes not give health when Clove died previously with the buff active. 
+**{{ui|Bugfix}} Fixed a bug where {{ai|Tejo}}’s {{abi text|Stealth Drone}} could ride on various projectiles. 
+**{{ui|Bugfix}} Fixed a bug for Coaches and Observers where Tejo’s {{abi text|Armageddon}} targeting cursor could go outside of the ability map UI. 
+**{{ui|Bugfix}} Fixed a bug for Coaches and Observers where {{ai|Brimstone}}’s {{abi text|Sky Smoke}} and {{abi text|Orbital Strike}} map UI would not render when swapping to Brimstone’s perspective. 
+**{{ui|Bugfix}} Fixed a bug for Coaches and Observers where equipping {{ai|Omen}}’s {{abi text|From the Shadows}} would cause the ability map UI to linger into the next round. 
+**{{ui|Bugfix}} Fixed a bug for Coaches and Observers where Agents with an ability map UI would repeatedly play their equip animation when switching to their POV. 
+
+==Console Only== 
+===Bug Fixes===
+*Agent 
+**{{ui|Bugfix}} Fixed a bug where the ascender highlights could become permanently visible on a player if they tried to use both ascenders at once on [[Split]].
+
+[[Category:Patch Notes]]

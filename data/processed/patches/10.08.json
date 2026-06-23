@@ -1,0 +1,73 @@
+{
+    "version": "10.08",
+    "date": "April 29th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Brimstone",
+            "ability": "Incendiary",
+            "change_type": "Adjustment",
+            "description": "Incendiary - Brim\u2019s molotov audio has been updated to be easier to hear, especially when placed underneath smokes."
+        },
+        {
+            "agent": "Astra",
+            "ability": "Nova Pulse",
+            "change_type": "Nerf",
+            "description": "Nova Pulse stun duration: 4s >>> 3.5s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Dimensional Drift",
+            "change_type": "Nerf",
+            "description": "Dimensional Drift duration reduced 12s >>> 10s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Dimensional Drift",
+            "change_type": "Nerf",
+            "description": "Dimensional Drift point cost 7 >>> 8"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Waylay",
+        "Bugfix Buff Fixed a bug where reactivating Refract immediately after casting Convergent Paths would prevent the reactivate from working.",
+        "Harbor",
+        "Bugfix Buff Fixed a bug where Harbor\u2019s water bracelet would sometimes bleed through thin walls like the doors on Ascent.",
+        "Deadlock",
+        "Bugfix Fixed an issue where Deadlock\u2019s Barrier Mesh was not playing hit audio when shooting the center node.",
+        "Bugfix Nerf Fixed an issue where Deadlock\u2019s Barrier Mesh could be used to boost players.",
+        "Vyse",
+        "Bugfix Nerf Fixed an issue where the cooldown on Vyse\u2019s Arc Rose was not properly set after it was destroyed.",
+        "Bugfix Fixed an issue where Vyse\u2019s activated Shear wall didn\u2019t display the warning fade out visual cue.",
+        "Bugfix Nerf Fixed an issue where Vyse\u2019s Shear wall blocked bullets after the visual wall despawned.",
+        "Thanks to SeismicChef on X for reporting the above issues!",
+        "Bugfix Nerf Fixed an issue where Vyse\u2019s Steel Garden warning indicator did not properly match the debuff area.",
+        "Yoru",
+        "Bugfix Reverted a bugfix that caused Yoru\u2019s clone to slightly mismatch normal player movement when running into walls.",
+        "Skye",
+        "Bugfix Nerf Fixed an issue where Skye\u2019s Trailblazer leap did not get slowed by Waylay\u2019s Saturate debuff.",
+        "Gekko",
+        "Bugfix Nerf Fixed an issue where Gekko\u2019s Thrash leap did not get slowed by Waylay\u2019s Saturate debuff.",
+        "Tejo",
+        "Bugfix Nerf Fixed an issue where players could boost on Tejo\u2019s Stealth Drone.",
+        "Bugfix Nerf Fixed an issue where Stealth Drone could not be tagged by Cypher\u2019s camera.",
+        "Bugfix Fixed an issue where Armageddon VFX may remain after being used.",
+        "Bugfix Nerf Fixed an issue where there was no danger indicator for players running through Armeggadon from the back side.",
+        "Reyna",
+        "Bugfix Nerf Fixed an issue where Reyna\u2019s Devour Overheal would not be interrupted when taking damage that was less than her current Overheal amount.",
+        "Iso",
+        "Bugfix Updated Iso\u2019s Double Tap tooltip to mention the reload speed buff. Thanks Reddit user /u/RemoteWhile5881!",
+        "Cosmetics",
+        "We\u2019re currently aware of an issue within the Act III Battlepass where some Player Cards are currently displaying the incorrect item name.",
+        "We\u2019ll be deploying a fix with the correct item names with Patch 10.09 in a couple of weeks.",
+        "Welcome to Stage V25A3! Matches start on May 7.",
+        "Adjustment We\u2019ve updated our Premier Restrictions. Instead of a flat 30 day ineligibility, players who engage in disruptive behavior are now ineligible for Premier for a period of time based on the severity of the misconduct and the length of the active intervention.",
+        "Bugfix Lowered the size of the hover text for Rank Shields in the Summary screen.",
+        "Bugfix Fixed an issue where long player names would overlap certain elements in the Timeline screen.",
+        "Bugfix Fixed an issue where text explaining rank requirements for the current season was not shown on the Act Rank screen.",
+        "Bugfix Updated the Act Rank screen text to refer to Seasons."
+    ],
+    "player_behavior_changes": []
+}

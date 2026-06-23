@@ -12,6 +12,12 @@
             "agent": "General",
             "ability": "Blast Pack",
             "change_type": "Adjustment",
+            "description": "Second Blast Pack"
+        },
+        {
+            "agent": "General",
+            "ability": "Blast Pack",
+            "change_type": "Adjustment",
             "description": "Second Blast Pack\u2019s horizontal force has been reduced."
         },
         {
@@ -25,6 +31,36 @@
             "ability": "Double Tap",
             "change_type": "Adjustment",
             "description": "Signature kill reset removed."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Lotus enters Competitive, Unrated, Swiftplay, and Deathmatch queues."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Deathmatch is experiencing an issue and will be unavailable on Console until a fix can be shipped."
+        },
+        {
+            "agent": "Social Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Updated the notification indicator on the social card so that it\u2019s easier to tell when you have a party invite even when the social panel is closed."
+        },
+        {
+            "agent": "Social Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Added voice indicators to the Party tab in the social panel, so you can see who is speaking."
+        },
+        {
+            "agent": "Social Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Added a button to leave the party to the My Party section of the Party tab in the social panel."
         }
     ],
     "weapon_changes": [],

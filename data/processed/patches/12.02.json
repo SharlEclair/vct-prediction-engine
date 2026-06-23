@@ -1,0 +1,153 @@
+{
+    "version": "12.02",
+    "date": "February 3rd, 2026",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Nerf",
+            "description": "Certain Agent ability deployables can now be concussed."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Gekko\u2019s Wingman"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Skye's Seekers"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Raze\u2019s Boom Bot"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 40s >> 30s"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Buff",
+            "description": "Smoke duration increased from 15s >>> 19.25s"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Buff",
+            "description": "Health increased from 500 to 680"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Buff",
+            "description": "Harbor now re-equips his gun faster after activating Cove"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Storm Surge",
+            "change_type": "Adjustment",
+            "description": "Added Buff Storm Surge now plays audio in world if enemies are hit"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "High Tide",
+            "change_type": "Buff",
+            "description": "Wall height increased 6m >> 8m"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "High Tide",
+            "change_type": "Buff",
+            "description": "Max wall length increased from 50m to 60m"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Buff",
+            "description": "Wave speed increased by 25%"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Adjustment",
+            "description": "Added Can now re-use the ultimate to stop it in place for 7s."
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Soul Orbs (Passive)",
+            "change_type": "Nerf",
+            "description": "Duration in world decreased from 4s >> 3s"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Soul Orbs (Passive)",
+            "change_type": "Adjustment",
+            "description": "*The ability description had incorrectly listed the duration at 3s while they were lasting 4s. The duration now accurately matches the description."
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Devour",
+            "change_type": "Nerf",
+            "description": "Overheal applied by Devour is now temporary and lasts 10s. Healing applied while in Empress is still permanent."
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Empress",
+            "change_type": "Nerf",
+            "description": "Ult points increased 6 >> 7"
+        },
+        {
+            "agent": "General Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Adjusted the appearance of the Social Panel"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Trailblazer",
+            "change_type": "Adjustment",
+            "description": "UI damage indicators now display for objects that take damage while controlled by a player (i.e. Skye\u2019s Trailblazer, Tejo\u2019s Stealth Drone, etc)"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Cosmetics",
+        "A visual bug with the gold VFX trail on the Champions 2021 Karambit is now fixed!",
+        "Gameplay Systems",
+        "Fixed an issue where player names were misaligned in the Combat Report",
+        "Modes",
+        "All Random One Site",
+        "Bugfix Hot Fixed a bug where players selected loadouts would reset in certain disconnect scenarios.",
+        "Bugfix Nerf Fixed a bug where certain Agents would drop Ult Orbs when they shouldn\u2019t.",
+        "Bugfix Fixed an issue where glass breaking audio would play in an out of bounds area on Ascent. (wiki editor note: this was also mentioned in the 12.01 notes.)",
+        "Bugfix Fixed a bug where text would overrun on the Next Random Agent UI in certain localizations.",
+        "Agent",
+        "Fixed bugs where ability HUDs were missing in replays for Brimstone, Clove, Omen, and Tejo.",
+        "Bugfix Nerf Fixed a bug where Vyse's Shear was sometimes destroying Gekko\u2019s Thrash, Skye\u2019s Trailblazer, Sova\u2019s Owl Drone, and Tejo\u2019s Stealth Drone instead of pushing them aside.",
+        "Bugfix Nerf Fixed a bug where Cypher's Spycam dart could hit players in unexpected locations when going through the Bind teleporters",
+        "Bugfix Fixed a bug where Harbor\u2019s Reckoning VFX indicator lines were not lined up with the hit box.",
+        "Bugfix Fixed a bug where Harbor\u2019s Reckoning SFX would persist between rounds",
+        "Bugfix Buff Fixed a bug where in Team Deathmatch, Clove\u2019s Pick-me-up overheal would sometimes not give health when Clove died previously with the buff active.",
+        "Bugfix Fixed a bug where Tejo\u2019s Stealth Drone could ride on various projectiles.",
+        "Bugfix Fixed a bug for Coaches and Observers where Tejo\u2019s Armageddon targeting cursor could go outside of the ability map UI.",
+        "Bugfix Fixed a bug for Coaches and Observers where Brimstone\u2019s Sky Smoke and Orbital Strike map UI would not render when swapping to Brimstone\u2019s perspective.",
+        "Bugfix Fixed a bug for Coaches and Observers where equipping Omen\u2019s From the Shadows would cause the ability map UI to linger into the next round.",
+        "Bugfix Fixed a bug for Coaches and Observers where Agents with an ability map UI would repeatedly play their equip animation when switching to their POV.",
+        "Agent",
+        "Bugfix Fixed a bug where the ascender highlights could become permanently visible on a player if they tried to use both ascenders at once on Split."
+    ],
+    "player_behavior_changes": [
+        "Behavior Standing",
+        "We made some tweaks to what shows up and when to make things more clear. You\u2019ll no longer see an XP/AP Denial under Active Interventions when you leave a Deathmatch."
+    ]
+}

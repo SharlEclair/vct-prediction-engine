@@ -1,0 +1,388 @@
+{{PatchNav|previous=11.07b|next=11.09}}
+{{Infobox patch
+|image   = Patch Notes Highlights 11.08.jpg
+|date    = October 14th, 2025
+|act     = [[Season 2025: Act 6]]
+|changes = '''All Platforms:'''
+*[[Agents]] (including PC-only and Console-only changes)
+*[[Maps]]
+*[[Maps#Map rotations|Map rotation update]]
+*[[Weapons]] (including PC-only and Console-only changes)
+*[[Competitive]]
+'''PC-only:'''
+*[[Premier]]
+|bundle  = {{collection|Dolmir's Revenge}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-08/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v11.08'''.
+----
+Hello everyone, this patch is a big one! The entire VALORANT team has been working to bring VALORANT closer to our long-term vision for the game, preserving our core identity as a tactical shooter while evolving toward a healthier balance between gunplay and abilities. 
+
+TL;DR- we are making adjustments across gameplay to create a healthy dialogue in combat - one where there are clear ways to respond and adapt to what the enemy team is doing round over round. These changes aim to strike a healthier balance between sharp gunplay and the unique abilities that give VALORANT its signature tactical flavor. They span agents, weapons, and maps, all aimed at rewarding strategic decision-making in VALORANT.
+
+==All Platforms==
+===General Updates===
+Our end of year balance patch is meant to adjust how our maps, weapons, and agents work together. The tuning pass in this patch is designed to reinforce what we call “the competitive dialogue”—the round-to-round exchange between attackers and defenders that rewards adaptation and strategy. 
+
+Over time, as player skill and ability impact have grown, uncoordinated utility has at times felt just as impactful as well-executed, strategic plays. This has reduced meaningful opportunities for counterplay and diminished the strategic depth we aim for in VALORANT. These changes are focused on striking a healthy balance between gunplay and the abilities that make VALORANT its own unique flavor of tactical shooter
+
+===Agent Updates===
+====General====
+*The agent updates this patch are focused around how we can support higher mastery around ability usage. We want to allow your gunplay to do the talking, while you use abilities strategically and intentionally to gain advantages. These changes should reward players who use abilities well in the right time and place. Additionally, we’re also reducing the size of some of the largest ultimate abilities.
+*We’re also aiming to create more consistency across the game’s various debuffs, making it easier to build muscle memory when playing with or against effects like Nearsight, Concuss, and Stims. ''(wiki editor note: see below for actual changes of each Agent)'' 
+**Nearsights: {{ai|Fade}}'s {{abi text|Prowler}}, {{ai|Omen}}'s {{abi text|Paranoia}}, {{ai|Reyna}}'s {{abi text|Leer}}, {{ai|Skye}}'s {{abi text|Seekers}}
+***{{ui|Nerf}} Nearsight radius increased from 5 >>> 7m 
+**Concuss: {{ai|Breach}}’s {{abi text|Fault Line}}, {{ai|Gekko}}’s {{abi text|Wingman}}, {{ai|Neon}}’s {{abi text|Relay Bolt}}, {{ai|Astra}}’s {{abi text|Nova Pulse}}
+***{{ui|Nerf}} Concuss duration decreased to 2.5s
+**Stim Unification: {{ai|Brimstone}}'s {{abi text|Stim Beacon}}, {{ai|KAY/O}}'s {{abi text|NULL/cmd}}, {{ai|Reyna}}'s {{abi text|Empress}} ''(wiki editor note: {{ai|Veto}} is also adjusted but is [[Undocumented Changes|undocumented]] in this patch notes.)
+***Faster reload time modifier: 90%
+***Increased firing rate modifier: 10% 
+***Weapon draw time modifier: 90%
+***Weapon recovery speed modifier: 10%
+
+====Initiators====
+Initiators are intended to be the go-to agents for breaking angles and creating openings for their team. With this update, we’re adjusting how often they can use their signature abilities within a round. These abilities should remain impactful, but now demand more coordination and deliberate timing to unlock their full value. 
+
+Flashes have always been a critical tool for challenging angles, and in a world with less frequent signature abilities, we want them to retain the power needed to start fights. To support that, we’ve increased the strength of Initiator flashes so they remain reliable tools for setting up engagements. 
+
+====={{ai|Breach}}=====
+*{{abi text|Fault Line}}
+**{{ui|Nerf}} Cooldown increased from 40s → 60s 
+**{{ui|Buff}} Initial windup decreased from 1.2s → 1.1s
+**{{ui|Nerf}} Concuss duration decreased from 3.5s → 2.5s
+*{{abi text|Flashpoint}} 
+**{{ui|Buff}} Flash duration increased up from 2s → 2.25s 
+*{{abi text|Rolling Thunder}}
+**{{ui|Nerf}} Width decreased from 23m → 18m 
+**{{ui|Nerf}} Concuss duration decreased from 6s → 4s
+**{{ui|Buff}} Ult points decreased from 9 → 8
+
+====={{ai|Fade}}=====
+*{{abi text|Haunt}}
+**{{ui|Nerf}} Cooldown increased from 40s → 60s
+**{{ui|Nerf}} Haunt active duration decreased 2s → 1.5s 
+*{{abi text|Prowler}}
+**{{ui|Nerf}} Visibility in Nearsight increased from 5m → 7m
+*{{abi text|Nightfall}}
+**{{ui|Nerf}} Deafen and Marked duration decreased from 12s → 8s 
+**{{ui|Nerf}} Width decreased from 24m → 20m 
+**{{ui|Buff}} Decay now remains a consistent 80 damage over its duration instead of decreasing over time
+
+====={{ai|Gekko}}=====
+*[[Globules]]
+**{{ui|Nerf}} Cooldown upon reclaim increased from 10s → 20s
+*{{abi text|Wingman}}
+**{{ui|Nerf}} Health decreased from 80 → 60 
+**{{ui|Nerf}} Concuss duration decreased from 3s → 2.5s ''(wiki editor note: patch notes state 3.5s instead as previous value)
+*{{abi text|Thrash}}
+**{{ui|Nerf}} Health decreased from 200 → 180
+
+====={{ai|KAY/O}}===== 
+*{{abi text|ZERO/point}}
+**{{ui|Nerf}} Cooldown increased from 40s → 60s 
+*{{abi text|FLASH/drive}}
+**{{ui|Buff}} Underhand maximum flash duration increased from 1.5s → 2.25s
+*{{abi text|NULL/cmd}}
+**Updated to match Stim standardization 
+***{{ui|Nerf}} Increased fire rate reduced from 15% → 10%
+***Added standardized weapon draw time for Stims
+****{{ui|Added}} NEW: Increased weapon draw speed by 10% 
+***<s>Added weapon recovery speed for Stims</s> ''(wiki editor note: this buff was already in effect beforehand)''
+****<s>NEW: Weapon recovery speed increased by 10%</s>
+
+====={{ai|Sova}}=====
+*{{abi text|Recon Bolt}}
+**{{ui|Nerf}} Cooldown increased from 40s → 60s
+
+====Duelists====
+Most Duelist gameplay is in a healthy state, so we’re making minor tunings. We want stuns and slows to feel rewarding when they lead to kills, so we’re making adjustments that will reward precise timing and well-coordinated ability combos. 
+
+====={{ai|Iso}}=====
+*{{abi text|Kill Contract}}
+**{{ui|Nerf}} Length decreased from 48m → 36m
+
+====={{ai|Neon}}=====
+Neon’s High Gear changes allow Neon to make more significant timing breaks but will require more thoughtful resource management.
+
+*[[Energy]]
+**{{ui|Nerf}} Battery recharge decreased, time to recharge to full battery increased from 20s → 60s 
+**{{ui|Buff}} Battery drain reduced, increasing sprint time with full battery from 10s → 16s ''(wiki editor note: the patch notes documented it as 12s → 16s)
+*{{abi text|Relay Bolt}}
+**{{ui|Nerf}} Concuss duration decreased 3.5s → 2.5s
+
+====={{ai|Reyna}}=====
+*{{abi text|Leer}}
+**{{ui|Nerf}} Health decreased from 80 → 60 
+*{{abi text|Empress}}
+**Updated to match stim standardization
+***{{ui|Nerf}} Faster reload time reduced from 25% → 10% 
+***{{ui|Nerf}} Increased fire rate reduced from 15% → 10%
+***{{ui|Nerf}} Increased weapon draw speed reduced from 25% → 10%
+***{{ui|Nerf}} Increased weapon recovery speed reduced from 25% → 10%
+
+====={{ai|Waylay}}=====
+*{{abi text|Saturate}}
+**{{ui|Nerf}} Hindered duration decreased from 4s → 3s
+*{{abi text|Convergent Paths}}
+**{{ui|Removed}} Ultimate no longer spawns an afterimage of Waylay
+**{{ui|Adjustment}} She is no longer pushed back when casting 
+**{{ui|Nerf}} Ultimate now briefly restricts aim rotation and movement speed similar to [[Breach]]’s [[Rolling Thunder]] when casting
+**{{ui|Nerf}} Hindered duration decreased from 7s → 6s
+**{{ui|Buff}} Initial windup decreased from 2s → 1s
+**{{ui|Nerf}} Width decreased from 18m → 13.5m
+**{{ui|Nerf}} Decreased movement speed buff on ult from 15% → 10%
+
+====={{ai|Yoru}}=====
+We’ve seen a notable rise in Yoru mastery, but his kit has become so effective it can overshadow other Duelists, and even some Initiators. We’re making changes to make his tools a bit more selfish and encourage coordinated team plays to achieve his potential.
+
+*{{abi text|Gatecrash}}
+**{{ui|Nerf}} Health decreased from 60 → 20 
+**{{ui|Adjustment}} Audio now plays from Yoru’s location when Yoru teleports or fakes it
+*{{abi text|Fakeout}}
+**{{ui|Nerf}} Flash duration decreased from 3s → 2s 
+*{{abi text|Blindside}}
+**{{ui|Nerf}} Flash duration decreased from 1.75s → 1.5s
+**{{ui|Nerf}} Flash now follows the standard flash falloff curves as other Agents. Previously, Yoru’s flashes that were slightly offscreen were more effective than intended 
+*{{abi text|Dimensional Drift}}
+**{{ui|Nerf}} Yoru can no longer cast Blindside, or set up his Fakeout during Dimensional Drift 
+***He can still cast the initial Gatecrash and reactivation, as well as reactivation of Fakeouts
+
+====={{ai|Raze}}=====
+*{{abi text|Blast Pack}}
+**{{ui|Nerf}} Raze can now be affected by Slows while midair with Blast Pack 
+***If Slowed, the force from Blast Pack will be reduced, similar to how slows affect other Dashes
+
+====Controllers====
+Controllers were largely in a healthy state and required few changes, though some abilities have been adjusted to align with recent roster-wide updates.
+
+====={{ai|Astra}}=====
+*{{abi text|Gravity Well}}
+**{{ui|Nerf}} Fragile duration decreased from 5s → 2.5s 
+**{{ui|Nerf}} Cooldown increased from 45s → 60s 
+*{{abi text|Nova Pulse}}
+**{{ui|Nerf}} Concuss duration decreased from 3.5s → 2.5s
+**{{ui|Nerf}} Cooldown increased from 45s → 60s 
+*{{abi text|Nebula/Dissipate}}
+**{{ui|Nerf}} Cooldown increased 25s → 35s
+
+====={{ai|Brimstone}}=====
+*{{abi text|Stim Beacon}}
+**Updated to match stim standardization 
+***{{ui|Nerf}} Increased fire rate reduced from 15% → 10%
+***{{ui|Nerf}} Increased movement speed reduced from 15% → 10%
+
+====={{ai|Omen}}=====
+*{{abi text|Dark Cover}}
+**{{ui|Nerf}} Cooldown increased from 30s → 40s
+*{{abi text|Paranoia}}
+**{{ui|Buff}} Projectile speed increased from 16 meters per second → 20 meters per second 
+**{{ui|Nerf}} Travel distance reduced from 32.5m → 25m 
+
+====={{ai|Viper}}=====
+*[[Toxin]]
+**{{ui|Nerf}} Initial contact now inflicts less Decay, reduced from 30 → 10 health
+
+====Sentinels====
+Sentinels are premier at defending territory, but we think there can be more room for dialogue between attackers and defensive Sentinel utilities. These adjustments aim to make it easier to take advantage of intended counterplay while sharpening each Sentinel’s unique identity. We're also reducing the health of some of the tankier shootables to make them sponge less of your bullets.
+
+====={{ai|Vyse}}=====
+Vyse has been great at stalling and punishing enemies that move recklessly through her space but countering her has been more difficult than intended. We're adjusting Shear and Arc Rose’s counterplay rules to make them simpler and more consistent for enemies to perform.
+
+*{{abi text|Arc Rose}}
+**{{ui|Nerf}} Arc Rose is now destructible after the flash windup starts rather than being invulnerable.
+**{{ui|Removed}} When enemy players are successfully flashed, the audio cue and voiceline alerting Vyse and her allies is removed 
+**{{ui|Nerf}} Flash duration decreased from 2.25s → 2.0s 
+**Cooldowns are slightly adjusted 
+***{{ui|Nerf}} After destruction, cooldown is increased from 45s → 60s
+***{{ui|Nerf}} Recalling the ability will now always incur a 20s cooldown 
+*{{abi text|Shear}}
+**{{ui|Nerf}} Wall Trap trigger logic has been reworked to make it easier to bait out. The wall now spawns immediately when an enemy enters and then leaves its trigger zone. Enemies will also hear an audio cue, audible only to them, when they enter the trigger zone 
+*{{abi text|Razorvine}}
+**{{ui|Nerf}} Health decreased from 40 → 20 
+*{{abi text|Steel Garden}}
+**{{ui|Nerf}} Initial windup increased from 3.4s → 4.4s 
+**{{ui|Nerf}} Radius decreased from 32.5m → 26m 
+
+====={{ai|Cypher}}=====
+We're asking Cypher players to be craftier with their camera placements and focus on his role as a surveillance network master. Enemies will now see and hear a Spycam when it is nearby, similar to Vyse’s Arc Rose. Trapwire has been adjusted to be less lethal, though Cypher can still convert to a kill when they are disrespected. 
+
+*{{abi text|Spycam}}
+**{{ui|Added}} {{ui|Nerf}} Added stealthing functionality
+***Inactive camera will be revealed to enemies when you are within 8 meter radius of the camera, and will also have an accompanying audio tell
+***When the camera is active, there will be a louder persistent camera audio for enemies with a 12m range 
+**{{ui|Nerf}} Cooldown when destroyed is increased from 45s → 60s 
+*{{abi text|Trapwire}}
+**Trapwire activation windup decreased
+***{{ui|Nerf}} PC: 1.5s → 0.9s 
+***{{ui|Nerf}} Console: 2.5s → 1.9s 
+**{{ui|Removed}} Trapwire activation has been adjusted to remove the Concuss and Tether debuffs. Timing of other debuffs has been changed
+***Previously, players were Tethered and Revealed after 0.5 seconds. Trapwire would then activate after 1.5 seconds and Concuss players if it was not destroyed.
+***{{ui|Added}} Now, players will be immediately Slowed upon crossing the Trapwire Trapwire will now activate after 0.9 seconds and Reveal players if not destroyed OR if the player moves 4 meters away from the attached location. 
+
+====={{ai|Killjoy}}=====
+*{{abi text|Turret}}
+**{{ui|Nerf}} Cooldown when destroyed increased from 45s → 60s
+**{{ui|Nerf}} Reactivation time for turret increased from 0.5s → 2s
+**{{ui|Buff}} Turret movement tagging per bullet increased 29.5% → 50% 
+**{{ui|Added}} {{ui|Nerf}} NEW: Added a “windup” effect when Killjoy first re-enters the activation range 
+*{{abi text|Alarmbot}}
+**{{ui|Nerf}} Health decreased from 50 → 20 
+**{{ui|Nerf}} Reactivation time increased from 1s → 2s
+**{{ui|Added}} {{ui|Nerf}} NEW: Added a “windup” effect when Killjoy first re-enters the activation range
+
+====={{ai|Deadlock}}=====
+*{{abi text|GravNet}}
+**{{ui|Nerf}} Cooldown increased from 40s → 60s 
+*{{abi text|Barrier Mesh}}
+**{{ui|Buff}} Cost reduced from 400 → 300 
+**{{ui|Nerf}} Health of smaller nodes decreased from 570 → 480 
+*{{abi text|Sonic Sensor}}
+**{{ui|Nerf}} Concuss duration reduced 3.5s → 2.5s 
+
+====={{ai|Sage}}=====
+*{{abi text|Barrier Orb}}
+**{{ui|Buff}} Cost reduced from 400 → 300 
+**{{ui|Buff}} Fortification delay reduced from 3.3 sec → 2 sec 
+**{{ui|Nerf}} Health of Barrier segments decreased from 800 → 600
+
+===Map Updates===
+In general, our focus for this patch was to encourage more on-site play for both teams, and to make planting for main more risky and predictable. 
+
+====[[Pearl]]====
+Defending post-plant positions from B Main should remain a viable strategy, but it’s become overly difficult for defenders to retake the site, particularly when utility is in play. To address this, we’re making the following changes: 
+
+*B-Site 
+**Removed the deep sightline from B Long - This angle provided too much control over the site from a safe distance
+**Adjusted cover positioning on and around the site - These changes will encourage more direct engagements on the site itself 
+
+{| style="margin:auto"
+|[[File:Pearl 11.08 B Site 1.jpg|300px]]
+|[[File:Pearl 11.08 B Site 2.jpg|300px]]
+|[[File:Pearl 11.08 B Site 3.jpg|300px]]
+|}
+
+====[[Abyss]]====
+Seeing the map evolve over the last year, we’ve observed many prominent strategies emerge and identified areas that could be improved, mainly focused on strengthening defensibility and improving pathing 
+
+*B-Site 
+**Site Changes - Currently both teams are having a tough time playing on-site—Defenders struggle with the initial site hold, while Attackers have difficulty holding the spike during post-plant and feel forced to plant for main. We want to take a pass at improving on-site play for both teams while also making post-plants for main more risky. 
+
+{| style="margin:auto"
+|[[File:Abyss 11.08 B Site 1.jpg|300px]]
+|[[File:Abyss 11.08 B Site 2.jpg|300px]]
+|[[File:Abyss 11.08 B Site 3.jpg|300px]]
+|-
+|[[File:Abyss 11.08 B Site 4.jpg|300px]]
+|[[File:Abyss 11.08 B Site 5.jpg|300px]]
+|}
+
+*Mid 
+**Mid Hallway Changes - We want to help open up quicker macro pathing options for both teams. We’re adjusting the hallway in Mid that leads towards B Main to allow for improved flow through the map for both teams.
+
+{| style="margin:auto"
+|[[File:Abyss 11.08 Mid 1.jpg|300px]]
+|[[File:Abyss 11.08 Mid 2.jpg|300px]]
+|}
+
+====Map Pool Updates==== 
+*[[Pearl]] and [[Split]] are IN the [[Competitive]] and [[Deathmatch]] queues. 
+*[[Lotus]] and [[Ascent]] are OUT of the COMPETITIVE and DEATHMATCH queues
+
+===Weapons Updates===
+Our goal is for VALORANT's gunplay to feel rewarding to master with exciting weapon choices, allowing for players to express their playstyles in how they take fights. Each weapon in our arsenal should feel they have a unique identity with their own strengths and weaknesses and though the arsenal has felt like it's overall pretty healthy, we want to make sure we continue to push on making weapons feel like competitive choices for different scenarios and round economy states. 
+
+====PC-only====
+=====Rifles=====
+We’ve noticed that tap strafing has been generally the most viable shooting style. We want the decision between tapping, bursting, and spraying to feel more balanced and a more meaningful optimization. We are making some minor adjustments to spraying rifles to make them more of a viable option for fights at the close and mid ranges. 
+
+A quick definition for those of you who may not know- 
+*% chance of yaw switch: % chance the gun will swap horizontal recoil from one side to the other (left vs right from your crosshair) 
+*Yaw switch time: how quickly the gun swaps horizontal recoil from one side to the other. When yaw switch time increases, this means you have more time to counteract the recoil 
+*Protected bullet counts: how many bullets in a spray you can use before your gun has a chance of yaw switch 
+
+======[[Bulldog]]======
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.37s → 0.6s 
+*{{ui|Nerf}} Chance for horizontal (Yaw) to switch increased from 6% → 10%
+
+======[[Phantom]]======
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.37s → 0.6s
+*{{ui|Nerf}} Chance for horizontal (Yaw) to switch increased from 6% → 10% 
+*{{ui|Buff}} Protected bullet count increased from 6 → 8 bullets
+
+======[[Vandal]]======
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.37s → 0.6s
+*{{ui|Nerf}} Chance for horizontal (Yaw) to switch increased from 6% → 10% 
+*{{ui|Buff}} Protected bullet count increased from 4 → 6 bullets 
+
+=====Submachine guns=====
+We’re making some changes to SMGs to make the Spectre a more appealing purchase over the Stinger in some scenarios, while also increasing the mastery needed to control the weapon when trying to punch up in eco rounds. 
+
+======[[Spectre]]======
+*{{ui|Buff}} Total spread reduced from 1.5 → 1.4 
+*{{ui|Buff}} Tap Efficiency increased from 2 → 3 
+**Tap Efficiency determines the rate that inaccuracy is accrued when re-firing prior to waiting for the complete duration of a weapon’s respective Gun Recovery Time. The higher the Tap Efficiency, the lower the rate of inaccuracy accrual 
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.18s → 0.28s
+*{{ui|Buff}} Protected bullet count increased from 4 → 5 bullets 
+
+======[[Stinger]]======
+*Full Auto
+**{{ui|Nerf}} Total spread increased from 1.3 → 1.5
+**{{ui|Nerf}} Total spread accrued faster from 7 bullets → 6 bullets
+**{{ui|Nerf}} Vertical (Pitch) recoil curve increases more aggressively
+***Total recoil is unchanged
+
+====Console-only====
+=====Spectre===== 
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.20s → 0.28s
+
+=====Stinger=====
+*Full Auto 
+**{{ui|Nerf}} Vertical (Pitch) recoil curve increases more aggressively 
+***Total recoil is unchanged 
+
+=====Bulldog=====
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.50s → 0.60s
+
+=====Phantom===== 
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.50s → 0.60s
+*{{ui|Buff}} Protected bullet count from yaw (horizontal) switching while spraying, increased from 5 → 8 bullets 
+
+=====Vandal=====
+*{{ui|Buff}} Horizontal (Yaw) switch time increased from 0.50s >>> 0.60s 
+*{{ui|Buff}} Protected bullet count from yaw (horizontal) switching while spraying, increased from 5 → 6 bullets 
+
+===Competitive Updates===
+Starting in 11.09, accounts detected for sharing must enable Riot Mobile multi-factor authentication (MFA) to access [[Competitive]] queue. Other modes will remain unaffected. 
+
+For now in 11.08, you can check out the banner in the Competitive lobby or this article for more information on the upcoming changes.
+
+===Gameplay Systems Updates=== 
+*We've improved how Placeable Abilities like [[Cypher]]'s [[Spycam]] and [[Deadlock]]'s [[Sonic Sensor]] previews when placing in our maps. All previews will now better align to the eventual location of your ability.
+**We have not added or removed any placement options, we have only made our previews more accurate. This is especially so for Deadlock's Sound Sensor, which will see the biggest preview change, moving away from the current snappy behavior, to a more smooth preview. 
+
+===Player Behavior Updates=== 
+*Added “Rank Manipulation” as a new reporting category.
+**Please use ‘Rank Manipulation’ instead of ‘Cheating’ to report players who abuse matchmaking. This encompasses behaviors we commonly know as smurfing, wintrading, and boosting.
+
+==PC-only==
+===Premier Updates===
+*Welcome to Stage V25A6! 
+**At the end of this Stage, the top 16 teams in Invite will remain in Invite. All other Invite teams will be demoted at the start of the next Stage. These rules are listed on the Standings tab. 
+**Demoted teams will seed into the zone they originally promoted from. Next Stage, Team Owners can change their zone in the Team Settings dropdown anytime before the team plays a match. 
+**If your team cannot be placed into a zone at the start of the next Stage, your Team Owner will be prompted to select a zone. 
+**Divisions other than Invite will not have demotion, and teams will still be promoted or be seeded into a division as normal at the start of next Stage. 
+*Contender Eligibility updates 
+**Contender Eligibility for 2025 expires at the end of Stage V25A6. 
+**To be Contender Eligible in 2026, you must perform a qualifying action in Stage V25A6 or at any point in 2026. 
+**Qualifying actions include: 
+***Play a Weekly or Playoff match on a team in Contender or Invite Division. 
+***Reach Immortal 3 or higher peak rank in [[Competitive#Ranks|Competitive]]. 
+***Play in a Playoff match in Elite 5. 
+**Contender Eligibility for 2026 expires at the end of 2026. 
+*VCT Team Tags 
+**Starting this patch, we’re expanding the Team Tag feature to include tags for VCT teams! Pros will now have their team’s tag shown before their name throughout the client - in the social panel, in lobby, in game (like the killfeed), and on the Competitive Leaderboards! 
+**VCT team names and tags are reserved ONLY for VCT partnered teams.
+***Current Premier teams that have a team name and/or tag of a VCT partnered team will receive a prompt in-game for their Team Owner to change their team name.
+
+[[Category:Patch Notes]]

@@ -1,0 +1,697 @@
+{
+    "uncategorized_rate": 2.69,
+    "total_meaningful_bullet_lines": 1525,
+    "total_uncategorized_lines": 41,
+    "passed_success_criterion": true,
+    "template_frequency": {
+        "{{abi text}}": 568,
+        "{{ui}}": 535,
+        "{{ai}}": 479,
+        "{{collection}}": 68,
+        "{{patchnav}}": 45,
+        "{{patch}}": 18,
+        "{{capsule}}": 16,
+        "{{tocright}}": 14,
+        "{{quote1}}": 13,
+        "{{wi}}": 7,
+        "{{patchv}}": 6,
+        "{{w}}": 2
+    },
+    "unhandled_templates": [
+        "{{patchnav}}",
+        "{{collection}}",
+        "{{patch}}",
+        "{{capsule}}",
+        "{{patchv}}",
+        "{{w}}",
+        "{{tocright}}",
+        "{{quote1}}"
+    ],
+    "uncategorized_lines": [
+        {
+            "version": "10.04",
+            "line": "*Combat Report"
+        },
+        {
+            "version": "11.00",
+            "line": "*Neon"
+        },
+        {
+            "version": "11.00",
+            "line": "*Phoenix"
+        },
+        {
+            "version": "11.00",
+            "line": "*NEW MAP: CORRODE"
+        },
+        {
+            "version": "11.00",
+            "line": "*MAP POOL UPDATES"
+        },
+        {
+            "version": "11.00",
+            "line": "*CORRODE QUEUE"
+        },
+        {
+            "version": "11.04",
+            "line": "*Map Pool Updates"
+        },
+        {
+            "version": "11.08",
+            "line": "*B-Site"
+        },
+        {
+            "version": "11.08",
+            "line": "*B-Site"
+        },
+        {
+            "version": "11.08",
+            "line": "*Full Auto"
+        },
+        {
+            "version": "11.08",
+            "line": "*Full Auto"
+        },
+        {
+            "version": "12.00",
+            "line": "*New Limited Time Mode"
+        },
+        {
+            "version": "12.00",
+            "line": "*Leaving Limited Time Mode"
+        },
+        {
+            "version": "12.02",
+            "line": "*[[Soul Harvest|Soul Orbs]] (Passive)"
+        },
+        {
+            "version": "12.05",
+            "line": "*Abilities:"
+        },
+        {
+            "version": "12.05",
+            "line": "*Crystal Model Update"
+        },
+        {
+            "version": "12.05",
+            "line": "*Assist Banners"
+        },
+        {
+            "version": "12.05",
+            "line": "*Killfeed Updates"
+        },
+        {
+            "version": "12.05",
+            "line": "*Status Effect Tags"
+        },
+        {
+            "version": "12.05",
+            "line": "*New Limited Time Mode"
+        },
+        {
+            "version": "12.09",
+            "line": "***Bucky: crouch accuracy modifier increased from 10 >>> 15%"
+        },
+        {
+            "version": "12.09",
+            "line": "***Judge/Shorty: crouch accuracy modifier decreased from 25 >>> 15%"
+        },
+        {
+            "version": "12.09",
+            "line": "***{{ui|Nerf}} Stationary: Accuracy multiplier decreased from .075 >>> .75"
+        },
+        {
+            "version": "12.09",
+            "line": "***{{ui|Nerf}} Walking: Accuracy multiplier decreased from .09 >>> 1.5"
+        },
+        {
+            "version": "12.09",
+            "line": "***{{ui|Nerf}} Running: Accuracy multiplier decreased from .1 >>> 3.0"
+        },
+        {
+            "version": "9.03",
+            "line": "*'''Ground Spreading Abilities"
+        },
+        {
+            "version": "9.03",
+            "line": "*'''{{ai|Sage}}\u2019s Barrier Orb"
+        },
+        {
+            "version": "9.04",
+            "line": "*Abilities:"
+        },
+        {
+            "version": "9.08",
+            "line": "*B Main"
+        },
+        {
+            "version": "9.08",
+            "line": "*B Main Exterior"
+        },
+        {
+            "version": "9.08",
+            "line": "*B Site"
+        },
+        {
+            "version": "9.08",
+            "line": "*B Site Back"
+        },
+        {
+            "version": "9.08",
+            "line": "*B Boba"
+        },
+        {
+            "version": "9.08",
+            "line": "*Mid Courtyard"
+        },
+        {
+            "version": "9.10",
+            "line": "*[[Passive Effects#Drift|Drift]] (Passive)"
+        },
+        {
+            "version": "9.10",
+            "line": "*Overheal UI Visual Update"
+        },
+        {
+            "version": "9.10",
+            "line": "*Smoke Visual Update"
+        },
+        {
+            "version": "9.10",
+            "line": "*Run Inaccuracy: 2 >>> 2.3"
+        },
+        {
+            "version": "9.10",
+            "line": "*Run Inaccuracy: 2 >>> 2.3"
+        },
+        {
+            "version": "9.10",
+            "line": "*All Rifles"
+        },
+        {
+            "version": "9.10",
+            "line": "*All Machine Guns"
+        }
+    ],
+    "version_statistics": {
+        "10.00": {
+            "version": "10.00",
+            "agent_changes": 22,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 22,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "10.01": {
+            "version": "10.01",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 9,
+            "bug_fixes": 19,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "10.02": {
+            "version": "10.02",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 18,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "10.03": {
+            "version": "10.03",
+            "agent_changes": 4,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 15,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": []
+        },
+        "10.04": {
+            "version": "10.04",
+            "agent_changes": 48,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 9,
+            "unparsed_lines": 1,
+            "unrecognized_templates": 5,
+            "uncategorized_examples": [
+                "*Combat Report"
+            ]
+        },
+        "10.05": {
+            "version": "10.05",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 7,
+            "bug_fixes": 25,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": []
+        },
+        "10.06": {
+            "version": "10.06",
+            "agent_changes": 23,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 33,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 9,
+            "uncategorized_examples": []
+        },
+        "10.07": {
+            "version": "10.07",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 4,
+            "bug_fixes": 17,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "10.08": {
+            "version": "10.08",
+            "agent_changes": 4,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 37,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": []
+        },
+        "10.09": {
+            "version": "10.09",
+            "agent_changes": 14,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 11,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 9,
+            "uncategorized_examples": []
+        },
+        "10.10": {
+            "version": "10.10",
+            "agent_changes": 6,
+            "weapon_changes": 0,
+            "competitive_changes": 7,
+            "bug_fixes": 27,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 6,
+            "uncategorized_examples": []
+        },
+        "10.11": {
+            "version": "10.11",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 1,
+            "bug_fixes": 13,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": []
+        },
+        "11.00": {
+            "version": "11.00",
+            "agent_changes": 40,
+            "weapon_changes": 0,
+            "competitive_changes": 8,
+            "bug_fixes": 24,
+            "unparsed_lines": 5,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": [
+                "*Neon",
+                "*Phoenix",
+                "*NEW MAP: CORRODE",
+                "*MAP POOL UPDATES",
+                "*CORRODE QUEUE"
+            ]
+        },
+        "11.01": {
+            "version": "11.01",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 0,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": []
+        },
+        "11.02": {
+            "version": "11.02",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 31,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": []
+        },
+        "11.04": {
+            "version": "11.04",
+            "agent_changes": 12,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 21,
+            "unparsed_lines": 1,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": [
+                "*Map Pool Updates"
+            ]
+        },
+        "11.05": {
+            "version": "11.05",
+            "agent_changes": 2,
+            "weapon_changes": 0,
+            "competitive_changes": 1,
+            "bug_fixes": 34,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "11.06": {
+            "version": "11.06",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 1,
+            "bug_fixes": 6,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": []
+        },
+        "11.07": {
+            "version": "11.07",
+            "agent_changes": 32,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 12,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "11.08": {
+            "version": "11.08",
+            "agent_changes": 144,
+            "weapon_changes": 0,
+            "competitive_changes": 2,
+            "bug_fixes": 0,
+            "unparsed_lines": 4,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": [
+                "*B-Site",
+                "*B-Site",
+                "*Full Auto",
+                "*Full Auto"
+            ]
+        },
+        "11.09": {
+            "version": "11.09",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 6,
+            "bug_fixes": 47,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": []
+        },
+        "11.10": {
+            "version": "11.10",
+            "agent_changes": 11,
+            "weapon_changes": 0,
+            "competitive_changes": 5,
+            "bug_fixes": 62,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": []
+        },
+        "11.11": {
+            "version": "11.11",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 47,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 7,
+            "uncategorized_examples": []
+        },
+        "12.00": {
+            "version": "12.00",
+            "agent_changes": 50,
+            "weapon_changes": 8,
+            "competitive_changes": 5,
+            "bug_fixes": 58,
+            "unparsed_lines": 2,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": [
+                "*New Limited Time Mode",
+                "*Leaving Limited Time Mode"
+            ]
+        },
+        "12.01": {
+            "version": "12.01",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 2,
+            "bug_fixes": 36,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 6,
+            "uncategorized_examples": []
+        },
+        "12.02": {
+            "version": "12.02",
+            "agent_changes": 19,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 24,
+            "unparsed_lines": 1,
+            "unrecognized_templates": 6,
+            "uncategorized_examples": [
+                "*[[Soul Harvest|Soul Orbs]] (Passive)"
+            ]
+        },
+        "12.03": {
+            "version": "12.03",
+            "agent_changes": 4,
+            "weapon_changes": 0,
+            "competitive_changes": 23,
+            "bug_fixes": 11,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 6,
+            "uncategorized_examples": []
+        },
+        "12.04": {
+            "version": "12.04",
+            "agent_changes": 1,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 41,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 5,
+            "uncategorized_examples": []
+        },
+        "12.05": {
+            "version": "12.05",
+            "agent_changes": 57,
+            "weapon_changes": 0,
+            "competitive_changes": 4,
+            "bug_fixes": 19,
+            "unparsed_lines": 6,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": [
+                "*Abilities:",
+                "*Crystal Model Update",
+                "*Assist Banners",
+                "*Killfeed Updates",
+                "*Status Effect Tags"
+            ]
+        },
+        "12.06": {
+            "version": "12.06",
+            "agent_changes": 4,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 38,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 9,
+            "uncategorized_examples": []
+        },
+        "12.07": {
+            "version": "12.07",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 26,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 8,
+            "uncategorized_examples": []
+        },
+        "12.08": {
+            "version": "12.08",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 26,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 5,
+            "uncategorized_examples": []
+        },
+        "12.09": {
+            "version": "12.09",
+            "agent_changes": 4,
+            "weapon_changes": 29,
+            "competitive_changes": 1,
+            "bug_fixes": 25,
+            "unparsed_lines": 5,
+            "unrecognized_templates": 5,
+            "uncategorized_examples": [
+                "***Bucky: crouch accuracy modifier increased from 10 >>> 15%",
+                "***Judge/Shorty: crouch accuracy modifier decreased from 25 >>> 15%",
+                "***{{ui|Nerf}} Stationary: Accuracy multiplier decreased from .075 >>> .75",
+                "***{{ui|Nerf}} Walking: Accuracy multiplier decreased from .09 >>> 1.5",
+                "***{{ui|Nerf}} Running: Accuracy multiplier decreased from .1 >>> 3.0"
+            ]
+        },
+        "9.0": {
+            "version": "9.0",
+            "agent_changes": 5,
+            "weapon_changes": 0,
+            "competitive_changes": 11,
+            "bug_fixes": 19,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "9.01": {
+            "version": "9.01",
+            "agent_changes": 10,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 55,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "9.02": {
+            "version": "9.02",
+            "agent_changes": 13,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 49,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "9.03": {
+            "version": "9.03",
+            "agent_changes": 5,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 22,
+            "unparsed_lines": 2,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": [
+                "*'''Ground Spreading Abilities",
+                "*'''{{ai|Sage}}\u2019s Barrier Orb"
+            ]
+        },
+        "9.04": {
+            "version": "9.04",
+            "agent_changes": 9,
+            "weapon_changes": 0,
+            "competitive_changes": 1,
+            "bug_fixes": 52,
+            "unparsed_lines": 1,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": [
+                "*Abilities:"
+            ]
+        },
+        "9.05": {
+            "version": "9.05",
+            "agent_changes": 6,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 27,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 3,
+            "uncategorized_examples": []
+        },
+        "9.06": {
+            "version": "9.06",
+            "agent_changes": 8,
+            "weapon_changes": 1,
+            "competitive_changes": 0,
+            "bug_fixes": 35,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": []
+        },
+        "9.07": {
+            "version": "9.07",
+            "agent_changes": 10,
+            "weapon_changes": 0,
+            "competitive_changes": 11,
+            "bug_fixes": 15,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "9.08": {
+            "version": "9.08",
+            "agent_changes": 18,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 17,
+            "unparsed_lines": 6,
+            "unrecognized_templates": 7,
+            "uncategorized_examples": [
+                "*B Main",
+                "*B Main Exterior",
+                "*B Site",
+                "*B Site Back",
+                "*B Boba"
+            ]
+        },
+        "9.09": {
+            "version": "9.09",
+            "agent_changes": 0,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 25,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        },
+        "9.10": {
+            "version": "9.10",
+            "agent_changes": 75,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 18,
+            "unparsed_lines": 7,
+            "unrecognized_templates": 4,
+            "uncategorized_examples": [
+                "*[[Passive Effects#Drift|Drift]] (Passive)",
+                "*Overheal UI Visual Update",
+                "*Smoke Visual Update",
+                "*Run Inaccuracy: 2 >>> 2.3",
+                "*Run Inaccuracy: 2 >>> 2.3"
+            ]
+        },
+        "9.11": {
+            "version": "9.11",
+            "agent_changes": 28,
+            "weapon_changes": 0,
+            "competitive_changes": 0,
+            "bug_fixes": 4,
+            "unparsed_lines": 0,
+            "unrecognized_templates": 2,
+            "uncategorized_examples": []
+        }
+    }
+}

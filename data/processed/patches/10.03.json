@@ -1,0 +1,51 @@
+{
+    "version": "10.03",
+    "date": "February 19th, 2025",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "All slows consistently slow dashes across the whole agent ecosystem now to match behavior we made in patches 9.10 and 9.11 for Vyse and Concuss effects."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "This means it now affects Chamber, Skye, and Harbor\u2019s slows."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Minimap visual language has been updated for increased gameplay clarity & fidelity."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Here\u2019s an example using Icebox:"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "General",
+        "Fixed issues where explosive damaging utility could kill Sentinel trap abilities like Vyse\u2019s Arc Rose from vastly outside its intended radius.",
+        "NOTE: New explosive damage functionality was toggled off for 10.01/10.02 while this was being investigated and fixed. We\u2019ll be monitoring these changes to ensure there are no other issues requiring a toggle.",
+        "Gameplay Systems",
+        "Fixed an issue where you could not move/use the buy menu while the remake vote screen is displayed. This new voting widget also color corrects the confirmation button to be green and the decline button to be red.",
+        "You can now add and edit friend notes for your Riot friends.",
+        "We\u2019ve added a way to search your friends list.",
+        "You can use the friends list search field to filter your friends list by player name or tag.",
+        "When you have more than four party invites, the friends list will now hide them so you can still see your friends. You can click \u2018Show More\u2019 to display any hidden invites.",
+        "Competitive",
+        "Fixed an issue where Remake-ended matches in Competitive queue would display incorrect end-of-game screens after the game.",
+        "Fixed an issue where navigating players on the Leaderboard would sometimes highlight multiple players.",
+        "Premier",
+        "Fixed an issue on the tournament bracket screen where match score was occasionally displayed in black.",
+        "Fixed an issue where the tournament bracket was not properly centered on some ultrawide displays."
+    ],
+    "player_behavior_changes": []
+}

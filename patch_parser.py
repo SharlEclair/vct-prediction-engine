@@ -158,13 +158,22 @@ class PatchParser:
                     is_abi_declaration = False
                     abi_match = self.abi_pattern.search(line_str)
                     if abi_match and bullet_level == 1:
-                        is_abi_declaration = True
-                        current_ability = abi_match.group(1).strip()
+                        # Check if it has actual change details on the same line
+                        line_stripped = self.abi_pattern.sub('', line_str).strip('* ').strip()
+                        if len(line_stripped) > 3 or any(kw in line_stripped.lower() for kw in [" >>> ", " -> ", "increase", "decrease", "reduce", "buff", "nerf", "cost"]):
+                            current_ability = abi_match.group(1).strip()
+                            is_abi_declaration = False
+                        else:
+                            is_abi_declaration = True
+                            current_ability = abi_match.group(1).strip()
                     elif bullet_level == 1 and not any(x in clean_content for x in ["Nerf", "Buff", "Adjustment", "Bugfix"]):
-                        # Fallback: if it's a first-level bullet and has no nerf/buff tags, treat it as ability context
-                        is_abi_declaration = True
-                        current_ability = clean_content
-                        
+                        # Fallback: if it's a short first-level bullet and has no nerf/buff tags, treat it as ability context
+                        if len(clean_content) < 30:
+                            is_abi_declaration = True
+                            current_ability = clean_content
+                        else:
+                            is_abi_declaration = False
+                            
                     if is_abi_declaration:
                         continue
                         

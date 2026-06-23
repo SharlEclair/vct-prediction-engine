@@ -1,0 +1,167 @@
+{{PatchNav|previous=10.11|next=11.01}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 11.00.jpg
+|date    = June 24th, 2025
+|act     = [[Season 2025: Act 4]]
+|changes = '''All Platforms:'''
+*[[Corrode]] release
+*[[Agents]]
+*[[Competitive]]
+*[[Maps#Map rotations|Map rotation update]]
+|bundle  = 
+*{{collection|Phaseguard}}
+*{{collection|Rupture}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-00/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v11.00.
+
+<i>Heya folks! It’s Ash and I’m going to get straight into it because this is a BIG patch. Let’s go!
+
+TLDR;
+*Agents
+**Agent abilities adjusted = Waylay, Reyna, Phoenix, Neon
+**Agent clarity and consistency improvements = Breach, Sova, Clove, Killjoy, Cypher, Omen, Brimstone
+*Maps
+**New map = Corrode
+**New mode = Corrode Only queue in Swiftplay for 5 days (to help you learn the map!)
+**For Competitive and Deathmatch = Bind and Corrode are in, Pearl and Split are out
+**For the first 2 weeks of Competitive, Corrode RR losses are reduced by 50%, wins are still 100% (to also help you learn the map!)
+*Competitive
+**You may see less of a drop in rank after completing placements for this midseason reset.
+**The maximum rank you can place is now Ascendant 3 instead of Ascendant 1.
+Now there’s other spicy updates, such as the esports hub coming to console, so grab a coffee and jump in below!</i>
+
+==All Platforms==
+===General Updates===
+*{{ui|Adjustment}} [[Suppress|Suppression]] visual effects have been updated to be more visible on opponents to improve clarity of the debuff
+*{{ui|Adjustment}} We’ve added new UI/UX animations around picking up the spike to hopefully make it more obvious when players have picked it up.
+
+===Agent Updates===
+===={{ai|Waylay}}====
+Waylay has shown a steep mastery curve since her release, where her win rate significantly improves the more games you play. That said, she is still slightly weak at all skill levels. These buffs aim to sharpen her ability to take fights right after exiting Lightspeed and make her Refract loop easier to play around, as well as improve Waylay’s flow and gameplay feel. Saturate does not land at a comparable rate to other abilities, so we’re increasing its power to justify its 300 credit cost.
+*{{abi text|Refract}}
+**Refract is faster and smoother, reducing total travel time
+***{{ui|Buff}} Minimum time in refract decreased 0.5s >>> 0.35s
+***{{ui|Buff}} Maximum time in refract decreased 3s >>> 2s
+**{{ui|Buff}} Unequip time decreased 1.0s >>> 0.8s
+**{{ui|Buff}} Refract delay after reactivation decreased 0.1s >>> 0.05s
+*{{abi text|Lightspeed}}
+**{{ui|Buff}} Unequip delay decreased 0.8s >>> 0.6s
+*{{abi text|Saturate}}
+**{{ui|Buff}} Windup before explosion decreased 0.75s >>> 0.6s
+**{{ui|Buff}} Size increased 10m total size >>> 12m total size
+
+As we continue to tune ability strength for consistency, there’s opportunity for a couple of small changes with a few of our Agents so there’s more room for counterplay and opportunities for clutch moments like flicking to turn flashes.
+
+===={{ai|Reyna}}====
+Leer is tankier than many of our other comparable shootable objects, and can feel especially so when it’s unclear if you are successfully shooting Leer after it has formed.
+*{{abi text|Leer}}
+**{{ui|Nerf}} HP decreased 100 >> 80
+**{{ui|Added}} Audio and visual hit confirm feedback has been added to shots that land on Leer.
+
+===={{ai|Neon}} & {{ai|Phoenix}}====
+We’re also adjusting Neon’s Relay Bolt and Phoenix’s Curveball to have room for some additional counterplay. These abilities are meant to create strong combat advantages, but their fast activation left little time for opponents to respond. These changes aim to increase moment-to-moment counterplay without removing the need to anticipate and position against them.
+
+*Neon
+**{{ui|Nerf}} {{abi text|Relay Bolt}} Windup increased 0.8s >>> 1.0s
+*Phoenix
+**{{ui|Nerf}} {{abi text|Curveball}} Windup increased 0.5s >>> 0.6s
+
+===Clarity and Consistency Updates===
+These below changes are part of our ongoing effort to improve gameplay consistency & combat clarity similar to our updates to Neon’s Overdrive visual effects and Deadlock’s Barrier Mesh health states.
+
+*{{ai|Breach}}
+**{{abi text|Aftershock}}
+***{{ui|Adjustment}} Visual effects around the windup and explosions resolve slightly more quickly and block less gameplay space
+*{{ai|Sova}}
+**{{abi text|Recon Bolt}}
+***{{ui|Adjustment}} Increased volume of Recon Bolt’s projectile loop and improved how the arrow’s sound travels through the air to make it easier to track
+***{{ui|Adjustment}} Audio priority and attenuation adjusted so that you can more reliably hear the arrow when multiple audio cues are present
+***{{ui|Adjustment}} Audio tech updated to make it easier understand the trajectory of the arrow, point of impact, and reveal radius
+**{{abi text|Owl Drone}}
+***{{ui|Added}} Enemies now hear a light warning audio loop when they are spotted by Sova’s drone
+***{{ui|Added}} Audio hit confirm feedback has been added when shooting the drone successfully
+*{{ai|Clove}}
+**{{abi text|Pick-me-up}}
+***{{ui|Adjustment}} Pick-Me-Up visuals updated to show when Clove’s speed boost is active
+*{{ai|Killjoy}}
+**{{abi text|Lockdown}}
+***{{ui|Buff}} Lockdown’s detain pulse delay: 0.5s >>> 0.15s
+***{{ui|Adjustment}} Lockdown’s visual effects have been updated to match this new behavior
+*{{ai|Cypher}}
+**{{abi text|Spycam}}
+***{{ui|Adjustment}} Spycam’s dart visuals have been updated so that is easier to understand the dart’s directionality
+*{{ai|Omen}}
+**{{ui|Buff}} Given no other dome smoke controllers reveal their own location on smoking, we’ve removed this opponent counterplay specific to Omen.
+**{{ui|Buff}} {{abi text|Dark Cover}} no longer plays audio in third person within 12.5 meters for opponents. This audio will still play for Allies.
+*{{ai|Brimstone}}
+**{{ui|Added}} {{abi text|Sky Smoke}} will now play cast audio within 12.5 meters for allies
+
+===Map Updates===
+*NEW MAP: CORRODE
+**A 5v5 spike mode map featuring layered defenses and strategic depth across its medieval fortress setting. Navigate through contrasting castle fortifications and village structures, battling across multi-level positions in this salt-crystallized stronghold shaped by radianite storms.
+**Corrode features three lanes and two sites.
+*MAP POOL UPDATES
+**[[Bind]] and [[Corrode]] are IN the COMPETITIVE and DEATHMATCH queues.
+**[[Pearl]] and [[Split]] are OUT of the COMPETITIVE and DEATHMATCH queues.
+**Corrode is now also available to play in Premier, Unrated, Swiftplay, Spike Rush, and Escalation.
+
+===Modes Updates===
+*CORRODE QUEUE
+**Corrode Only queue will be available for 5 days.
+**Corrode Only games will use the Swiftplay mode format.
+*[[Escalation]]
+**{{ui|Removed}} Escalation will be temporarily disabled during the 5-day Corrode-only queue period.
+**{{ui|Bugfix}} [[Icebox]] has been reenabled in Deathmatch and Escalation game modes after addressing spawn-related issues that emerged in patch {{patch|10.09}}.
+
+===Competitive Updates===
+*Ranked Gun Buddy has arrived!
+**Act IV starts today so you’ll be receiving your ranked buddy this patch. Remember that it’s based on the highest rank you achieved throughout the first three acts of Season 2025.
+*Corrode Launch Event
+**Corrode will be available to play in Competitive queue on the first day of the patch!
+**RR losses on Corrode will be 50% reduced for the first two weeks, but don’t worry, you will still receive 100% of the RR for any wins on Corrode
+*We’ve made some adjustments to rank resets. Hop back into Competitive and see where you land!
+**{{ui|Buff}} Players may see less of a drop in rank after completing placements for this midseason reset.
+**{{ui|Buff}} The maximum rank you can place is now Ascendant 3.
+
+===Bug Fixes===
+*General
+**{{ui|Bugfix Nerf}} Fixed a bug with all [[Vulnerable]]s/Fragiles where the visual effects could linger on a target longer than the gameplay debuff duration
+**{{ui|Bugfix Nerf}} Fixed a bug where destructible deployables like Tejo’s Stealth Drone and Fade’s Prowlers could keep teleporter doors open on Bind
+*Agents
+**{{ai|KAY/O}}
+***{{ui|Bugfix Buff}} Fixed an issue where KAYO’s [[NULL-cmd|ultimate]] sometimes did not apply the suppression visuals to opponents
+**{{ai|Raze}}
+***{{ui|Bugfix}} Fixed an issue where Raze’s {{abi text|Paint Shells}} VFX would persist across rounds
+**{{ai|Omen}}
+***{{ui|Bugfix}} Fixed an issue where targeting views could be inconsistently applied during {{abi text|Dark Cover}} if {{abi text|Shrouded Step}} was spammed during Dark Cover’s ability equip flow.
+**{{ai|Skye}}
+***{{ui|Bugfix}} Fixed inconsistent spacing in ability tooltips
+**{{ai|Cypher}}
+***{{ui|Bugfix}} Fixed inconsistent spacing in ability tooltips
+**{{ai|Breach}}
+***{{ui|Bugfix Buff}} Fixed an issue where Breach’s {{abi text|Fault Line}} could rarely fail to apply its debuff to targets around varying elevations on specific charge levels
+**{{ai|Astra}}
+***{{ui|Bugfix Buff}} Fixed an issue where disconnecting and reconnecting within [[Astral Form|Astral World]] could result in Astral World’s visuals persisting for the round despite the player not being in Astral World.
+
+==PC Only==
+===Premier Updates===
+Welcome to Stage V25A4! Participate in [[Premier]] to earn new team recognition!
+*As soon as you join a team, your social hover card now shows your Premier team name, what division you’re in, and your team’s current Premier Score.
+*Play two Weekly matches (or one Playoff match) with your team to earn your Team Tag and basic Plating.
+**Team Tags show up all throughout the client - in the social panel, in lobby, in game (like the killfeed), and on the Competitive Leaderboards!
+**Plating shows up on your player card in the social panel, in lobby, and in game.
+*Qualify for playoffs to evolve your Plating, and win playoffs to unlock the Champion’s Aura - a new player card effect that sticks with you for the entire Act after your playoff win!
+*You can check out everything that’s available in the new Awards tab of the Premier hub.
+
+===Player Behavior Updates===
+*You can now report inappropriate Premier team names from Standings and Match History in the Premier Hub and also from the end of game screens.
+**If your team name is found inappropriate, you may be forced to rename.
+**Repeatedly choosing offensive names will result in Premier restrictions.
+
+==Console Only==
+===Esports Features===
+*The Esports Hub is coming to Console!
+**Check out the VCT overview page that provides a concise snapshot of where we are on the year long VCT journey, dive into the brackets for the International League Stage 2 which starts on July 12, and get familiar with our VCT teams and players!
+[[Category:Patch Notes]]

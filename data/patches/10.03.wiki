@@ -1,0 +1,56 @@
+{{PatchNav|previous=10.02|next=10.04}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.03.jpg
+|date    = February 19th, 2025
+|act     = [[Season 2025: Act 1]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+|bundle  ={{collection|Neptune}} (V25)
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-03/ Patch Notes]
+}}
+
+The following is a list of changes to be made in patch v10.03.
+
+<i>Hey, everyone. Kenny, here.
+This week’s patch is another small one as we get closer to Masters Bangkok Finals. In it, you’ll find some small updates to minimap clarity, changes to Chamber, Skye, and Harbor’s slow behavior, and a couple bug fixes.
+
+GL HF!</i>
+
+==All Platforms==
+===Agent Updates===
+*All [[Slow (disambiguation)|slows]] consistently slow dashes across the whole agent ecosystem now to match behavior we made in patches {{patch|9.10}} and {{patch|9.11}} for Vyse and Concuss effects. 
+**This means it now affects {{ai|Chamber}}, {{ai|Skye}}, and {{ai|Harbor}}’s slows.
+
+===Gameplay Systems Updates===
+*Minimap visual language has been updated for increased gameplay clarity & fidelity.
+**Here’s an example using [[Icebox]]:
+[[File:10.03 minimap change.gif|500px|center]]
+
+===Bug Fixes===
+*'''General
+**Fixed issues where explosive damaging utility could kill Sentinel trap abilities like {{ai|Vyse}}’s {{abi text|Arc Rose}} from vastly outside its intended radius.
+***NOTE: New explosive damage functionality was toggled off for 10.01/10.02 while this was being investigated and fixed. We’ll be monitoring these changes to ensure there are no other issues requiring a toggle. 
+*'''Gameplay Systems
+**Fixed an issue where you could not move/use the buy menu while the remake vote screen is displayed. This new voting widget also color corrects the confirmation button to be green and the decline button to be red.
+
+==Console Only==
+===Social Updates===
+*You can now add and edit friend notes for your Riot friends.
+*We’ve added a way to search your friends list.
+**You can use the friends list search field to filter your friends list by player name or tag.
+*When you have more than four party invites, the friends list will now hide them so you can still see your friends. You can click ‘Show More’ to display any hidden invites.
+
+===Bug Fixes===
+*'''[[Competitive]]
+**Fixed an issue where Remake-ended matches in Competitive queue would display incorrect end-of-game screens after the game.
+**Fixed an issue where navigating players on the Leaderboard would sometimes highlight multiple players.
+
+==PC Only==
+===Bug Fixes===
+*'''[[Premier]]
+**Fixed an issue on the tournament bracket screen where match score was occasionally displayed in black.
+**Fixed an issue where the tournament bracket was not properly centered on some ultrawide displays.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.03]]

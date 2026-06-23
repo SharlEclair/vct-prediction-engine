@@ -1,0 +1,76 @@
+{{PatchNav|previous=10.08|next=10.10}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.09.jpg
+|date    = May 13th, 2025
+|act     = [[Season 2025: Act 3]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Gifting]]
+*[[Game Modes]]
+|bundle  = {{collection|Give Back V25|Give Back // V25}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-09/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.09.
+
+<i>Pssst. Wake up, babe. Tejo’s balance update just dropped.
+
+Hiya, friends. It’s Kenny—here to walk you through Patch 10.09.
+
+Today’s patch has some highly anticipated changes to Tejo, a minor nerf to Breach’s stun, some small updates to starting ultimate points in Swiftplay, and various bug fixes.
+
+Let’s jump into it.</i>
+
+==All Platforms==
+===Agent Updates===
+===={{ai|Tejo}}====
+We hear you. And we agree that Tejo has been overperforming in some factors. We’re constantly monitoring the state of our Agents and feel that Tejo’s rockets have led to higher frequency of unhealthy game states, such as Tejo’s repeated usage of his rockets being able to swing rounds without sacrificing as much compared to other Initiators. We want to maintain Guided Salvo as an ability that is very powerful and reliable at clearing space, but increase the commitment so that wasted or uninformed casts are less free, and so opponents have room to iterate and try different things round-over-round. We feel that reliable map-targeted flush is a powerful enough tool to warrant not having a cooldown. Additionally, we felt that Tejo’s economy could use rebalancing given the strength of Stealth Drone.
+*{{abi text|Guided Salvo}}: We’ve changed the Guided Salvo to be more flexible but have adopted the no recharge model (like on [[Skye]]) to maintain the power of the rockets while also increasing cost per cast. We’ve also reduced the ability to easily stall across the map in a handful of scenarios we felt wasn’t healthy.
+**{{ui|Nerf}} Cost: 150
+***Grants a free charge on round start
+**{{ui|Adjustment}} Each individual rocket used will consume 1 charge.
+**{{ui|Nerf}} The cooldown has been removed.
+**{{ui|Nerf}} Map Targeting Range decreased from 55m to 45m.
+*{{abi text|Stealth Drone}}
+**{{ui|Nerf}} Cost: 300 >>> 400
+*{{abi text|Special Delivery}}
+**{{ui|Buff}} Cost: 300 >>> 200
+*{{abi text|Armageddon}}: We're raising the cost to put it in line with other ultimates that are in a similar power profile..
+**{{ui|Nerf}} Ult points increased from 8 to 9
+
+===={{ai|Breach}}====
+Breach's Fault Line has felt below our counterplay bar for abilities. We want to increase the amount of situations where you could get out of Breach's stun if you aren't completely in the center.
+*{{abi text|Fault Line}}
+**{{ui|Nerf}} Time until Fault Line detonates after its cast increased from 1 second >>> 1.2 seconds
+
+===General Updates===
+====[[Gifting]]====
+Due to popular demand, we are increasing the limit of gifts you can send to your friends from 5 to 10 gifts per day starting May 15. This change is going live when our [[Give Back V25 Collection|Give Back // V25 Collection]] hits the Featured Store—so every gift from this bundle you send to a friend is also a gift to charity.
+
+===Modes Updates===
+====[[Swiftplay]]====
+Maximum ultimate point costs have gone up since Swiftplay launched, making it harder for some Agents to reach their ultimates. We've adjusted starting ultimate points to give you a better shot at using their ultimates within a half. This change is part of a broader Swiftplay update to scale starting ult points based on ultimate cost.
+*{{ai|Breach}}
+**{{ui|Buff}} {{abi text|Rolling Thunder}} starting points 2 >>> 3
+*{{ai|Killjoy}}
+**{{ui|Buff}} {{abi text|Lockdown}} starting points 2 >>> 3
+*{{ai|Viper}}
+**{{ui|Buff}} {{abi text|Viper's Pit}} starting points 2 >>> 3
+
+===Bug Fixes===
+*[[Cosmetics]]
+**{{ui|Bugfix}} In Patch {{patch|10.08}}, we fixed a visual bug that was found in the {{collection|Bolt}} skinline that caused the skins to glow brighter than intended after equipping and inspecting the Bolt Flex.
+***We initially thought this bug could cause potential issues for photosensitive players. But after conducting extensive photosensitivity testing, we've concluded that there is no substantial risk. So we've decided to revert that bug fix and leave it as an Easter egg.
+**{{ui|Bugfix}} Fixed a bug where [[Kill Banners]] for certain skins ({{collection|Oni}}, {{collection|Evori Dreamwings}}, {{collection|EX.O}}, {{collection|Prelude to Chaos}}, {{collection|Mystbloom}}, and more) were appearing smaller than normal after the first kill.
+
+===Known Issues===
+*Cosmetics
+**We're aware of a bug with the Bolt skinline that is causing the skins to glow far brighter than normal.
+***This is separate from the previous Bolt bug that was found, fixed, and reverted in this patch. This new bug causes Bolt skins to glow at an unacceptable brightness which could cause issues for photosensitive players and also affect competitive integrity.
+***We will be fixing this bug with patch 10.11.
+*[[Agents]]
+**We're aware of an issue where {{ai|Omen}} can enter his smoke targeting mode for {{abi text|Dark Cover}}, allowing dead allies to be able to see through Viper's Pit or other nearsight effects
+***We will be fixing this bug with patch 10.10
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.09]]

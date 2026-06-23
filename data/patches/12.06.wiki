@@ -1,0 +1,116 @@
+{{PatchNav|previous=12.05|next=12.07}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.06.jpg
+|date    = March 31st, 2026
+|act     = [[Season 2026: Act 2]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Cosmetics]]
+|bundle  = *{{collection|Jellybeam}}
+*[[VCT26 Team Capsules]] ({{capsule|VCT x FS|FS}}, {{capsule|VCT x NV|NV}}, {{capsule|VCT x PCF|PCF}} & {{capsule|VCT x VL|VL}})
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-06/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.06'''.
+----
+{{Quote1|Well, hello there!
+
+Welcome to Patch 12.06. I’m Kenny and I’ll be your guide through what is sure to be a preeeeetty spicy 🌶️ patch. So let’s jump right into it.
+
+TL;DR:
+
+*VALORANT will no longer be a first-person shooter as we have switched to third-person POV.
+**To better support this playstyle, we have added the ability to go into a prone stance and filled most of our maps with tall grass and shrubs.
+*New Weapon: Introducing the Hackerator, a powerful new sniper rifle that will automatically cause enemies who are hit with a headshot to disconnect from the game.
+**Lol, diffed
+*New Agent: Welcome, Brainrot, our newest Initiator. Brainrot uses his abilities through voice commands in team chat. The more vocal you are, the more likely you are to apply stacks of Cringe.
+**New Debuff: Cringe. After being affected by more than three stacks of Cringe, enemies die instantly. But be careful, if you miss more than three of his abilities, YOU die instantly of self-inflicted Cringe.
+*Tejo Rework: With the recently discovered Tejo exploit, we decided to take another look at his kit. Ultimately, we loved the skill expression that comes with an endless barrage of artillery. So we’ve given him unlimited charges of Guided Salvo and removed the max cast distance. Have fun!
+
+Ok, so obviously those changes aren’t real. HAPPY EARLY APRIL FOOLS! For the real changes, read below!
+
+*Updated End-of Game screens
+*Waylay’s Saturate changed from INSTANT to EQUIP
+*Backend tech improvements to Viper’s ultimate
+*Additional UX/UI bug fixes
+*And more!
+GL HF GGs, gamers.}}
+
+==All Platforms==
+===General Updates===
+We’ve updated Victory, Defeat and Draw end-of-game visuals and sound effects
+
+===Agent Updates===
+===={{ai|Waylay}}====
+While we’re happy that Waylay’s found her role in team compositions, we’ve noticed that Saturate creates situations with little to no counterplay when used with the rest of her kit. 
+
+In particular, we’re seeing Waylay combo her abilities to safely target players with Saturate for her teammates with almost no risk. We think Duelists play best when they are using their kit with some risk, and when that risk falls primarily on the Duelist themselves. 
+
+By changing Waylay’s Saturate from an INSTANT cast ability to an EQUIP, she can no longer Hinder enemies instantly while airborne or reactively on contact without greater risk to herself. This incentivizes Waylay to coordinate with her team to mitigate risk for herself, rather than using it as a setup piece for a teammate to capitalize on.
+*{{abi text|Saturate}}
+**{{ui|Nerf}} Changed from INSTANT to EQUIP.
+
+===={{ai|Viper}}====
+*{{abi text|Viper's Pit}}
+**{{ui|Adjustment}} Chemical cloud has been updated to be more consistent in the way it spreads around map geometry.
+
+===={{ai|Yoru}}====
+Added new voice lines
+
+===Cosmetics Updates===
+Since the launch of Flex over a year ago, we’ve gotten a lot of player feedback that while Flex are cool, it doesn’t feel optimal to use them because they use Ability movespeed rather than Melee movespeed (Ability Movespeed is 90% of Melee movespeed). 
+
+Specifically, we've gotten feedback that players are less likely to equip Flex because they're afraid of accidentally equipping them mid-round due to a misclick, thus nerfing their movespeed during a critical moment. After lots of testing, we’re ready to roll out this change with some guardrails (namely, make sure that all Flex follow all competitive integrity guidelines in 3rd person). 
+
+*{{ui|Buff}} [[Flex]] movespeed is being increased to match Melee movespeed. This will apply to all past and future Flex. 
+**Big thanks to all of you for feedback and special shoutout to Grim, Ethos, Tokibbi, Ellum, Joshiwashi, and LakiEats for sharing their feedback with us personally!
+
+===Performance Updates=== 
+We’re enabling Push-model Replication as an optimization for our game servers and to unlock future performance gains. We don’t expect anything to change with your game client, so let us know if you see anything weird! 
+
+===Bug Fixes===
+*[[Agents]]
+**{{ui|Bugfix}} Fixed a bug where {{ai|Veto}}'s {{abi text|Crosscut}} icon was missing on the minimap when the Enemy Highlight Color setting was set to red. 
+**{{ui|Bugfix}} Fixed a bug where some of {{ai|Miks}}’ {{abi text|Harmonize}} 1P VFX were disappearing early.
+**{{ui|Bugfix}} Fixed a bug where Miks’ Harmonize targeting UI could overlap with an ally’s loadout. 
+**{{ui|Bugfix}} Fixed a bug where Miks’ {{abi text|Waveform}} ability placement UI would persist briefly in 3P after he placed a smoke. 
+**{{ui|Bugfix Nerf}} Fixed a bug where Miks’ {{abi text|M-pulse}} could be stuck in certain spots on the map and could not be destroyed. 
+**{{ui|Bugfix Buff}} Fixed a bug where {{ai|Clove}}’s post-death {{abi text|Ruse}} could not be unequipped without casting it. 
+**{{ui|Bugfix Nerf}} Fixed a bug that allowed {{ai|Tejo}}'s {{abi text|Guided Salvo}} to be cast three times. ''(wiki editor note: this was already hotfixed in mid-{{patchv|12.05}})''
+*General 
+**Various spacing and sizing fixes across End of Game. 
+***Adjusted the spacing around the sub navigation across all pages so elements aren’t squished together 
+***Reduced the overall text sizes in summary, scoreboard, timeline, and performance 
+***Timeline 
+****Adjusted the sizes of the match round boxes to fit more across the screen 
+**Leaderboards 
+***Fixed the spacing between rows
+**Career Match History 
+***Fixed alignment issues in the left buttons and dropdown 
+***Adjusted the text sizes within each match row
+*[[Premier]] 
+**Fixed an issue where the View Team modal would sometimes incorrectly display the zone icon as a blank white box 
+**Fixed a bug where the tournament queue timer wasn't properly showing the time to queue up by 
+**Fixed a bug where "Make Captain" and "Transfer Ownership" options were not disabled during a tournament
+*Store 
+**Numerous fixes across the overall store experience 
+***Fixed a bug where skin names in the rotational store had clipped text in Japanese. 
+***Fixed misaligned text on the accessories shop, rotational store tiles, radianite point store, and when selecting a gifting recipient. 
+***Fixed misaligned subheader text when purchasing a skin. 
+***Fixed an issue with squished bundle images in the gifting center. 
+***Fixed an issue where weapons were too high on the purchase complete screen. 
+***Added a hover state when mousing over offers in the featured store.
+***Adjusted opacity of offer tile when gifting a flex in the gifting center.
+
+==PC Only==
+===Bug Fixes===
+*[[Premier]]
+**Fixed an issue where the View Team modal would sometimes incorrectly display the zone icon as a blank white box
+**Fixed a bug where the tournament queue timer wasn't properly showing the time to queue up by
+**Fixed a bug where "Make Captain" and "Transfer Ownership" options were not disabled during a tournament
+
+===Progression Updates===
+*Battlepass has added paginated arrow buttons to ease selecting between the chapters. 
+*Scroll issue has been fixed and you can now scroll forwards and backwards on reward tiers and tracker
+
+[[Category:Patch Notes]]

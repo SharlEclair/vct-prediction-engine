@@ -1,0 +1,80 @@
+{{PatchNav|previous=9.10|next=10.00}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 11.jpg
+|date    = December 10th, 2024
+|act     = [[Episode 09: COLLISION: Act 3|EP 09 Act 3]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Game Modes]]
+*Pings
+|bundle  = {{collection|Araxys}} (EP 9)
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-11/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v9.11.
+
+<i>Hi, all. Kenny here.
+
+Today’s the day. Yes—the Neon nerfs are here. Along with that, we’ve got some nice buffs for Vyse, some pretty major updates of the in-game ping system, QoL improvements to upgrading your weapon skins, and a few other tweaks.
+
+Patch 9.11 is the last patch of the year. So get in there, frag out, and practice up ahead of the new year and the ranked reset.</i>
+
+==All Platforms==
+===Agent Updates===
+===={{ai|Neon}}====
+''We’re reducing the power of Neon’s High Gear and Overdrive. These changes are intended to require Neon to play more intentionally as Neon’s abilities are highly reactive and impactful and should require more strategic use than they currently do.''
+*{{abi text|High Gear}}
+**''We believe Neon’s slide is correctly positioned as an aggressive combat tool, but making a call around when to  cast should be more important than it is currently, and that she should pay more of a cost when she slides.''
+***''Additionally, we want to sharpen the slide as a close-quarters combat tool to reward Neon for sprinting up to her opponents rather than consistently beaming opponents at long ranges.''
+**Slides 2 >>> 1
+**Accuracy during slide
+***Full accuracy >>> Crouch-walking accuracy
+*{{abi text|Overdrive}}
+**''We want to increase counterplay for Overdrive—giving opponents a potential window to stall Neon out or disengage. The amount of average round impact with her ultimate also justifies an 8 point cost.''
+**Duration of ultimate: 20s >>> 10s (via [[Passive Effects#Energy|Energy]] passive)
+**Ultimate points 7 >>> 8
+
+===={{ai|Vyse}}====
+*{{abi text|Razorvine}}
+**''We want to increase Razorvine’s ability to hold space as well as clean up some unclear gameplay situations where Razorvines that land on high objects could affect opponents with poor visual feedback.''
+**Damage per tick of moving through Razorvine: 6 >>> 10
+**Vertical drop spawn height: 450 >>> 300
+***This means Razorvine will no longer affect players as far under it when spawning high up on objects/level geometry
+**Now slows enemy dashes similar to [[Sage]]’s [[Slow Orb]] and [[Concuss (disambiguation)|concusses]].
+*{{abi text|Arc Rose}}
+**''Arc Rose is getting some minor quality of life updates that should make aggressing off its initial placement easier.
+**Equip speed after cast
+***Normal >>> Fast
+
+===Client Updates===
+*You can now upgrade your [[Weapon Skins|weapon skins]] quickly
+**Added the ability to unlock multiple available skin levels in a single transaction. 
+**Variants will require a separate unlock.
+
+===Gameplay Systems Updates===
+====Ping System====
+*The in-game ping system was created with the simple goal of allowing players to communicate with one another without using their mic. Over the years, unintended use cases of the ping system have emerged that give players in-the-moment combat advantages that go beyond the intended use of the system.
+*With that in mind, we’re making two changes to the ping system.
+**[[Smokes]] will block your in-world pings from traveling through them and instead land on the smoke.
+**Pings made on your map will no longer appear in the world and only display on the minimap.
+*To help you differentiate these ping behaviors in game we’re introducing new ping visuals and new ping sound for pings made on the map.
+*We’ll introduce a cheat function for allowing map pings to show in-world during [[Custom Game|custom games]] to aid labbing and lineups, but this will come in a future patch.
+
+===Modes Updates===
+*[[Team Deathmatch]]
+**''The [[Armor and Shield|Regen Shield]] has been added to Team Deathmatch in Stage 1. When using the [[Classic]] in Stage 1 you will now have the Regen Shield instead of Light Armor.
+**Stage 1 Classic
+***Light Armor >>> Regen Shield
+
+===Bug Fixes===
+*Progression
+**Fixed a bug that incorrectly required 100 matches played to complete the Play A Match [[Dailies and Missions|weekly mission]].
+
+==PC==
+===Social Updates===
+*Updated the color of Party chat messages from Team chat messages.
+*Updated the appearance of Party flags in the Social Panel.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.11]]

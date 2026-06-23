@@ -1,0 +1,108 @@
+{
+    "version": "9.06",
+    "date": "September 24th, 2024",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Agent abilities involving walls have had their interaction with the glass window on Ascent changed."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Phoenix\u2019s Blaze and Neon\u2019s Fast Lane will break the window if their initial cast center point would hit the window, but the walls themselves will not interact with the window."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Harbor\u2019s High Tide will no longer break the glass window since it does not hit walls."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Chamber\u2019s Trademark, Cypher\u2019s Trapwire, and Killjoy\u2019s Lockdown will no longer break windows when placed too close."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Brimstone\u2019s Orbital Strike and Vyse\u2019s Steel Garden"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Brimstone\u2019s Orbital Strike AOE windup/activation and Vyse\u2019s Steel Garden AOE windup audio integration have been updated from being positioned directly on the Agent when in the AOE to being slightly directional toward the origin of the AOE to allow you to know which direction to travel in, in order to escape."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Updated voting systems so that draw votes no longer take into account AFK players."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "Haven",
+            "change_type": "Adjustment",
+            "description": "There are several quality of life improvements to help with placing Vyse\u2019s Arc Rose and Cypher\u2019s Trapwire on crates on Haven."
+        }
+    ],
+    "weapon_changes": [
+        {
+            "weapon": "General",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "We are adding Weapon Skin names to the in-game Weapon Switcher. We hope this will make it easier to determine what skin you are using when you pick up or switch to a weapon. You can see this change on your in-game HUD."
+        }
+    ],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Fixed an issue where Deadlock\u2019s Sonic Sensors could stay active if placed as Deadlock was killed.",
+        "Fixed an issue where Cypher\u2019s Trapwire did not take damage from certain abilities.",
+        "Fixed an issue where Gekko\u2019s Wingman could get stuck in a loop while attempting to chase an unreachable target.",
+        "Fixed an issue where Yoru\u2019s Fakeout did not trigger Vyse\u2019s Shear.",
+        "Fixed an issue where Breach was unable to cast abilities through Vyse\u2019s Shear.",
+        "Fixed an issue where Sova\u2019s Recon Bolt was destroyed by Vyse\u2019s Shear.",
+        "Fixed an issue where Gekko\u2019s Thrash and Raze\u2019s Showstopper could hit people on the other side of Vyse\u2019s Shear.",
+        "Fixed an issue where Vyse\u2019s Arc Rose could be placed on invalid objects.",
+        "Fixed various collision issues with Vyse\u2019s Shear, that blocked bullets and people while despawning.",
+        "Fixed rare instances of people\u2019s bodies being clipped inside Vyse\u2019s Shear.",
+        "Fixed an issue where Vyse\u2019s Razorvine and Shear had lingering VFX when canceling early.",
+        "Cosmetics",
+        "Fixed the third person animation for the Nocturnum Scythe so it will no longer appear higher than the Agent model when you equip your melee. [https://www.youtube.com/shorts/57ZKOy6Mj3U Thanks to Kanga for this report]!",
+        "Gameplay Systems",
+        "Fixed an issue where the Combat Report did not display \u201ckilled\u201d text when you kill an ally.",
+        "Fixed an issue where the Combat Report \u201ckilled by\u201d text would have incorrect text alignment in Arabic.",
+        "Maps",
+        "Breeze",
+        "Fixed an issue with the mechanical door at A Switch where bullets were not able to go through even though the door was open.",
+        "New Player Tips (defaulted on for new accounts only)",
+        "As you join our community, complete the tutorial, and start sharpening your skills on the battlefield, we want to make sure you are armed with the right information in order to succeed and secure that clutch! So, we\u2019ve implemented a \"New Player Tip\" system that will display useful in-game information based on the actions you take during the match. These tips will provide critical information for gameplay fundamentals, potential focuses for skill improvements, and suggestions for advanced strategies.",
+        "NOTE: If you\u2019re an existing player, New Player Tips won't show up unless turned on in Settings.",
+        "Our New Player Tips have been built from the ground up to give you more opportunities to skill-up and learn VALORANT faster via: tips that \u201clisten\u201d to your in-match actions and behaviors, and tips that level up with you as you learn the fundamentals of VALORANT gameplay, from beginner to advanced strategies.",
+        "Tips can be switched On or Off in your Settings.",
+        "You can now block communications with other players. When you block someone, you will no longer see or hear any direct communications from them, including:",
+        "Messages in text chat",
+        "Voice comms",
+        "Party invites and requests",
+        "Friend requests",
+        "Updates to megamap cursor sensitivity settings:",
+        "Added a new setting to allow you to select an input curve for megamap cursor controls.",
+        "Added Agent-specific cursor curve settings for abilities that utilize the megamap: Brimstone\u2019s Sky Smoke and Orbital Strike, Clove\u2019s Ruse, and Omen\u2019s From the Shadows map ability controls.",
+        "Removed aim assist from some abilities that aren\u2019t intended to target opposing players.",
+        "Fracture enters Unrated and Swift Play queues. This is the final legacy map being added to console mode queues. Console players now have the entire catalog of current VALORANT maps."
+    ],
+    "player_behavior_changes": [
+        "We have adjusted our comms abuse penalties to create a better comms experience in VALORANT. People who engage in repeat comms abuse behavior will receive increased penalties.",
+        "In order to create a healthier comms experience in VALORANT, we will be issuing comms abuse penalties to people who have received a manual behavioral evaluation due to their repeated pattern of comms abuse.",
+        "We made an update to our voice chat system. You should now more reliably reconnect to voice chat after unexpected disconnects."
+    ]
+}

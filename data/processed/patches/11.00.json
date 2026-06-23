@@ -1,0 +1,291 @@
+{
+    "version": "11.00",
+    "date": "June 24th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Waylay",
+            "ability": "Refract",
+            "change_type": "Adjustment",
+            "description": "Refract is faster and smoother, reducing total travel time"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Refract",
+            "change_type": "Buff",
+            "description": "Minimum time in refract decreased 0.5s >>> 0.35s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Refract",
+            "change_type": "Buff",
+            "description": "Maximum time in refract decreased 3s >>> 2s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Refract",
+            "change_type": "Buff",
+            "description": "Unequip time decreased 1.0s >>> 0.8s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Refract",
+            "change_type": "Buff",
+            "description": "Refract delay after reactivation decreased 0.1s >>> 0.05s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Lightspeed",
+            "change_type": "Buff",
+            "description": "Unequip delay decreased 0.8s >>> 0.6s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Buff",
+            "description": "Windup before explosion decreased 0.75s >>> 0.6s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Buff",
+            "description": "Size increased 10m total size >>> 12m total size"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Leer",
+            "change_type": "Nerf",
+            "description": "HP decreased 100 >> 80"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Leer",
+            "change_type": "Adjustment",
+            "description": "Added Audio and visual hit confirm feedback has been added to shots that land on Leer."
+        },
+        {
+            "agent": "Neon & Phoenix",
+            "ability": "Neon",
+            "change_type": "Nerf",
+            "description": "Relay Bolt Windup increased 0.8s >>> 1.0s"
+        },
+        {
+            "agent": "Neon & Phoenix",
+            "ability": "Phoenix",
+            "change_type": "Nerf",
+            "description": "Curveball Windup increased 0.5s >>> 0.6s"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Breach",
+            "change_type": "Adjustment",
+            "description": "Aftershock"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Breach",
+            "change_type": "Adjustment",
+            "description": "Visual effects around the windup and explosions resolve slightly more quickly and block less gameplay space"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Recon Bolt"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Increased volume of Recon Bolt\u2019s projectile loop and improved how the arrow\u2019s sound travels through the air to make it easier to track"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Audio priority and attenuation adjusted so that you can more reliably hear the arrow when multiple audio cues are present"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Audio tech updated to make it easier understand the trajectory of the arrow, point of impact, and reveal radius"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Owl Drone"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Added Enemies now hear a light warning audio loop when they are spotted by Sova\u2019s drone"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Added Audio hit confirm feedback has been added when shooting the drone successfully"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Clove",
+            "change_type": "Adjustment",
+            "description": "Pick-me-up"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Clove",
+            "change_type": "Adjustment",
+            "description": "Pick-Me-Up visuals updated to show when Clove\u2019s speed boost is active"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Killjoy",
+            "change_type": "Adjustment",
+            "description": "Lockdown"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Killjoy",
+            "change_type": "Buff",
+            "description": "Lockdown\u2019s detain pulse delay: 0.5s >>> 0.15s"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Killjoy",
+            "change_type": "Adjustment",
+            "description": "Lockdown\u2019s visual effects have been updated to match this new behavior"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Cypher",
+            "change_type": "Adjustment",
+            "description": "Spycam"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Cypher",
+            "change_type": "Adjustment",
+            "description": "Spycam\u2019s dart visuals have been updated so that is easier to understand the dart\u2019s directionality"
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Omen",
+            "change_type": "Buff",
+            "description": "Given no other dome smoke controllers reveal their own location on smoking, we\u2019ve removed this opponent counterplay specific to Omen."
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Omen",
+            "change_type": "Buff",
+            "description": "Dark Cover no longer plays audio in third person within 12.5 meters for opponents. This audio will still play for Allies."
+        },
+        {
+            "agent": "Clarity and Consistency Updates",
+            "ability": "Brimstone",
+            "change_type": "Adjustment",
+            "description": "Added Sky Smoke will now play cast audio within 12.5 meters for allies"
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "NEW MAP: CORRODE",
+            "change_type": "Adjustment",
+            "description": "A 5v5 spike mode map featuring layered defenses and strategic depth across its medieval fortress setting. Navigate through contrasting castle fortifications and village structures, battling across multi-level positions in this salt-crystallized stronghold shaped by radianite storms."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "NEW MAP: CORRODE",
+            "change_type": "Adjustment",
+            "description": "Corrode features three lanes and two sites."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "MAP POOL UPDATES",
+            "change_type": "Adjustment",
+            "description": "Bind and Corrode are IN the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "MAP POOL UPDATES",
+            "change_type": "Adjustment",
+            "description": "Pearl and Split are OUT of the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "MAP POOL UPDATES",
+            "change_type": "Adjustment",
+            "description": "Corrode is now also available to play in Premier, Unrated, Swiftplay, Spike Rush, and Escalation."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "CORRODE QUEUE",
+            "change_type": "Adjustment",
+            "description": "Corrode Only queue will be available for 5 days."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "CORRODE QUEUE",
+            "change_type": "Adjustment",
+            "description": "Corrode Only games will use the Swiftplay mode format."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "Escalation",
+            "change_type": "Adjustment",
+            "description": "Removed Escalation will be temporarily disabled during the 5-day Corrode-only queue period."
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "Escalation",
+            "change_type": "Bugfix",
+            "description": "Icebox has been reenabled in Deathmatch and Escalation game modes after addressing spawn-related issues that emerged in patch 10.09."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Ranked Gun Buddy has arrived!",
+        "Act IV starts today so you\u2019ll be receiving your ranked buddy this patch. Remember that it\u2019s based on the highest rank you achieved throughout the first three acts of Season 2025.",
+        "Corrode Launch Event",
+        "Corrode will be available to play in Competitive queue on the first day of the patch!",
+        "RR losses on Corrode will be 50% reduced for the first two weeks, but don\u2019t worry, you will still receive 100% of the RR for any wins on Corrode",
+        "We\u2019ve made some adjustments to rank resets. Hop back into Competitive and see where you land!",
+        "Buff Players may see less of a drop in rank after completing placements for this midseason reset.",
+        "Buff The maximum rank you can place is now Ascendant 3."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "General",
+        "Bugfix Nerf Fixed a bug with all Vulnerables/Fragiles where the visual effects could linger on a target longer than the gameplay debuff duration",
+        "Bugfix Nerf Fixed a bug where destructible deployables like Tejo\u2019s Stealth Drone and Fade\u2019s Prowlers could keep teleporter doors open on Bind",
+        "Agents",
+        "KAY/O",
+        "Bugfix Buff Fixed an issue where KAYO\u2019s ultimate sometimes did not apply the suppression visuals to opponents",
+        "Raze",
+        "Bugfix Fixed an issue where Raze\u2019s Paint Shells VFX would persist across rounds",
+        "Omen",
+        "Bugfix Fixed an issue where targeting views could be inconsistently applied during Dark Cover if Shrouded Step was spammed during Dark Cover\u2019s ability equip flow.",
+        "Skye",
+        "Bugfix Fixed inconsistent spacing in ability tooltips",
+        "Cypher",
+        "Bugfix Fixed inconsistent spacing in ability tooltips",
+        "Breach",
+        "Bugfix Buff Fixed an issue where Breach\u2019s Fault Line could rarely fail to apply its debuff to targets around varying elevations on specific charge levels",
+        "Astra",
+        "Bugfix Buff Fixed an issue where disconnecting and reconnecting within Astral World could result in Astral World\u2019s visuals persisting for the round despite the player not being in Astral World.",
+        "As soon as you join a team, your social hover card now shows your Premier team name, what division you\u2019re in, and your team\u2019s current Premier Score.",
+        "Play two Weekly matches (or one Playoff match) with your team to earn your Team Tag and basic Plating.",
+        "Team Tags show up all throughout the client - in the social panel, in lobby, in game (like the killfeed), and on the Competitive Leaderboards!",
+        "Plating shows up on your player card in the social panel, in lobby, and in game.",
+        "Qualify for playoffs to evolve your Plating, and win playoffs to unlock the Champion\u2019s Aura - a new player card effect that sticks with you for the entire Act after your playoff win!",
+        "You can check out everything that\u2019s available in the new Awards tab of the Premier hub."
+    ],
+    "player_behavior_changes": [
+        "You can now report inappropriate Premier team names from Standings and Match History in the Premier Hub and also from the end of game screens.",
+        "If your team name is found inappropriate, you may be forced to rename.",
+        "Repeatedly choosing offensive names will result in Premier restrictions.",
+        "The Esports Hub is coming to Console!",
+        "Check out the VCT overview page that provides a concise snapshot of where we are on the year long VCT journey, dive into the brackets for the International League Stage 2 which starts on July 12, and get familiar with our VCT teams and players!"
+    ]
+}

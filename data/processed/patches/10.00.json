@@ -1,0 +1,166 @@
+{
+    "version": "10.00",
+    "date": "January 7th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Tejo",
+            "ability": "Special Delivery",
+            "change_type": "Adjustment",
+            "description": "EQUIP a sticky grenade. FIRE to launch. The grenade sticks to the first surface it hits and explodes, Concussing any targets caught in the blast. ALT FIRE to launch the grenade with a single bounce instead."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Stealth Drone",
+            "change_type": "Adjustment",
+            "description": "EQUIP a stealth drone. FIRE to throw the drone forward, assuming direct control of its movement. FIRE again to trigger a pulse that Suppresses and Reveals enemies hit."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "EQUIP an AR targeting system. FIRE to select up to two target locations on the map. ALT FIRE to launch missiles that autonomously navigate to target locations, detonating on arrival."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "CONSOLE ONLY: EQUIP an AR targeting system. ALT FIRE to select up to two target locations on the map. FIRE to launch missiles that autonomously navigate to target locations, detonating on arrival."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Armageddon",
+            "change_type": "Adjustment",
+            "description": "EQUIP a tactical strike targeting map. FIRE to select the origin point of the strike. FIRE again to set the end point and launch the attack, unleashing a wave of explosions along the strike path. ALT FIRE during map targeting to cancel the origin point."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Armageddon",
+            "change_type": "Adjustment",
+            "description": "CONSOLE ONLY: EQUIP a tactical strike targeting map. ALT FIRE to select the origin point of the strike. FIRE to set the end point and launch the attack, unleashing a wave of explosions along the strike path. ALT FIRE during map targeting to cancel the origin point."
+        },
+        {
+            "agent": "Brimstone",
+            "ability": "Stim Beacon",
+            "change_type": "Adjustment",
+            "description": "Normal equip times are rare and usually reserved for abilities with higher counterplay needs. This is a light quality of life change for Brimstone."
+        },
+        {
+            "agent": "Brimstone",
+            "ability": "Stim Beacon",
+            "change_type": "Adjustment",
+            "description": "Equip time after casting adjusted from Normal >>> Fast"
+        },
+        {
+            "agent": "PC Only",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "The Esports Hub is back for VCT25!"
+        },
+        {
+            "agent": "PC Only",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Check out our new overview page that provides a concise snapshot of where we are on the year long VCT journey!"
+        },
+        {
+            "agent": "PC Only",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "See where everyone landed after roster-mania and get familiar with our four new guest teams!"
+        },
+        {
+            "agent": "PC Only",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Dive into the brackets for the International League Kickoff starting on January 11!"
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "Automatic Remake Voting",
+            "change_type": "Adjustment",
+            "description": "When a player AFKs in the first round, a remake vote now automatically starts and requires only a majority vote of the remaining players to pass."
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "Automatic Remake Voting",
+            "change_type": "Adjustment",
+            "description": "Example: Previously if one player was AFK, this vote required all four players to vote yes. Now it only requires three out of the remaining four players to vote yes to be successful."
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "Ping System",
+            "change_type": "Adjustment",
+            "description": "A \u201cshow map pings in world\u201d cheat has been added to Custom game modes to support labbing lineups and practice."
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "Ping System",
+            "change_type": "Adjustment",
+            "description": "When enabled, this cheat reverts the map pinging behavior to pre-patch 9.11 behavior."
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "Map Rotations",
+            "change_type": "Adjustment",
+            "description": "Starting with patch 10.00, maps will rotate every Act. We'll provide updates about which maps are rotating on a per-Act basis, announcing the next Act's map pool shortly after the current Act starts."
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "10.00 Map Rotation:",
+            "change_type": "Adjustment",
+            "description": "Fracture and Lotus are back IN the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "All Platforms",
+            "ability": "10.00 Map Rotation:",
+            "change_type": "Adjustment",
+            "description": "Ascent and Sunset are OUT of the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "PC Only",
+            "ability": "Matches start on January 15",
+            "change_type": "Adjustment",
+            "description": "If your team was in the Invite Division in Stage E9A3 and did not finish the Stage in the top 16 teams, your team has been demoted. You\u2019ll see your new Provisional Division in the Premier hub."
+        },
+        {
+            "agent": "PC Only",
+            "ability": "Matches start on January 15",
+            "change_type": "Adjustment",
+            "description": "Demoted teams seeded into the zone they originally promoted from. Your Team Owner can change your team\u2019s zone in the Team Settings dropdown anytime before your team plays a match."
+        },
+        {
+            "agent": "PC Only",
+            "ability": "Matches start on January 15",
+            "change_type": "Adjustment",
+            "description": "If your team cannot be placed into a zone, your Team Owner will be prompted to select a zone."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "ALL PLATFORMS",
+        "Fixed a bug causing some abilities to display as the wrong team color for observers.",
+        "Clove",
+        "Fixed an issue where Not Dead Yet could fail to cast when pressed in the last few frames of the activation window",
+        "Skye",
+        "Fixed a bug where Guiding Light\u2019s flash duration was not scaling properly",
+        "Fixed a bug where Guiding Light\u2019s hit confirm sound and VO would not play when hitting Yoru\u2019s Fakeout Clone",
+        "Cypher and Viper",
+        "Fixed an issue where shooting through Cypher\u2019s Cyber Cage or Viper\u2019s Poison Cloud could cheat wall penetration if they were placed too close to level geometry",
+        "Phoenix",
+        "Fixed an issue where Blaze referenced a Harbor projectile asset for a few frames",
+        "Fixed an issue where Blaze\u2019s visual effects could be slightly offset",
+        "Improved the performance around Brimstone\u2019s Sky Smoke dissipation effect",
+        "Fixed an issue where specific flashbang projectile visuals would stick around for Observers",
+        "Fixed an issue where players taking damage with Regen Shields would play hit-confirm sounds regardless of player visibility",
+        "Weapons",
+        "ALL PLATFORMS",
+        "Fixed a bug where if you were in Aim Down Sights (ADS), weapons would occasionally exit and re-enter ADS without any input.",
+        "Cosmetics",
+        "ALL PLATFORMS",
+        "When in a custom game with cheats enabled, if the player changes Agents after using the Restart Game cheat, the Expressions Wheel (where you find Sprays and Flex choices) may appear blank. We\u2019re looking to fix this in coming patches."
+    ],
+    "player_behavior_changes": []
+}

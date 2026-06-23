@@ -1,0 +1,40 @@
+{
+    "version": "10.01",
+    "date": "January 22nd, 2025",
+    "agent_changes": [],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Rank Shields have been added to Competitive Mode!",
+        "You are granted two Rank Shields while in Tier 1 (e.g. Silver 1, Gold 1, Platinum 1) of all Ranks except Radiant.",
+        "When you lose a game at 0 RR, one shield is consumed, leaving you with one shield remaining.",
+        "Losing again at 0 RR consumes the second shield, leaving you with zero shields remaining.",
+        "If you lose three games while at 0 RR, you demote to the lower rank (e.g. Gold 1 to Silver 3).",
+        "You do not have shields in the other tiers of a Rank (e.g. There are no shields when losing at 0 RR in Gold 2).",
+        "Only when you move into Tier 1 via promotion or demotion, will you replenish two shields for that tier.",
+        "Winning at 0 RR and going back to 10 RR will not replenish your shields.",
+        "You can see all information about Rank Shields in the Rank Details screen in the client!"
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Tejo",
+        "Fixed an issue where players who exited then re-entered Tejo\u2019s Armageddon blast zone do not count as Displaced in the Combat Report.",
+        "Fixed an issue where Tejo\u2019s Guided Salvo projectile would get stuck inside the wall when cast towards a path blocked by Sage\u2019s Barrier Orb.",
+        "Fixed an issue where Tejo\u2019s Stealth Drone affected by Nearsight could see Enemy Players\u2019 model outline at certain distances.",
+        "Improved an issue where Tejo\u2019s Guided Salvo smoke trail VFX could clip through thin walls and structures once cast.",
+        "Fixed an issue where Tejo\u2019s Stealth Drone is slowed outside the AOE of Sage\u2019s Slow Orb.",
+        "Fixed an issue where Tejo\u2019s Guided Salvo missile visuals are set to draw as a Cylinder instead of Sphere, showing an incorrect damage zone.",
+        "Fixed an issue where Tejo\u2019s Guided Salvo loses functionality and appears as stuck if he cast it while being outside of the map.",
+        "Fixed an issue where Tejo\u2019s Guided Salvo damages players on elevation without showing a warning indicator.",
+        "Maps",
+        "Bind",
+        "Fixed an issue where invisible collision would sometimes impede agent utility inside one of the teleporter rooms.",
+        "Premier",
+        "Fixed an issue where there were inconsistent font sizes on the Change Zone and the Delete Team pop-up screens in Premier.",
+        "Fixed an issue where Premier matches in match history did not show a mode tooltip when you hovered over them.",
+        "Fixed an issue where the ineligibility warning tooltip in the lobby was very hard to trigger.",
+        "Competitive Systems",
+        "Fixed a bug where the queue timer overlaps with a portion of the Leaderboard page."
+    ],
+    "player_behavior_changes": []
+}

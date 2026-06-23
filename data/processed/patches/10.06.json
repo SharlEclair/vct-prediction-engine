@@ -1,0 +1,187 @@
+{
+    "version": "10.06",
+    "date": "April 1st, 2025",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "While we love that KAY/O has an engaging path to mastery, we consistently see that there is a large gap between his skill ceiling and skill floor and that gap hasn\u2019t really improved over time. We see from both player feedback and internal statistics that his flash is the most difficult flash to coordinate with on the roster."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "We think we can make KAY/O\u2019s overhand flash more flexible for mid-range scenarios to better match our other flashes."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "These sets of changes should continue to preserve his high skill ceiling on those perfectly tossed pop flashes you have been practicing."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "We\u2019re also reducing his resurrection duration on his ultimate to reinforce the potential for teamplay to pick up an ally KAY/O."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "FLASH-drive"
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "Upon bouncing, flashes will now start a 0.8 second windup and then pop."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "This windup has unique audio and visuals when triggered."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "The bounce windup will not be triggered if it is already less than 0.8 seconds from popping, so it won\u2019t increase the total max time from throw to pop."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "Underhand maximum flash duration 1.25s >>> 1.5s"
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "Increase VO callout range of KAY/O\u2019s \u201cflashing\u201d voice line 20m >>> 50m"
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "Unequip time 0.85s >>> 0.6s"
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "A minimap indicator has been added to the flash for teammates only."
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "NULL-cmd"
+        },
+        {
+            "agent": "General",
+            "ability": "KAY/O",
+            "change_type": "Adjustment",
+            "description": "Ally resurrection time 3s >>> 1.5s"
+        },
+        {
+            "agent": "General",
+            "ability": "Yoru",
+            "change_type": "Adjustment",
+            "description": "Fakeout is providing a bit too much return on investment at the 100 credit cost."
+        },
+        {
+            "agent": "General",
+            "ability": "Yoru",
+            "change_type": "Adjustment",
+            "description": "Fakeout"
+        },
+        {
+            "agent": "General",
+            "ability": "Yoru",
+            "change_type": "Adjustment",
+            "description": "Cost increase 100 >>> 200 credits"
+        },
+        {
+            "agent": "General",
+            "ability": "Vyse",
+            "change_type": "Adjustment",
+            "description": "While we\u2019re happy that Vyse has found a place in the ecosystem since the buffs in patch 9.11, we\u2019ve found the durations on her abilities to be excessive in a world where her Razorvines are more threatening. We\u2019re shortening the durations on her Razorvines and Shear so that Vyse will have to more actively capitalize rather than just relying on the baseline value of their stall."
+        },
+        {
+            "agent": "General",
+            "ability": "Vyse",
+            "change_type": "Adjustment",
+            "description": "Razorvine"
+        },
+        {
+            "agent": "General",
+            "ability": "Vyse",
+            "change_type": "Adjustment",
+            "description": "Duration: 10s >>> 6s"
+        },
+        {
+            "agent": "General",
+            "ability": "Vyse",
+            "change_type": "Adjustment",
+            "description": "Wiki editor note: Notes initially stated 7s, but is [https://reddit.com/r/VALORANT/comments/1jrha7r/1006_vyse_nerfs_are_incorrectly_documented_in_the/mlff9tq/ revealed] as a typo by the original poster."
+        },
+        {
+            "agent": "General",
+            "ability": "Vyse",
+            "change_type": "Adjustment",
+            "description": "Shear"
+        },
+        {
+            "agent": "General",
+            "ability": "Vyse",
+            "change_type": "Adjustment",
+            "description": "Triggered Wall Duration: 8s >>> 6s"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [
+        "Improved CPU performance of Sunset by reducing the number of map specific objects that tick each frame."
+    ],
+    "bug_fixes": [
+        "Agents",
+        "Vyse",
+        "Arc Rose",
+        "Fixed a bug where Vyse\u2019s Arc Rose idle animation stopped looping when she crouched.",
+        "Fixed a bug where destroying the Arc Rose while Vyse was recalling it did not respect the 40 second \u201cdestroyed\u201d cooldown.",
+        "Raze",
+        "Blast Pack",
+        "Fixed an issue where Blast Pack could knock back Skye\u2019s Trailblazer and Tejo\u2019s Stealth Drone through walls.",
+        "Clove",
+        "Meddle",
+        "Updated tooltips to reflect our patch 10.04 changes.",
+        "Deadlock",
+        "Annihilation",
+        "Fixed an issue where hit-confirm sounds on Deadlock\u2019s cocoon target were abnormally loud.",
+        "Breach",
+        "Aftershock",
+        "Fixed an issue where Breach would go into an incorrect idle animation pose in third-person after Aftershock was fired.",
+        "Sova",
+        "Owl Drone",
+        "Fixed an issue where Sova would go into an incorrect idle animation pose in third person after exiting Owl Drone.",
+        "KAY/O",
+        "Fixed a rare issue where KAY/O could appear standing up when downed during NULL-cmd.",
+        "Fixed an issue where KAY/O\u2019s ZERO-point dagger trajectory could behave unexpectedly with packet loss.",
+        "Gekko",
+        "Fixed an issue where the \u201cSpike Down\u201d VO would not play when Wingman was destroyed while carrying the Spike.",
+        "Iso",
+        "Fixed an issue where swapping to Iso with Double Tap active could result in the wrong UI bar displaying for spectators or observers.",
+        "Tejo",
+        "Stealth Drone",
+        "Fixed a bug where Stealth Drone was not unstealthing upon jumping up prior to its scan.",
+        "Premier",
+        "Fixed an issue where a player\u2019s status in the Premier Hub roster list would sometimes overlap with the alert icon in certain queues.",
+        "Fixed an issue where the playoff bracket would not update dynamically during the second game of a best of three matchup."
+    ],
+    "player_behavior_changes": [
+        "Improved feedback notifications so you will now more reliably see messages when a cheating report leads to a ban."
+    ]
+}

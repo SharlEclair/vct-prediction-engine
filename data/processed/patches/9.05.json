@@ -1,0 +1,89 @@
+{
+    "version": "9.05",
+    "date": "September 10th, 2024",
+    "agent_changes": [
+        {
+            "agent": "Omen",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "We've updated Omen's voice lines and added interaction lines with Viper, Clove, Iso, and Vyse."
+        },
+        {
+            "agent": "Chamber",
+            "ability": "Rendezvous",
+            "change_type": "Adjustment",
+            "description": "Rendezvous: TP radius increased from 13m >>> 18m"
+        },
+        {
+            "agent": "Chamber",
+            "ability": "Rendezvous",
+            "change_type": "Adjustment",
+            "description": "Chamber could use a light nudge to fight for more space on maps safely around his Rendezvous. More space around his Rendezvous beacon allows for more setups and allows Chamber to push out more aggressively and take unexpected angles."
+        },
+        {
+            "agent": "Astra",
+            "ability": "Stars",
+            "change_type": "Adjustment",
+            "description": "Stars: Increased from 4 >>> 5"
+        },
+        {
+            "agent": "Astra",
+            "ability": "Stars",
+            "change_type": "Adjustment",
+            "description": "After rebalancing some of Astra's power away from her Gravity Well and into her Nova Pulse and Cosmic Divide in Patch 7.04, Astra has struggled to be competitive with other Controllers. Given Astra has to choose between fulfilling her core duties as a Controller and using her other abilities, this change gives Astra more freedom to use her other pieces of utility without sacrificing her ability to smoke throughout the round."
+        },
+        {
+            "agent": "Stim Behavior",
+            "ability": "Empress",
+            "change_type": "Adjustment",
+            "description": "Over the years we've heard player feedback that combat stim effects like Reyna's Empress can feel disruptive when spraying and it makes it harder to hit your shots. We've updated all buffs that increase your rate of fire to have consistent recoil control that matches the default rate of fire. This should allow players who are stimmed to utilize their learned muscle memory that they've built up from un-stimmed weaponry. This change only affects how the stims modify recoil without affecting the applied spread reduction."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [
+        "Optimized threading logic and ordering of files on disk to improve load times. Please note that this will increase download time of the patch and an increase in patch time."
+    ],
+    "bug_fixes": [
+        "Abyss",
+        "Fixed a spot where you could land on a ledge that is out of bounds on the map.",
+        "Lotus",
+        "Minor art fixes around the map.",
+        "Icebox",
+        "Fixed a gap where you could shoot through the door frame in A Pipes from Mid Boiler.",
+        "Sunset",
+        "Fixed a gap in the retractable roof above B Boba.",
+        "Fixed the box at Mid Top to display the correct bullet penetration decals.",
+        "The Range",
+        "Removed a placeholder object in the vista.",
+        "Fixed an issue where the Base Aim Curve setting was being applied to cursor movement on the megamap and maps for Agent abilities (Example: Brimstone's Sky Smoke).",
+        "Ability Targeting",
+        "Fixed an issue where Deadlock's Sonic Sensor, Cypher's Spycam, and Vyse's Arc Rose could not be placed on some map walls during the BUY PHASE.",
+        "Vyse",
+        "Fixed an issue where KAY/O's ZERO/point was destroyed by Shear.",
+        "Fixed an issue where Shear's collision would linger after being placed on sloped surfaces.",
+        "Fixed an issue where Shear could extend over gaps improperly.",
+        "Fixed instances where Shear's destruction voice line was not properly playing.",
+        "Fixed instances of Arc Rose voice line being cut off prematurely.",
+        "Fixed an issue where the combat report would show the incorrect abilities for Vyse.",
+        "[PS5] Fixed rare client crash instances related to Steel Garden.",
+        "Omen",
+        "Fixed an issue where From the Shadows was not cancellable with certain bindings.",
+        "Fixed an issue where Dark Cover would move slower than intended.",
+        "KAY/O",
+        "Fixed an issue where KAY/O's Ability HUD was ordered incorrectly."
+    ],
+    "player_behavior_changes": [
+        "We have updated the existing ranked and Premier restrictions to expand to all team-based modes so that penalized players will be restricted from queueing up in any team-based mode for disruptive behavior.",
+        "Revert crouch benefits nerf from standard 25% back to 40%",
+        "Crouching is better again and is now the same as Odin Odin.",
+        "Headshot multiplier adjusted from 2.4 >>> 2.5",
+        "This makes an Ares kill in 2 headshots while within 30m when previously it would have done 144 damage.",
+        "We've updated the Riot Voice Evaluation (RVE) experience in certain regions where voice recording is now enabled to ensure you understand the behavioral expectations and technical implications associated with RVE and voice chat.",
+        "Added a button to view the maps available in Playoffs. To see the Playoff map pool, click Playoffs Event in the schedule on the Premier hub, and then click the \"Show Map Pool\" button in the center of the hub.",
+        "Progression Screen",
+        "The objectives panel on the progression screen will now feature Agent gear if there are open slots. Previously, only Basic Training, Battlepass, and Event Pass were featured and left an open slot if completed.",
+        "Added a new Map Cursor Speed slider which will let you speed up or slow down cursor movement on the megamap and maps for Agent abilities (Example: Brimstone's Sky Smoke).",
+        "New map: \"Breeze\" enters Unrated & Swiftplay queues."
+    ]
+}

@@ -1,0 +1,378 @@
+{
+    "version": "12.05",
+    "date": "March 17th, 2026",
+    "agent_changes": [
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "Harmonize"
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "EQUIP Harmonize. Target an ally and FIRE to activate a Combat Stim on yourself and the ally that refreshes with each kill. ALT-FIRE to grant Combat Stim to yourself."
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "M-pulse"
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "EQUIP M-pulse. ALT-FIRE to toggle between Concuss and Healing outputs. FIRE to throw the device. Upon landing, M-pulse sends out sound waves, either Concussing or Healing players."
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "Waveform"
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "EQUIP a Map Targeter. FIRE to set locations. ALT-FIRE to spawn Smokes at selected locations."
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "Bassquake"
+        },
+        {
+            "agent": "Miks",
+            "ability": "Abilities:",
+            "change_type": "Adjustment",
+            "description": "EQUIP Bassquake. FIRE to build up and unleash Sonic Radiance forward, knocking back, Deafening, and Slowing players."
+        },
+        {
+            "agent": "Sage",
+            "ability": "Healing Orb",
+            "change_type": "Adjustment",
+            "description": "Healing Orb - Ally Targeting"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Healing Orb",
+            "change_type": "Adjustment",
+            "description": "With the release of Miks, we have updated our Ally Targeting UI/UX and brought those updates to Sage. You\u2019ll see a new widget above the targeted allies head, and an additional highlight around the agent's model."
+        },
+        {
+            "agent": "Sage",
+            "ability": "Crystal Model Update",
+            "change_type": "Adjustment",
+            "description": "We\u2019ve added crystal growths to Sage\u2019s model and key art to show the price she is paying for repeatedly pushing the limits of her power."
+        },
+        {
+            "agent": "Skye",
+            "ability": "Guiding Light",
+            "change_type": "Adjustment",
+            "description": "Added Added 60s Cooldown"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Gatecrash",
+            "change_type": "Nerf",
+            "description": "Duration beacon is active reduced 30s >> 15s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Blindside",
+            "change_type": "Nerf",
+            "description": "Charges reduced from 2 >> 1."
+        },
+        {
+            "agent": "Clove",
+            "ability": "Ruse",
+            "change_type": "Nerf",
+            "description": "Smoke duration 14s >> 6s (when casted while dead)"
+        },
+        {
+            "agent": "Clove",
+            "ability": "Meddle",
+            "change_type": "Nerf",
+            "description": "Area of effect reduced 6m >> 4m"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Assist Banners",
+            "change_type": "Adjustment",
+            "description": "Assists have always been a huge part of winning rounds, but they've never gotten the recognition they deserve. Now they do!"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Assist Banners",
+            "change_type": "Adjustment",
+            "description": "When your utility or damage contributes to a teammate's kill, you'll see an assist banner on the bottom of your screen"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Assist Banners",
+            "change_type": "Adjustment",
+            "description": "The banner shows your specific contribution to the elimination and is accompanied by an audio cue"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Killfeed Updates",
+            "change_type": "Adjustment",
+            "description": "Your team's killfeed now displays the assisting player's agent icon and the ability or damage that set up the kill"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Killfeed Updates",
+            "change_type": "Adjustment",
+            "description": "This info is visible to your team only"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Status Effect Tags",
+            "change_type": "Adjustment",
+            "description": "We\u2019ve updated how and where status effects appear on your HUD to improve clarity and consistency. When multiple effects are active, you can quickly see what\u2019s affecting you and how long it lasts in predictable areas of the screen, with buffs on the left and debuffs on the right for cleaner organization during combat."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Status Effect Tags",
+            "change_type": "Adjustment",
+            "description": "Observers and spectators can now see Ability Map Targeters like Clove\u2019s Ruse, Brim\u2019s Sky Smoke, Tejo\u2019s Guided Salvo, etc. Ability Map Targeters will also show up in Replays."
+        },
+        {
+            "agent": "Map Pool Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Lotus and Fracture are IN the Competitive and Deathmatch queues."
+        },
+        {
+            "agent": "Map Pool Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Abyss and Corrode are OUT of Competitive and Deathmatch queues."
+        },
+        {
+            "agent": "Lotus",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Attacker lobby wall thickened to remove wall penetration off barrier drop"
+        },
+        {
+            "agent": "Lotus",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Jump up to Vines moved to help attackers get out of Lobby and avoid utility dump."
+        },
+        {
+            "agent": "Lotus",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Wall outside of Tree room has been reinforced to remove wall penetration."
+        },
+        {
+            "agent": "Lotus",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Extra room added outside of A-site stairs to help hold A-site and let defenders play further back from rubble"
+        },
+        {
+            "agent": "Lotus",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "A-site plant zone has changed so you can no longer plant for breakable/link"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Introducing Knockout, a round-based tactical elimination mode where every kill resurrects a fallen teammate. Teams stage at a center-line and coordinate pushes into enemy territory across escalating weapon stages to wipe each other out. Stick with your team, trade for each other, and ride the momentum swings as your squad rebuilds kill after kill."
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Mode Details"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Resurrection System"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Eliminating an enemy brings back a fallen teammate"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Resurrection delay scales with round length, from near-instant early in the round to several seconds later on"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Team Territories"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "A center-line barrier divides the map into team territories"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Capture orbs to shift the line toward the enemy, expanding your territory and compressing theirs"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Orbs also heal you and grant you an ultimate charge"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Crossing into enemy territory applies a debuff, forcing the pushing team to coordinate their timing"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "\"Threat Detected\" notification alerts the enemy team when a player crosses into your territory"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Crossing into enemy territory also obfuscates your minimap, reducing your ability to track enemy positions while in their territory"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Loadouts"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "No economy - select your loadout each round"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Weapon offerings escalate through stages as the match progresses"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Round Structure"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "5v5 on TDM maps"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Rounds last 3 minutes"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Overtime respawns and healing are disabled and damage over time forces a final fight"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Eliminate all enemies to win the round"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "First team to 4 rounds wins the match"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Agents & Abilities"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Standard agent select with TDM ability recharge rates"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Earn your ultimate with kills or orb captures"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Ultimate charge resets on death and at the start of each round"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Match Length"
+        },
+        {
+            "agent": "Knockout",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "8-15 minutes"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "We're adjusting the Ranked Rating thresholds to hit Immortal 2, 3 and Radiant to bring parity to leaderboard requirements across all of our regions.",
+        "We're not adjusting any of the underlying MMR systems, so we expect the same players to show up on the leaderboard.",
+        "We made a QoL update to the new Rank summary screen that we implemented in patch 12.04.",
+        "You can now access the Social Panel and select Play Now directly from that screen."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Bugfix Fixed a bug where a floating gun may briefly appear when a suppression effect interrupts Gekko's Thrash, Sova's Owl Drone, or Astra's Astral Form.",
+        "Bugfix Nerf Fixed a bug where Veto\u2019s Interceptor would detect a stealthed Cypher Spycam.",
+        "Bugfix Fixed a bug where Harbor\u2019s relic was not glowing when equipping Storm Surge in Left Handed Mode.",
+        "Bugfix Buff Fixed a bug where picking up a dead player\u2019s weapon would cause you to auto-equip it when they were resurrected.",
+        "Bugfix Fixed a bug where Brimstone\u2019s Sky Smoke equip pose was displaying unintended VFX when viewed far away.",
+        "Bugfix Nerf Fixed a bug where Deadlock\u2019s Barrier Mesh could be used to float into the air by completely blocking the ziplines at Attacker spawn on Fracture",
+        "General",
+        "Fixed multiple localization issues on the End of Game (EOG) Scoreboard screen.",
+        "Fixed an issue where a friend\u2019s most recent match was not always updating in the Career view.",
+        "Fixed an issue where the progression bar could overlap with the top tabs in the EOG Progression tab.",
+        "Fixed an issue where the focus highlight could be delayed on the EOG Timeline screen.",
+        "Welcome to Stage V26A2! Matches start on March 18.",
+        "Adjustment This Stage will run for six weeks of matches instead of the usual seven.",
+        "Teams with a Premier Score of at least 500 qualify for Playoffs on April 26.",
+        "In Contender and Invite, qualification is still based on your placement - check out the standings page for more info",
+        "Your awards hub will temporarily display that you haven't unlocked any rewards. This will be fixed in patch 12.06.",
+        "Battle Pass",
+        "Fixed a bug that caused the scroll wheel to not work when navigating between the tiers on the battlepass and/or event pass."
+    ],
+    "player_behavior_changes": []
+}

@@ -1,0 +1,63 @@
+{{PatchNav|previous=10.04|next=10.06}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.05.jpg
+|date    = March 18th, 2025
+|act     = [[Season 2025: Act 2]]
+|changes = '''All Platforms:'''
+*[[Competitive]]
+|bundle  = {{collection|Storm Maw}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-05/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.05.
+
+<i>Hey, everyone. It’s ya boi Kenny here—back with a small but mighty patch 10.05.
+
+First and foremost, Ranked Rollbacks are here! Check out the notes below for more detail, and keep an eye on our social channels for a short video showing how this change will show up in your game client.
+
+Beyond RR Rollbacks, you’ll also notice some minor Bug Fixes for Agents.
+
+That’s all from me. GL HF GG.</i>
+
+==All Platforms==
+===[[Competitive]] Updates===
+*Ranked Rollbacks are live!
+**If you lost Rank Rating (RR) due to a match against a confirmed cheater in the last week, you will be eligible for an RR refund! 
+**Here’s how it works:
+***You will get a pop-up notification showing the exact amount of RR being refunded.
+***To apply the refunded RR, you must complete one Competitive match.
+***Once you finish that match, the refunded RR will be reflected in your End of Game summary screen—win or lose, the refund still gets added to your total RR for that game.
+***'''Important:''' Ranked Rollbacks are only valid within the current Act and there is a cap per Act. If you qualify for a refund, be sure to play a game before the Act ends to claim it!
+
+===Bug Fixes===
+*[[Agents]]
+**{{ai|Raze}}
+***Fixed a bug where {{abi text|Blast Pack}}’s explosion was slightly smaller at the tip of the explosion since the explosion changes that went live in {{patch|10.03}} 
+**{{ai|Clove}} 
+***Fixed a bug where Clove could take damage or die for a single frame upon reviving with {{abi text|Not Dead Yet}} 
+**{{ai|Sage}}
+***{{abi text|Resurrection}}: Fixed the same bug as Clove above where there was a single frame of vulnerability upon reviving a target
+**{{ai|Tejo}}
+***Fixed a bug where {{abi text|Armageddon}}’s danger indicator did not always apply on variable elevations 
+**{{ai|Iso}}
+***Fixed a bug where {{abi text|Double Tap}}’s HUD bar could look visually incorrect for spectators or observers 
+**{{ai|Waylay}}
+***Fixed a bug where there was a performance hitch upon casting {{abi text|Convergent Paths}}
+***Fixed a bug where Convergent Paths was unable to be equipped during the buy phase.
+*Social
+**Fixed an issue where in-game status and scores were not updating as frequently as they should in the social panel.
+*[[Maps]]
+**[[Breeze]]
+***Fixed a bug where [[abilities]] would ignore line of sight around crates on A Site.
+***Fixed a bug where [[flash]] abilities would be blocked in certain areas on the map.
+**[[Sunset]]
+***Fixed a bug where players could not plant the Spike on the B Site crates inside of the plant zone.
+
+==Console Only==
+===General Updates===
+*We are disabling Remote Play for PS5 until further notice to investigate an issue. Please keep an eye out on future patch notes for an update!
+
+===Bug Fixes===
+*Social
+**Fixed a bug where it would take several seconds to reconnect to comms when going back to the custom game lobby after match.
+[[Category:Patch Notes]]

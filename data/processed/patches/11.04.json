@@ -1,0 +1,105 @@
+{
+    "version": "11.04",
+    "date": "August 19th, 2025",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "We've updated Phoenix's voice lines and added interaction lines with Vyse. Enemies and allies beware!"
+        },
+        {
+            "agent": "General",
+            "ability": "Chamber",
+            "change_type": "Adjustment",
+            "description": "Trademark"
+        },
+        {
+            "agent": "General",
+            "ability": "Chamber",
+            "change_type": "Adjustment",
+            "description": "Range restriction has been removed. We\u2019re giving a little bit more strategic & positional flexibility for Chamber as his trap hasn\u2019t felt like it warrants a range restriction in modern VALORANT. This went live accidentally in patch 11.02 and we didn\u2019t want to revert a buff that was planned for 11.04 anyways."
+        },
+        {
+            "agent": "General",
+            "ability": "Sage",
+            "change_type": "Adjustment",
+            "description": "We\u2019re leaning into Sage\u2019s identity as a Controller-leaning Sentinel hybrid by allowing her to control space from further safety."
+        },
+        {
+            "agent": "General",
+            "ability": "Sage",
+            "change_type": "Buff",
+            "description": "Barrier Orb: Sage wall cast range has increased from 10m >>> 15m"
+        },
+        {
+            "agent": "General",
+            "ability": "Sage",
+            "change_type": "Buff",
+            "description": "Resurrection: Sage resurrection range has increased from 6m >>> 12m"
+        },
+        {
+            "agent": "General",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Visual effects around Hunter's Fury have been adjusted to resolve more quickly and take up less gameplay space"
+        },
+        {
+            "agent": "Gameplay Systems Update",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Pings that are placed on the minimap have had their audio adjusted to be less harsh."
+        },
+        {
+            "agent": "Gameplay Systems Update",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "AOE Ultimate indicator colors on the minimap have been updated to reflect if they were cast by an ally or enemy."
+        },
+        {
+            "agent": "Gameplay Systems Update",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "All ally zones will now appear a consistent teal and enemy zones should now be consistently yellow. Ability icons will now only appear in the minimap zone if the ultimate is destructible."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "Map Pool Updates",
+            "change_type": "Adjustment",
+            "description": "Abyss is back IN the Competitive and Deathmatch queues."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "Map Pool Updates",
+            "change_type": "Adjustment",
+            "description": "Icebox is OUT of the Competitive and Deathmatch queues"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "General",
+        "Fixed an issue where a Concussed player's crosshair would stop swaying while debuffed if they quickly entered and exited a pilotable ability like Cypher cam or Sova drone.",
+        "Agents",
+        "Chamber",
+        "Bugfix Fixed an issue where the minimap would still show the deactivation range of Chamber's Trademark while the ability was equipped.",
+        "KAY/O",
+        "Bugfix Nerf Fixed a bug where KAY/O\u2019s ZERO/point revealed exact opponent locations with an audio cue. (This was fixed in 11.02 but we\u2019re letting you know now \ud83d\ude00)",
+        "Astra & Harbor:",
+        "Bugfix Fixed an issue where bullet tracers could be seen passing through Astra's Cosmic Divide and Harbor's Cove.",
+        "Phoenix & Tejo",
+        "Bugfix Fixed a bug where the wrong voiceline played during round-start when Phoenix & Tejo are both present.",
+        "Neon",
+        "Bugfix Nerf Fixed a bug where Neon could skip her unequip delay by binding High Gear to multiple keys.",
+        "Maps",
+        "Split",
+        "Bugfix Buff Fixed an issue where molotov abilities did not properly spread up stairs after hitting the ground.",
+        "There is a known issue where player resolution and display settings reset the first time people play after patching to UE5. We will not issue a fix, but make sure to adjust your resolution and display settings to your preferred settings after patching the game.",
+        "Competitive Updates",
+        "Bugfix Fixed an issue for end of game screens where characters were cut off in some languages.",
+        "Premier Updates",
+        "Bugfix Fixed an issue on the Awards tab where characters were cut off in some languages."
+    ],
+    "player_behavior_changes": []
+}

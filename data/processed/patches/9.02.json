@@ -4,25 +4,31 @@
     "agent_changes": [
         {
             "agent": "General",
-            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
             "change_type": "Adjustment",
             "description": "The following abilities can be set to Togglable in the Agent Profile Settings:"
         },
         {
             "agent": "General",
-            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "ability": "General",
             "change_type": "Adjustment",
             "description": "Harbor: High Tide"
         },
         {
             "agent": "General",
-            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "ability": "General",
             "change_type": "Adjustment",
             "description": "Phoenix: Blaze"
         },
         {
             "agent": "General",
-            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "ability": "General",
             "change_type": "Adjustment",
             "description": "Skye: Guiding Light"
         },
@@ -49,6 +55,30 @@
             "ability": "Sova",
             "change_type": "Adjustment",
             "description": "Hunter\u2019s Fury applies less drag on your controls, allowing more control over the charge\u2019s duration."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Icebox enters Competitive, Unrated, Swiftplay, and Deathmatch queues."
+        },
+        {
+            "agent": "Social Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "The in-match scoreboard now has voice control shortcuts. You can now open the scoreboard and press a button to quickly mute other people or switch voice channels."
+        },
+        {
+            "agent": "Social Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Added audio to social notifications. Now when you receive a friend request or party invite you\u2019ll hear a notification sound."
+        },
+        {
+            "agent": "Social Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Added party information to the social panel. The friends list now shows the number of people in your friend\u2019s party and the remaining open party slots."
         }
     ],
     "weapon_changes": [],

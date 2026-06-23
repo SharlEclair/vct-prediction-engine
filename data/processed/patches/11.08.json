@@ -1,0 +1,898 @@
+{
+    "version": "11.08",
+    "date": "October 14th, 2025",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "The agent updates this patch are focused around how we can support higher mastery around ability usage. We want to allow your gunplay to do the talking, while you use abilities strategically and intentionally to gain advantages. These changes should reward players who use abilities well in the right time and place. Additionally, we\u2019re also reducing the size of some of the largest ultimate abilities."
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "We\u2019re also aiming to create more consistency across the game\u2019s various debuffs, making it easier to build muscle memory when playing with or against effects like Nearsight, Concuss, and Stims. (wiki editor note: see below for actual changes of each Agent)"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Nearsights: Fade's Prowler, Omen's Paranoia, Reyna's Leer, Skye's Seekers"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Nerf",
+            "description": "Nearsight radius increased from 5 >>> 7m"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Concuss: Breach\u2019s Fault Line, Gekko\u2019s Wingman, Neon\u2019s Relay Bolt, Astra\u2019s Nova Pulse"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased to 2.5s"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Stim Unification: Brimstone's Stim Beacon, KAY/O's NULL/cmd, Reyna's Empress (wiki editor note: Veto is also adjusted but is undocumented in this patch notes.)"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Faster reload time modifier: 90%"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Increased firing rate modifier: 10%"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Weapon draw time modifier: 90%"
+        },
+        {
+            "agent": "General",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Weapon recovery speed modifier: 10%"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Fault Line",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 40s \u2192 60s"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Fault Line",
+            "change_type": "Buff",
+            "description": "Initial windup decreased from 1.2s \u2192 1.1s"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Fault Line",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased from 3.5s \u2192 2.5s"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Flashpoint",
+            "change_type": "Buff",
+            "description": "Flash duration increased up from 2s \u2192 2.25s"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Rolling Thunder",
+            "change_type": "Nerf",
+            "description": "Width decreased from 23m \u2192 18m"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Rolling Thunder",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased from 6s \u2192 4s"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Rolling Thunder",
+            "change_type": "Buff",
+            "description": "Ult points decreased from 9 \u2192 8"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Haunt",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 40s \u2192 60s"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Haunt",
+            "change_type": "Nerf",
+            "description": "Haunt active duration decreased 2s \u2192 1.5s"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Prowler",
+            "change_type": "Nerf",
+            "description": "Visibility in Nearsight increased from 5m \u2192 7m"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Nightfall",
+            "change_type": "Nerf",
+            "description": "Deafen and Marked duration decreased from 12s \u2192 8s"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Nightfall",
+            "change_type": "Nerf",
+            "description": "Width decreased from 24m \u2192 20m"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Nightfall",
+            "change_type": "Buff",
+            "description": "Decay now remains a consistent 80 damage over its duration instead of decreasing over time"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Globules",
+            "change_type": "Nerf",
+            "description": "Cooldown upon reclaim increased from 10s \u2192 20s"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Wingman",
+            "change_type": "Nerf",
+            "description": "Health decreased from 80 \u2192 60"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Wingman",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased from 3s \u2192 2.5s (wiki editor note: patch notes state 3.5s instead as previous value)"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Thrash",
+            "change_type": "Nerf",
+            "description": "Health decreased from 200 \u2192 180"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "ZERO/point",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 40s \u2192 60s"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "FLASH/drive",
+            "change_type": "Buff",
+            "description": "Underhand maximum flash duration increased from 1.5s \u2192 2.25s"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "NULL/cmd",
+            "change_type": "Adjustment",
+            "description": "Updated to match Stim standardization"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "NULL/cmd",
+            "change_type": "Nerf",
+            "description": "Increased fire rate reduced from 15% \u2192 10%"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "NULL/cmd",
+            "change_type": "Adjustment",
+            "description": "Added standardized weapon draw time for Stims"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "NULL/cmd",
+            "change_type": "Adjustment",
+            "description": "Added NEW: Increased weapon draw speed by 10%"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "NULL/cmd",
+            "change_type": "Adjustment",
+            "description": "<s>Added weapon recovery speed for Stims</s> (wiki editor note: this buff was already in effect beforehand)"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "NULL/cmd",
+            "change_type": "Adjustment",
+            "description": "<s>NEW: Weapon recovery speed increased by 10%</s>"
+        },
+        {
+            "agent": "Sova",
+            "ability": "Recon Bolt",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 40s \u2192 60s"
+        },
+        {
+            "agent": "Iso",
+            "ability": "Kill Contract",
+            "change_type": "Nerf",
+            "description": "Length decreased from 48m \u2192 36m"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Energy",
+            "change_type": "Nerf",
+            "description": "Battery recharge decreased, time to recharge to full battery increased from 20s \u2192 60s"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Energy",
+            "change_type": "Buff",
+            "description": "Battery drain reduced, increasing sprint time with full battery from 10s \u2192 16s (wiki editor note: the patch notes documented it as 12s \u2192 16s)"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Relay Bolt",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased 3.5s \u2192 2.5s"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Leer",
+            "change_type": "Nerf",
+            "description": "Health decreased from 80 \u2192 60"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Empress",
+            "change_type": "Adjustment",
+            "description": "Updated to match stim standardization"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Empress",
+            "change_type": "Nerf",
+            "description": "Faster reload time reduced from 25% \u2192 10%"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Empress",
+            "change_type": "Nerf",
+            "description": "Increased fire rate reduced from 15% \u2192 10%"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Empress",
+            "change_type": "Nerf",
+            "description": "Increased weapon draw speed reduced from 25% \u2192 10%"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Empress",
+            "change_type": "Nerf",
+            "description": "Increased weapon recovery speed reduced from 25% \u2192 10%"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Nerf",
+            "description": "Hindered duration decreased from 4s \u2192 3s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Adjustment",
+            "description": "Removed Ultimate no longer spawns an afterimage of Waylay"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Adjustment",
+            "description": "She is no longer pushed back when casting"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Nerf",
+            "description": "Ultimate now briefly restricts aim rotation and movement speed similar to Breach\u2019s Rolling Thunder when casting"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Nerf",
+            "description": "Hindered duration decreased from 7s \u2192 6s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Buff",
+            "description": "Initial windup decreased from 2s \u2192 1s"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Nerf",
+            "description": "Width decreased from 18m \u2192 13.5m"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Nerf",
+            "description": "Decreased movement speed buff on ult from 15% \u2192 10%"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Gatecrash",
+            "change_type": "Nerf",
+            "description": "Health decreased from 60 \u2192 20"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Gatecrash",
+            "change_type": "Adjustment",
+            "description": "Audio now plays from Yoru\u2019s location when Yoru teleports or fakes it"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Fakeout",
+            "change_type": "Nerf",
+            "description": "Flash duration decreased from 3s \u2192 2s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Blindside",
+            "change_type": "Nerf",
+            "description": "Flash duration decreased from 1.75s \u2192 1.5s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Blindside",
+            "change_type": "Nerf",
+            "description": "Flash now follows the standard flash falloff curves as other Agents. Previously, Yoru\u2019s flashes that were slightly offscreen were more effective than intended"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Dimensional Drift",
+            "change_type": "Nerf",
+            "description": "Yoru can no longer cast Blindside, or set up his Fakeout during Dimensional Drift"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Dimensional Drift",
+            "change_type": "Adjustment",
+            "description": "He can still cast the initial Gatecrash and reactivation, as well as reactivation of Fakeouts"
+        },
+        {
+            "agent": "Raze",
+            "ability": "Blast Pack",
+            "change_type": "Nerf",
+            "description": "Raze can now be affected by Slows while midair with Blast Pack"
+        },
+        {
+            "agent": "Raze",
+            "ability": "Blast Pack",
+            "change_type": "Adjustment",
+            "description": "If Slowed, the force from Blast Pack will be reduced, similar to how slows affect other Dashes"
+        },
+        {
+            "agent": "Astra",
+            "ability": "Gravity Well",
+            "change_type": "Nerf",
+            "description": "Fragile duration decreased from 5s \u2192 2.5s"
+        },
+        {
+            "agent": "Astra",
+            "ability": "Gravity Well",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 45s \u2192 60s"
+        },
+        {
+            "agent": "Astra",
+            "ability": "Nova Pulse",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased from 3.5s \u2192 2.5s"
+        },
+        {
+            "agent": "Astra",
+            "ability": "Nova Pulse",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 45s \u2192 60s"
+        },
+        {
+            "agent": "Astra",
+            "ability": "Nebula/Dissipate",
+            "change_type": "Nerf",
+            "description": "Cooldown increased 25s \u2192 35s"
+        },
+        {
+            "agent": "Brimstone",
+            "ability": "Stim Beacon",
+            "change_type": "Adjustment",
+            "description": "Updated to match stim standardization"
+        },
+        {
+            "agent": "Brimstone",
+            "ability": "Stim Beacon",
+            "change_type": "Nerf",
+            "description": "Increased fire rate reduced from 15% \u2192 10%"
+        },
+        {
+            "agent": "Brimstone",
+            "ability": "Stim Beacon",
+            "change_type": "Nerf",
+            "description": "Increased movement speed reduced from 15% \u2192 10%"
+        },
+        {
+            "agent": "Omen",
+            "ability": "Dark Cover",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 30s \u2192 40s"
+        },
+        {
+            "agent": "Omen",
+            "ability": "Paranoia",
+            "change_type": "Buff",
+            "description": "Projectile speed increased from 16 meters per second \u2192 20 meters per second"
+        },
+        {
+            "agent": "Omen",
+            "ability": "Paranoia",
+            "change_type": "Nerf",
+            "description": "Travel distance reduced from 32.5m \u2192 25m"
+        },
+        {
+            "agent": "Viper",
+            "ability": "Toxin",
+            "change_type": "Nerf",
+            "description": "Initial contact now inflicts less Decay, reduced from 30 \u2192 10 health"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Nerf",
+            "description": "Arc Rose is now destructible after the flash windup starts rather than being invulnerable."
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Removed When enemy players are successfully flashed, the audio cue and voiceline alerting Vyse and her allies is removed"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Nerf",
+            "description": "Flash duration decreased from 2.25s \u2192 2.0s"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Cooldowns are slightly adjusted"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Nerf",
+            "description": "After destruction, cooldown is increased from 45s \u2192 60s"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Arc Rose",
+            "change_type": "Nerf",
+            "description": "Recalling the ability will now always incur a 20s cooldown"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Shear",
+            "change_type": "Nerf",
+            "description": "Wall Trap trigger logic has been reworked to make it easier to bait out. The wall now spawns immediately when an enemy enters and then leaves its trigger zone. Enemies will also hear an audio cue, audible only to them, when they enter the trigger zone"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Razorvine",
+            "change_type": "Nerf",
+            "description": "Health decreased from 40 \u2192 20"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Steel Garden",
+            "change_type": "Nerf",
+            "description": "Initial windup increased from 3.4s \u2192 4.4s"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Steel Garden",
+            "change_type": "Nerf",
+            "description": "Radius decreased from 32.5m \u2192 26m"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Spycam",
+            "change_type": "Adjustment",
+            "description": "Added Nerf Added stealthing functionality"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Spycam",
+            "change_type": "Adjustment",
+            "description": "Inactive camera will be revealed to enemies when you are within 8 meter radius of the camera, and will also have an accompanying audio tell"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Spycam",
+            "change_type": "Adjustment",
+            "description": "When the camera is active, there will be a louder persistent camera audio for enemies with a 12m range"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Spycam",
+            "change_type": "Nerf",
+            "description": "Cooldown when destroyed is increased from 45s \u2192 60s"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Adjustment",
+            "description": "Trapwire activation windup decreased"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Nerf",
+            "description": "PC: 1.5s \u2192 0.9s"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Nerf",
+            "description": "Console: 2.5s \u2192 1.9s"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Adjustment",
+            "description": "Removed Trapwire activation has been adjusted to remove the Concuss and Tether debuffs. Timing of other debuffs has been changed"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Adjustment",
+            "description": "Previously, players were Tethered and Revealed after 0.5 seconds. Trapwire would then activate after 1.5 seconds and Concuss players if it was not destroyed."
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Adjustment",
+            "description": "Added Now, players will be immediately Slowed upon crossing the Trapwire Trapwire will now activate after 0.9 seconds and Reveal players if not destroyed OR if the player moves 4 meters away from the attached location."
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Turret",
+            "change_type": "Nerf",
+            "description": "Cooldown when destroyed increased from 45s \u2192 60s"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Turret",
+            "change_type": "Nerf",
+            "description": "Reactivation time for turret increased from 0.5s \u2192 2s"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Turret",
+            "change_type": "Buff",
+            "description": "Turret movement tagging per bullet increased 29.5% \u2192 50%"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Turret",
+            "change_type": "Adjustment",
+            "description": "Added Nerf NEW: Added a \u201cwindup\u201d effect when Killjoy first re-enters the activation range"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Alarmbot",
+            "change_type": "Nerf",
+            "description": "Health decreased from 50 \u2192 20"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Alarmbot",
+            "change_type": "Nerf",
+            "description": "Reactivation time increased from 1s \u2192 2s"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Alarmbot",
+            "change_type": "Adjustment",
+            "description": "Added Nerf NEW: Added a \u201cwindup\u201d effect when Killjoy first re-enters the activation range"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Nerf",
+            "description": "Cooldown increased from 40s \u2192 60s"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "Barrier Mesh",
+            "change_type": "Buff",
+            "description": "Cost reduced from 400 \u2192 300"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "Barrier Mesh",
+            "change_type": "Nerf",
+            "description": "Health of smaller nodes decreased from 570 \u2192 480"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "Sonic Sensor",
+            "change_type": "Nerf",
+            "description": "Concuss duration reduced 3.5s \u2192 2.5s"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Barrier Orb",
+            "change_type": "Buff",
+            "description": "Cost reduced from 400 \u2192 300"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Barrier Orb",
+            "change_type": "Buff",
+            "description": "Fortification delay reduced from 3.3 sec \u2192 2 sec"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Barrier Orb",
+            "change_type": "Nerf",
+            "description": "Health of Barrier segments decreased from 800 \u2192 600"
+        },
+        {
+            "agent": "Pearl",
+            "ability": "B-Site",
+            "change_type": "Adjustment",
+            "description": "Removed the deep sightline from B Long - This angle provided too much control over the site from a safe distance"
+        },
+        {
+            "agent": "Pearl",
+            "ability": "B-Site",
+            "change_type": "Adjustment",
+            "description": "Adjusted cover positioning on and around the site - These changes will encourage more direct engagements on the site itself"
+        },
+        {
+            "agent": "Abyss",
+            "ability": "B-Site",
+            "change_type": "Adjustment",
+            "description": "Site Changes - Currently both teams are having a tough time playing on-site\u2014Defenders struggle with the initial site hold, while Attackers have difficulty holding the spike during post-plant and feel forced to plant for main. We want to take a pass at improving on-site play for both teams while also making post-plants for main more risky."
+        },
+        {
+            "agent": "Abyss",
+            "ability": "Mid",
+            "change_type": "Adjustment",
+            "description": "Mid Hallway Changes - We want to help open up quicker macro pathing options for both teams. We\u2019re adjusting the hallway in Mid that leads towards B Main to allow for improved flow through the map for both teams."
+        },
+        {
+            "agent": "Map Pool Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Pearl and Split are IN the Competitive and Deathmatch queues."
+        },
+        {
+            "agent": "Map Pool Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Lotus and Ascent are OUT of the COMPETITIVE and DEATHMATCH queues"
+        },
+        {
+            "agent": "Rifles",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "% chance of yaw switch: % chance the gun will swap horizontal recoil from one side to the other (left vs right from your crosshair)"
+        },
+        {
+            "agent": "Rifles",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Yaw switch time: how quickly the gun swaps horizontal recoil from one side to the other. When yaw switch time increases, this means you have more time to counteract the recoil"
+        },
+        {
+            "agent": "Rifles",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Protected bullet counts: how many bullets in a spray you can use before your gun has a chance of yaw switch"
+        },
+        {
+            "agent": "Bulldog",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.37s \u2192 0.6s"
+        },
+        {
+            "agent": "Bulldog",
+            "ability": "General",
+            "change_type": "Nerf",
+            "description": "Chance for horizontal (Yaw) to switch increased from 6% \u2192 10%"
+        },
+        {
+            "agent": "Phantom",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.37s \u2192 0.6s"
+        },
+        {
+            "agent": "Phantom",
+            "ability": "General",
+            "change_type": "Nerf",
+            "description": "Chance for horizontal (Yaw) to switch increased from 6% \u2192 10%"
+        },
+        {
+            "agent": "Phantom",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Protected bullet count increased from 6 \u2192 8 bullets"
+        },
+        {
+            "agent": "Vandal",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.37s \u2192 0.6s"
+        },
+        {
+            "agent": "Vandal",
+            "ability": "General",
+            "change_type": "Nerf",
+            "description": "Chance for horizontal (Yaw) to switch increased from 6% \u2192 10%"
+        },
+        {
+            "agent": "Vandal",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Protected bullet count increased from 4 \u2192 6 bullets"
+        },
+        {
+            "agent": "Spectre",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Total spread reduced from 1.5 \u2192 1.4"
+        },
+        {
+            "agent": "Spectre",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Tap Efficiency increased from 2 \u2192 3"
+        },
+        {
+            "agent": "Spectre",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Tap Efficiency determines the rate that inaccuracy is accrued when re-firing prior to waiting for the complete duration of a weapon\u2019s respective Gun Recovery Time. The higher the Tap Efficiency, the lower the rate of inaccuracy accrual"
+        },
+        {
+            "agent": "Spectre",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.18s \u2192 0.28s"
+        },
+        {
+            "agent": "Spectre",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Protected bullet count increased from 4 \u2192 5 bullets"
+        },
+        {
+            "agent": "Stinger",
+            "ability": "Full Auto",
+            "change_type": "Nerf",
+            "description": "Total spread increased from 1.3 \u2192 1.5"
+        },
+        {
+            "agent": "Stinger",
+            "ability": "Full Auto",
+            "change_type": "Nerf",
+            "description": "Total spread accrued faster from 7 bullets \u2192 6 bullets"
+        },
+        {
+            "agent": "Stinger",
+            "ability": "Full Auto",
+            "change_type": "Nerf",
+            "description": "Vertical (Pitch) recoil curve increases more aggressively"
+        },
+        {
+            "agent": "Stinger",
+            "ability": "Full Auto",
+            "change_type": "Adjustment",
+            "description": "Total recoil is unchanged"
+        },
+        {
+            "agent": "Spectre",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.20s \u2192 0.28s"
+        },
+        {
+            "agent": "Stinger",
+            "ability": "Full Auto",
+            "change_type": "Nerf",
+            "description": "Vertical (Pitch) recoil curve increases more aggressively"
+        },
+        {
+            "agent": "Stinger",
+            "ability": "Full Auto",
+            "change_type": "Adjustment",
+            "description": "Total recoil is unchanged"
+        },
+        {
+            "agent": "Bulldog",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.50s \u2192 0.60s"
+        },
+        {
+            "agent": "Phantom",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.50s \u2192 0.60s"
+        },
+        {
+            "agent": "Phantom",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Protected bullet count from yaw (horizontal) switching while spraying, increased from 5 \u2192 8 bullets"
+        },
+        {
+            "agent": "Vandal",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Horizontal (Yaw) switch time increased from 0.50s >>> 0.60s"
+        },
+        {
+            "agent": "Vandal",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Protected bullet count from yaw (horizontal) switching while spraying, increased from 5 \u2192 6 bullets"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "We've improved how Placeable Abilities like Cypher's Spycam and Deadlock's Sonic Sensor previews when placing in our maps. All previews will now better align to the eventual location of your ability.",
+        "We have not added or removed any placement options, we have only made our previews more accurate. This is especially so for Deadlock's Sound Sensor, which will see the biggest preview change, moving away from the current snappy behavior, to a more smooth preview."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [],
+    "player_behavior_changes": [
+        "Added \u201cRank Manipulation\u201d as a new reporting category.",
+        "Please use \u2018Rank Manipulation\u2019 instead of \u2018Cheating\u2019 to report players who abuse matchmaking. This encompasses behaviors we commonly know as smurfing, wintrading, and boosting.",
+        "Welcome to Stage V25A6!",
+        "At the end of this Stage, the top 16 teams in Invite will remain in Invite. All other Invite teams will be demoted at the start of the next Stage. These rules are listed on the Standings tab.",
+        "Demoted teams will seed into the zone they originally promoted from. Next Stage, Team Owners can change their zone in the Team Settings dropdown anytime before the team plays a match.",
+        "If your team cannot be placed into a zone at the start of the next Stage, your Team Owner will be prompted to select a zone.",
+        "Divisions other than Invite will not have demotion, and teams will still be promoted or be seeded into a division as normal at the start of next Stage.",
+        "Contender Eligibility updates",
+        "Contender Eligibility for 2025 expires at the end of Stage V25A6.",
+        "To be Contender Eligible in 2026, you must perform a qualifying action in Stage V25A6 or at any point in 2026.",
+        "Qualifying actions include:",
+        "Play a Weekly or Playoff match on a team in Contender or Invite Division.",
+        "Reach Immortal 3 or higher peak rank in Competitive.",
+        "Play in a Playoff match in Elite 5.",
+        "Contender Eligibility for 2026 expires at the end of 2026.",
+        "VCT Team Tags",
+        "Starting this patch, we\u2019re expanding the Team Tag feature to include tags for VCT teams! Pros will now have their team\u2019s tag shown before their name throughout the client - in the social panel, in lobby, in game (like the killfeed), and on the Competitive Leaderboards!",
+        "VCT team names and tags are reserved ONLY for VCT partnered teams.",
+        "Current Premier teams that have a team name and/or tag of a VCT partnered team will receive a prompt in-game for their Team Owner to change their team name."
+    ]
+}

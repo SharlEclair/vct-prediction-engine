@@ -10,13 +10,19 @@
         },
         {
             "agent": "General",
-            "ability": "Map Targeted Abilities Improvements",
+            "ability": "Ground Spreading Abilities",
+            "change_type": "Adjustment",
+            "description": "Map Targeted Abilities Improvements"
+        },
+        {
+            "agent": "General",
+            "ability": "Ground Spreading Abilities",
             "change_type": "Adjustment",
             "description": "You can now ping and see additional icons on maps used for ability targeting"
         },
         {
             "agent": "General",
-            "ability": "Map Targeted Abilities Improvements",
+            "ability": "Ground Spreading Abilities",
             "change_type": "Adjustment",
             "description": "Affected abilities: Brimstone\u2019s Sky Smoke and Orbital Strike, Clove\u2019s Ruse, and Omen\u2019s From the Shadows"
         },

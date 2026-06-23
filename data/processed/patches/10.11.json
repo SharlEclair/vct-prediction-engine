@@ -1,0 +1,26 @@
+{
+    "version": "10.11",
+    "date": "June 10th, 2025",
+    "agent_changes": [],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "We\u2019ve added the Performance view as part of the End of Game and Match Details screens where you can review how you matched up against each opponent."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Bugfix Fixed an issue where the visual indicator for Nightfall wouldn\u2019t disappear for spectators if Fade dies with the ability equips.",
+        "Bugfix Fixed an issue where area names on Guided Salvo ability maps were too large and overlapping due to decreased cast range. We\u2019ve removed area names from Tejo\u2019s Guided Salvo and Armageddon ability maps for consistency.",
+        "Bugfix Fixed an issue where Reyna\u2019s Targeting visual for Leer wouldn\u2019t properly display for spectators, allies, and observer perspectives.",
+        "Bugfix Fixed an issue where Waylay\u2019s targeting indicator for Convergent Paths wouldn\u2019t display properly for spectators, allies, and observer perspectives.",
+        "Bugfix Fixed an issue where Clove\u2019s Pick-me-up audio wouldn\u2019t play properly for all players.",
+        "Bugfix Fixed an issue where Chamber\u2019s Trademark didn\u2019t have team coloring applied on the minimap for observers.",
+        "Bugfix Fixed an issue where Breach\u2019s Fault Line area of effect VFX was not matching collision volume depending on charge duration.",
+        "In addition to a gun buddy and title, the winners of V25A3 playoffs will receive the new player card effect at the start of V25A4!",
+        "Rewards are granted to all players on the roster at the time of the playoff win that played at least two Weekly matches or one Playoff match on the team this Stage.",
+        "This means you should NOT leave the team until after playoffs complete if you want to receive your rewards.",
+        "Gun buddy and title are granted the next time you log in ~24 hr after playoffs.",
+        "The new player card effect will show up when Stage V25A4 starts."
+    ],
+    "player_behavior_changes": []
+}

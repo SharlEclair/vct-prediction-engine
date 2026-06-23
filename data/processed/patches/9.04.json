@@ -49,6 +49,12 @@
             "ability": "Astra",
             "change_type": "Adjustment",
             "description": "Cosmic Divide\u2019s wall placement now prioritizes player input, allowing you to better control the placement of the ability."
+        },
+        {
+            "agent": "Map Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "NEW MAP! \u201cSplit\u201d enters Unrated & Swiftplay queues."
         }
     ],
     "weapon_changes": [],

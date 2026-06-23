@@ -1,0 +1,102 @@
+{{PatchNav|previous=11.06|next=11.07b}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 11.07.jpg
+|date    = September 30th, 2025
+|act     = [[Season 2025: Act 5]]
+|changes = '''All Platforms:'''
+*'''[[Skirmish]] release
+*[[Agents]]
+'''PC-only:'''
+*[[Replays]]
+|bundle  = {{collection|Wasteland}} (V25)
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-07/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v11.07.
+----
+<i>Wowee would you look at the time? That’s right, it’s time for Champs Finals! Who are you rooting for?
+
+It’s Ash. Let’s get down to business.</i>
+
+==All Platforms==
+===Agent Updates===
+*{{ai|Cypher}}
+**{{ui|Buff}} Parts of Cypher’s {{abi text|Spycam}} visual glitch effect have been removed. This effect is most noticeable when entering the camera in rapid succession and this should make it so you are less likely to miss any information when checking your camera frequently.
+*{{ai|Waylay}}
+**{{ui|Adjustment}} Improved clarity of Waylay’s {{abi text|Convergent Paths}} so you know exactly where the edges are when dodging.
+
+===Gameplay Systems Updates===
+*As new Agents and abilities are released, we want to ensure the information provided to players remains consistent across similar abilities. There are two sets of changes that will be rolling out.
+**Abilities that can be placed and reactivated now use a distinctive teal color, improving clarity.
+***{{ai|Chamber}}
+****{{abi text|Trademark}}
+****{{abi text|Rendezvous}}
+***{{ai|Killjoy}}
+****{{abi text|Nanoswarm}}
+***{{ai|Vyse}}
+****{{abi text|Razorvine}}
+****{{abi text|Arc Rose}}
+***{{ai|Yoru}}
+****{{abi text|Gatecrash}}
+{| class="wikitable" style="margin:auto"
+!Unhovered
+!Hovered
+|-
+|[[File:Patch 11.07 unhovered ability.png|250px]]
+|[[File:Patch 11.07 hovered ability.png|250px]]
+|}
+
+*In an effort to keep new abilities consistent in information and behavior, we have adjusted some of how controllable utility and drones are shown on the minimap. Their icons now have a directional arrow to indicate where they are facing, ally and enemy color coding, and added a seeking-state for drones that lock-on to players.
+**{{ai|Fade}}
+***{{abi text|Prowler}}
+**{{ai|Raze}}
+***{{abi text|Boom Bot}} - NEW (previously not shown on minimap)
+**{{ai|Gekko}}
+***{{abi text|Wingman}} 
+***{{abi text|Thrash}} 
+**{{ai|Skye}} 
+***{{abi text|Trailblazer}} 
+***{{abi text|Guiding Light}} 
+***{{abi text|Seekers}}
+**{{ai|Sova}}
+***{{abi text|Owl Drone}}
+**{{ai|Tejo}}
+***{{abi text|Stealth Drone}}
+{| class="wikitable" style="margin:auto"
+!Before
+!After
+|-
+|[[File:Patch 11.07 directional ability before.png|250px]]
+|[[File:Patch 11.07 directional ability after.png|250px]]
+|}
+
+===Modes Updates===
+*[[Skirmish|New Mode in Customs]] - live on October 3rd
+**You can access the new game mode by creating a custom lobby and inviting a friend or two. More info dropping during Champions Finals Weekend.
+
+===Bug Fixes===
+*[[Agents]]
+**{{ui|Bugfix Nerf}} Fixed a bug where recoil on {{ai|Chamber}}'s {{abi text|Headhunter}} would sometimes appear to recover quicker than intended. Thanks to Reddit user, [https://www.reddit.com/r/VALORANT/comments/1mo1ma4/undocumented_headhunter_changes/ RejiAG], for calling this out! 
+**{{ui|Bugfix}} The map icon for {{ai|Brimstone}}'s {{abi text|Orbital Strike}} is now removed at the same time the area of effect is turned off. Previously, it lingered while the effect faded out which exceeded when it was visible to players. 
+**{{ui|Bugfix}} Fixed {{ai|Raze}}'s hair so it wouldn’t flicker during certain movements in Agent select.
+**{{ui|Bugfix}} Fixed an issue when {{ai|Phoenix}}’s {{abi text|Blaze}} would break [[Ascent]] glass despite not overlapping it. 
+
+===Known Issues===
+*General 
+**Last week we implemented a fix aimed at solving most cases of the disappearing Agents bug. We're still investigating a full fix and there might be a small number of these occurrences. If you're still seeing this bug in your games, please let us know by reaching out to Player Support!
+
+==PC Only== 
+===General Updates===
+*[[Replays]] “Show Replay UI” and “Show Cursor” UI will now toggle off when using the setting to hide user interface in game. 
+
+===Premier Updates===
+*In a future patch, we’ll be expanding the Team Tag feature to include VCT teams! To prepare for this, current Premier teams that have a team name and/or tag of a VCT partnered team will receive a prompt in-game for their Team Owner to change their team name. 
+
+===Known Issues===
+*If you pause a replay while first person spectating someone that is impacted by Fade's Nightfall, your next game will sound muffled unless you restart the game client. This will be fixed in patch 11.08. 
+*We’re aware of a minor visual bug where hovering over an offline player on your friends list may show an empty Premier team section. This will be fixed in patch 11.08
+*We're aware of an issue that's causing intermittent crashing on the Agent Select screen after locking in your Agent. We'll be rolling out a fix for this issue with Patch 11.08. In the meantime, you can workaround by disabling AVX512 instructions in your system's BIOS
+
+[[Category:Patch Notes]]
+
+[[de:Patchnotes/11.07]]

@@ -1,0 +1,29 @@
+{
+    "version": "10.02",
+    "date": "February 4th, 2025",
+    "agent_changes": [],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "General",
+        "Fixed an issue where certain types of damage could leave players with Regen Shields at 1 HP when the damage should have been lethal.",
+        "This also fixed issues where Clove could tank lethal damage specifically when Regen Shield and Pick-me-up were active at the same time.",
+        "Agents",
+        "Vyse",
+        "Fixed an issue where Arc Rose and Razorvine were visible when placed on specific water surfaces.",
+        "Tejo",
+        "Fixed an issue where players could rarely survive running straight through the full duration of Armageddon.",
+        "Killjoy",
+        "Fixed an issue where Killjoy\u2019s recall minimap indicator could get stuck in a state where it was invisible.",
+        "Alarmbot logic has been updated to be more intelligent.",
+        "In niche circumstances, the Alarmbot will now path towards players if they are on ledges and explode on them if they would be hit by the size of the explosion rather than trying to run extremely long paths around the map.",
+        "Gameplay Systems",
+        "Fixed a bug where Observers were seeing inconsistent player team outline colors.",
+        "Premier",
+        "Fixed an issue where long team names could overlap each other on the playoff bracket screen.",
+        "Fixed an issue where dropdowns on the standings sometimes cut off text.",
+        "Fixed an issue where the division name text was not always correctly aligned on the match history screen."
+    ],
+    "player_behavior_changes": []
+}

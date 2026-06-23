@@ -1,0 +1,216 @@
+{
+    "version": "11.07",
+    "date": "September 30th, 2025",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "Cypher",
+            "change_type": "Buff",
+            "description": "Parts of Cypher\u2019s Spycam visual glitch effect have been removed. This effect is most noticeable when entering the camera in rapid succession and this should make it so you are less likely to miss any information when checking your camera frequently."
+        },
+        {
+            "agent": "General",
+            "ability": "Waylay",
+            "change_type": "Adjustment",
+            "description": "Improved clarity of Waylay\u2019s Convergent Paths so you know exactly where the edges are when dodging."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "As new Agents and abilities are released, we want to ensure the information provided to players remains consistent across similar abilities. There are two sets of changes that will be rolling out."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Abilities that can be placed and reactivated now use a distinctive teal color, improving clarity."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Chamber"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Trademark"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Rendezvous"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Killjoy"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Nanoswarm"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Vyse"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Razorvine"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Arc Rose"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Yoru"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Gatecrash"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "In an effort to keep new abilities consistent in information and behavior, we have adjusted some of how controllable utility and drones are shown on the minimap. Their icons now have a directional arrow to indicate where they are facing, ally and enemy color coding, and added a seeking-state for drones that lock-on to players."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Fade"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Prowler"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Raze"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Boom Bot - NEW (previously not shown on minimap)"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Gekko"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Wingman"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Thrash"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Skye"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Trailblazer"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Guiding Light"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Seekers"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Sova"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Owl Drone"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Tejo"
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Stealth Drone"
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "New Mode in Customs - live on October 3rd"
+        },
+        {
+            "agent": "Modes Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "You can access the new game mode by creating a custom lobby and inviting a friend or two. More info dropping during Champions Finals Weekend."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Bugfix Nerf Fixed a bug where recoil on Chamber's Headhunter would sometimes appear to recover quicker than intended. Thanks to Reddit user, [https://www.reddit.com/r/VALORANT/comments/1mo1ma4/undocumented_headhunter_changes/ RejiAG], for calling this out!",
+        "Bugfix The map icon for Brimstone's Orbital Strike is now removed at the same time the area of effect is turned off. Previously, it lingered while the effect faded out which exceeded when it was visible to players.",
+        "Bugfix Fixed Raze's hair so it wouldn\u2019t flicker during certain movements in Agent select.",
+        "Bugfix Fixed an issue when Phoenix\u2019s Blaze would break Ascent glass despite not overlapping it.",
+        "General",
+        "Last week we implemented a fix aimed at solving most cases of the disappearing Agents bug. We're still investigating a full fix and there might be a small number of these occurrences. If you're still seeing this bug in your games, please let us know by reaching out to Player Support!",
+        "Replays \u201cShow Replay UI\u201d and \u201cShow Cursor\u201d UI will now toggle off when using the setting to hide user interface in game.",
+        "In a future patch, we\u2019ll be expanding the Team Tag feature to include VCT teams! To prepare for this, current Premier teams that have a team name and/or tag of a VCT partnered team will receive a prompt in-game for their Team Owner to change their team name.",
+        "If you pause a replay while first person spectating someone that is impacted by Fade's Nightfall, your next game will sound muffled unless you restart the game client. This will be fixed in patch 11.08.",
+        "We\u2019re aware of a minor visual bug where hovering over an offline player on your friends list may show an empty Premier team section. This will be fixed in patch 11.08",
+        "We're aware of an issue that's causing intermittent crashing on the Agent Select screen after locking in your Agent. We'll be rolling out a fix for this issue with Patch 11.08. In the meantime, you can workaround by disabling AVX512 instructions in your system's BIOS"
+    ],
+    "player_behavior_changes": []
+}

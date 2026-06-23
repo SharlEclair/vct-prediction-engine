@@ -1,0 +1,309 @@
+{
+    "version": "10.04",
+    "date": "March 4th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Waylay",
+            "ability": "Refract",
+            "change_type": "Adjustment",
+            "description": "INSTANTLY create a beacon of light on the floor. REACTIVATE to speed back to your beacon as a mote of pure light. You are invulnerable as you travel."
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Lightspeed",
+            "change_type": "Adjustment",
+            "description": "EQUIP to prepare for a burst of speed. FIRE to dash forward twice. ALT FIRE to dash once. Only your first dash can send you upward."
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "INSTANTLY throw a cluster of light that explodes upon contact with the ground, HINDERING nearby players with a powerful movement and weapon slow."
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Hinder"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Applies a debuff that SLOWS which impacts:"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Fire Rate"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Recoil Recovery"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Equip Time"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Reload Speed"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Movement Speed"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Adjustment",
+            "description": "Jump Speed"
+        },
+        {
+            "agent": "Waylay",
+            "ability": "Convergent Paths",
+            "change_type": "Adjustment",
+            "description": "EQUIP to focus your prismatic power. FIRE to create an afterimage of yourself that projects a beam of light. After a brief delay, you gain a powerful speed boost and the beam expands, HINDERING other players in the area."
+        },
+        {
+            "agent": "Clove",
+            "ability": "Meddle",
+            "change_type": "Adjustment",
+            "description": "No longer explodes after a 1.3 second timer after casting. Explodes after contact with the ground after a 0.75s timer."
+        },
+        {
+            "agent": "Clove",
+            "ability": "Meddle",
+            "change_type": "Adjustment",
+            "description": "Projectile audio has been updated to fit this new behavior."
+        },
+        {
+            "agent": "Clove",
+            "ability": "Ruse",
+            "change_type": "Adjustment",
+            "description": "Cooldown duration increased from 30s >>> 40s"
+        },
+        {
+            "agent": "Clove",
+            "ability": "Pick-me-up",
+            "change_type": "Adjustment",
+            "description": "Health buff duration increased from 8s >>> 10s"
+        },
+        {
+            "agent": "Clove",
+            "ability": "Pick-me-up",
+            "change_type": "Adjustment",
+            "description": "Move speed duration reduced from 8s >>> 3s"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "Barrier Mesh",
+            "change_type": "Adjustment",
+            "description": "Changed to a non-signature ability"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "Barrier Mesh",
+            "change_type": "Adjustment",
+            "description": "Cost: Free >>> 400 credits"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Adjustment",
+            "description": "Changed to a signature ability with 40s cooldown"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Adjustment",
+            "description": "Total Size decreased from 16m >>> 13m"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Adjustment",
+            "description": "Gravnet\u2019s Projectile audio loop has been updated to increase its gameplay clarity."
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Adjustment",
+            "description": "When an enemy removes the net, the audio cue of the net breaking now plays for all players."
+        },
+        {
+            "agent": "Iso",
+            "ability": "Undercut",
+            "change_type": "Adjustment",
+            "description": "Reduced charges from 2 >>> 1"
+        },
+        {
+            "agent": "Iso",
+            "ability": "Undercut",
+            "change_type": "Adjustment",
+            "description": "Cost increased from 200 >>> 300 credits"
+        },
+        {
+            "agent": "Iso",
+            "ability": "Undercut",
+            "change_type": "Adjustment",
+            "description": "Now applies Suppression alongside Vulnerability for the same duration (4s) on players hit."
+        },
+        {
+            "agent": "Iso",
+            "ability": "Contingency",
+            "change_type": "Adjustment",
+            "description": "Now has an Alt-Fire cast that makes the wall move at half the speed"
+        },
+        {
+            "agent": "Iso",
+            "ability": "Contingency",
+            "change_type": "Adjustment",
+            "description": "This does not affect the duration of Contingency."
+        },
+        {
+            "agent": "Iso",
+            "ability": "Double Tap",
+            "change_type": "Adjustment",
+            "description": "Iso now receives a Heavy Penetration tag rather than a Wall Penetration tag when the shield is broken. This means he\u2019s slowed more upon his shield breaking."
+        },
+        {
+            "agent": "Iso",
+            "ability": "Kill Contract",
+            "change_type": "Adjustment",
+            "description": "BUGFIX: If Iso DOES NOT have Double Tap\u2019s buff applied, the ultimate will now automatically apply it so that won ultimate duels always spawn an orb."
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "Damage decreased from 70 >>> 65"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Guided Salvo",
+            "change_type": "Adjustment",
+            "description": "Guided Salvo now does 50% damage to non-player objects."
+        },
+        {
+            "agent": "Map Rotation",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Icebox and Ascent are back IN the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "Map Rotation",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Abyss and Bind are OUT of the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "Ascent",
+            "ability": "B Main",
+            "change_type": "Adjustment",
+            "description": "Changed part of the B Main wall along B Lane to non-pennable."
+        },
+        {
+            "agent": "Gameplay Systems Updates",
+            "ability": "Combat Report",
+            "change_type": "Adjustment",
+            "description": "Overhauled visuals of the detailed damage breakdown panel to be more organized and intuitive."
+        },
+        {
+            "agent": "Neon",
+            "ability": "Overdrive",
+            "change_type": "Adjustment",
+            "description": "Head Damage Multiplier increased 2.5 >>> 3.0 (Standardizing to PC)"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Overdrive",
+            "change_type": "Adjustment",
+            "description": "Body Damage Multiplier: 1.0 (unchanged, already same as PC)"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Overdrive",
+            "change_type": "Adjustment",
+            "description": "Leg Damage Multiplier increased 0.75 >>> 0.85 (Standardizing to PC)"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Energy",
+            "change_type": "Adjustment",
+            "description": "Fuel Drain Per Second: 0.11 >>> 0.1 (Standardizing to PC)"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Dimensional Drift",
+            "change_type": "Adjustment",
+            "description": "Unequip delay decreased 1.2s >>> 0.8s (Standardizing to PC)"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Fakeout",
+            "change_type": "Adjustment",
+            "description": "Max flash duration increased 2.0s >>> 3.0s (Standardizing to PC)"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Fakeout",
+            "change_type": "Adjustment",
+            "description": "Flash explosion delay increased: 0.6s >>> 0.8s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Fakeout",
+            "change_type": "Adjustment",
+            "description": "Note: We\u2019re keeping the console-specific counterplay added to Yoru\u2019s Fakeout."
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Blindside",
+            "change_type": "Adjustment",
+            "description": "Max Flash Duration increased from 1.25s >>> 1.75s (Standardizing to PC)"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Blindside",
+            "change_type": "Adjustment",
+            "description": "Flash Explosion Delay: 0.7s >>> 0.6s (Standardizing to PC)"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Leer",
+            "change_type": "Adjustment",
+            "description": "Leer Health increased 40 >>> 100 (Standardizing to PC)"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Leer",
+            "change_type": "Adjustment",
+            "description": "Note: Similar to Yoru\u2019s Decoy Flash, Leer continues to have a slightly longer (+0.2s) activation time and duration. This patch does not change that."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Neon",
+        "Checked in a more systemic fix to an issue where Neon could jiggle her head up and down while sliding if mashing strafing inputs.",
+        "Fade",
+        "Fixed an issue where Fade\u2019s hands got stuck in place if she crouched while holding Nightfall out.",
+        "Competitive",
+        "Fixed an issue where the Rank Shield icon on the Match History page would disappear after playing a non-Competitive game.",
+        "General",
+        "There is a bug where the first person camera angle may be slightly offset from the expected player point of view while spectating another player."
+    ],
+    "player_behavior_changes": []
+}

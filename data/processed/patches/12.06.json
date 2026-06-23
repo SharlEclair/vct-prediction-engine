@@ -1,0 +1,74 @@
+{
+    "version": "12.06",
+    "date": "March 31st, 2026",
+    "agent_changes": [
+        {
+            "agent": "Waylay",
+            "ability": "Saturate",
+            "change_type": "Nerf",
+            "description": "Changed from INSTANT to EQUIP."
+        },
+        {
+            "agent": "Viper",
+            "ability": "Viper's Pit",
+            "change_type": "Adjustment",
+            "description": "Chemical cloud has been updated to be more consistent in the way it spreads around map geometry."
+        },
+        {
+            "agent": "Cosmetics Updates",
+            "ability": "General",
+            "change_type": "Buff",
+            "description": "Flex movespeed is being increased to match Melee movespeed. This will apply to all past and future Flex."
+        },
+        {
+            "agent": "Cosmetics Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Big thanks to all of you for feedback and special shoutout to Grim, Ethos, Tokibbi, Ellum, Joshiwashi, and LakiEats for sharing their feedback with us personally!"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Bugfix Fixed a bug where Veto's Crosscut icon was missing on the minimap when the Enemy Highlight Color setting was set to red.",
+        "Bugfix Fixed a bug where some of Miks\u2019 Harmonize 1P VFX were disappearing early.",
+        "Bugfix Fixed a bug where Miks\u2019 Harmonize targeting UI could overlap with an ally\u2019s loadout.",
+        "Bugfix Fixed a bug where Miks\u2019 Waveform ability placement UI would persist briefly in 3P after he placed a smoke.",
+        "Bugfix Nerf Fixed a bug where Miks\u2019 M-pulse could be stuck in certain spots on the map and could not be destroyed.",
+        "Bugfix Buff Fixed a bug where Clove\u2019s post-death Ruse could not be unequipped without casting it.",
+        "Bugfix Nerf Fixed a bug that allowed Tejo's Guided Salvo to be cast three times. (wiki editor note: this was already hotfixed in mid-12.05)",
+        "General",
+        "Various spacing and sizing fixes across End of Game.",
+        "Adjusted the spacing around the sub navigation across all pages so elements aren\u2019t squished together",
+        "Reduced the overall text sizes in summary, scoreboard, timeline, and performance",
+        "Timeline",
+        "Adjusted the sizes of the match round boxes to fit more across the screen",
+        "Leaderboards",
+        "Fixed the spacing between rows",
+        "Career Match History",
+        "Fixed alignment issues in the left buttons and dropdown",
+        "Adjusted the text sizes within each match row",
+        "Premier",
+        "Fixed an issue where the View Team modal would sometimes incorrectly display the zone icon as a blank white box",
+        "Fixed a bug where the tournament queue timer wasn't properly showing the time to queue up by",
+        "Fixed a bug where \"Make Captain\" and \"Transfer Ownership\" options were not disabled during a tournament",
+        "Store",
+        "Numerous fixes across the overall store experience",
+        "Fixed a bug where skin names in the rotational store had clipped text in Japanese.",
+        "Fixed misaligned text on the accessories shop, rotational store tiles, radianite point store, and when selecting a gifting recipient.",
+        "Fixed misaligned subheader text when purchasing a skin.",
+        "Fixed an issue with squished bundle images in the gifting center.",
+        "Fixed an issue where weapons were too high on the purchase complete screen.",
+        "Added a hover state when mousing over offers in the featured store.",
+        "Adjusted opacity of offer tile when gifting a flex in the gifting center.",
+        "Premier",
+        "Fixed an issue where the View Team modal would sometimes incorrectly display the zone icon as a blank white box",
+        "Fixed a bug where the tournament queue timer wasn't properly showing the time to queue up by",
+        "Fixed a bug where \"Make Captain\" and \"Transfer Ownership\" options were not disabled during a tournament",
+        "Battlepass has added paginated arrow buttons to ease selecting between the chapters.",
+        "Scroll issue has been fixed and you can now scroll forwards and backwards on reward tiers and tracker"
+    ],
+    "player_behavior_changes": []
+}

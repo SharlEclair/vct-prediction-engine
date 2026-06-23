@@ -1,0 +1,137 @@
+{
+    "version": "9.08",
+    "date": "October 22nd, 2024",
+    "agent_changes": [
+        {
+            "agent": "Gekko",
+            "ability": "Globules",
+            "change_type": "Adjustment",
+            "description": "Reduced time in world 20s >>> 15s"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Globules",
+            "change_type": "Adjustment",
+            "description": "Reclaim time increased 1s >>> 1.5s"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Dizzy",
+            "change_type": "Adjustment",
+            "description": "Time active after being thrown and forming is reduced 1.5s >>> 1s."
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Dizzy",
+            "change_type": "Adjustment",
+            "description": "Dizzy\u2019s targeting algorithm has been updated to be more reliable."
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Dizzy",
+            "change_type": "Adjustment",
+            "description": "Dizzy\u2019s goop flash now also blinds the minimap of affected players."
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Wingman",
+            "change_type": "Adjustment",
+            "description": "Increased the angle of the cone concuss area 45 degrees >>> 65 degrees."
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Wingman",
+            "change_type": "Adjustment",
+            "description": "When Wingman turns into a globule after planting the Spike there are unique visuals."
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Thrash",
+            "change_type": "Adjustment",
+            "description": "Ultimate points increased 7 >>> 8"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Blind abilities like Gekko\u2019s Dizzy and Vyse\u2019s Arc Rose will now display the blind effect on Yoru\u2019s Fakeout clone as if he was a real Agent."
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Arc Rose",
+            "change_type": "Adjustment",
+            "description": "Vyse will play her Successful Blind celebration lines when blinding Yoru\u2019s Fakeout clone."
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Neural Theft",
+            "change_type": "Adjustment",
+            "description": "Cypher\u2019s Neural Theft will show the Yoru\u2019s Fakeout clone."
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Meddle",
+            "change_type": "Adjustment",
+            "description": "Clove\u2019s Meddle will now show the decay effect on Yoru\u2019s Fakeout clone."
+        },
+        {
+            "agent": "Skye and Jett",
+            "ability": "Tailwind",
+            "change_type": "Adjustment",
+            "description": "Jett\u2019s Tailwind and Skye\u2019s Trailblazer will no longer stop at the window in Ascent. Instead, they will burst through and continue movement onto the other side."
+        },
+        {
+            "agent": "Cosmetic Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Wiki editor note: The official patch notes state Gothic Marshal, which is the codename for Ruin Collection."
+        },
+        {
+            "agent": "Glitch",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "A 5v5 map that puts you in a dual-themed arena. This is the 5th TDM map and takes place in a \u201cglitched out\u201d Maxbot arena."
+        },
+        {
+            "agent": "Glitch",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Glitch is playable via the \u201cTeam Deathmatch\u201d game mode queue."
+        },
+        {
+            "agent": "Map Rotations",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Pearl and Split are BACK in the COMPETITIVE QUEUE"
+        },
+        {
+            "agent": "Map Rotations",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Icebox and Lotus are OUT of the COMPETITIVE QUEUE"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Maps",
+        "Abyss",
+        "The Spike will now spawn correctly at B Danger if it falls off the map.",
+        "At the end of this Stage, the top 16 teams in Invite will remain in Invite. All other Invite teams will be demoted at the start of the next Stage. These rules are listed on the Standings tab.",
+        "Demoted teams will seed into the zone they originally promoted from. Next Stage, Team Owners can change their zone in the Team Settings dropdown anytime before the team plays a match.",
+        "If your team cannot be placed into a zone at the start of the next Stage, your Team Owner will be prompted to select a zone.",
+        "Divisions other than Invite will not have demotion, and teams will still be promoted or be seeded into a division as normal at the start of next Stage.",
+        "Contender Eligibility updates",
+        "If you have five Contender Eligible players on your team, you are guaranteed to place into Contender Division.",
+        "Contender Eligibility for 2024 expires at the end of Stage E9A3.",
+        "To be Contender Eligible in 2025, you and your team must perform a qualifying action in Stage E9A3 or at any point in 2025.",
+        "Qualifying actions include:",
+        "Play a Weekly or Playoff match on a team in Contender or Invite Division.",
+        "Reach Immortal 3 or higher peak rank in Competitive.",
+        "Play in a Playoff match in Elite 5.",
+        "Contender Eligibility for 2025 expires at the end of the last Stage in 2025.",
+        "Fixed an issue where you would see a Competitor Crest after playing a Practice match on a brand new team, despite not having earned any points"
+    ],
+    "player_behavior_changes": []
+}

@@ -1,0 +1,104 @@
+{{PatchNav|previous=10.05|next=10.07}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.06.jpg
+|date    = April 1st, 2025
+|act     = [[Season 2025: Act 2]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+|bundle  = 
+*{{collection|Smite}} (V25)
+*{{collection|Bolt}} 
+*[[VCT25 Team Capsules]] ({{capsule|VCT x 2G|2G}}, {{capsule|VCT x APK|APK}}, {{capsule|VCT x BOOM|BOOM}}, {{capsule|VCT x NS|NS}} & {{capsule|VCT x XLG|XLG}})
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-06/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.06.
+
+<i>Hey folks, it’s Ash! 
+
+For patch 10.06, we’re looking at a nice lil buff for [[KAYO|KAY/O]] that introduces a new mechanic to his [[flash|flashes]] causing them to pop earlier upon bouncing. KAY/O’s [[NULL-cmd|resurrection]] time has also gone down by half, so you’ll no longer have to yell at your teammate to watch your back as you res…well you’ll be yelling for half as long at least.
+
+There’s also a bunch of bug fixes. For those of you on console who may have seen that you’re not getting progress at the end of each game—don’t worry, it’s a visual bug and you are still getting your progress!
+
+Lastly, we’re adding 4 extra teleporters on [[Bind]] and none of them are connected so entering any of them will shoot you out at 1 of the other 5 locations at random. Please let us know how you feel about it!
+
+Until next time, happy gaming and don’t forget to 1, 2, 3, flash!
+
+(The last one is an April Fools’ joke btw, please don’t kill me)</i>
+
+==All Platforms==
+===Agent Updates===
+*{{ai|KAY/O}}
+**''While we love that KAY/O has an engaging path to mastery, we consistently see that there is a large gap between his skill ceiling and skill floor and that gap hasn’t really improved over time. We see from both player feedback and internal statistics that his flash is the most difficult flash to coordinate with on the roster.
+**''We think we can make KAY/O’s overhand flash more flexible for mid-range scenarios to better match our other flashes.
+***''These sets of changes should continue to preserve his high skill ceiling on those perfectly tossed pop flashes you have been practicing.
+**''We’re also reducing his resurrection duration on his ultimate to reinforce the potential for teamplay to pick up an ally KAY/O.
+**{{abi text|FLASH-drive}}
+***Upon bouncing, flashes will now start a 0.8 second windup and then pop.
+****This windup has unique audio and visuals when triggered.
+****The bounce windup will not be triggered if it is already less than 0.8 seconds from popping, so it won’t increase the total max time from throw to pop.
+***Underhand maximum flash duration 1.25s >>> 1.5s
+***Increase VO callout range of KAY/O’s “flashing” voice line 20m >>> 50m
+***Unequip time 0.85s >>> 0.6s
+***A minimap indicator has been added to the flash for teammates only.
+**{{abi text|NULL-cmd}}
+***Ally resurrection time 3s >>> 1.5s
+*{{ai|Yoru}}
+**''Fakeout is providing a bit too much return on investment at the 100 credit cost.
+**{{abi text|Fakeout}}
+***Cost increase 100 >>> 200 credits
+*{{ai|Vyse}}
+**''While we’re happy that Vyse has found a place in the ecosystem since the buffs in patch 9.11, we’ve found the durations on her abilities to be excessive in a world where her Razorvines are more threatening. We’re shortening the durations on her Razorvines and Shear so that Vyse will have to more actively capitalize rather than just relying on the baseline value of their stall.
+**{{abi text|Razorvine}} 
+***Duration: 10s >>> 6s 
+****''Wiki editor note: Notes initially stated 7s, but is [https://reddit.com/r/VALORANT/comments/1jrha7r/1006_vyse_nerfs_are_incorrectly_documented_in_the/mlff9tq/ revealed] as a typo by the original poster.
+**{{abi text|Shear}}
+***Triggered Wall Duration: 8s >>> 6s
+
+===Player Behavior Updates===
+*Improved feedback notifications so you will now more reliably see messages when a cheating report leads to a ban.
+
+===Performance Updates===
+*Improved CPU performance of [[Sunset]] by reducing the number of map specific objects that tick each frame.
+
+===Bug Fixes===
+*'''[[Agents]]
+**{{ai|Vyse}}
+***{{abi text|Arc Rose}}
+****Fixed a bug where Vyse’s Arc Rose idle animation stopped looping when she crouched.
+****Fixed a bug where destroying the Arc Rose while Vyse was recalling it did not respect the 40 second “destroyed” cooldown.
+**{{ai|Raze}}
+***{{abi text|Blast Pack}}
+****Fixed an issue where Blast Pack could knock back Skye’s Trailblazer and Tejo’s Stealth Drone through walls.
+**{{ai|Clove}}
+***{{abi text|Meddle}}
+****Updated tooltips to reflect our patch {{patch|10.04}} changes.
+**{{ai|Deadlock}}
+***{{abi text|Annihilation}}
+****Fixed an issue where hit-confirm sounds on Deadlock’s cocoon target were abnormally loud.
+**{{ai|Breach}}
+***{{abi text|Aftershock}}
+****Fixed an issue where Breach would go into an incorrect idle animation pose in third-person after Aftershock was fired.
+**{{ai|Sova}}
+***{{abi text|Owl Drone}}
+****Fixed an issue where Sova would go into an incorrect idle animation pose in third person after exiting Owl Drone.
+**{{ai|KAY/O}}
+***Fixed a rare issue where KAY/O could appear standing up when downed during {{abi text|NULL-cmd}}.
+***Fixed an issue where KAY/O’s {{abi text|ZERO-point}} dagger trajectory could behave unexpectedly with packet loss.
+**{{ai|Gekko}}
+***Fixed an issue where the “Spike Down” VO would not play when {{abi text|Wingman}} was destroyed while carrying the [[Spike]].
+**{{ai|Iso}}
+***Fixed an issue where swapping to Iso with {{abi text|Double Tap}} active could result in the wrong UI bar displaying for spectators or observers.
+**{{ai|Tejo}}
+***{{abi text|Stealth Drone}}
+****Fixed a bug where Stealth Drone was not unstealthing upon jumping up prior to its scan.
+
+==PC Only==
+===Bug Fixes===
+*'''[[Premier]]
+**Fixed an issue where a player’s status in the Premier Hub roster list would sometimes overlap with the alert icon in certain queues.
+**Fixed an issue where the playoff bracket would not update dynamically during the second game of a best of three matchup.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.06]]

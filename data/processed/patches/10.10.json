@@ -1,0 +1,83 @@
+{
+    "version": "10.10",
+    "date": "May 28th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Raze",
+            "ability": "Boom Bot",
+            "change_type": "Adjustment",
+            "description": "Raze\u2019s explosion VFX has been updated to more accurately indicate hitboxes for her Boom Bot and Paint Shells. Additionally, the visual effects will exist in world for a shorter period of time for more gameplay clarity."
+        },
+        {
+            "agent": "Collection updates",
+            "ability": "Console changes:",
+            "change_type": "Adjustment",
+            "description": "Removed Page for navigating to specific content types removed"
+        },
+        {
+            "agent": "Collection updates",
+            "ability": "Console changes:",
+            "change_type": "Adjustment",
+            "description": "All content types (including Player Card and Sprays/Flex) now available on the Collection page, matching PC layout"
+        },
+        {
+            "agent": "Collection updates",
+            "ability": "Console changes:",
+            "change_type": "Adjustment",
+            "description": "Gamepad navigation system for the Collection page improved"
+        },
+        {
+            "agent": "Collection updates",
+            "ability": "PC changes:",
+            "change_type": "Adjustment",
+            "description": "Removed Level + Chroma indicators in weapon tiles removed"
+        },
+        {
+            "agent": "Collection updates",
+            "ability": "PC changes:",
+            "change_type": "Adjustment",
+            "description": "Minor layout updates"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Rank Rollback Adjustments:",
+        "Buff For players below Radiant, we increased the cap of refunded RR you can receive within an Act. We are continuing to monitor edge cases around experiences with refunds.",
+        "Swiftplay",
+        "Tejo",
+        "Buff Armageddon starting points 2 >>> 3",
+        "This change was already live in 10.09 but missed in our patch notes. Ultimates at 9 points in the future will be automatically updated to scale.",
+        "Removed Icebox will remain disabled in Deathmatch and Escalation game modes while we address spawn-related issues that emerged in patch 10.09."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Omen",
+        "Bugfix Nerf Reverted a bugfix that was released in 10.07, which should fix the issue where dead allies spectating Omen could see through nearsights (most notably Viper\u2019s ult) if Omen is using Dark Cover",
+        "Bugfix Nerf Reintroduced (and still investigating) the issue where Omen could not see properly when casting Dark Cover if he was overlapping another dense smoke (smokes that obscure vision inside, e.g. Jett Cloudburst, Brimstone Sky Smoke, etc.).",
+        "Wiki editor note: Official note states 10.08, but is in 10.07 notes instead.",
+        "Vyse",
+        "Bugfix Buff Fixed an issue where Vyse\u2019s Arc Rose hit confirm would play when affecting non-players",
+        "Bugfix Buff Fixed an issue where Vyse could no longer use Arc Rose for the remainder of the round if it was placed too close to the spike",
+        "Deadlock",
+        "Bugfix Buff Fixed a bug where jumping could inconsistently dodge Deadlock\u2019s net toss despite players being inside the affected area",
+        "Tejo",
+        "Bugfix Buff Fixed an issue where Astra\u2019s concuss always affected Tejo\u2019s Stealth Drone as long as the drone had line of sight to the concuss",
+        "Bugfix Buff Fixed an issue where Tejo\u2019s rockets could get hindered by Waylay\u2019s Saturate and Convergent Paths",
+        "Yoru",
+        "Bugfix Fixed an issue where Yoru\u2019s flash visual decals would linger on walls they bounced off of",
+        "Brimstone",
+        "Bugfix Fixed an issue where Brimstone\u2019s ultimate visuals drew underneath the map",
+        "Icebox will remain disabled in Deathmatch and Escalation game modes while we address spawn-related issues that emerged in patch 10.09.",
+        "Pick\u2019Ems return in style for Masters Toronto! Starting on May 28th, you will be able to make your picks for the Swiss Stage in-client and on the web.",
+        "For Swiss stage, you will be tasked with trying to predict who will advance from the 8 Team Swiss Groups. For extra bonus points, try to predict a team who will make it out flawlessly with a 2-0.",
+        "Earn an exclusive title just for playing, but snag extra prizes for finishing in the Top 50% and Top 20% of all players.",
+        "See how you stack up against other experts and creators on the VAL Community Leaderboard",
+        "Finally, prepare for the Playoffs Stage where you\u2019ll fill out the full double elimination bracket, earning more points for correct teams in the later rounds!",
+        "Added Added a description for Fast Melee Equip in Settings > Controls > Advanced",
+        "Walk / Run Threshold in Settings > Controls > Movement updated to allow for a wider range. This has actually been in since 10.09.",
+        "Min value 0.5 > 0.001",
+        "Movement Deadzone in Settings > Controls > Movement updated to allow for a wider range. This has actually been in since 10.09",
+        "Max value 0.5 > 1.0"
+    ],
+    "player_behavior_changes": []
+}

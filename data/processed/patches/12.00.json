@@ -1,0 +1,451 @@
+{
+    "version": "12.00",
+    "date": "January 6th, 2026",
+    "agent_changes": [
+        {
+            "agent": "Breach",
+            "ability": "Flashpoint",
+            "change_type": "Buff",
+            "description": "Projectile speed increased 20% from 2000 >>> 2400"
+        },
+        {
+            "agent": "Breach",
+            "ability": "Fault Line",
+            "change_type": "Buff",
+            "description": "Width increased from 7.5m >>> 8m"
+        },
+        {
+            "agent": "Brimstone",
+            "ability": "Sky Smoke",
+            "change_type": "Adjustment",
+            "description": "Tactical map on the on Sky Smoke and Orbital Strike have been updated for better readability"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Storm Surge",
+            "change_type": "Buff",
+            "description": "Explosion no longer requires line of sight to nearsight and slow players"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Storm Surge",
+            "change_type": "Buff",
+            "description": "Explosion windup decreased from 0.8s >>> 0.6s"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Storm Surge",
+            "change_type": "Buff",
+            "description": "Slow duration increased from 0.6s >>> 2s"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Buff",
+            "description": "Slow duration increased from 0.6s >>> 2s"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Healing Orb",
+            "change_type": "Adjustment",
+            "description": "Updated targeting"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Special Delivery",
+            "change_type": "Nerf",
+            "description": "Concuss duration decreased from 4 seconds >>> 2.5 seconds"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Special Delivery",
+            "change_type": "Adjustment",
+            "description": "Added Added damage on the explosion"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Special Delivery",
+            "change_type": "Adjustment",
+            "description": "Maximum damage of 35 at center, with minimum damage of 20"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Stealth Drone",
+            "change_type": "Buff",
+            "description": "Reveal type has been changed from Snapshot reveal to being fully Revealed"
+        },
+        {
+            "agent": "Tejo",
+            "ability": "Stealth Drone",
+            "change_type": "Nerf",
+            "description": "Pulse radius decreased from 30m >>> 16m"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Steel Garden",
+            "change_type": "Buff",
+            "description": "Radius increased from 26m >>> 28m"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Steel Garden",
+            "change_type": "Adjustment",
+            "description": "<s>Width increased from 7.5m >>> 8m</s>"
+        },
+        {
+            "agent": "Vyse",
+            "ability": "Steel Garden",
+            "change_type": "Adjustment",
+            "description": "This change is assumed to be an editing error in the notes"
+        },
+        {
+            "agent": "Breeze",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Breeze is back-and has received our biggest map rework yet! We've made significant changes across the entire map to reduce angle complexity, tighten open spaces, and improve rotation times for defenders. The sun's still shining, but a lot of your old setups probably won't work. Check out [https://www.youtube.com/shorts/rRieYkJMwN4 this video] to take a look at the changes."
+        },
+        {
+            "agent": "Breeze",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Breeze Rework Event: For the first 2 weeks of Competitive, Breeze RR losses are reduced by 50%, wins are still 100% (to also help you learn the map!)"
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Haven",
+            "change_type": "Adjustment",
+            "description": "Mid Window"
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Haven",
+            "change_type": "Adjustment",
+            "description": "Added Added a breakable element to prevent early round start kills through wall penetration"
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Corrode",
+            "change_type": "Adjustment",
+            "description": "Some of Corrode's wall materials have made certain positions too effective at denying space through penetration alone. We're adjusting the wall materials in key areas so that holding these spots requires more commitment."
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Corrode",
+            "change_type": "Adjustment",
+            "description": "A Site"
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Corrode",
+            "change_type": "Adjustment",
+            "description": "Adjusted wall material on a key surface"
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Corrode",
+            "change_type": "Adjustment",
+            "description": "B Site"
+        },
+        {
+            "agent": "Haven and Corrode",
+            "ability": "Corrode",
+            "change_type": "Adjustment",
+            "description": "Adjusted wall material on a key surface"
+        },
+        {
+            "agent": "Map Pool Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Breeze is IN the Competitive and Deathmatch queues."
+        },
+        {
+            "agent": "Map Pool Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Sunset is OUT of the COMPETITIVE and DEATHMATCH queues."
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Introducing All Random One Site-an all new fast-paced 5v5 limited-time mode. Your Agent changes every round, you fight for a single site, loadouts are free, and abilities recharge throughout the round while high-value Ultimate Orbs are scattered across the map-get ready for ultimate chaos!"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Mode Details"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Random Agents"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "You're assigned a new random Agent every round-no duplicates per team"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "All Agents are available regardless of ownership"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Single Site"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Each round activates one bomb site with barriers blocking unused areas of the map"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "The active site randomizes each round"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Active site is revealed during the buy phase"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Available Maps"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Abyss, Ascent, Breeze, Corrode, Pearl, Icebox, Sunset, Split"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Abilities"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Full ability charges granted each round at no cost"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Abilities recharge throughout the round"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Ultimate Orbs"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Start each round at 0% ultimate charge"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Ultimate Orbs are placed around the map and grant 50% ultimate charge when captured"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Kills grant 50% ultimate charge"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Killed players drop Ground Orbs containing their accumulated charge"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Loadouts"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "No economy-select your loadout each round"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "New Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Weapon offerings escalate through stages as the match progresses"
+        },
+        {
+            "agent": "All Random One Site",
+            "ability": "Leaving Limited Time Mode",
+            "change_type": "Adjustment",
+            "description": "Snowball Fight is heading out. Thanks for playing! (wiki editor note: this mode was already unavailable as of ~January 4th 2026.)"
+        }
+    ],
+    "weapon_changes": [
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Weapon Class: Sidearm"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Price: 600 credits"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Attachments: None"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Bullets per Magazine: 8"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Ammo Reserve: 24"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Reload Timing: 1.5s"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Equip Timing: .75s"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Wall Penetration: Medium"
+        }
+    ],
+    "competitive_changes": [
+        "Hidden MMR Update",
+        "We've made changes to our hidden MMR calculation that should improve match quality and help bring more consistent experiences match-to-match.",
+        "MFA for EU",
+        "Starting in 12.00, accounts detected for sharing in EU and all Ascendant+ players must enable Riot Mobile multi-factor authentication (MFA) to access Competitive queue. Other modes will remain unaffected.",
+        "You can check out this article for more information on why we're making this change, or get yourself set up with MFA now using this [https://support-valorant.riotgames.com/hc/en-us/articles/4415709691667-Multi-Factor-Authentication-How-to-FAQ how-to guide]."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Bugfix General Agents: Fixed a bug where ability cooldown bars would disappear for observers when switching between Agents.",
+        "Bugfix Buff General Agents: Fixed many bugs where throw animations would break if aiming straight down.",
+        "This applies to Clove's Meddle, Cypher's Cyber Cage, Deadlock's GravNet and Barrier Mesh, Fade's Haunt and Seize, Gekko's Mosh Pit, Iso's Undercut, Jett's Cloudburst, KAY/O's FRAG/ment, Phoenix's Hot Hands, Reyna's Leer, and Viper's Poison Cloud.",
+        "Astra:",
+        "Bugfix Fixed a bug where Astra's Nebula created by Dissipate did not have an icon on the minimap.",
+        "Breach:",
+        "Bugfix Buff Fixed a bug where Breach's Rolling Thunder was launching people at inconsistent heights if Breach was on different elevation.",
+        "Clove:",
+        "Bugfix Fixed a bug where their total health pool was displaying 151 instead of 150 when overhealed with Pick-me-up.",
+        "Cypher:",
+        "Bugfix Buff Fixed a bug where a placed Trapwire could be heard being placed again as the barrier drops.",
+        "Deadlock:",
+        "Bugfix Nerf Fixed a bug where Annihilation would phase through certain parts of Breeze and leave captured enemies stuck against a wall.",
+        "Gekko:",
+        "Bugfix Nerf Fixed a bug where Wingman could continue chasing players after they teleport away.",
+        "Sova:",
+        "Bugfix Fixed a bug where switching to melee after fully charging Recon Bolt or Shock Bolt caused the lightning VFX to disappear for the rest of the game.",
+        "Veto:",
+        "Bugfix Buff Fixed a bug where Chokehold's jump throw trajectory was inconsistent.",
+        "Yoru:",
+        "Bugfix Fixed a bug where using Dimensional Drift while attaching to an ascender would cause Yoru to get stuck in an animation loop.",
+        "Maps",
+        "Haven",
+        "Bugfix Nerf Fixed unintended wall penetration between A Tower and A Site",
+        "Bugfix Nerf Fixed unintended wall penetration between B Site and C Garage",
+        "Bind",
+        "Bugfix Nerf Fixed unintended wall penetration between B Window and B Garden",
+        "Competitive",
+        "Fixed an issue where V25A3 ranked gun buddies were shown in your collection with the incorrect name of \"V25A6.\"",
+        "Refreshed Home Screen Layout",
+        "The Home Screen has been revamped to utilize the top navigation of other screens",
+        "Refreshed Lobby / Queue Select",
+        "Matchmade Lobby",
+        "Added a \"Queue Select\" screen, with new art and queue descriptions",
+        "Your currently selected queue is now more prominently displayed on the left side of the lobby screen",
+        "Custom Lobby",
+        "Updated layout for custom lobby",
+        "Mode and Map select are now located on the left and utilize selection screens with new art and descriptions",
+        "Refreshed Social Panel",
+        "The Social Panel has been revamped with a fresh coat of paint and some quality of life improvements, including a new tab for managing friend requests!",
+        "Welcome to Stage V26A1! Matches start on January 14.",
+        "If your team was in the Invite Division in Stage V25A6 and did not finish the Stage in the top 16 teams, your team has been demoted. You'll see your new Provisional Division in the Premier hub.",
+        "Demoted teams seeded into the zone they originally promoted from. Your Team Owner can change your team's zone in the Team Settings dropdown anytime before your team plays a match.",
+        "If your team cannot be placed into a zone, your Team Owner will be prompted to select a zone.",
+        "Agent",
+        "Deadlock:",
+        "Bugfix Fixed a bug where Barrier Mesh walls were sometimes invisible if placed when experiencing packet loss.",
+        "KAY/O:",
+        "Bugfix Fixed a bug where KAY/O would make no sound upon dying while downed in NULL/cmd.",
+        "Client",
+        "Known Issue with Whispers",
+        "If whispering a friend doesn't work, you can send them a message via Riot Client's social panel first, join a party together, or re-add them as a friend.",
+        "Client",
+        "The queue timer now displays correctly when disconnecting and reconnecting with the timer active.",
+        "The queue can now be canceled after reconnecting with the timer active.",
+        "\"Choose a mode\" now properly displays as \"Choose a Queue\" on the queue select screen.",
+        "You can now start the queue after the party leader leaves or the party is disbanded."
+    ],
+    "player_behavior_changes": [
+        "Behavior Standing is Live!",
+        "You'll see an indicator on the Social Panel if you have an active penalty or are at immediate risk of a future penalty. After expanding the indicator, you'll see additional information related to your active and at-risk penalties.",
+        "Riot Games Community Pact",
+        "Play to Win. Play Fair. Play with Respect. Or play something else.",
+        "When you log in for the first time after this patch you'll see the Community Pact. The Community Pact is an evolution of the Community Code and covers our expectations for player behavior. However, unlike the Community Code, you should expect to see and recommit to it every year.",
+        "To better reflect these expectations in-game, we've updated the categories and descriptions on Report Player screens to align with these core principles.",
+        "We've adjusted our systems for Chat and Inappropriate Name penalties.",
+        "Our systems will more reliably issue firmer penalties sooner for frequent or severe Voice and Text Chat offenses.",
+        "If you receive an Account Ban for having an Inappropriate Riot ID, you'll be unable to change your Riot ID until the ban is over."
+    ]
+}

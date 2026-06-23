@@ -1,0 +1,71 @@
+{
+    "version": "12.03",
+    "date": "February 18th, 2026",
+    "agent_changes": [
+        {
+            "agent": "Gekko",
+            "ability": "Globules",
+            "change_type": "Buff",
+            "description": "Reclaim timer increased 15s >> 20s"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Mosh Pit",
+            "change_type": "Adjustment",
+            "description": "Added Is now reclaimable"
+        },
+        {
+            "agent": "General Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Audio occlusion now responds to map doorways being opened, closed, or destroyed."
+        },
+        {
+            "agent": "General Updates",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "When watching Replays, you now have a setting to skip spectating dead players."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "In APAC, accounts flagged for sharing and all Ascendant+ players must enable Riot Mobile multi-factor authentication (MFA) to access Competitive queue. Other modes remain unaffected.",
+        "You can check out [https://playvalorant.com/en-us/news/game-updates/riot-mobile-verification-beta/ this article] for more information on why we're making this change, or get yourself set up with MFA now using [https://support-valorant.riotgames.com/hc/en-us/articles/4415709691667-Multi-Factor-Authentication-How-to-FAQ this how-to guide].",
+        "Masters Santiago Pick'Ems",
+        "Pick'Ems return in style for Masters Santiago! Starting February 19 (PT), you can make your picks for the Swiss Stage in-client and on the web.",
+        "For the Swiss Stage, you\u2019ll be tasked with trying to predict who will advance from the 8-Team Swiss Groups. For extra bonus points, try to predict a team who will make it out flawlessly with a 2-0 record.",
+        "Earn an exclusive title just for playing, but win additional prizes depending on how you fare against other players.",
+        "VCT Player Stats",
+        "Player stats are now available on the Esports Hub Teams page. Take a look and see how you compare.",
+        "Added NEW LIMITED TIME MODE",
+        "Skirmish comes to matchmaking as a 2v2 queue for a limited time. Compact maps, no abilities\u2014gunplay only. Grab a partner and put your mechanics to the test.",
+        "Mode Details",
+        "2v2 Matchmaking Queue",
+        "Solo queue or bring a partner",
+        "First to 10 rounds wins",
+        "Gameplay",
+        "Abilities disabled",
+        "Full weapon selection each round (no economy)",
+        "No agent select\u2013hop in and go next fast",
+        "Available Maps",
+        "Skirmish A, Skirmish B, Skirmish C",
+        "Map randomly selected each match",
+        "Loadouts",
+        "Adjustment We've taken a pass on Stages and Loadouts. All Random One Site is chaotic by design, but your loadout should still give you some agency. We've added weapons to a few stages and buffed some of the more niche options\u2014hop in and see what's new."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Modes",
+        "All Random One Site",
+        "Bugfix Nerf Fixed an issue where Vyse could continuously place infinite Razorvines during Buy phase.",
+        "Battle Pass",
+        "Hitting ESC will cause the Battlepass elements to disappear/reappear instead of taking you back a page. This will be resolved in patch 12.04.",
+        "Scroll wheel currently will not work when navigating between the tiers on the battlepass or event pass. This will be fixed soon.",
+        "Store",
+        "The background for the accessories store is currently missing. This will be resolved in patch 12.04.",
+        "The Reaver Bandit is showing up incorrectly as a limited edition item. This is not limited edition and will be resolved in patch 12.04.",
+        "Refreshed Event Pass & Battlepass",
+        "Updated layout and button visuals. You can navigate through tiers using mouse or arrow keys."
+    ],
+    "player_behavior_changes": []
+}

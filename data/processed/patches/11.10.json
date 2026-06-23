@@ -1,0 +1,146 @@
+{
+    "version": "11.10",
+    "date": "November 11th, 2025",
+    "agent_changes": [
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Adjustment",
+            "description": "Changed to the signature ability slot. (wiki editor note: Because it is a 1 charge ability, cost: 350 credits >>> Free)"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Cove",
+            "change_type": "Adjustment",
+            "description": "EQUIP Cove. ACTIVATE to form a water Smoke in the select location. HOLD FIRE while targeting to move the marker further away and HOLD ALT FIRE to move it closer. RELOAD to toggle targeting view. REACTIVATE to Shield the water Smoke, blocking any bullets that hit it. The Shielded water Smoke can be destroyed."
+        },
+        {
+            "agent": "Harbor",
+            "ability": "High Tide",
+            "change_type": "Adjustment",
+            "description": "Changed to a non-signature ability"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "High Tide",
+            "change_type": "Nerf",
+            "description": "Cost 300 credits"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Storm Surge",
+            "change_type": "Adjustment",
+            "description": "Storm Surge (New) - Added"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Storm Surge",
+            "change_type": "Adjustment",
+            "description": "EQUIP Storm Surge. FIRE to throw, creating an explosive whirlpool that Nearsights and Slows enemies within it after a short duration."
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Adjustment",
+            "description": "EQUIP Reckoning. FIRE to unleash the full power of your artifact, releasing a surge of water that barrels forward to Nearsight and Slow enemies that are hit."
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Adjustment",
+            "description": "We've also updated Harbor\u2019s voice lines to reflect his updated abilities. We added conversation voice lines with Tejo and Waylay and have new lines at the start of the match on Abyss and Corrode."
+        },
+        {
+            "agent": "Clove",
+            "ability": "Ruse",
+            "change_type": "Nerf",
+            "description": "Ruse charges are now restricted to 1 maximum when Clove is dead"
+        },
+        {
+            "agent": "Clove",
+            "ability": "Pick-me-up",
+            "change_type": "Nerf",
+            "description": "Overheal amount, while Pick Me Up is active, has been reduced from 100 HP \u2192 50 HP"
+        },
+        {
+            "agent": "Omen",
+            "ability": "General",
+            "change_type": "Adjustment",
+            "description": "Spectators can now see Omen\u2019s perspective in Dark Cover when he is placing his smokes."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Nerf Starting in 11.10, all Ascendant+ players in NA, LATAM, BR, and KR, must enable Riot Mobile multi-factor authentication (MFA) to access Competitive queue. Other modes will remain unaffected.",
+        "Why Ascendant+? Our highest ranked players are capable of inflicting the greatest harm when smurfing and are at risk of more competitive integrity violations as an outcome to sharing accounts \u2013 i.e. win trading.",
+        "You can check out [https://playvalorant.com/en-us/news/game-updates/riot-mobile-verification-beta/ this article] for more information on why we\u2019re making this change, or get yourself set up with MFA now using [https://support-valorant.riotgames.com/hc/en-us/articles/4415709691667-Multi-Factor-Authentication-How-to-FAQ this how-to guide].",
+        "To simplify layered debuff states, all persistent attached debuffs will be removed at once by holding the \u201cUse Object\u201d button.",
+        "For example, Cypher's Spycam Dart and Deadlock's GravNet will both be removed if they happen to be stacked on you at the same time."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "General",
+        "Bugfix Nerf Fixed a bug where players could plant the spike outside or float partially above the site's designated area. The spike will now stay within the outlined site area no matter where you are facing in game.",
+        "Bugfix Fixed a bug where bots in The Range would not show flash VFX when hit by screen blind effects.",
+        "Bugfix Fixed a bug that caused certain abilities to apply status effects to dead players and show in the Combat Report.",
+        "Agents",
+        "General Agents",
+        "Bugfix Nerf Abilities that cause vulnerable will not grant assists after the vulnerable effect has ended.",
+        "Bugfix Fixed an issue on the Kill effects at the sides of the screen where they'd look misaligned when playing in left-handed mode",
+        "Clove",
+        "Bugfix Fixed a bug where Clove would sometimes revive in unexpected locations when casting Not Dead Yet",
+        "Bugfix Nerf Fixed a bug that allowed Clove to use Not Dead Yet after falling off the edge of Abyss",
+        "Bugfix Buff Fixed a bug that incorrectly teleported Clove to spawn when teleporting back from Iso\u2019s Kill Contract",
+        "Bugfix Buff Fixed a bug where Clove would be moved into a wall if their body was intersecting Sage\u2019s Barrier Orb",
+        "Cypher",
+        "Bugfix Buff Fixed a bug where Cypher's Neural Theft would sometimes display a blank icon on the minimap",
+        "Harbor",
+        "Bugfix Harbor\u2019s Cove now grants assists for players killed while affected by it.",
+        "Bugfix Nerf Viper\u2019s Snake Bite, Brimstone\u2019s Incendiary, Sova\u2019s Hunter's Fury, and Killjoy\u2019s Nanoswarm should properly damage Harbor\u2019s Cove",
+        "KAY/O",
+        "Bugfix Fixed a bug where the killfeed wasn\u2019t showing the proper headshot icon if KAY/O was the last player to die while NULL/cmd was active.",
+        "Killjoy",
+        "Bugfix Buff Fixed a bug where the minimap icons for Alarmbot and Turret would occasionally disappear when deactivated outside their active ranges.",
+        "Bugfix Nerf Fixed inaccurate hit detection on Killjoy's Alarmbot while it is jumping",
+        "Omen",
+        "Bugfix Fixed Dark Cover\u2019s minimap to match the darkness of other dome smokes.",
+        "Bugfix Fixed minimap icon size for Omen\u2019s Paranoia",
+        "Reyna",
+        "Bugfix Buff Fixed a bug where Reyna\u2019s Leer projectile would animate forward in the incorrect direction while jumping and rapidly changing her aim location.",
+        "Sage",
+        "Bugfix Fixed an issue where Sage\u2019s Resurrection indicator was snapping to allies out of Sage\u2019s POV.",
+        "Bugfix Fixed a bug that caused Sage\u2019s hands to flicker briefly when using Healing Orb on an ally.",
+        "Bugfix Fixed a bug where Sage\u2019s Slow Orb was making a popping sound when intersecting Cosmic Divide.",
+        "Veto",
+        "Bugfix Crosscut targeting should be more consistent now to other targetable usables.",
+        "Bugfix Fixed a bug with Veto\u2019s animation while recalling Interceptor.",
+        "Bugfix Buff Fixed a bug where Crosscut was invisible or non-functional when used in Buy Phase with high ping or packet loss.",
+        "Vyse",
+        "Bugfix Buff Fixed a bug with Razorvine's decals being able to be seen under certain platforms.",
+        "Bugfix Buff Fixed a bug with Razorvine\u2019s projectile where it wouldn\u2019t disappear upon landing.",
+        "Yoru",
+        "Bugfix Buff Yoru\u2019s Fakeout clone will now properly show suppression VFX when affected by suppression.",
+        "Bugfix Observers are now able to see Yoru\u2019s Blindside immediately instead of after it bounces.",
+        "Bugfix Yoru\u2019s Blindside will display the correct color VFX when there are two Yoru\u2019s in the same match.",
+        "Bugfix Buff Fixed bug where Blindside\u2019s audio was audible by enemies while stealthed.",
+        "Replays",
+        "Replays are now live for consoles! Check out the Replays FAQ [https://playvalorant.com/en-us/news/dev/replays-everything-you-need-to-know/ here] for detailed information and answers to commonly asked questions about the feature.",
+        "You can now tab over to the Lobby like any other page, or use the shortcut button.",
+        "Custom game lobbies have been moved into the \u2018Select a Queue\u2019 page.",
+        "The layouts of the \u2018Select a Queue\u2019 and \u2018Map\u2019 pages have been updated.",
+        "When in queue, the active queue timer will now appear in the top left corner of the Main Menu HUD",
+        "Client",
+        "The queue timer sometimes doesn\u2019t reset when disconnecting and reconnecting with the timer active.",
+        "Disconnecting and reconnecting then queuing can make it impossible to cancel the queue.",
+        "Restarting the game fixes this issue.",
+        "Custom Lobby",
+        "The lobby type changes back to Matchmaking when finishing a Custom Lobby Match.",
+        "Party members cannot view custom game options or changes made by the party leader.",
+        "\u201cChoose a Mode\u201d is currently displayed instead of \u201cChoose a Queue\u201d on the queue select screen.",
+        "Added You can now view Premier team information from standings, invites, and your social panel.",
+        "View a team\u2019s Roster, Zone, Division, and current Premier Score by:",
+        "Right clicking on any team on the Premier standings and choosing \u2018View Team\u2019",
+        "Right clicking on a friend on the social panel and choosing \u2018View Team\u2019 **Clicking \u2018View Team\u2019 on a Premier invite you\u2019ve received"
+    ],
+    "player_behavior_changes": []
+}

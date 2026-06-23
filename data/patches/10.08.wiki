@@ -1,0 +1,119 @@
+{{PatchNav|previous=10.07|next=10.09}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.08.jpg
+|date    = April 29th, 2025
+|act     = [[Season 2025: Act 3]]
+|changes = '''All Platforms:'''
+*[[Gifting]] release
+*[[Agents]]
+*[[Maps#Map rotations|Map rotation update]]
+'''PC only:'''
+*[[Premier]]
+|bundle  = 
+*{{collection|Divergence}}
+*{{collection|Duo's Day Haz & Matt|Duo's Day // Haz & Matt}}<!--
+*{{collection|Give Back V25|Give Back // V25}}
+-->
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-08/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.08.
+
+<i>Hey, everyone. It’s Kenny here, wishing you a warm welcome to Act III of Season 2025 and Patch 10.08.
+
+This patch brings some Agent balance updates for Brim, Astra, and Yoru, plus the long-awaited Gifting functionality to the Featured Store, and a slew of bug fixes.
+
+Oh, and you might catch a little nostalgia if you listen to the music throughout the game. That Episode 1 menu music really takes me back…
+
+Ok, that’s all from me. GL HF, gamers!</i>
+
+==All Platforms==
+===Client Updates===
+*In celebration of VALORANT’s fifth anniversary, we are bringing some of the [[Episode 01: IGNITION|Episode 1]] music back in patches 10.08 and 10.09. This includes music for the menus, character select, and Victory/Defeat.
+
+===General Updates===
+====Gifting====
+*[[Gifting]] Now Available
+**With Patch 10.08, gifting is officially live. Starting with the first bundle of the Act, players can now send select Featured Store bundles and items directly to friends.
+**How to Gift: 
+**#Navigate to the [[Store]] 
+**#Open the details page for the Featured bundle or item
+**#Click the Gift button in the bottom-right corner
+**#Select your recipient (restrictions apply)
+**#Choose to gift the full bundle or individual items
+**#Send your gift!
+**Your recipient will be prompted to accept or decline the gift the next time they log in to VALORANT.
+**Gifting is currently limited to Featured Store items, with expanded support planned for future updates.
+**For full details and gifting requirements, visit our Player Support [https://support-valorant.riotgames.com/hc/en-us/articles/40270045945107 site].
+
+====Ranked Gun Buddy====
+*Ranked Gun Buddy Coming Soon!
+**Act III starts today! So we want to remind everyone that this is your last Act to grind before ranked buddies are distributed with Patch 11.00 at the start of Act IV.
+**After Act III ends, you’ll receive a ranked gun buddy based on the highest rank you achieved throughout the first three acts of Season 2025.
+
+===Agent Updates===
+===={{ai|Brimstone}}====
+This change is a part of our constant effort to improve gameplay & combat clarity similar to our updates to Neon’s Overdrive visual effects and Deadlock’s Barrier Mesh health states. 
+*{{ui|Adjustment}} {{abi text|Incendiary}} - Brim’s molotov audio has been updated to be easier to hear, especially when placed underneath smokes.
+
+===={{ai|Astra}}====
+This is part of our ongoing efforts to reduce ability power creep. Most non-ultimate concusses are 3.5 seconds, so we’re changing Astra’s Nova Pulse to match the typical duration.
+*{{ui|Nerf}} {{abi text|Nova Pulse}} stun duration: 4s >>> 3.5s
+
+===={{ai|Yoru}}====
+Yoru’s Dimensional Drift is a powerful ultimate that requires a lot of opponent attention, so we’re standardizing its duration to similar ultimates and raising its point cost.
+*{{ui|Nerf}} {{abi text|Dimensional Drift}} duration reduced 12s >>> 10s
+*{{ui|Nerf}} Dimensional Drift point cost 7 >>> 8
+
+===Bug Fixes===
+====Agents====
+*{{ai|Waylay}} 
+**{{ui|Bugfix Buff}} Fixed a bug where reactivating {{abi text|Refract}} immediately after casting Convergent Paths would prevent the reactivate from working.
+*{{ai|Harbor}}
+**{{ui|Bugfix Buff}} Fixed a bug where Harbor’s water bracelet would sometimes bleed through thin walls like the doors on Ascent.
+*{{ai|Deadlock}}
+**{{ui|Bugfix}} Fixed an issue where Deadlock’s {{abi text|Barrier Mesh}} was not playing hit audio when shooting the center node.
+**{{ui|Bugfix Nerf}} Fixed an issue where Deadlock’s Barrier Mesh could be used to boost players.
+*{{ai|Vyse}}
+**{{ui|Bugfix Nerf}} Fixed an issue where the cooldown on Vyse’s {{abi text|Arc Rose}} was not properly set after it was destroyed.
+**{{ui|Bugfix}} Fixed an issue where Vyse’s activated {{abi text|Shear}} wall didn’t display the warning fade out visual cue.
+**{{ui|Bugfix Nerf}} Fixed an issue where Vyse’s Shear wall blocked bullets after the visual wall despawned. 
+***Thanks to SeismicChef on X for reporting the above issues!
+**{{ui|Bugfix Nerf}} Fixed an issue where Vyse’s {{abi text|Steel Garden}} warning indicator did not properly match the debuff area.
+*{{ai|Yoru}}
+**{{ui|Bugfix}} Reverted a bugfix that caused Yoru’s [[Fakeout|clone]] to slightly mismatch normal player movement when running into walls.
+*{{ai|Skye}}
+**{{ui|Bugfix Nerf}} Fixed an issue where Skye’s {{abi text|Trailblazer}} leap did not get slowed by Waylay’s {{abi text|Saturate}} debuff.
+*{{ai|Gekko}}
+**{{ui|Bugfix Nerf}} Fixed an issue where Gekko’s {{abi text|Thrash}} leap did not get slowed by Waylay’s Saturate debuff.
+*{{ai|Tejo}}
+**{{ui|Bugfix Nerf}} Fixed an issue where players could boost on Tejo’s {{abi text|Stealth Drone}}.
+**{{ui|Bugfix Nerf}} Fixed an issue where Stealth Drone could not be tagged by Cypher’s [[Spycam|camera]].
+**{{ui|Bugfix}} Fixed an issue where {{abi text|Armageddon}} VFX may remain after being used.
+**{{ui|Bugfix Nerf}} Fixed an issue where there was no danger indicator for players running through Armeggadon from the back side.
+*{{ai|Reyna}}
+**{{ui|Bugfix Nerf}} Fixed an issue where Reyna’s {{abi text|Devour}} Overheal would not be interrupted when taking damage that was less than her current Overheal amount.
+*{{ai|Iso}}
+**{{ui|Bugfix}} Updated Iso’s Double Tap tooltip to mention the reload speed buff. Thanks Reddit user /u/RemoteWhile5881!
+
+===Known Issues===
+*[[Cosmetics]]
+**We’re currently aware of an issue within the Act III Battlepass where some Player Cards are currently displaying the incorrect item name. 
+**We’ll be deploying a fix with the correct item names with Patch 10.09 in a couple of weeks.
+
+==PC Only==
+===[[Premier]] Updates===
+*Welcome to Stage V25A3! Matches start on May 7.
+*{{ui|Adjustment}} We’ve updated our Premier Restrictions. Instead of a flat 30 day ineligibility, players who engage in disruptive behavior are now ineligible for Premier for a period of time based on the severity of the misconduct and the length of the active intervention.
+
+===Bug Fixes===
+*{{ui|Bugfix}} Lowered the size of the hover text for [[Competitive|Rank Shields]] in the Summary screen.
+
+==Console Only==
+===Bug Fixes===
+*{{ui|Bugfix}} Fixed an issue where long player names would overlap certain elements in the Timeline screen.
+*{{ui|Bugfix}} Fixed an issue where text explaining rank requirements for the current season was not shown on the Act Rank screen.
+*{{ui|Bugfix}} Updated the Act Rank screen text to refer to Seasons.
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.08]]
