@@ -250,6 +250,16 @@ st.markdown("""
         margin-bottom: 20px;
     }
     
+    /* Style native dataframes as glass cards */
+    div[data-testid="stDataFrame"] {
+        background: rgba(26, 29, 36, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+        padding: 16px;
+        backdrop-filter: blur(12px);
+        margin-bottom: 20px;
+    }
+    
     </style>
 """, unsafe_allow_html=True)
 
@@ -586,31 +596,46 @@ with tab_match:
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-        st.markdown('<div class="metric-title">SERIES WINNER PROJECTION</div>', unsafe_allow_html=True)
-        
-        col_ta, col_tb = st.columns(2)
-        with col_ta:
-            st.markdown(f"#### {team_a}")
-            st.subheader(f"{win_prob_a:.1%}")
-            st.progress(float(win_prob_a))
-        with col_tb:
-            st.markdown(f"#### {team_b}")
-            st.subheader(f"{win_prob_b:.1%}")
-            st.progress(float(win_prob_b))
-            
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(clean_html(f"""
+            <div class="glass-card">
+                <div class="metric-title">SERIES WINNER PROJECTION</div>
+                <div style="display: flex; justify-content: space-between; gap: 24px; margin-top: 18px;">
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: #a78bfa;">{team_a}</div>
+                        <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin: 4px 0;">{win_prob_a:.1%}</div>
+                        <div style="background: rgba(167, 139, 250, 0.15); border-radius: 99px; height: 8px; overflow: hidden; margin-top: 6px;">
+                            <div style="background: #a78bfa; width: {win_prob_a * 100}%; height: 100%; border-radius: 99px;"></div>
+                        </div>
+                    </div>
+                    <div style="width: 1px; background: rgba(255, 255, 255, 0.05); align-self: stretch;"></div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: #f59e0b;">{team_b}</div>
+                        <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin: 4px 0;">{win_prob_b:.1%}</div>
+                        <div style="background: rgba(245, 158, 11, 0.15); border-radius: 99px; height: 8px; overflow: hidden; margin-top: 6px;">
+                            <div style="background: #f59e0b; width: {win_prob_b * 100}%; height: 100%; border-radius: 99px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        """), unsafe_allow_html=True)
         
     with col2:
-        st.markdown('<div class="glass-card" style="height: 100%;">', unsafe_allow_html=True)
-        st.markdown('<div class="metric-title">PREDICTED WINNER</div>', unsafe_allow_html=True)
-        
         winner_name = team_a if win_prob_a > win_prob_b else team_b
         win_conf = win_prob_a if win_prob_a > win_prob_b else win_prob_b
         
-        st.markdown(f'<div class="winner-box" style="margin-top: 15px;">🏆 {winner_name} ({win_conf:.1%})</div>', unsafe_allow_html=True)
-        st.markdown(f"<p style='text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: 10px;'>Map vetoes: {predicted_veto['veto_str']}</p>", unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(clean_html(f"""
+            <div class="glass-card" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="metric-title">PREDICTED WINNER</div>
+                    <div class="winner-box" style="margin-top: 15px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.2); padding: 15px; border-radius: 8px; color: #4ade80; font-weight: 600; text-align: center;">
+                        🏆 {winner_name} ({win_conf:.1%})
+                    </div>
+                </div>
+                <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">
+                    Map vetoes: {predicted_veto['veto_str']}
+                </div>
+            </div>
+        """), unsafe_allow_html=True)
     
     # Projected Map Scores Grid
     st.markdown("### Projected Map Scores")
@@ -618,16 +643,11 @@ with tab_match:
     
     for idx, m_name in enumerate(predicted_veto["maps"]):
         with cols_maps[idx]:
-            st.markdown('<div class="glass-card" style="text-align: center;">', unsafe_allow_html=True)
             team_a_features = {"acs_ema": ta_acs, "avg_loadout": ta_loadout, "comfort_diff": comfort_a}
             team_b_features = {"acs_ema": tb_acs, "avg_loadout": tb_loadout, "comfort_diff": comfort_b}
             veto_w = predicted_veto["veto_weights"].get(m_name, 0)
             
             rounds_a, rounds_b = score_reg.predict_score(team_a_features, team_b_features, m_name, veto_w)
-            
-            st.markdown(f"**MAP {idx+1}**")
-            st.subheader(m_name)
-            st.markdown(f"### {rounds_a} - {rounds_b}")
             
             picker = "Decider"
             if veto_w == 1:
@@ -635,8 +655,14 @@ with tab_match:
             elif veto_w == -1:
                 picker = f"Picked by {team_b}"
                 
-            st.markdown(f"<span style='color: #94a3b8; font-size: 0.8rem;'>{picker}</span>", unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(clean_html(f"""
+                <div class="glass-card" style="text-align: center; padding: 20px 14px;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">MAP {idx+1}</div>
+                    <div style="font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin: 6px 0;">{m_name}</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #ff4655; margin: 8px 0; letter-spacing: -1px;">{rounds_a} - {rounds_b}</div>
+                    <div style="color: #94a3b8; font-size: 0.8rem; font-weight: 500;">{picker}</div>
+                </div>
+            """), unsafe_allow_html=True)
     
     # Predicted Agent Compositions Grid
     st.markdown("### Projected Agent Compositions")
@@ -651,51 +677,50 @@ with tab_match:
             
             with col_la:
                 st.markdown(f"#### {team_a} Projected Lineup")
-                st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+                cards_a_html = ""
                 for p_name, details in comp_a_map.items():
                     agent = details["agent"]
                     role = details["role"]
                     icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
                     
-                    st.markdown(clean_html(f"""
+                    cards_a_html += f"""
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <img src="{icon}" width="36" height="36" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
                                 <div>
-                                    <div style="font-weight: 600; font-size: 0.95rem;">{p_name}</div>
+                                    <div style="font-weight: 600; font-size: 0.95rem; color: #f8fafc;">{p_name}</div>
                                     <div style="font-size: 0.75rem; color: #94a3b8;">{agent}</div>
                                 </div>
                             </div>
                             <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
                         </div>
-                    """), unsafe_allow_html=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+                    """
+                st.markdown(clean_html(f'<div class="glass-card">{cards_a_html}</div>'), unsafe_allow_html=True)
                 
             with col_lb:
                 st.markdown(f"#### {team_b} Projected Lineup")
-                st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+                cards_b_html = ""
                 for p_name, details in comp_b_map.items():
                     agent = details["agent"]
                     role = details["role"]
                     icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
                     
-                    st.markdown(clean_html(f"""
+                    cards_b_html += f"""
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <img src="{icon}" width="36" height="36" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
                                 <div>
-                                    <div style="font-weight: 600; font-size: 0.95rem;">{p_name}</div>
+                                    <div style="font-weight: 600; font-size: 0.95rem; color: #f8fafc;">{p_name}</div>
                                     <div style="font-size: 0.75rem; color: #94a3b8;">{agent}</div>
                                 </div>
                             </div>
                             <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
                         </div>
-                    """), unsafe_allow_html=True)
-                st.markdown('</div>', unsafe_allow_html=True)
+                    """
+                st.markdown(clean_html(f'<div class="glass-card">{cards_b_html}</div>'), unsafe_allow_html=True)
     
     # Fantasy Leaderboard
     st.markdown("### Valorant Fantasy League Leaderboard")
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     
     fantasy_eng = VCTFantasyEngine()
     filepath = selected_match["filepath"]
@@ -723,10 +748,7 @@ with tab_match:
     else:
         st.info("Leaderboard scores currently unavailable for this match.")
         
-    st.markdown('</div>', unsafe_allow_html=True)
-    
     st.markdown("### V5 Projected Fantasy Points (Expected Value)")
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     if "projections" in v5_res:
         proj_data = []
         for p, ev in v5_res["projections"].items():
@@ -736,7 +758,6 @@ with tab_match:
         st.dataframe(proj_df, use_container_width=True, hide_index=True)
     else:
         st.info("EV Projections unavailable.")
-    st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================
 # TAB 2: OPEN SIMULATION
@@ -1401,8 +1422,6 @@ with tab_vfl:
             "ownership_pct": "Ownership %"
         })
         
-        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
         st.dataframe(display_vfl_df, use_container_width=True, hide_index=True)
-        st.markdown('</div>', unsafe_allow_html=True)
     else:
         st.info("No VFL data available. Click '🔄 Scrape VFL Player Stats' in the sidebar to load data.")
