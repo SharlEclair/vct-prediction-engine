@@ -1,0 +1,83 @@
+{{PatchNav|previous=9.02|next=9.04}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 03.jpg
+|date    = August 13th, 2024
+|act     = [[Episode 09: COLLISION: Act 1|EP 09 Act 1]]
+|changes = '''All Platforms:'''
+*[[Night.Market]] appearance 
+*[[Agents]]
+'''Console-only:'''
+*[[Maps]]
+|bundle  = {{collection|Wonderstallion}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-03/ Patch Notes]
+}}
+The following is a list with all the changes made in patch v9.03.
+
+<i>Hey folks! I’m Ash and I’m a new Community Manager on the team. Don’t worry, Jo-Ellen is still here – I’ll be helping her out with patch notes from now on so you’ll see me from time to time. I’m excited to start sharing game updates with y’all so let’s get right to it with Patch Notes 9.03.
+
+We’ve made improvements to ground spreading abilities and added a preview to Sage’s Barrier Orb so the placement preview now also shows up on the minimap. Additionally, Pearl is entering Unrated and Swift Play queues on Console.
+
+Hope everyone has been enjoying VALORANT on Console so far!</i>
+
+==All Platforms==
+===General Updates===
+*Made improvements to how overlapping interactable objects work. You should now perform the desired action more consistently.
+**For Example: A dart from {{ai|Cypher}}’s {{abi text|Spycam}} should no longer prevent you from attaching to a rope if you’re directly looking at it.
+
+===Agent Updates===
+*'''Ground Spreading Abilities
+**We're making improvements to abilities that spread along the ground like {{ai|Brimstone}}’s {{abi text|Incendiary}} and {{ai|Viper}}'s {{abi text|Snake Bite}}. Previously, these abilities had inconsistent effects depending on the exact location they landed, ranging from extremely different sizes or damaging through walls and in areas the ability wasn’t visually present. With this update, these abilities should spread more consistently and only apply damage in places that are consistent with the visuals.
+*'''Map Targeted Abilities Improvements
+**You can now ping and see additional icons on maps used for ability targeting
+***Affected abilities: {{ai|Brimstone}}’s {{abi text|Sky Smoke}} and {{abi text|Orbital Strike}}, {{ai|Clove}}’s {{abi text|Ruse}}, and {{ai|Omen}}’s {{abi text|From the Shadows}}
+*'''{{ai|Sage}}’s Barrier Orb
+**{{abi text|Barrier Orb}}’s placement preview now also shows up on the minimap
+
+===Performance Updates===
+*Improved the performance of {{ai|Iso}}’s {{abi text|Kill Contract}} ability.
+
+===Bug Fixes===
+'''General
+*Fixed issue where opening menus would reset your toggle crouch / toggle walk state.
+
+'''Gameplay Systems
+*Fixed a bug where pinging guns on the ground was not displaying the gun's name in the text feed.
+*Fixed a rare bug that resulted in the defuse timer showing up as ‘-00.00’ if the [[Spike]] was defused as the round timer hit 0.
+*Fixed an issue with Ability icons not appearing on the minimap as an Observer.
+*Fixed an issue where in certain scenarios, you can see an enemy but they don’t appear on the minimap.
+*Fixed an issue where "DAMAGE TO YOU/YOU DEALT" is overlapping the Combat Report widget.
+*Fixed font size readability issues with Combat Report in certain languages.
+*Fixed an issue with auto re-scoping for [[Outlaw]], [[Marshal]], [[Operator]] staying active while the gun goes through a reload.
+
+'''Maps
+*[[Abyss]]
+**Fixed a spot in Mid Library where thrown abilities can clip through the shelves into gameplay space.
+**Fixed a spot where Agent utility could be thrown off the map and used as a platform.
+**Revised the message from the Scions of the Hourglass to fix text errors.
+**Fixed a minor visual issue for the railings around Defender Spawn.
+
+*[[Range|The Range]]
+**Fixed a bug where certain words in the Range were not being translated correctly into various languages.
+
+==PC==
+===Bug Fixes===
+'''Client
+*Combat Report
+**Fixed a bug where during pre-round, [Tab] must be held down while pressing the cursor toggle button to enable the cursor.
+
+==Console==
+===Map Updates===
+*[[Pearl]] enters [[Unrated]] & [[Swiftplay]] queues.
+
+==Known Issues==
+'''General
+*Fixed issue where opening an Ability map and the Shop/Scoreboard simultaneously could result in a loss of input.
+*Fixed an issue where pressing an Ability button while diffusing the Spike would equip a weapon.
+
+'''Agents
+*{{ai|Harbor}}
+**Fixed an issue where Harbor’s {{abi text|High Tide}} wall would end prematurely.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.03]]

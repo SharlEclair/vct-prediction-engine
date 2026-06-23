@@ -1,0 +1,147 @@
+{{PatchNav|previous=9.0|next=9.02}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 01.png
+|date    = July 16th, 2024
+|act     = [[Episode 09: COLLISION: Act 1|EP 09 Act 1]]
+|changes = '''All Platforms:
+*[[Weapons]]
+'''Console-only:
+*[[Agents]]
+|bundle  = {{collection|RGX 11z Pro|RGX 11z Pro (EP 9)}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-901/ Patch Notes]
+}}
+The following is a list with all the changes made in patch v9.01.
+
+<i>Howdy, gamers. Jo-Ellen, here. 
+
+There are a lot of Console updates in this patch including some for Neon, Raze, and Iso. Lotus is also entering the scene on Console. Read more below.</i>
+
+==All Platforms==
+===Weapons Updates===
+*Updated the animation for the [[Outlaw]] and its skinlines so that it is more apparent when the weapon is ready to be fired.
+
+===Bug Fixes===
+'''General 
+*Fixed a bug where {{ai|Neon}} could equip faster out of her [[High Gear|slide]] than intended by manually inputting an equip action.
+
+'''Gameplay Systems
+*Fixed a bug where AFK players were able to start the vote for surrender.
+*Fixed an issue when exiting {{ai|Cypher}}’s {{abi text|Spycam}} that causes a brief stutter for Spectators.
+*Fixed an issue with Tactical Callouts displaying in chat regardless of the option being turned off in Settings.
+*Fixed an issue with bullet tracers appearing for guns picked up regardless if they are turned off in Settings.
+*Fixed an issue regarding {{ai|Sage}} and {{ai|Clove}} resurrections not being visible for Spectators and Observers.
+*Fixed a performance degradation issue caused by auto-respawn by [[spike]] explosion in Custom Game modes.
+
+'''Maps
+*[[Abyss]]
+**Cleaned up lots of Cypher’s Spycam spots to prevent visual issues or unintended placements.
+**Improved Wingman’s Spike plant pathing on A site.
+**Cleaned up ability and player collision in a variety of spots across the map.
+**Fixed a bug where the Minimap could be oriented upside down with certain settings active.
+**Fixed a visual bug seen when falling off of the map on A site.
+**Fixed a bug where Viper’s Pit could spread farther than intended on A site.
+
+===Known Issues===
+'''Social
+*When changes happen to your party, there is a chance you may see "<MISSING STRING ENTRY TABLE>" in your chat log.
+
+==PC==
+===Esports Features===
+*Pick 'Ems Beta is coming for VALORANT Champions 2024!
+**Starting on July 26th, you will have access to the Champions Seoul Group Stage in-client and on the web. You’ll get to:
+***Predict the advancing teams for points, earning extra points for correctly guessing the exact placement.
+***Earn rewards for playing, with the best of the best earning more exclusive rewards.
+***And see how you stack up against other experts and creators.
+**Finally, prepare for the Playoffs Stage next patch where you’ll fill out the full double elimination bracket at once.
+*Look out for more details on how to participate later this month!
+
+===Bug Fixes===
+'''Gameplay Systems
+*Fixed an issue involving the Ping Wheel getting stuck on the interface when bound to the Z key.
+
+'''[[Premier]]
+Hey IBIT zone Premier Players! 
+
+There was an issue with matchmaking that prevented matches from being played in the first 2 weeks of the Episode 9 Act 1 stage. Contender and Invite divisions were unaffected and these teams successfully played their matches.
+
+*Issue has been fixed and teams should be able to find matches successfully for week 3 and on.
+*Any team that plays a match in the IBIT zone in week 6 and before will automatically qualify for playoffs.
+*Teams that have already played a match in another EU zone can still earn the playoff qualification in IBIT, but will require teams to create a new roster in the IBIT zone and play a match.
+*Teams will qualify for playoffs by receiving 600 points before the start of week 7 matches.
+**For example, if your team has 25 points at the end of week 6, then your team will have 625 points before you play your week 7 matches.
+
+==Console==
+===General Updates===
+*It is now possible to freely rebind non-ultimate Ability Button mappings.
+*Added settings for inverting map cursor controls.
+
+===Agent Updates===
+'''{{ai|Neon}}
+*[[High Gear|Slide]]
+**Re-equip Speed changed from Fast to Instant.
+
+'''{{ai|Raze}}
+*Second {{abi text|Blast Pack}}
+**Second Blast Pack’s horizontal force has been reduced.
+
+'''{{ai|Iso}}
+*{{abi text|Double Tap}}
+**Duration: 20s >>> 12s 
+**Signature kill reset removed.
+
+===Map Updates===
+*[[Lotus]] enters [[Competitive]], [[Unrated]], [[Swiftplay]], and [[Deathmatch]] queues.
+
+===Modes Updates===
+'''[[Deathmatch]]
+*Deathmatch is experiencing an issue and will be unavailable on Console until a fix can be shipped.
+
+===Social Updates===
+*Updated the notification indicator on the social card so that it’s easier to tell when you have a party invite even when the social panel is closed.
+*Added voice indicators to the Party tab in the social panel, so you can see who is speaking.
+*Added a button to leave the party to the My Party section of the Party tab in the social panel.
+
+===Bug Fixes===
+'''General 
+*Traditional Preset Weapon Switching Fixes
+**Fixed issue where unequipping abilities wouldn't respect the “Auto-Equip Prioritizes (Strongest/Latest Setting)”.
+**Fixed issue where you couldn't switch off from the Spike when you had no primary when using the ‘Traditional Controls’ Preset.
+**Fixed an issue where you could sometimes lose visual highlighting on the buttons you hover over in the front-end menus.
+**Fixed issues that could cause you to be unable to leave the Range.
+
+'''Agent
+*{{ai|Sova}}
+**{{abi text|Recon Bolt}}
+***Fixed an issue where Recon Bolt did not properly apply AimAssist to Revealed Targets.
+
+*{{ai|Fade}}
+**{{abi text|Haunt}}
+***Fixed an issue where Haunt did not properly apply AimAssist to Revealed Targets.
+
+*Fixed an issue where AimAssist was incorrectly being applied when certain abilities were equipped:
+**{{ai|Fade}} - {{abi text|Nightfall}}
+**{{ai|Chamber}} - {{abi text|Rendezvous}}
+**{{ai|Harbor}} - {{abi text|Cascade}}
+**{{ai|Harbor}} - {{abi text|Cove}}
+**{{ai|Viper}} - {{abi text|Poison Cloud}}
+**{{ai|Viper}} - {{abi text|Toxic Screen}}
+**{{ai|Viper}} - {{abi text|Viper's Pit}}
+**{{ai|Yoru}} - {{abi text|Fakeout}}
+**{{ai|Yoru}} - {{abi text|Dimensional Drift}}
+
+'''Gameplay Systems
+*Fixed issue where you could be in Focus Mode while inspecting your weapon.
+
+'''Competitive Systems
+*Fixed an issue where EOG screens when viewing matches in Match History will disappear and be inaccessible
+
+'''Social 
+*Fixed a bug where your presence sometimes failed to update after a match.
+
+===Known Issues===
+'''General 
+*When navigating Surrender menus, there's a chance your controls can become locked for an entire round. Due to this, we've elected to disable the Surrender and Remake menus until we can properly fix the issue. Draw will remain functional.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.01]]

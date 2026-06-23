@@ -1,0 +1,134 @@
+{{PatchNav|previous=9.01|next=9.03}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 02.png
+|date    = July 30th, 2024
+|act     = [[Episode 09: COLLISION: Act 1|EP 09 Act 1]]
+|changes = '''PC-only:'''
+*[[Premier]]
+'''Console-only:'''
+*[[Maps]]
+*[[Agents]]
+|bundle  = {{collection|Champions 2024}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-902/ Patch Notes]
+}}
+The following is a list with all the changes made in patch v9.02.
+
+<i>Hey, y’all. It’s Jo-Ellen and I’m here once more with Patch Notes 9.02.
+
+What you’ll see below: a Player Behavior update whether you’re on Console or PC, an updated Combat Report and Basic Training now available for PC, and [[Icebox]] entering the scene on Console.
+
+One last note: ready for [[Champions 2024 Collection#Pick 'Ems|Pick’Ems]]?</i>
+
+==All Platforms==
+===Player Behavior Updates===
+*Behavioral Intervention Update: People who engage in comms abuse will experience increased penalties.
+
+===Bug Fixes===
+====Agents====
+*{{ai|Neon}}
+**Fixed a bug where Neon’s hitbox could be slightly offset while sliding.
+
+====Gameplay Systems====
+*Fixed an issue in Premier Overtime voting that prevented people from calling an Overtime Timeout when switching sides.
+*Fixed an issue with Ability HUD persisting into deathcam.
+
+====Maps====
+*[[Abyss]]
+**Fixed several areas where the Spike could get stuck on certain ledges outside the map.
+**Fixed a bug where Omen could die by teleporting in a specific spot in Mid Bottom.
+**Several Visual Bugs fixed.
+*[[Sunset]]
+**You can no longer jump on the tall box in A Alley.
+
+==PC==
+===General Updates===
+*We have made the new Basic Training (tutorial) and The [[Range]] from Console available on PC!
+*All new players will be required to play through the tutorial, and will have an option to play a Bot Training Match.
+*For current players, you can access the Basic Training and The Range by going to the Practice menu.
+
+===Gameplay Systems Updates===
+*Combat Report
+**Visual refresh! The in-game combat report has a new look.
+**Combat Report will now be visible during the Buy Phase by default. You will still be able to toggle it on and off during this phase.
+
+===Premier Updates===
+*Playoffs in Contender and Invite Divisions have a best of 3 finals. Rounds prior to finals are best of 1.
+**Map pick and ban takes place before agent select for each game in a match.
+**Once a map is played, it is removed from the map pool for subsequent games in the match.
+*Added playoff qualification rules in the side panel on the standings page.
+
+===Social Updates===
+*Added platform information in the social panel. It is now clearer when a friend who is playing VALORANT is on a different platform.
+
+===Bug Fixes===
+*[[Premier]]
+**Fixed an issue where the playoff results text on the standings page was always displayed in English.
+**Fixed an issue where the team page was showing the wrong background.
+**Fixed an issue where changing the Stage in the dropdown on the standings page sometimes wouldn’t refresh the content.
+
+===Known Issues===
+*Gameplay Systems
+**Combat Report additional details window is missing headers for “Weapon / Ability,” “Damage,” and “Hits”. This will be resolved in an upcoming release.
+*[[Premier]]
+**During a tournament, sometimes the rest period timer between matches may not display.
+**If the text on the lobby says “MATCH STARTING” and a match has not started after 10 seconds, try navigating to the Premier tab and back to the lobby to get an updated timer.
+**Even if this timer doesn’t display, your match will still start at the appropriate time. You will still receive the MATCH FOUND notification.
+**You will always have at least 5 minutes in between matches. This time may be longer if you’re waiting on a match to finish in order to determine your next opponent.
+
+==Console==
+===General Updates===
+*The ‘Keep Player Centered’ minimap setting will now be forced on for minimap zoom levels above 1.0. This prevents non-centered minimap views from getting into an unusable state for high zoom levels.
+
+===Agent Updates===
+*'''Toggleable Abilities''': Select abilities which require you to press and hold a button down can now be set to ‘Toggle,’ allowing you to press and let go of the input to steer the ability freely while it’s active.
+**The following abilities can be set to Togglable in the Agent Profile Settings:
+***{{ai|Harbor}}: {{abi text|High Tide}}
+***{{ai|Phoenix}}: {{abi text|Blaze}}
+***{{ai|Skye}}: {{abi text|Guiding Light}}
+*{{ai|Neon}}
+**{{abi text|High Gear}}
+***High Gear’s description in the Ability Info Panel has been updated to match the ability’s bindings.
+*{{ai|Sova}}
+**{{abi text|Hunter's Fury}}
+***Hunter’s Fury applies less drag on your controls, allowing more control over the charge’s duration.
+
+===Map Updates===
+*[[Icebox]] enters [[Competitive]], [[Unrated]], [[Swiftplay]], and [[Deathmatch]] queues.
+
+===Social Updates===
+*The in-match scoreboard now has voice control shortcuts. You can now open the scoreboard and press a button to quickly mute other people or switch voice channels.
+*Added audio to social notifications. Now when you receive a friend request or party invite you’ll hear a notification sound.
+*Added party information to the social panel. The friends list now shows the number of people in your friend’s party and the remaining open party slots.
+
+===Bug Fixes===
+====General====
+*Fixed an issue where you can lose input when interfacing with the surrender vote system.
+*Fixed an issue where unbound inputs displayed incorrect controller bindings.
+*Fixed issue where megamap sometimes rotated when spectating other people after dying.
+*Credits are now localized properly in the tutorial.
+*Fixed an issue where the weapon wheel was not displaying the correct inputs when changing controls in individual Agent Profiles.
+
+====Gameplay Systems====
+*Fixed an update with timestamp and ability status text overlapping in Combat Reports.
+*Fixed “Self” and “Ally” not localizing in Combat Report text.
+*Fixed overrun texts in Combat Reports for Indonesian localized texts.
+
+====Performance====
+*Fixed a performance issue when changing controller presets.
+
+====Social====
+*Fixed a bug where you could not remove someone as a friend while in match.
+*Fixed a bug where your presence sometimes would not update after a match.
+*Fixed a bug where social systems would sometimes not respect block.
+*Fixed a bug where your name would sometimes display in match even when you have set it to hidden.
+
+====Weapons====
+*Mitigated an issue when using scoped weapons where your sensitivity would sharply increase at the beginning of scope zoom-in transitions.
+
+===Known Issues===
+*General
+**While playing through the [[Basic Training Event]], the “End of Game” Basic Training Event banner in the Progression Hub will show your current milestone as +1 instead of +2 after you complete the second milestone. It is correct everywhere else in the client and people are still earning XP. This will be fixed in Patch 9.03.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.02]]
