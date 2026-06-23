@@ -1,0 +1,60 @@
+{
+    "version": "9.03",
+    "date": "August 13th, 2024",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "Ground Spreading Abilities",
+            "change_type": "Adjustment",
+            "description": "We're making improvements to abilities that spread along the ground like Brimstone\u2019s Incendiary and Viper's Snake Bite. Previously, these abilities had inconsistent effects depending on the exact location they landed, ranging from extremely different sizes or damaging through walls and in areas the ability wasn\u2019t visually present. With this update, these abilities should spread more consistently and only apply damage in places that are consistent with the visuals."
+        },
+        {
+            "agent": "General",
+            "ability": "Map Targeted Abilities Improvements",
+            "change_type": "Adjustment",
+            "description": "You can now ping and see additional icons on maps used for ability targeting"
+        },
+        {
+            "agent": "General",
+            "ability": "Map Targeted Abilities Improvements",
+            "change_type": "Adjustment",
+            "description": "Affected abilities: Brimstone\u2019s Sky Smoke and Orbital Strike, Clove\u2019s Ruse, and Omen\u2019s From the Shadows"
+        },
+        {
+            "agent": "General",
+            "ability": "Sage\u2019s Barrier Orb",
+            "change_type": "Adjustment",
+            "description": "Barrier Orb\u2019s placement preview now also shows up on the minimap"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [
+        "Improved the performance of Iso\u2019s Kill Contract ability."
+    ],
+    "bug_fixes": [
+        "Fixed issue where opening menus would reset your toggle crouch / toggle walk state.",
+        "Fixed a bug where pinging guns on the ground was not displaying the gun's name in the text feed.",
+        "Fixed a rare bug that resulted in the defuse timer showing up as \u2018-00.00\u2019 if the Spike was defused as the round timer hit 0.",
+        "Fixed an issue with Ability icons not appearing on the minimap as an Observer.",
+        "Fixed an issue where in certain scenarios, you can see an enemy but they don\u2019t appear on the minimap.",
+        "Fixed an issue where \"DAMAGE TO YOU/YOU DEALT\" is overlapping the Combat Report widget.",
+        "Fixed font size readability issues with Combat Report in certain languages.",
+        "Fixed an issue with auto re-scoping for Outlaw, Marshal, Operator staying active while the gun goes through a reload.",
+        "Abyss",
+        "Fixed a spot in Mid Library where thrown abilities can clip through the shelves into gameplay space.",
+        "Fixed a spot where Agent utility could be thrown off the map and used as a platform.",
+        "Revised the message from the Scions of the Hourglass to fix text errors.",
+        "Fixed a minor visual issue for the railings around Defender Spawn.",
+        "The Range",
+        "Fixed a bug where certain words in the Range were not being translated correctly into various languages.",
+        "Combat Report",
+        "Fixed a bug where during pre-round, [Tab] must be held down while pressing the cursor toggle button to enable the cursor.",
+        "Pearl enters Unrated & Swiftplay queues.",
+        "Fixed issue where opening an Ability map and the Shop/Scoreboard simultaneously could result in a loss of input.",
+        "Fixed an issue where pressing an Ability button while diffusing the Spike would equip a weapon.",
+        "Harbor",
+        "Fixed an issue where Harbor\u2019s High Tide wall would end prematurely."
+    ],
+    "player_behavior_changes": []
+}

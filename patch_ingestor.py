@@ -2,16 +2,37 @@ import os
 import csv
 import httpx
 import logging
+import json
 
-from v4_parsing_skills import parse_mediawiki_tree
+from patch_parser import PatchParser
 
 logger = logging.getLogger("patch_ingestor")
 
 PATCHES_CACHE_DIR = "./data/patches"
+PROCESSED_PATCHES_DIR = "./data/processed/patches"
 
 class PatchFetchError(Exception):
     """Exception raised when patch notes cannot be retrieved from remote wiki and cache is missing."""
     pass
+
+def load_version_dates(csv_path="./data/raw/patch_notes.csv"):
+    dates = {}
+    if not os.path.exists(csv_path):
+        logger.warning(f"CSV not found: {csv_path}")
+        return dates
+    try:
+        with open(csv_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                val = row.get("patch_version", "").strip()
+                if not val:
+                    continue
+                if val.startswith("v"):
+                    val = val[1:]
+                dates[val] = row.get("release_date", "").strip()
+    except Exception as e:
+        logger.warning(f"Error loading CSV dates: {e}")
+    return dates
 
 def get_patch_versions(csv_path="./data/raw/patch_notes.csv", limit=5):
     versions = []
@@ -29,14 +50,6 @@ def get_patch_versions(csv_path="./data/raw/patch_notes.csv", limit=5):
             if val.startswith("v"):
                 val = val[1:]
             
-            # Skip future patches that don't exist on the wiki yet (e.g., 10.xx, 11.xx, 12.xx)
-            try:
-                major = int(val.split('.')[0])
-                if major >= 10:
-                    continue
-            except ValueError:
-                pass
-                
             versions.append(val)
             if limit and len(versions) >= limit:
                 break
@@ -99,20 +112,25 @@ def fetch_from_wiki_api(version: str) -> str:
     except Exception as e:
         if not isinstance(e, PatchFetchError):
             raise PatchFetchError(f"Unexpected error when querying Fandom API for patch {version}: {e}")
-        throw_e = e
-        raise throw_e
+        raise e
 
-def ingest_latest_patches(limit=5):
+def ingest_latest_patches(limit=5, version_list=None):
     """
-    Reads patch versions from CSV and retrieves their parsed trees.
+    Retrieves patch versions, parses their content, and stores JSON outputs.
     Implements a local caching layer under data/patches/.
-    Throws PatchFetchError if a patch notes page cannot be fetched and has no local cache.
     """
-    patch_versions = get_patch_versions(limit=limit)
+    if version_list:
+        patch_versions = version_list
+    else:
+        patch_versions = get_patch_versions(limit=limit)
+        
     aggregated_data = {}
+    parser = PatchParser()
+    version_dates = load_version_dates()
     
-    # Ensure cache directory exists
+    # Ensure directories exist
     os.makedirs(PATCHES_CACHE_DIR, exist_ok=True)
+    os.makedirs(PROCESSED_PATCHES_DIR, exist_ok=True)
     
     for version in patch_versions:
         cache_path = os.path.join(PATCHES_CACHE_DIR, f"{version}.wiki")
@@ -141,20 +159,27 @@ def ingest_latest_patches(limit=5):
                 logger.error(f"Failed to fetch patch notes for {version}: {e}")
                 raise PatchFetchError(f"Unable to retrieve patch notes for version {version} (cache missing and remote fetch failed: {e})")
         
-        # 3. Parse wikitext content
-        parsed_tree = parse_mediawiki_tree(raw_text)
-        aggregated_data[version] = parsed_tree
+        # 3. Parse wikitext using production parser
+        csv_date = version_dates.get(version, "")
+        parsed_json = parser.parse_patch(version, csv_date, raw_text)
+        
+        # 4. Save structured JSON to data/processed/patches/
+        processed_path = os.path.join(PROCESSED_PATCHES_DIR, f"{version}.json")
+        try:
+            with open(processed_path, "w", encoding="utf-8") as f:
+                json.dump(parsed_json, f, indent=4)
+            logger.info(f"Saved structured JSON for Patch {version} to {processed_path}")
+        except Exception as e:
+            logger.error(f"Failed to write structured JSON for patch {version}: {e}")
+            
+        aggregated_data[version] = parsed_json
         
     return aggregated_data
 
 if __name__ == "__main__":
-    import json
     logging.basicConfig(level=logging.INFO)
     try:
-        data = ingest_latest_patches(limit=5)
-        print("\nIngested patch versions:", list(data.keys()))
-        for v, tree in data.items():
-            print(f"\n--- Patch {v} Agent Updates ---")
-            print(json.dumps(tree.get("Agent Updates", {}), indent=2))
+        data = ingest_latest_patches(version_list=["9.0", "9.01", "9.02", "9.03", "9.04", "12.09"])
+        print("\nSuccessfully ingested and parsed patches:", list(data.keys()))
     except Exception as e:
-        logger.error(f"Ingestion test execution failed: {e}")
+        logger.error(f"Ingestion failed: {e}")

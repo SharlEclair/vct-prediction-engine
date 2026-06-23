@@ -1,0 +1,68 @@
+{
+    "version": "9.0",
+    "date": "June 25th, 2024",
+    "agent_changes": [
+        {
+            "agent": "Iso",
+            "ability": "Double Tap",
+            "change_type": "Adjustment",
+            "description": "Duration: 20s >>> 12s"
+        },
+        {
+            "agent": "Iso",
+            "ability": "Double Tap",
+            "change_type": "Adjustment",
+            "description": "Signature kill reset removed"
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [
+        "Abyss added to the Ranked map pool.",
+        "Competitive Mode is coming to Console this patch! Queue up and see if you can climb the ranks and make it onto the Immortal Leaderboards. Good luck on your first race to Radiant!",
+        "Our Competitive Mode map pool will start with Abyss, Ascent, Bind, Haven, and Sunset with new maps slowly being added in the next few patches.",
+        "Added a new \"Controls Preset\" selection screen upon first boot-up prior to loading into the tutorial",
+        "You can now choose between our VALORANT-specific controls preset or a more familiar, TRADITIONAL console FPS preset as your starting controls scheme.",
+        "You can easily change your preset and customize controls at any point once in-game through the Settings menu.",
+        "Polished sound transitions between Focus and ADS to better reflect the aim state you're transitioning into.",
+        "Crosshair presets have been updated to reflect a better variety of usable crosshairs.",
+        "Updated the Fighter controls preset so that Crouch is a Hold action instead of a Toggle action.",
+        "Added holistic Aim Sensitivity slider.",
+        "Added the ability to enter precision mode while in controls settings to adjust sensitivity sliders by .1 increments."
+    ],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Fixed an issue where Iso's shield hitbox could be misaligned.",
+        "Fixed an issue with Jett's Tailwind",
+        "Fixed an issue in Team Deathmatch where you would incorrectly see DRAW as a final result in EOG screens",
+        "Added specific scoreboard screens for Team Deathmatch and Deathmatch (diagonal dash) that was reducing the dash length.",
+        "Fixed a particle issue when using ADS on the Level 3 and 4 Mystbloom Collection.",
+        "Fixed an issue when exiting Cypher's Spycam that caused Cypher's hands to stutter for Spectators.",
+        "Fixed issue where both Focus and ADS sounds would play during transitions.",
+        "Fixed Leave Game menu persisting through AFK idling.",
+        "Fixed animation bug with Leave Game Menu.",
+        "Abyss",
+        "Fixed several unintended boost positions.",
+        "Fixed bugs allowing players to get under the map.",
+        "A Site cover should now properly appear in Omen and Astra smoke targeting world.",
+        "Fixed an Omen exploit allowing him to get between the spawn barriers.",
+        "Fixed an issue where the friends list would sometimes display inaccurate platform information for friends.",
+        "When navigating Surrender menus, there's a chance your controls can become locked for an entire round. Due to this, we've elected to disable the Surrender and Remake menus until we can properly fix the issue. Draw will remain functional.",
+        "When changing the Stage in the dropdown on the standings page, the content doesn't refresh. To see accurate standings for past Stages, change the Stage, then change division or zone and the content will update.",
+        "The standings page sometimes fails to update, and you may see fewer teams than expected. Click on another tab in the Premier Hub and then return to standings to fix the issue.",
+        "If you are in Contender or Invite and are awarded a Bye during Weekly matches, you will not see that match recorded in their Premier Match History tab. You will be awarded a win and 100 Premier Score as expected, and that is reflected correctly on the standings."
+    ],
+    "player_behavior_changes": [
+        "In addition to removing zero tolerance terms from text chat, people who repeatedly engage in this behavior will see increased penalties on their transgressions.",
+        "Teams in Contender that earned a promotion in Stage E8A3 are in the new Invite Division, where finishing the Stage at a high enough rank will earn you an opportunity to make it into a Challengers League.",
+        "Contender and Invite Divisions play a little differently:",
+        "Strict rematch protection in weekly matches prevents you from ever matching against the same team more than once in a Stage.",
+        "If we can't find you an appropriate match during the queue window, you'll be given a Bye. Byes award a match win and 100 points.",
+        "Losses award 0 points.",
+        "Finals in playoffs are Best of 3 matchups.",
+        "There are some extra roster restrictions for Contender and Invite Division teams.",
+        "For all the details on new rules in Contender and Invite, check out our [https://playvalorant.com/en-sg/news/game-updates/everything-you-need-to-know-about-premier/ updated Everything You Need to Know About Premier article.]",
+        "When you add a friend, you can now paste or type a full Riot ID (including tagline) into the \"Riot ID\" field and it will automatically split the data into the \"Riot ID\" and \"tagline\" fields.",
+        "We've updated the communications menu so it's easier to manage team and party voice on the fly.",
+        "We've added Voice Chat to the Settings page. Now you can tailor your mic behavior and voice settings to suit your setup."
+    ]
+}

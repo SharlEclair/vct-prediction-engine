@@ -1,0 +1,111 @@
+{
+    "version": "9.02",
+    "date": "July 30th, 2024",
+    "agent_changes": [
+        {
+            "agent": "General",
+            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "change_type": "Adjustment",
+            "description": "The following abilities can be set to Togglable in the Agent Profile Settings:"
+        },
+        {
+            "agent": "General",
+            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "change_type": "Adjustment",
+            "description": "Harbor: High Tide"
+        },
+        {
+            "agent": "General",
+            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "change_type": "Adjustment",
+            "description": "Phoenix: Blaze"
+        },
+        {
+            "agent": "General",
+            "ability": "Toggleable Abilities: Select abilities which require you to press and hold a button down can now be set to \u2018Toggle,\u2019 allowing you to press and let go of the input to steer the ability freely while it\u2019s active.",
+            "change_type": "Adjustment",
+            "description": "Skye: Guiding Light"
+        },
+        {
+            "agent": "General",
+            "ability": "Neon",
+            "change_type": "Adjustment",
+            "description": "High Gear"
+        },
+        {
+            "agent": "General",
+            "ability": "Neon",
+            "change_type": "Adjustment",
+            "description": "High Gear\u2019s description in the Ability Info Panel has been updated to match the ability\u2019s bindings."
+        },
+        {
+            "agent": "General",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Hunter's Fury"
+        },
+        {
+            "agent": "General",
+            "ability": "Sova",
+            "change_type": "Adjustment",
+            "description": "Hunter\u2019s Fury applies less drag on your controls, allowing more control over the charge\u2019s duration."
+        }
+    ],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Neon",
+        "Fixed a bug where Neon\u2019s hitbox could be slightly offset while sliding.",
+        "Fixed an issue in Premier Overtime voting that prevented people from calling an Overtime Timeout when switching sides.",
+        "Fixed an issue with Ability HUD persisting into deathcam.",
+        "Abyss",
+        "Fixed several areas where the Spike could get stuck on certain ledges outside the map.",
+        "Fixed a bug where Omen could die by teleporting in a specific spot in Mid Bottom.",
+        "Several Visual Bugs fixed.",
+        "Sunset",
+        "You can no longer jump on the tall box in A Alley.",
+        "We have made the new Basic Training (tutorial) and The Range from Console available on PC!",
+        "All new players will be required to play through the tutorial, and will have an option to play a Bot Training Match.",
+        "For current players, you can access the Basic Training and The Range by going to the Practice menu.",
+        "Combat Report",
+        "Visual refresh! The in-game combat report has a new look.",
+        "Combat Report will now be visible during the Buy Phase by default. You will still be able to toggle it on and off during this phase.",
+        "Playoffs in Contender and Invite Divisions have a best of 3 finals. Rounds prior to finals are best of 1.",
+        "Map pick and ban takes place before agent select for each game in a match.",
+        "Once a map is played, it is removed from the map pool for subsequent games in the match.",
+        "Added playoff qualification rules in the side panel on the standings page.",
+        "Added platform information in the social panel. It is now clearer when a friend who is playing VALORANT is on a different platform.",
+        "Premier",
+        "Fixed an issue where the playoff results text on the standings page was always displayed in English.",
+        "Fixed an issue where the team page was showing the wrong background.",
+        "Fixed an issue where changing the Stage in the dropdown on the standings page sometimes wouldn\u2019t refresh the content.",
+        "Gameplay Systems",
+        "Combat Report additional details window is missing headers for \u201cWeapon / Ability,\u201d \u201cDamage,\u201d and \u201cHits\u201d. This will be resolved in an upcoming release.",
+        "Premier",
+        "During a tournament, sometimes the rest period timer between matches may not display.",
+        "If the text on the lobby says \u201cMATCH STARTING\u201d and a match has not started after 10 seconds, try navigating to the Premier tab and back to the lobby to get an updated timer.",
+        "Even if this timer doesn\u2019t display, your match will still start at the appropriate time. You will still receive the MATCH FOUND notification.",
+        "You will always have at least 5 minutes in between matches. This time may be longer if you\u2019re waiting on a match to finish in order to determine your next opponent.",
+        "The \u2018Keep Player Centered\u2019 minimap setting will now be forced on for minimap zoom levels above 1.0. This prevents non-centered minimap views from getting into an unusable state for high zoom levels.",
+        "Fixed an issue where you can lose input when interfacing with the surrender vote system.",
+        "Fixed an issue where unbound inputs displayed incorrect controller bindings.",
+        "Fixed issue where megamap sometimes rotated when spectating other people after dying.",
+        "Credits are now localized properly in the tutorial.",
+        "Fixed an issue where the weapon wheel was not displaying the correct inputs when changing controls in individual Agent Profiles.",
+        "Fixed an update with timestamp and ability status text overlapping in Combat Reports.",
+        "Fixed \u201cSelf\u201d and \u201cAlly\u201d not localizing in Combat Report text.",
+        "Fixed overrun texts in Combat Reports for Indonesian localized texts.",
+        "Fixed a performance issue when changing controller presets.",
+        "Fixed a bug where you could not remove someone as a friend while in match.",
+        "Fixed a bug where your presence sometimes would not update after a match.",
+        "Fixed a bug where social systems would sometimes not respect block.",
+        "Fixed a bug where your name would sometimes display in match even when you have set it to hidden.",
+        "Mitigated an issue when using scoped weapons where your sensitivity would sharply increase at the beginning of scope zoom-in transitions.",
+        "General",
+        "While playing through the Basic Training Event, the \u201cEnd of Game\u201d Basic Training Event banner in the Progression Hub will show your current milestone as +1 instead of +2 after you complete the second milestone. It is correct everywhere else in the client and people are still earning XP. This will be fixed in Patch 9.03."
+    ],
+    "player_behavior_changes": [
+        "Behavioral Intervention Update: People who engage in comms abuse will experience increased penalties."
+    ]
+}

@@ -1,0 +1,275 @@
+{
+    "version": "12.09",
+    "date": "May 12th, 2026",
+    "agent_changes": [
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Nerf",
+            "description": "Jumping with High Gear active no longer provides any speed bonus while Neon is airborne. Instead, Neon\u2019s air speed while sprinting will match melee speed."
+        },
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Adjustment",
+            "description": "Improved VFX to more clearly communicate the direction and origin of her slide"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Energy",
+            "change_type": "Nerf",
+            "description": "Fuel will only regenerate with a kill when Neon's ultimate is active"
+        },
+        {
+            "agent": "Neon",
+            "ability": "Energy",
+            "change_type": "Adjustment",
+            "description": "Fuel will still regenerate passively"
+        }
+    ],
+    "weapon_changes": [
+        {
+            "weapon": "All shotguns",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "All shotguns are now less accurate when moving"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Run, walk, crouch-walk, and jump accuracy has been standardized across all shotguns"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Crouching now provides a 15% accuracy multiplier for shotguns, matching rifles"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "Bucky crouch accuracy modifier",
+            "old_value": 10.0,
+            "new_value": 15.0,
+            "change_type": "Buff"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "Judge/Shorty crouch accuracy modifier",
+            "old_value": 25.0,
+            "new_value": 15.0,
+            "change_type": "Buff"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Shotgun accuracy reduced while on a rope"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "Stationary Accuracy multiplier",
+            "old_value": 0.075,
+            "new_value": 0.75,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "Walking Accuracy multiplier",
+            "old_value": 0.09,
+            "new_value": 1.5,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "All shotguns",
+            "stat": "Running Accuracy multiplier",
+            "old_value": 0.1,
+            "new_value": 3.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Bucky pellet damage in the 0-8m range decreased"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Head",
+            "old_value": 40.0,
+            "new_value": 34.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Body",
+            "old_value": 20.0,
+            "new_value": 17.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Legs",
+            "old_value": 17.0,
+            "new_value": 14.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Minimum spread",
+            "old_value": 2.6,
+            "new_value": 3.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Walking spread",
+            "old_value": 0.075,
+            "new_value": 1.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Running spread",
+            "old_value": 0.1,
+            "new_value": 2.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Crouch-walk spread",
+            "old_value": 0.05,
+            "new_value": 0.5,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Bucky",
+            "stat": "Jump spread",
+            "old_value": 1.25,
+            "new_value": 4.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Judge",
+            "stat": "Minimum spread",
+            "old_value": 2.25,
+            "new_value": 2.5,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Judge",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Note: this will only apply to PC for now- this spread change will apply to console in Patch 12.11"
+        },
+        {
+            "weapon": "Judge",
+            "stat": "Walking spread",
+            "old_value": 0.075,
+            "new_value": 1.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Judge",
+            "stat": "Running spread",
+            "old_value": 0.75,
+            "new_value": 2.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Judge",
+            "stat": "Crouch-walk spread",
+            "old_value": 0.05,
+            "new_value": 0.5,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Judge",
+            "stat": "Jump spread",
+            "old_value": 2.25,
+            "new_value": 4.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Shorty",
+            "stat": "Fire rate",
+            "old_value": 3.33,
+            "new_value": 3.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Shorty",
+            "stat": "Walking spread",
+            "old_value": 0.075,
+            "new_value": 1.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Shorty",
+            "stat": "Running spread",
+            "old_value": 0.1,
+            "new_value": 2.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Shorty",
+            "stat": "Crouch-walk spread",
+            "old_value": 0.05,
+            "new_value": 0.5,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Shorty",
+            "stat": "Jump spread",
+            "old_value": 1.25,
+            "new_value": 4.0,
+            "change_type": "Nerf"
+        }
+    ],
+    "competitive_changes": [
+        "We\u2019re testing MMR changes for modes other than Competitive, Unrated, and Swiftplay. These changes should result in better, more consistent matches. We\u2019ll use what we learn to improve Competitive, Unrated, and Swiftplay in the future."
+    ],
+    "performance_changes": [
+        "Added support for AMD Anti-Lag 2, which reduces input latency in certain GPU-bound scenarios. In order to use AMD Anti-Lag 2, you need compatible hardware, with updated drivers from March 9th, 2026 or later."
+    ],
+    "bug_fixes": [
+        "Agents",
+        "Chamber",
+        "Bugfix Buff Fixed a bug where ADS-ing while firing Chamber\u2019s Headhunter created an animation that covers too much of the screen",
+        "Jett",
+        "Bugfix Fixed a visual bug where Jett's Tailwind was not playing the intended first-person animations when left-handed setting is enabled",
+        "Bugfix Fixed a bug where using Jett's Drift caused performance drops (wiki editor note: notes say \"Glide\", but no such ability exists for Jett, so it is assumed to be Drift based on its description of changes.)",
+        "Miks",
+        "Bugfix Updated tooltip description of Harmonize.",
+        "Bugfix Buff Fixed bug where the preview cone for his ultimate would not show unless the ability was fully equipped",
+        "Sage",
+        "Bugfix Buff Fixed an issue where a full health Sage could use Healing Orb on herself while affected by Decay, because she is not actually losing any health. This would consume the ability needlessly, since her health returns to normal once Decay wears off.",
+        "Tejo",
+        "Bugfix Fixed issue where the Guided Salvo\u2019s equip idle sound kept playing long after cast.",
+        "Viper",
+        "Bugfix Buff Fixed a bug where Sova's Recon Bolt and Chamber's Trademark were not affected by nearsightedness in Viper's Pit",
+        "Vyse",
+        "Bugfix Buff Fixed a bug where possessable drones (Sova's Owl Drone, Skye's Trailblazer, Tejo's Stealth Drone) would trigger the arming audio of Vyse's wall",
+        "Progression",
+        "Fixed issue where dailies shown while hovering over the icon did not match the dailies in the End of Game screen.",
+        "Agents",
+        "Phoenix",
+        "Bugfix Updated tooltip description of Curveball.",
+        "Modes",
+        "Skirmish 2v2: Ascension and Skirmish 1v1: Ascension - Timer is stuck at 00.50 sec in Overtime phase",
+        "Skirmish 2v2: Ascension and Skirmish 1v1: Ascension - Agent abilities do not show up on the Combat Report in the following round after affecting enemies"
+    ],
+    "player_behavior_changes": []
+}
