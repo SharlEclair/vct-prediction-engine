@@ -35,6 +35,13 @@ from v5_simulation_engine import VCTv5SimulationEngine
 def get_v5_simulation_engine():
     return VCTv5SimulationEngine()
 
+def clean_html(html_str: str) -> str:
+    """Strip leading/trailing whitespace from each line in a multiline HTML string
+    to prevent the Markdown parser from identifying indentation as a code block."""
+    if not html_str:
+        return ""
+    return "\n".join(line.strip() for line in html_str.splitlines())
+
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("app")
@@ -94,29 +101,35 @@ def load_cached_historical_data():
 
 # Agent Icons mapping
 AGENT_ICONS = {
-    "Jett": "https://media.valorant-api.com/agents/add6443a-41da-e1c3-d774-4598a6c7e2ca/displayicon.png",
-    "Raze": "https://media.valorant-api.com/agents/f7aeec33-4615-a78d-6b58-5e35024b3e30/displayicon.png",
-    "Breach": "https://media.valorant-api.com/agents/5f8d3a7f-467b-97f3-062c-13db7f307e32/displayicon.png",
-    "Omen": "https://media.valorant-api.com/agents/8e2535ab-4c40-07a4-4b1a-7b3b7e329840/displayicon.png",
-    "Brimstone": "https://media.valorant-api.com/agents/9f0f7139-4456-04ce-774b-14bc73a5d641/displayicon.png",
-    "Phoenix": "https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-00a68e7d0ace/displayicon.png",
+    "Jett": "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png",
+    "Raze": "https://media.valorant-api.com/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png",
+    "Breach": "https://media.valorant-api.com/agents/5f8d3a7f-467b-97f3-062c-13acf203c006/displayicon.png",
+    "Omen": "https://media.valorant-api.com/agents/8e253930-4c05-31dd-1b6c-968525494517/displayicon.png",
+    "Brimstone": "https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayicon.png",
+    "Phoenix": "https://media.valorant-api.com/agents/eb93336a-449b-9c1b-0a54-a891f7921d69/displayicon.png",
     "Sage": "https://media.valorant-api.com/agents/569fdd95-4d10-43ab-ca70-79becc718b46/displayicon.png",
-    "Sova": "https://media.valorant-api.com/agents/ded3520f-4064-ae4b-b6cd-db07307a5d90/displayicon.png",
-    "Viper": "https://media.valorant-api.com/agents/707e2116-4f48-434a-2052-ed87db41663f/displayicon.png",
-    "Cypher": "https://media.valorant-api.com/agents/115d613b-4f08-593c-2c54-398a773ccb3b/displayicon.png",
-    "Reyna": "https://media.valorant-api.com/agents/a3593731-4771-54f3-e5d0-a7b4109b457e/displayicon.png",
+    "Sova": "https://media.valorant-api.com/agents/320b2a48-4d9b-a075-30f1-1f93a9b638fa/displayicon.png",
+    "Viper": "https://media.valorant-api.com/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png",
+    "Cypher": "https://media.valorant-api.com/agents/117ed9e3-49f3-6512-3ccf-0cada7e3823b/displayicon.png",
+    "Reyna": "https://media.valorant-api.com/agents/a3bfb853-43b2-7238-a4f1-ad90e9e46bcc/displayicon.png",
     "Killjoy": "https://media.valorant-api.com/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png",
-    "Astra": "https://media.valorant-api.com/agents/41fb69c1-4189-7b37-f117-bcaf1e96f101/displayicon.png",
-    "KAY/O": "https://media.valorant-api.com/agents/601dbbe7-43ce-be57-2a40-4b24fc6d9006/displayicon.png",
-    "Chamber": "https://media.valorant-api.com/agents/22697a3d-44bf-8dd7-4f4f-4a90a3245040/displayicon.png",
-    "Neon": "https://media.valorant-api.com/agents/bb2a2828-4bc5-47a3-af3e-408c697b41a7/displayicon.png",
+    "Astra": "https://media.valorant-api.com/agents/41fb69c1-4189-7b37-f117-bcaf1e96f1bf/displayicon.png",
+    "KAY/O": "https://media.valorant-api.com/agents/601dbbe7-43ce-be57-2a40-4abd24953621/displayicon.png",
+    "Chamber": "https://media.valorant-api.com/agents/22697a3d-45bf-8dd7-4fec-84a9e28c69d7/displayicon.png",
+    "Neon": "https://media.valorant-api.com/agents/bb2a4828-46eb-8cd1-e765-15848195d751/displayicon.png",
     "Fade": "https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayicon.png",
-    "Harbor": "https://media.valorant-api.com/agents/95b58a7a-46db-986d-ab41-41abb40d1b34/displayicon.png",
-    "Gekko": "https://media.valorant-api.com/agents/e370fa57-4757-3604-361d-76b3615c5025/displayicon.png",
-    "Deadlock": "https://media.valorant-api.com/agents/cc8b3908-4b4b-a3a9-dda1-37ab35519918/displayicon.png",
-    "Iso": "https://media.valorant-api.com/agents/1dbf2eff-4395-95c3-b69d-29b1cc7a86b6/displayicon.png",
-    "Clove": "https://media.valorant-api.com/agents/0e38b6e5-4cda-caee-312d-2f9e436b43b6/displayicon.png",
-    "Vyse": "https://media.valorant-api.com/agents/608298b4-4b56-c782-b70d-f0ba29b4e727/displayicon.png"
+    "Harbor": "https://media.valorant-api.com/agents/95b78ed7-4637-86d9-7e41-71ba8c293152/displayicon.png",
+    "Gekko": "https://media.valorant-api.com/agents/e370fa57-4757-3604-3648-499e1f642d3f/displayicon.png",
+    "Deadlock": "https://media.valorant-api.com/agents/cc8b64c8-4b25-4ff9-6e7f-37b4da43d235/displayicon.png",
+    "Iso": "https://media.valorant-api.com/agents/0e38b510-41a8-5780-5e8f-568b2a4f2d6c/displayicon.png",
+    "Clove": "https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayicon.png",
+    "Vyse": "https://media.valorant-api.com/agents/efba5359-4016-a1e5-7626-b1ae76895940/displayicon.png",
+    "Skye": "https://media.valorant-api.com/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png",
+    "Yoru": "https://media.valorant-api.com/agents/7f94d92c-4234-0a36-9646-3a87eb8b5c89/displayicon.png",
+    "Tejo": "https://media.valorant-api.com/agents/b444168c-4e35-8076-db47-ef9bf368f384/displayicon.png",
+    "Miks": "https://media.valorant-api.com/agents/7c8a4701-4de6-9355-b254-e09bc2a34b72/displayicon.png",
+    "Veto": "https://media.valorant-api.com/agents/92eeef5d-43b5-1d4a-8d03-b3927a09034b/displayicon.png",
+    "Waylay": "https://media.valorant-api.com/agents/df1cb487-4902-002e-5c17-d28e83e78588/displayicon.png"
 }
 
 # 1. Page Configuration and Theme Injection
@@ -642,9 +655,9 @@ with tab_match:
                 for p_name, details in comp_a_map.items():
                     agent = details["agent"]
                     role = details["role"]
-                    icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41da-e1c3-d774-4598a6c7e2ca/displayicon.png")
+                    icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
                     
-                    st.markdown(f"""
+                    st.markdown(clean_html(f"""
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <img src="{icon}" width="36" height="36" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
@@ -655,7 +668,7 @@ with tab_match:
                             </div>
                             <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
                         </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
                 
             with col_lb:
@@ -664,9 +677,9 @@ with tab_match:
                 for p_name, details in comp_b_map.items():
                     agent = details["agent"]
                     role = details["role"]
-                    icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41da-e1c3-d774-4598a6c7e2ca/displayicon.png")
+                    icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
                     
-                    st.markdown(f"""
+                    st.markdown(clean_html(f"""
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <img src="{icon}" width="36" height="36" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
@@ -677,7 +690,7 @@ with tab_match:
                             </div>
                             <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
                         </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
     
     # Fantasy Leaderboard
@@ -730,7 +743,7 @@ with tab_match:
 # ============================================================
 with tab_sim:
     st.markdown("### ⚡ Open Match Simulation Engine")
-    st.markdown("""
+    st.markdown(clean_html("""
         <div class="glass-card">
             <div class="metric-title">ARBITRARY MATCH SIMULATOR</div>
             <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">
@@ -738,7 +751,7 @@ with tab_sim:
                 The engine dynamically resolves rosters, computes EMAs, and runs CatBoost inference.
             </p>
         </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
     
     # Collect all known team names from match data
     all_teams = sorted(list(set(
@@ -753,128 +766,312 @@ with tab_sim:
     with sim_col2:
         sim_team_b = st.selectbox("Team B", all_teams, index=min(1, len(all_teams)-1), key="sim_team_b")
     
-    sim_col3, sim_col4 = st.columns(2)
+    sim_col3, sim_col4, sim_col5 = st.columns(3)
     with sim_col3:
         sim_ref_date = st.date_input("Reference Date (for time-decay)", value=datetime(2026, 6, 22), key="sim_ref_date")
     with sim_col4:
+        sim_series_type = st.selectbox("Series Format", ["Bo3", "Bo5"], index=0, key="sim_series_type")
+    with sim_col5:
+        sim_iterations = st.selectbox("Simulation Depth", [1000, 5000, 10000], index=1, key="sim_iterations")
+
+    # ── Manual Map Veto Override Panel ──
+    max_maps = 3 if sim_series_type == "Bo3" else 5
+    with st.container():
+        st.markdown(clean_html(f"""
+            <div style="font-size: 0.78rem; font-weight: 700; color: #818cf8; text-transform: uppercase;
+                        letter-spacing: 0.08em; margin-top: 10px; margin-bottom: 6px;">
+                ⚙️ Map Veto Override Panel (Series Requires Exactly {max_maps} Maps)
+            </div>
+        """), unsafe_allow_html=True)
         enable_override = st.checkbox("Enable Manual Map Veto Override", value=False, key="enable_override_checkbox")
-        
-    if enable_override:
-        override_maps = st.multiselect(
-            "Select Exact Maps to Force Run (in sequence)",
-            options=all_maps,
-            default=[],
-            key="override_maps_select"
-        )
-    else:
-        override_maps = None
-    
+        if enable_override:
+            override_maps = st.multiselect(
+                f"Select Exact Maps to Force Run (Select exactly {max_maps} maps in order)",
+                options=all_maps,
+                default=[],
+                max_selections=max_maps,
+                key="override_maps_select"
+            )
+        else:
+            override_maps = None
+            
     if st.button("🚀 Run Simulation", key="btn_run_sim", type="primary"):
         if sim_team_a == sim_team_b:
             st.error("Please select two different teams.")
-        elif enable_override and not override_maps:
-            st.error("Please select at least one override map to simulate.")
+        elif enable_override and len(override_maps) != max_maps:
+            st.error(f"Please select exactly {max_maps} override maps to simulate.")
         else:
-            with st.spinner(f"Running V5 Bottom-Up Micro-Simulation (10,000 iterations) for {sim_team_a} vs {sim_team_b}..."):
+            with st.spinner(f"Running V5 Bottom-Up Micro-Simulation ({sim_iterations:,} iterations) for {sim_team_a} vs {sim_team_b}..."):
                 v5_engine = get_v5_simulation_engine()
                 sim_result = v5_engine.simulate_match(
                     team_a=sim_team_a,
                     team_b=sim_team_b,
-                    series_type="Bo3",
+                    series_type=sim_series_type,
                     target_patch="9.02",
-                    num_iterations=10000,
+                    num_iterations=sim_iterations,
                     override_maps=override_maps if enable_override else None
                 )
             
-            # Display results
-            st.markdown('<div class="sim-result">', unsafe_allow_html=True)
-            
-            res_col1, res_col2 = st.columns(2)
-            with res_col1:
-                st.markdown(f"#### {sim_result['team_a']}")
-                st.metric("Win Probability", f"{sim_result['win_prob_a']:.1%}")
-                st.progress(float(sim_result['win_prob_a']))
-                st.caption(f"Roster: {', '.join(sim_result.get('roster_a', []))}")
-            with res_col2:
-                st.markdown(f"#### {sim_result['team_b']}")
-                st.metric("Win Probability", f"{sim_result['win_prob_b']:.1%}")
-                st.progress(float(sim_result['win_prob_b']))
-                st.caption(f"Roster: {', '.join(sim_result.get('roster_b', []))}")
-            
-            # Winner announcement
-            sim_winner = sim_result['team_a'] if sim_result['win_prob_a'] > sim_result['win_prob_b'] else sim_result['team_b']
-            sim_conf = max(sim_result['win_prob_a'], sim_result['win_prob_b'])
-            st.markdown(f'<div class="winner-box">🏆 Predicted Winner: {sim_winner} ({sim_conf:.1%})</div>', unsafe_allow_html=True)
-            
-            # Map veto sequence / overrides
-            if enable_override:
-                st.markdown(f"**Manual Map Override Forced:** {', '.join(override_maps)}")
-            else:
-                if "veto_confidences" in sim_result:
-                    st.markdown("#### 🗺️ Map Veto Sequence & Probabilities")
-                    veto_data = []
-                    for action, conf in sim_result["veto_confidences"]:
-                        veto_data.append({"Veto Action": action, "Confidence": f"{conf*100:.1f}%"})
-                    st.dataframe(pd.DataFrame(veto_data), use_container_width=True, hide_index=True)
-            
-            st.markdown('</div>', unsafe_allow_html=True)
-            
-            # Map-by-map predictions (tabs)
-            st.markdown("### 📊 V5 Deep Simulation Analytics")
+            win_prob_a = sim_result["win_prob_a"]
+            win_prob_b = sim_result["win_prob_b"]
+            sim_winner = sim_result["team_a"] if win_prob_a > win_prob_b else sim_result["team_b"]
+            sim_loser  = sim_result["team_b"] if win_prob_a > win_prob_b else sim_result["team_a"]
+            winner_prob = win_prob_a if win_prob_a > win_prob_b else win_prob_b
+            loser_prob  = win_prob_b if win_prob_a > win_prob_b else win_prob_a
+            winner_roster_key = "roster_a" if win_prob_a > win_prob_b else "roster_b"
+            loser_roster_key  = "roster_b" if win_prob_a > win_prob_b else "roster_a"
+
+            # ── Series Winner Hero Card ──────────────────────────
+            st.markdown(clean_html(f"""
+                <div style="background: linear-gradient(135deg, rgba(168,85,247,0.13) 0%, rgba(99,102,241,0.07) 100%);
+                            border: 1px solid rgba(168,85,247,0.25); border-radius: 16px; padding: 28px 32px;
+                            margin: 20px 0 24px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="text-align: center; flex: 1;">
+                            <div style="font-size: 0.72rem; font-weight: 700; color: #a78bfa; text-transform: uppercase;
+                                        letter-spacing: 0.08em; margin-bottom: 6px;">🏆 Predicted Winner</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; line-height: 1.1;">{sim_winner}</div>
+                            <div style="font-size: 1.6rem; font-weight: 700; color: #a78bfa; margin-top: 4px;">{winner_prob:.1%}</div>
+                            <div style="font-size: 0.78rem; color: #64748b; margin-top: 6px;">
+                                Roster: {', '.join(sim_result.get(winner_roster_key, []))}
+                            </div>
+                        </div>
+                        <div style="font-size: 2.5rem; color: #334155; padding: 0 24px; font-weight: 700;">VS</div>
+                        <div style="text-align: center; flex: 1; opacity: 0.65;">
+                            <div style="font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase;
+                                        letter-spacing: 0.08em; margin-bottom: 6px;">Runner-Up</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #94a3b8; line-height: 1.1;">{sim_loser}</div>
+                            <div style="font-size: 1.6rem; font-weight: 700; color: #64748b; margin-top: 4px;">{loser_prob:.1%}</div>
+                            <div style="font-size: 0.78rem; color: #475569; margin-top: 6px;">
+                                Roster: {', '.join(sim_result.get(loser_roster_key, []))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            """), unsafe_allow_html=True)
+
+            # ── Win probability gradient bar ─────────────────────
+            bar_pct_a = int(win_prob_a * 100)
+            st.markdown(clean_html(f"""
+                <div style="margin-bottom: 28px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.78rem;
+                                color: #94a3b8; margin-bottom: 6px;">
+                        <span>{sim_result['team_a']} ({win_prob_a:.1%})</span>
+                        <span>{sim_result['team_b']} ({win_prob_b:.1%})</span>
+                    </div>
+                    <div style="background: rgba(239,68,68,0.2); border-radius: 99px; height: 10px; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #a78bfa, #6366f1);
+                                    width: {bar_pct_a}%; height: 100%; border-radius: 99px;"></div>
+                    </div>
+                </div>
+            """), unsafe_allow_html=True)
+
+            # ── Veto Sequence Card ───────────────────────────────
+            if enable_override and override_maps:
+                st.markdown(clean_html(f"""
+                    <div style="background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
+                                border-radius: 12px; padding: 14px 20px; margin-bottom: 20px;">
+                        <div style="font-size: 0.72rem; font-weight: 700; color: #f59e0b;
+                                    text-transform: uppercase; letter-spacing: 0.07em;">🗺️ Manual Override Active</div>
+                        <div style="font-weight: 600; color: #f8fafc; margin-top: 4px;">
+                            {' → '.join(override_maps)}
+                        </div>
+                    </div>
+                """), unsafe_allow_html=True)
+            elif "veto_confidences" in sim_result and sim_result["veto_confidences"]:
+                st.markdown("#### 🗺️ Predicted Map Veto Sequence")
+                step_colors = ["#6366f1", "#a78bfa", "#818cf8", "#4ade80", "#f59e0b"]
+                veto_items_html = ""
+                for vi, (action, conf) in enumerate(sim_result["veto_confidences"]):
+                    color = step_colors[vi % len(step_colors)]
+                    conf_pct = int(conf * 100)
+                    veto_items_html += clean_html(f"""
+                        <div style="display: flex; align-items: center; gap: 14px; padding: 10px 0;
+                                    border-bottom: 1px solid rgba(255,255,255,0.04);">
+                            <div style="width: 26px; height: 26px; border-radius: 50%; background: {color}22;
+                                        border: 1px solid {color}55; display: flex; align-items: center;
+                                        justify-content: center; font-size: 0.72rem; font-weight: 700;
+                                        color: {color}; flex-shrink: 0;">{vi+1}</div>
+                            <div style="flex: 1; font-size: 0.88rem; color: #e2e8f0;">{action}</div>
+                            <div style="text-align: right; min-width: 90px;">
+                                <div style="font-size: 0.75rem; color: {color}; font-weight: 600;">{conf_pct}% conf.</div>
+                                <div style="background: rgba(255,255,255,0.05); border-radius: 99px;
+                                            height: 4px; margin-top: 3px; overflow: hidden;">
+                                    <div style="background: {color}; width: {conf_pct}%; height: 100%; border-radius: 99px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    """)
+                st.markdown(clean_html(f'<div class="glass-card" style="margin-bottom:24px;">{veto_items_html}</div>'),
+                            unsafe_allow_html=True)
+
+            # ── V5 Deep Simulation Analytics: Map-by-Map Tabs ───
+            st.markdown(clean_html("""
+                <div style="font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin: 28px 0 16px;">
+                    📊 V5 Deep Simulation Analytics
+                </div>
+            """), unsafe_allow_html=True)
+
             final_maps = sim_result["predicted_maps"]
-            map_tabs = st.tabs([f"🗺️ Map {i+1}: {map_name} (Play Prob: {sim_result['map_details'][map_name]['play_probability']}%)" for i, map_name in enumerate(final_maps)])
-            
-            for idx, tab in enumerate(map_tabs):
+            map_tab_labels = []
+            for i, map_name in enumerate(final_maps):
+                d = sim_result["map_details"][map_name]
+                suffix = f"  ·  {d['play_probability']}% played" if d["played"] else "  ·  (Decider)"
+                map_tab_labels.append(f"Map {i+1}: {map_name}{suffix}")
+            map_tabs = st.tabs(map_tab_labels)
+
+            for idx, mtab in enumerate(map_tabs):
                 map_name = final_maps[idx]
                 details = sim_result["map_details"][map_name]
-                
-                with tab:
+                with mtab:
                     if not details["played"]:
-                        st.info(f"Map '{map_name}' was never played (series settled early).")
+                        st.markdown(clean_html(f"""
+                            <div style="background: rgba(100,116,139,0.08); border: 1px solid rgba(100,116,139,0.2);
+                                        border-radius: 12px; padding: 28px; text-align: center; color: #64748b;">
+                                <div style="font-size: 2rem; margin-bottom: 8px;">🏁</div>
+                                <div style="font-weight: 600; font-size: 1rem;">'{map_name}' was not played in any simulation run.</div>
+                                <div style="font-size: 0.85rem; margin-top: 4px;">Series settled before reaching this map.</div>
+                            </div>
+                        """), unsafe_allow_html=True)
                         continue
-                        
-                    col_score, col_composition = st.columns([1, 2])
-                    
-                    with col_score:
-                        st.markdown("#### 🎯 Predicted Scoreline")
-                        st.metric(
-                            "Most Likely Score",
-                            details["most_probable_score"],
-                            f"Confidence: {details['score_confidence']}%"
-                        )
-                        # Mini chart showing score distribution
-                        dist_data = details["score_distribution"]
+
+                    # ── Scoreline + Distribution ─────────────────
+                    score_col, dist_col = st.columns([1, 2])
+                    with score_col:
+                        conf_val = details["score_confidence"]
+                        conf_color = "#4ade80" if conf_val >= 40 else ("#f59e0b" if conf_val >= 20 else "#ef4444")
+                        st.markdown(clean_html(f"""
+                            <div class="glass-card" style="text-align: center; padding: 28px;">
+                                <div style="font-size: 0.72rem; font-weight: 700; color: #94a3b8;
+                                            text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px;">
+                                    🎯 Most Probable Scoreline
+                                </div>
+                                <div style="font-size: 3rem; font-weight: 800; color: #f8fafc;
+                                            letter-spacing: -2px; line-height: 1;">
+                                    {details['most_probable_score']}
+                                </div>
+                                <div style="margin-top: 14px; display: inline-block; padding: 4px 16px;
+                                            border-radius: 99px; background: {conf_color}22;
+                                            border: 1px solid {conf_color}55;
+                                            font-size: 0.8rem; font-weight: 700; color: {conf_color};">
+                                    {conf_val}% confidence
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.78rem; color: #64748b;">
+                                    Map play probability: {details['play_probability']}%
+                                </div>
+                            </div>
+                        """), unsafe_allow_html=True)
+
+                    with dist_col:
+                        dist_data = details.get("score_distribution", {})
                         if dist_data:
-                            dist_df = pd.DataFrame(list(dist_data.items()), columns=["Scoreline", "Frequency"])
-                            st.bar_chart(dist_df.set_index("Scoreline"))
-                            
-                    with col_composition:
-                        st.markdown("#### 🤖 Expected Agent Assignments")
-                        comp_rows = []
-                        for player, info in details["player_agents"].items():
-                            team = sim_team_a if player in sim_result["roster_a"] else sim_team_b
-                            comp_rows.append({
-                                "Player": player,
-                                "Team": team,
-                                "Expected Agent": info["agent"],
-                                "Pick Probability": f"{info['pick_probability']}%"
-                            })
-                        comp_df = pd.DataFrame(comp_rows)
-                        st.dataframe(comp_df, use_container_width=True, hide_index=True)
-                        
-                    st.markdown("#### 🔫 Player Performance Projections (80% Confidence Bounds)")
-                    perf_df = pd.DataFrame(details["player_stats"])
-                    st.dataframe(perf_df, use_container_width=True, hide_index=True)
-            
-            # EV projections expander
-            with st.expander("📊 V5 Roster EV Projections (Series-Level)"):
+                            st.markdown(clean_html("""
+                                <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8;
+                                            text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px;">
+                                    📈 Score Distribution (Top 10 Outcomes)
+                                </div>
+                            """), unsafe_allow_html=True)
+                            dist_df = pd.DataFrame(
+                                list(dist_data.items()), columns=["Scoreline", "Frequency"]
+                            ).sort_values("Frequency", ascending=False)
+                            st.bar_chart(dist_df.set_index("Scoreline"), height=200, use_container_width=True)
+
+                    st.markdown("<br>", unsafe_allow_html=True)
+
+                    # ── Agent Compositions ───────────────────────
+                    st.markdown(clean_html(f"""
+                        <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8;
+                                    text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px;">
+                            🤖 Expected Agent Assignments — {map_name}
+                        </div>
+                    """), unsafe_allow_html=True)
+
+                    comp_col_a, comp_col_b = st.columns(2)
+                    player_agents = details.get("player_agents", {})
+
+                    def _render_agent_card(player_name, info):
+                        agent_name = info["agent"]
+                        pick_pct = info["pick_probability"]
+                        icon_url = AGENT_ICONS.get(agent_name, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
+                        role = v5_engine.agent_transformer.agent_roles.get(agent_name, "Sentinel")
+                        role_colors = {"Duelist": "#ef4444", "Controller": "#3b82f6", "Initiator": "#f59e0b", "Sentinel": "#10b981"}
+                        role_color = role_colors.get(role, "#6366f1")
+                        return clean_html(f"""
+                            <div style="display: flex; align-items: center; justify-content: space-between;
+                                        padding: 10px 14px; margin-bottom: 8px; border-radius: 10px;
+                                        background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <img src="{icon_url}" width="38" height="38"
+                                         style="border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);"/>
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 0.92rem; color: #f1f5f9;">{player_name}</div>
+                                        <div style="font-size: 0.73rem; color: #64748b; margin-top: 1px;">{agent_name}</div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="font-size: 0.7rem; font-weight: 700; padding: 2px 9px;
+                                                 border-radius: 99px; background: {role_color}22;
+                                                 color: {role_color}; border: 1px solid {role_color}44;">{role}</span>
+                                    <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">{pick_pct}% pick rate</div>
+                                </div>
+                            </div>
+                        """)
+
+                    with comp_col_a:
+                        cards_a = "".join(
+                            _render_agent_card(p, player_agents[p])
+                            for p in sim_result.get("roster_a", []) if p in player_agents
+                        )
+                        st.markdown(clean_html(f"""
+                            <div style="margin-bottom: 6px; font-weight: 700; font-size: 0.95rem; color: #a78bfa;">{sim_team_a}</div>
+                            <div class="glass-card">{cards_a or '<div style="color:#64748b;font-size:0.85rem;">No composition data.</div>'}</div>
+                        """), unsafe_allow_html=True)
+
+                    with comp_col_b:
+                        cards_b = "".join(
+                            _render_agent_card(p, player_agents[p])
+                            for p in sim_result.get("roster_b", []) if p in player_agents
+                        )
+                        st.markdown(clean_html(f"""
+                            <div style="margin-bottom: 6px; font-weight: 700; font-size: 0.95rem; color: #fbbf24;">{sim_team_b}</div>
+                            <div class="glass-card">{cards_b or '<div style="color:#64748b;font-size:0.85rem;">No composition data.</div>'}</div>
+                        """), unsafe_allow_html=True)
+
+                    # ── Player Performance Table ─────────────────
+                    st.markdown(clean_html("""
+                        <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8;
+                                    text-transform: uppercase; letter-spacing: 0.07em; margin: 24px 0 10px;">
+                            🔫 Player Performance Projections — 80% Confidence Bounds (P10 – P90)
+                        </div>
+                    """), unsafe_allow_html=True)
+                    perf_rows = details.get("player_stats", [])
+                    if perf_rows:
+                        perf_df = pd.DataFrame(perf_rows)
+                        def _style_perf_row(row):
+                            bg = "rgba(99,102,241,0.06)" if row["Team"] == sim_team_a else "rgba(245,158,11,0.06)"
+                            return [f"background-color: {bg}"] * len(row)
+                        st.dataframe(perf_df.style.apply(_style_perf_row, axis=1), use_container_width=True, hide_index=True)
+                    else:
+                        st.info("No performance data for this map.")
+
+            # ── Series EV Projections ────────────────────────────
+            st.markdown("<br>", unsafe_allow_html=True)
+            with st.expander("📊 Series-Level VFL EV Projections (All Players)", expanded=False):
                 if "projections" in sim_result:
                     proj_data = []
                     for p, ev in sim_result["projections"].items():
-                        team = sim_team_a if p in sim_result["roster_a"] else sim_team_b
-                        proj_data.append({"Player": p, "Team": team, "Expected Value (EV) Points": ev})
-                    proj_df = pd.DataFrame(proj_data).sort_values("Expected Value (EV) Points", ascending=False)
-                    st.dataframe(proj_df, use_container_width=True, hide_index=True)
+                        team = sim_team_a if p in sim_result.get("roster_a", []) else sim_team_b
+                        proj_data.append({"Player": p, "Team": team, "Expected VFL Points (EV)": ev})
+                    proj_df = pd.DataFrame(proj_data).sort_values("Expected VFL Points (EV)", ascending=False)
+                    ev_max = proj_df["Expected VFL Points (EV)"].max() if len(proj_df) > 0 else 1
+                    def _color_ev(val):
+                        ratio = min(1.0, max(0.0, val / ev_max)) if ev_max > 0 else 0
+                        g = int(74 + ratio * (222 - 74))
+                        return f"color: rgb(74,{g},128)"
+                    st.dataframe(
+                        proj_df.style.map(_color_ev, subset=["Expected VFL Points (EV)"]),
+                        use_container_width=True, hide_index=True
+                    )
                 else:
                     st.info("EV Projections unavailable.")
 
@@ -901,8 +1098,8 @@ with tab_optimizer:
                     color = "#f97316" # orange
                     severity = "MODERATE NERF"
                 
-                icon_url = AGENT_ICONS.get(agent_name, "https://media.valorant-api.com/agents/add6443a-41da-e1c3-d774-4598a6c7e2ca/displayicon.png")
-                st.markdown(f"""
+                icon_url = AGENT_ICONS.get(agent_name, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
+                st.markdown(clean_html(f"""
                     <div style="background: rgba(26, 29, 36, 0.6); border-left: 5px solid {color}; border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                         <img src="{icon_url}" width="42" height="42" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
                         <div>
@@ -911,7 +1108,7 @@ with tab_optimizer:
                             <div style="font-weight: 700; font-size: 1.4rem; color: {color}; margin-top: 2px;">-{score:.2f}</div>
                         </div>
                     </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
     else:
         st.info("No active patch nerfs registered in the automated registry.")
 
@@ -923,18 +1120,18 @@ with tab_optimizer:
     
     with col_roster:
         st.markdown("#### 🏆 VCT 2026 Stage 2 Optimal Roster")
-        st.markdown("""
+        st.markdown(clean_html("""
             <p style="color: #94a3b8; font-size: 0.85rem; margin-top: -10px;">
                 Mathematically optimized using Mixed-Integer Linear Programming (MILP) to maximize projected points under strict VFL constraints.
             </p>
-        """, unsafe_allow_html=True)
+        """), unsafe_allow_html=True)
         
         with st.spinner("Computing optimal Stage 2 baseline roster..."):
             baseline_result = optimize_roster(vfl_players_data, salary_cap=salary_cap, survival_threshold=0.35)
             
         if baseline_result["solver_status"] == "optimal":
             # Show summary stats card
-            st.markdown(f"""
+            st.markdown(clean_html(f"""
                 <div class="optimizer-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
@@ -962,7 +1159,7 @@ with tab_optimizer:
                         </div>
                     </div>
                 </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
             
             # Show the selected players in the optimal lineup
             for idx, p in enumerate(baseline_result["optimal_roster"]):
@@ -971,7 +1168,7 @@ with tab_optimizer:
                 wc_badge = '<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: #facc15; margin-left: 8px;">Wildcard</span>' if p["is_wildcard"] else f'<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: #a78bfa; margin-left: 8px;">{p["role"]}</span>'
                 penalty_badge = get_meta_penalty_badge(p["player_name"], player_agent_stats, active_penalties)
                 
-                st.markdown(f"""
+                st.markdown(clean_html(f"""
                     <div class="glass-card" style="padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <span style="font-size: 1.3rem; font-weight: 700; color: #6366f1;">#{idx+1}</span>
@@ -989,17 +1186,17 @@ with tab_optimizer:
                             <div style="font-size: 0.75rem; color: #4ade80;">{p['ppg']:.1f} projected pts</div>
                         </div>
                     </div>
-                """, unsafe_allow_html=True)
+                """), unsafe_allow_html=True)
         else:
             st.error("Roster Optimizer was unable to calculate an optimal starting lineup. Try updating the database.")
             
     with col_transfer:
         st.markdown("#### 3-Transfer Advisor")
-        st.markdown("""
+        st.markdown(clean_html("""
             <p style="color: #94a3b8; font-size: 0.85rem; margin-top: -10px;">
                 Enter your current fantasy roster to identify the top 3 optimal player trades to maximize score velocity.
             </p>
-        """, unsafe_allow_html=True)
+        """), unsafe_allow_html=True)
         
         player_names_list = sorted([p["player_name"] for p in vfl_players_data])
         # Find some default players present in the registry to auto-select
@@ -1063,13 +1260,13 @@ with tab_optimizer:
                         for idx, rec in enumerate(recs):
                             with tabs[idx]:
                                 if rec["projected_gain"] > 0:
-                                    st.markdown(f"""
+                                    st.markdown(clean_html(f"""
                                         <div class="optimizer-card" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2); padding: 15px; border-radius: 8px; border: 1px solid; margin-bottom: 15px;">
                                             <div style="font-weight: 700; font-size: 1.1rem; color: #4ade80;">
                                                 📈 Projected Score Velocity: +{rec['projected_gain']:.1f} pts
                                             </div>
                                         </div>
-                                    """, unsafe_allow_html=True)
+                                    """), unsafe_allow_html=True)
                                     
                                     st.markdown("**Suggested Swaps (Max 3 Trades):**")
                                     
@@ -1090,14 +1287,14 @@ with tab_optimizer:
                                             if penalty > 0.10:
                                                 reason = f"Transfer Reason: Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
                                                 
-                                        st.markdown(f"""
+                                        st.markdown(clean_html(f"""
                                             <div class="transfer-out" style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05);">
                                                 <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
                                                 <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}</span>
                                                 <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
                                                 <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
                                             </div>
-                                        """, unsafe_allow_html=True)
+                                        """), unsafe_allow_html=True)
                                         
                                     for p in rec["transfers_in"]:
                                         igl_tag = " 👑" if p["is_igl"] else ""
@@ -1116,19 +1313,19 @@ with tab_optimizer:
                                         else:
                                             reason = "Transfer Reason: Optimal target pickup to maximize projected score under budget cap."
                                             
-                                        st.markdown(f"""
+                                        st.markdown(clean_html(f"""
                                             <div class="transfer-in" style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05);">
                                                 <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
                                                 <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}{igl_tag}</span>
                                                 <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
                                                 <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
                                             </div>
-                                        """, unsafe_allow_html=True)
-                                    st.markdown(f"""
+                                        """), unsafe_allow_html=True)
+                                    st.markdown(clean_html(f"""
                                         <div style="margin-top: 10px; color: #94a3b8; font-size: 0.8rem; text-align: right;">
                                             New Total Cost: <b>{rec['new_total_cost']} VP</b> | New Projected Points: <b>{rec['new_projected_points']:.1f} pts</b>
                                         </div>
-                                    """, unsafe_allow_html=True)
+                                    """), unsafe_allow_html=True)
                                 else:
                                     st.success("✅ Your current roster is already optimally positioned! No transfers recommended.")
                         else:

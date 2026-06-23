@@ -248,62 +248,82 @@ class AgentCompositionTransformer:
             with open(nerfs_path, "r", encoding="utf-8") as f:
                 self.nerf_registry = json.load(f)
 
-    def fit_comfort(self, player_agent_stats):
+    def fit_comfort(self, player_agent_stats, player_global_stats=None):
         """Compiles players' historical comfort on all agents."""
         self.agent_comfort_matrix = player_agent_stats
+        self.player_global_stats = player_global_stats or {}
 
-    def predict_composition(self, team_name: str, map_name: str, roster: list[str], target_patch: str = "9.02") -> list[str]:
+    def predict_composition(self, team_name: str, map_name: str, roster: list[str], target_patch: str = "9.02", temperature: float = 25.0) -> list[str]:
         """
-        Runs the autoregressive Attention draft simulator to output the 5 agents selected by a team.
+        Simultaneous optimal constrained agent composition selection.
+        Uses scipy.optimize.linear_sum_assignment to globally maximize team utility.
         """
+        from scipy.optimize import linear_sum_assignment
+        
         agents_pool = list(self.agent_roles.keys())
         if not agents_pool:
             agents_pool = ["Jett", "Raze", "Omen", "Breach", "Killjoy", "Sova", "Cypher", "Sage", "Viper", "Phoenix"]
             
-        selected_agents = []
+        n_players = min(5, len(roster))
+        n_agents = len(agents_pool)
         
-        # We model selection of 5 agents for the 5 players in the roster
-        for idx in range(min(5, len(roster))):
-            player = roster[idx]
+        # 1. Initialize utility matrix
+        utility_matrix = np.zeros((n_players, n_agents))
+        
+        for i in range(n_players):
+            player = roster[i]
             
-            # Compute compatibility scores for all agents in pool
-            agent_probs = []
-            for agent in agents_pool:
-                if agent in selected_agents:
-                    agent_probs.append(-9999.0) # Avoid duplicate agents on same team
-                    continue
-                    
-                # 1. Base Comfort Pick rating
-                comfort_stat = self.agent_comfort_matrix.get((player, agent), {"sum_acs": 0.0, "count": 0})
-                base_comfort = comfort_stat["sum_acs"] / comfort_stat["count"] if comfort_stat["count"] > 0 else 180.0
+            # Compute total matches played by this player on this map (for pick rate denominator)
+            total_map_matches = sum(self.agent_comfort_matrix.get((player, map_name, a), {}).get("count", 0) for a in agents_pool)
+            
+            # Fetch global baseline ACS for normalizing Comfort Score
+            global_stat = self.player_global_stats.get(player, {"sum_acs": 0.0, "count": 0})
+            player_global_acs = global_stat["sum_acs"] / global_stat["count"] if global_stat["count"] > 0 else 200.0
+            
+            for j in range(n_agents):
+                agent = agents_pool[j]
                 
-                # 2. Nerf penalty for target patch
+                # 1.1 Base Comfort Pick rating (Bayesian smoothed on map-specific keys)
+                comfort_stat = self.agent_comfort_matrix.get((player, map_name, agent), {"sum_acs": 0.0, "count": 0})
+                count = comfort_stat["count"]
+                map_agent_acs = comfort_stat["sum_acs"] / count if count > 0 else 0.0
+                
+                # Check if the player has ever played this agent globally
+                global_agent_stat = self.agent_comfort_matrix.get((player, agent), {"sum_acs": 0.0, "count": 0})
+                
+                if global_agent_stat["count"] > 0:
+                    alpha = 3.0
+                    base_comfort = ((count * map_agent_acs) + (alpha * player_global_acs)) / (count + alpha)
+                else:
+                    base_comfort = 180.0
+                    
+                # Incorporate nerf penalties in normalized comfort score
                 nerfs = self.nerf_registry.get(target_patch, {})
                 nerf_penalty = nerfs.get(agent, 0.0)
+                comfort_score = base_comfort - 100.0 * nerf_penalty
                 
-                # 3. Attention co-occurrence compatibility score with already selected agents
-                co_occur_compat = 0.0
-                for sel_a in selected_agents:
-                    # Look up patch JSD concept drift penalty between historical patch co-occurrences and target patch
-                    jsd_penalty = self.jsd_matrix.get("9.02", {}).get(target_patch, 0.0)
-                    # Compatibility is higher if co-occurrence historically matches well
-                    co_occur_compat += (50.0 - 150.0 * jsd_penalty)
+                normalized_comfort = comfort_score / player_global_acs
+                
+                # 1.2 Historical Pick Rate on map M
+                if total_map_matches > 0:
+                    historical_pick_rate = count / total_map_matches
+                else:
+                    historical_pick_rate = 0.0
                     
-                score = base_comfort - 100.0 * nerf_penalty + co_occur_compat
-                agent_probs.append(score)
+                # 1.3 Multi-Factor Utility (30% Comfort, 70% Pick Rate)
+                utility = 0.3 * normalized_comfort + 0.7 * historical_pick_rate
+                utility_matrix[i, j] = utility
                 
-            # Softmax to get probabilities
-            agent_probs = np.array(agent_probs)
-            max_score = np.max(agent_probs)
-            if max_score < -1000.0:
-                # Fallback if everything is chosen
-                chosen_agent = [a for a in agents_pool if a not in selected_agents][0]
-            else:
-                exp_probs = np.exp(agent_probs - max_score)
-                probs = exp_probs / np.sum(exp_probs)
-                chosen_agent = np.random.choice(agents_pool, p=probs)
-                
-            selected_agents.append(chosen_agent)
+        # 2. Inject Controlled Stochastic Noise (Monte Carlo exploration)
+        utility_matrix += np.random.normal(0, 0.05, size=utility_matrix.shape)
+        
+        # 3. Solve the assignment problem to maximize utility (minimize negative utility)
+        row_ind, col_ind = linear_sum_assignment(-utility_matrix)
+        
+        # Build the final selected agents in the roster order
+        selected_agents = [None] * n_players
+        for r, c in zip(row_ind, col_ind):
+            selected_agents[r] = agents_pool[c]
             
         return selected_agents
 
@@ -430,7 +450,7 @@ class VCTv5SimulationEngine:
         
         # Load datasets
         self.player_emas, self.baseline_lookup, self.team_stats, self.player_global_stats, self.player_agent_stats = get_simulation_historical_stats(self.raw_dir)
-        self.agent_transformer.fit_comfort(self.player_agent_stats)
+        self.agent_transformer.fit_comfort(self.player_agent_stats, self.player_global_stats)
         
     def sample_deaths(self, roster: list[str], agents: list[str], total_deaths: int) -> dict:
         """
@@ -935,6 +955,7 @@ def get_simulation_historical_stats(raw_dir: str):
     
     for m in matches:
         for map_data in m.get("maps", []):
+            map_name = map_data.get('map_name', '')
             for team_key in ['team1', 'team2']:
                 for p in map_data.get('players', {}).get(team_key, []):
                     p_name = p['name']
@@ -948,10 +969,17 @@ def get_simulation_historical_stats(raw_dir: str):
                         player_global_stats[p_name]['count'] += 1
                         
                         if agent:
+                            # Global key
                             if (p_name, agent) not in player_agent_stats:
                                 player_agent_stats[(p_name, agent)] = {'sum_acs': 0.0, 'count': 0}
                             player_agent_stats[(p_name, agent)]['sum_acs'] += acs_val
                             player_agent_stats[(p_name, agent)]['count'] += 1
+                            
+                            # Map-specific key
+                            if (p_name, map_name, agent) not in player_agent_stats:
+                                player_agent_stats[(p_name, map_name, agent)] = {'sum_acs': 0.0, 'count': 0}
+                            player_agent_stats[(p_name, map_name, agent)]['sum_acs'] += acs_val
+                            player_agent_stats[(p_name, map_name, agent)]['count'] += 1
 
     # Fill EMAs using historical global averages
     for p_name, stats in player_global_stats.items():

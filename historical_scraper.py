@@ -28,8 +28,12 @@ async def harvest_and_save_vct_match_ids(limit: int = 500) -> list[str]:
     # We require tournament names to contain at least one of these main VCT event keywords
     vct_keywords = ['challengers', 'masters', 'champions', 'vct', 'champions tour']
     
+    consecutive_failures = 0
     async with httpx.AsyncClient() as client:
         while len(match_ids) < limit:
+            if consecutive_failures >= 3:
+                logger.error("Too many consecutive failures fetching match IDs. Aborting harvest.")
+                break
             url = f"{BASE_URL}/v2/match?q=results&from_page={page}&to_page={page}"
             try:
                 logger.info(f"Fetching result page {page}...")
@@ -71,18 +75,21 @@ async def harvest_and_save_vct_match_ids(limit: int = 500) -> list[str]:
                     logger.info("Reached end of available historical pages in local API.")
                     break
                     
+                consecutive_failures = 0
                 page += 1
                 # Small delay between requests to keep the server happy
                 await asyncio.sleep(0.3)
                 
             except Exception as e:
-                logger.error(f"Error fetching page {page}: {e}. Retrying in 2 seconds...")
+                consecutive_failures += 1
+                logger.error(f"Error fetching page {page}: {e}. Retrying in 2 seconds (attempt {consecutive_failures}/3)...")
                 await asyncio.sleep(2.0)
                 
-    # Save to JSON file
-    out_path = os.path.join(".", "vct_match_ids.json")
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(match_ids, f, indent=4)
+    # Save to JSON file if matches were harvested
+    if match_ids:
+        out_path = os.path.join(".", "vct_match_ids.json")
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(match_ids, f, indent=4)
         
     logger.info(f"Successfully harvested {len(match_ids)} VCT Match IDs and saved to {out_path}")
     return match_ids
