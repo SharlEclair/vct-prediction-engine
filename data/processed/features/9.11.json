@@ -2,223 +2,279 @@
     "Agent Updates": {
         "Neon": [
             {
-                "feature_name": "cost",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "High Gear"
+                "values": null
             },
             {
-                "feature_name": "slideCount",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "High Gear"
+                "values": null
             },
             {
-                "feature_name": "slideCount",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.0,
                     "new": 1.0
-                },
-                "ability": "High Gear"
+                }
             },
             {
-                "feature_name": "slideCount",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "High Gear"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "general",
+                "feature_name": "high_gear",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "High Gear"
+                "values": null
             },
             {
+                "agent": "Neon",
+                "ability": "Overdrive",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Overdrive"
+                "values": null
             },
             {
+                "agent": "Neon",
+                "ability": "Overdrive",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 20.0,
                     "new": 10.0
-                },
-                "ability": "Overdrive"
+                }
             },
             {
+                "agent": "Neon",
+                "ability": "Overdrive",
+                "category": "general",
                 "feature_name": "points",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 7.0,
                     "new": 8.0
-                },
-                "ability": "Overdrive"
+                }
             }
         ],
         "Vyse": [
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Razorvine",
+                "category": "general",
+                "feature_name": "razorvine",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Razorvine"
+                "values": null
             },
             {
-                "feature_name": "tick",
+                "agent": "Vyse",
+                "ability": "Razorvine",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 6.0,
                     "new": 10.0
-                },
-                "ability": "Razorvine"
+                }
             },
             {
+                "agent": "Vyse",
+                "ability": "Razorvine",
+                "category": "general",
                 "feature_name": "height",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 450.0,
                     "new": 300.0
-                },
-                "ability": "Razorvine"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Razorvine",
+                "category": "general",
+                "feature_name": "razorvine",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Razorvine"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Razorvine",
+                "category": "general",
+                "feature_name": "razorvine",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Razorvine"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "general",
+                "feature_name": "arc_rose",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "general",
+                "feature_name": "arc_rose",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             }
         ],
         "Client Updates": [
             {
+                "agent": "Client Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Client Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Client Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Ping System": [
             {
+                "agent": "Ping System",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Ping System",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Ping System",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Ping System",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Ping System",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Ping System",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Modes Updates": [
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "Team Deathmatch",
+                "category": "general",
+                "feature_name": "team_deathmatch",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Team Deathmatch"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "Team Deathmatch",
+                "category": "general",
+                "feature_name": "team_deathmatch",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Team Deathmatch"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "Team Deathmatch",
+                "category": "general",
+                "feature_name": "team_deathmatch",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Team Deathmatch"
+                "values": null
             }
         ]
     },

@@ -2,83 +2,103 @@
     "Agent Updates": {
         "General": [
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "General",
+                "ability": "Slide",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Slide"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Blast Pack",
+                "category": "general",
+                "feature_name": "blast_pack",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Blast Pack"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Blast Pack",
+                "category": "general",
+                "feature_name": "blast_pack",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Blast Pack"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "Double Tap",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 20.0,
                     "new": 12.0
-                },
-                "ability": "Double Tap"
+                }
             },
             {
-                "feature_name": "signature_reset",
+                "agent": "General",
+                "ability": "Double Tap",
+                "category": "general",
+                "feature_name": "double_tap",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Double Tap"
+                "values": null
             }
         ],
         "Map Updates": [
             {
+                "agent": "Map Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Modes Updates": [
             {
+                "agent": "Modes Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Social Updates": [
             {
+                "agent": "Social Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Social Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Social Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },

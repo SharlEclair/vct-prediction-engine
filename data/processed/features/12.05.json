@@ -2,419 +2,533 @@
     "Agent Updates": {
         "Miks": [
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Miks",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "abilities:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             }
         ],
         "Sage": [
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Healing Orb",
+                "category": "general",
+                "feature_name": "healing_orb",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Healing Orb"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Healing Orb",
+                "category": "general",
+                "feature_name": "healing_orb",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Healing Orb"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Crystal Model Update",
+                "category": "general",
+                "feature_name": "crystal_model_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Crystal Model Update"
+                "values": null
             }
         ],
         "Skye": [
             {
-                "feature_name": "general",
+                "agent": "Skye",
+                "ability": "Guiding Light",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guiding Light"
+                "values": null
             }
         ],
         "Yoru": [
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Gatecrash",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Gatecrash"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Blindside",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Blindside"
+                "values": null
             }
         ],
         "Clove": [
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Ruse",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Ruse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Meddle",
+                "category": "general",
+                "feature_name": "meddle",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Meddle"
+                "values": null
             }
         ],
         "Gameplay Systems Updates": [
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Assist Banners",
+                "category": "general",
+                "feature_name": "assist_banners",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Assist Banners"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Assist Banners",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Assist Banners"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Assist Banners",
+                "category": "general",
+                "feature_name": "assist_banners",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Assist Banners"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Killfeed Updates",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Killfeed Updates"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Killfeed Updates",
+                "category": "general",
+                "feature_name": "killfeed_updates",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Killfeed Updates"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Status Effect Tags",
+                "category": "general",
+                "feature_name": "status_effect_tags",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Status Effect Tags"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Status Effect Tags",
+                "category": "general",
+                "feature_name": "status_effect_tags",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Status Effect Tags"
+                "values": null
             }
         ],
         "Map Pool Updates": [
             {
+                "agent": "Map Pool Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Map Pool Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Lotus": [
             {
+                "agent": "Lotus",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Lotus",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Lotus",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Lotus",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Lotus",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Knockout": [
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Knockout",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             }
         ]
     },

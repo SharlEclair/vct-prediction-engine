@@ -2,39 +2,49 @@
     "Agent Updates": {
         "General": [
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Ground Spreading Abilities",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Ground Spreading Abilities"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Ground Spreading Abilities",
+                "category": "general",
+                "feature_name": "ground_spreading_abilities",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Ground Spreading Abilities"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Ground Spreading Abilities",
+                "category": "general",
+                "feature_name": "ground_spreading_abilities",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Ground Spreading Abilities"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Ground Spreading Abilities",
+                "category": "general",
+                "feature_name": "affected_abilities",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Ground Spreading Abilities"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Sage\u2019s Barrier Orb",
+                "category": "general",
+                "feature_name": "sage\u2019s_barrier_orb",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sage\u2019s Barrier Orb"
+                "values": null
             }
         ]
     },

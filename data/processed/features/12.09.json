@@ -2,57 +2,73 @@
     "Agent Updates": {
         "Neon": [
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "High Gear"
+                "values": null
             },
             {
-                "feature_name": "slideCount",
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "High Gear"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "Energy",
+                "category": "general",
+                "feature_name": "energy",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Energy"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "Energy",
+                "category": "general",
+                "feature_name": "energy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Energy"
+                "values": null
             }
         ]
     },
     "Weapon Updates": {
         "All shotguns": [
             {
-                "feature_name": "General",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "General",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "General",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "Bucky crouch accuracy modifier",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "bucky_crouch_accuracy_modifier",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
@@ -61,7 +77,9 @@
                 }
             },
             {
-                "feature_name": "Judge/Shorty crouch accuracy modifier",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "judge/shorty_crouch_accuracy_modifier",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
@@ -70,13 +88,17 @@
                 }
             },
             {
-                "feature_name": "General",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "Stationary Accuracy multiplier",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "stationary_accuracy_multiplier",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -85,7 +107,9 @@
                 }
             },
             {
-                "feature_name": "Walking Accuracy multiplier",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "walking_accuracy_multiplier",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -94,7 +118,9 @@
                 }
             },
             {
-                "feature_name": "Running Accuracy multiplier",
+                "weapon": "All shotguns",
+                "category": "general",
+                "feature_name": "running_accuracy_multiplier",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -105,13 +131,17 @@
         ],
         "Bucky": [
             {
-                "feature_name": "General",
+                "weapon": "Bucky",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "Head",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "head",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -120,7 +150,9 @@
                 }
             },
             {
-                "feature_name": "Body",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "body",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -129,7 +161,9 @@
                 }
             },
             {
-                "feature_name": "Legs",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "legs",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -138,7 +172,9 @@
                 }
             },
             {
-                "feature_name": "Minimum spread",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "minimum_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -147,7 +183,9 @@
                 }
             },
             {
-                "feature_name": "Walking spread",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "walking_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -156,7 +194,9 @@
                 }
             },
             {
-                "feature_name": "Running spread",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "running_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -165,7 +205,9 @@
                 }
             },
             {
-                "feature_name": "Crouch-walk spread",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "crouch-walk_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -174,7 +216,9 @@
                 }
             },
             {
-                "feature_name": "Jump spread",
+                "weapon": "Bucky",
+                "category": "general",
+                "feature_name": "jump_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -185,7 +229,9 @@
         ],
         "Judge": [
             {
-                "feature_name": "Minimum spread",
+                "weapon": "Judge",
+                "category": "general",
+                "feature_name": "minimum_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -194,13 +240,17 @@
                 }
             },
             {
-                "feature_name": "General",
+                "weapon": "Judge",
+                "category": "general",
+                "feature_name": "note",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "Walking spread",
+                "weapon": "Judge",
+                "category": "general",
+                "feature_name": "walking_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -209,7 +259,9 @@
                 }
             },
             {
-                "feature_name": "Running spread",
+                "weapon": "Judge",
+                "category": "general",
+                "feature_name": "running_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -218,7 +270,9 @@
                 }
             },
             {
-                "feature_name": "Crouch-walk spread",
+                "weapon": "Judge",
+                "category": "general",
+                "feature_name": "crouch-walk_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -227,7 +281,9 @@
                 }
             },
             {
-                "feature_name": "Jump spread",
+                "weapon": "Judge",
+                "category": "general",
+                "feature_name": "jump_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -238,7 +294,9 @@
         ],
         "Shorty": [
             {
-                "feature_name": "fireRate",
+                "weapon": "Shorty",
+                "category": "general",
+                "feature_name": "fire_rate",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -247,7 +305,9 @@
                 }
             },
             {
-                "feature_name": "Walking spread",
+                "weapon": "Shorty",
+                "category": "general",
+                "feature_name": "walking_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -256,7 +316,9 @@
                 }
             },
             {
-                "feature_name": "Running spread",
+                "weapon": "Shorty",
+                "category": "general",
+                "feature_name": "running_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -265,7 +327,9 @@
                 }
             },
             {
-                "feature_name": "Crouch-walk spread",
+                "weapon": "Shorty",
+                "category": "general",
+                "feature_name": "crouch-walk_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
@@ -274,7 +338,9 @@
                 }
             },
             {
-                "feature_name": "Jump spread",
+                "weapon": "Shorty",
+                "category": "general",
+                "feature_name": "jump_spread",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {

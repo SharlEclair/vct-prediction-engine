@@ -2,11 +2,13 @@
     "Agent Updates": {
         "Killjoy": [
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Turret",
+                "category": "general",
+                "feature_name": "turret",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Turret"
+                "values": null
             }
         ]
     },

@@ -2,186 +2,232 @@
     "Agent Updates": {
         "General": [
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "general",
+                "feature_name": "kay/o",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "general",
+                "feature_name": "kay/o",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "general",
+                "feature_name": "kay/o",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 1.25,
                     "new": 1.5
-                },
-                "ability": "KAY/O"
+                }
             },
             {
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "general",
                 "feature_name": "range",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 20.0,
                     "new": 50.0
-                },
-                "ability": "KAY/O"
+                }
             },
             {
-                "feature_name": "time",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.85,
                     "new": 0.6
-                },
-                "ability": "KAY/O"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "general",
+                "feature_name": "kay/o",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "general",
+                "feature_name": "kay/o",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "KAY/O"
+                "values": null
             },
             {
-                "feature_name": "time",
+                "agent": "General",
+                "ability": "KAY/O",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 3.0,
                     "new": 1.5
-                },
-                "ability": "KAY/O"
+                }
             },
             {
+                "agent": "General",
+                "ability": "Yoru",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Yoru"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Yoru",
+                "category": "general",
+                "feature_name": "yoru",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Yoru"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "Yoru",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 100.0,
                     "new": 200.0
-                },
-                "ability": "Yoru"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Vyse",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Vyse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Vyse",
+                "category": "general",
+                "feature_name": "vyse",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Vyse"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "Vyse",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 10.0,
                     "new": 6.0
-                },
-                "ability": "Vyse"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Vyse",
+                "category": "general",
+                "feature_name": "vyse",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Vyse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Vyse",
+                "category": "general",
+                "feature_name": "vyse",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Vyse"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "Vyse",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 8.0,
                     "new": 6.0
-                },
-                "ability": "Vyse"
+                }
             }
         ]
     },

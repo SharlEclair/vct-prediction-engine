@@ -2,69 +2,87 @@
     "Agent Updates": {
         "General": [
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Abilities:",
+                "category": "general",
+                "feature_name": "arc_rose",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Abilities:",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Abilities:",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Abilities:",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Abilities:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "General",
+                "ability": "Sova",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Astra",
+                "category": "general",
+                "feature_name": "astra",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Astra"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Astra",
+                "category": "general",
+                "feature_name": "astra",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Astra"
+                "values": null
             }
         ],
         "Map Updates": [
             {
+                "agent": "Map Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },

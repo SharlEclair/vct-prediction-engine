@@ -2,1076 +2,1364 @@
     "Agent Updates": {
         "General": [
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "nearsights",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
-                "type": "adjustment",
-                "weight": 0.2,
-                "values": null,
-                "ability": "General"
-            },
-            {
-                "feature_name": "radius",
+                "agent": "General",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 5.0,
                     "new": 7.0
-                },
-                "ability": "General"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "concuss",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "stim_unification",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "General",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "reload",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "reloadTimeSeconds",
+                "agent": "General",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "General",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
-            },
-            {
-                "feature_name": "general",
-                "type": "adjustment",
-                "weight": 0.2,
-                "values": null,
-                "ability": "General"
-            },
-            {
-                "feature_name": "runSpeedMultiplier",
-                "type": "adjustment",
-                "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Breach": [
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Fault Line",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Fault Line"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Fault Line",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Fault Line"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Fault Line",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Fault Line"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Flashpoint",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Flashpoint"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Rolling Thunder",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Rolling Thunder"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Rolling Thunder",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Rolling Thunder"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Rolling Thunder",
+                "category": "economy",
+                "feature_name": "ultimate_cost",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Rolling Thunder"
+                "values": null
             }
         ],
         "Fade": [
             {
-                "feature_name": "general",
+                "agent": "Fade",
+                "ability": "Haunt",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Haunt"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Fade",
+                "ability": "Haunt",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Haunt"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Fade",
+                "ability": "Prowler",
+                "category": "general",
+                "feature_name": "prowler",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Prowler"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Fade",
+                "ability": "Nightfall",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Nightfall"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Fade",
+                "ability": "Nightfall",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Nightfall"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Fade",
+                "ability": "Nightfall",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Nightfall"
+                "values": null
             }
         ],
         "Gekko": [
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Globules",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Globules"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Wingman",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Wingman"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Wingman",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Wingman"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Thrash",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Thrash"
+                "values": null
             }
         ],
         "KAY/O": [
             {
-                "feature_name": "general",
+                "agent": "KAY/O",
+                "ability": "ZERO/point",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "ZERO/point"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "KAY/O",
+                "ability": "FLASH/drive",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "FLASH/drive"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "KAY/O",
+                "ability": "NULL/cmd",
+                "category": "general",
+                "feature_name": "null/cmd",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NULL/cmd"
+                "values": null
             },
             {
-                "feature_name": "fireRate",
+                "agent": "KAY/O",
+                "ability": "NULL/cmd",
+                "category": "combat",
+                "feature_name": "fire_rate",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "NULL/cmd"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "KAY/O",
+                "ability": "NULL/cmd",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NULL/cmd"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "KAY/O",
+                "ability": "NULL/cmd",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NULL/cmd"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "KAY/O",
+                "ability": "NULL/cmd",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NULL/cmd"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "KAY/O",
+                "ability": "NULL/cmd",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NULL/cmd"
+                "values": null
             }
         ],
         "Sova": [
             {
-                "feature_name": "general",
+                "agent": "Sova",
+                "ability": "Recon Bolt",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Recon Bolt"
+                "values": null
             }
         ],
         "Iso": [
             {
-                "feature_name": "general",
+                "agent": "Iso",
+                "ability": "Kill Contract",
+                "category": "general",
+                "feature_name": "kill_contract",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Kill Contract"
+                "values": null
             }
         ],
         "Neon": [
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "Energy",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Energy"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "Energy",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Energy"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "Relay Bolt",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Relay Bolt"
+                "values": null
             }
         ],
         "Reyna": [
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Leer",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Leer"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Empress",
+                "category": "general",
+                "feature_name": "empress",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             },
             {
-                "feature_name": "reloadTimeSeconds",
+                "agent": "Reyna",
+                "ability": "Empress",
+                "category": "combat",
+                "feature_name": "reload",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             },
             {
-                "feature_name": "fireRate",
+                "agent": "Reyna",
+                "ability": "Empress",
+                "category": "combat",
+                "feature_name": "fire_rate",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Reyna",
+                "ability": "Empress",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Reyna",
+                "ability": "Empress",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             }
         ],
         "Waylay": [
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "general",
+                "feature_name": "convergent_paths",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "general",
+                "feature_name": "convergent_paths",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             }
         ],
         "Yoru": [
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Gatecrash",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Gatecrash"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Gatecrash",
+                "category": "general",
+                "feature_name": "gatecrash",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Gatecrash"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Fakeout",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Fakeout"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Blindside",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Blindside"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Blindside",
+                "category": "combat",
+                "feature_name": "damage_falloff",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Blindside"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Dimensional Drift",
+                "category": "general",
+                "feature_name": "dimensional_drift",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Dimensional Drift"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Dimensional Drift",
+                "category": "general",
+                "feature_name": "dimensional_drift",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Dimensional Drift"
+                "values": null
             }
         ],
         "Raze": [
             {
-                "feature_name": "general",
+                "agent": "Raze",
+                "ability": "Blast Pack",
+                "category": "general",
+                "feature_name": "blast_pack",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Blast Pack"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Raze",
+                "ability": "Blast Pack",
+                "category": "general",
+                "feature_name": "blast_pack",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Blast Pack"
+                "values": null
             }
         ],
         "Astra": [
             {
-                "feature_name": "general",
+                "agent": "Astra",
+                "ability": "Gravity Well",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Gravity Well"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Astra",
+                "ability": "Gravity Well",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Gravity Well"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Astra",
+                "ability": "Nova Pulse",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Nova Pulse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Astra",
+                "ability": "Nova Pulse",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Nova Pulse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Astra",
+                "ability": "Nebula/Dissipate",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Nebula/Dissipate"
+                "values": null
             }
         ],
         "Brimstone": [
             {
-                "feature_name": "general",
+                "agent": "Brimstone",
+                "ability": "Stim Beacon",
+                "category": "general",
+                "feature_name": "stim_beacon",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Stim Beacon"
+                "values": null
             },
             {
-                "feature_name": "fireRate",
+                "agent": "Brimstone",
+                "ability": "Stim Beacon",
+                "category": "combat",
+                "feature_name": "fire_rate",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Stim Beacon"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Brimstone",
+                "ability": "Stim Beacon",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Stim Beacon"
+                "values": null
             }
         ],
         "Omen": [
             {
-                "feature_name": "general",
+                "agent": "Omen",
+                "ability": "Dark Cover",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Dark Cover"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Omen",
+                "ability": "Paranoia",
+                "category": "projectile",
+                "feature_name": "velocity",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Paranoia"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Omen",
+                "ability": "Paranoia",
+                "category": "general",
+                "feature_name": "paranoia",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Paranoia"
+                "values": null
             }
         ],
         "Viper": [
             {
-                "feature_name": "general",
+                "agent": "Viper",
+                "ability": "Toxin",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Toxin"
+                "values": null
             }
         ],
         "Vyse": [
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "general",
+                "feature_name": "arc_rose",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Arc Rose",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Shear",
+                "category": "general",
+                "feature_name": "shear",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Shear"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Razorvine",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Razorvine"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Steel Garden",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Steel Garden"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Steel Garden",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Steel Garden"
+                "values": null
             }
         ],
         "Cypher": [
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Spycam",
+                "category": "general",
+                "feature_name": "spycam",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Spycam"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Spycam",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Spycam"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Spycam",
+                "category": "general",
+                "feature_name": "spycam",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Spycam"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Spycam",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Spycam"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "general",
+                "feature_name": "pc",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "general",
+                "feature_name": "console",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "general",
+                "feature_name": "trapwire",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "general",
+                "feature_name": "trapwire",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "general",
+                "feature_name": "trapwire",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             }
         ],
         "Killjoy": [
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Turret",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Turret"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Turret",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Turret"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Killjoy",
+                "ability": "Turret",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Turret"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Turret",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Turret"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Alarmbot",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Alarmbot"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Alarmbot",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Alarmbot"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Killjoy",
+                "ability": "Alarmbot",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Alarmbot"
+                "values": null
             }
         ],
         "Deadlock": [
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "GravNet"
+                "values": null
             },
             {
+                "agent": "Deadlock",
+                "ability": "Barrier Mesh",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Barrier Mesh"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "Barrier Mesh",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Barrier Mesh"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "Sonic Sensor",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Sonic Sensor"
+                "values": null
             }
         ],
         "Sage": [
             {
+                "agent": "Sage",
+                "ability": "Barrier Orb",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Barrier Orb"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Barrier Orb",
+                "category": "general",
+                "feature_name": "barrier_orb",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Barrier Orb"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Barrier Orb",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Barrier Orb"
+                "values": null
             }
         ],
         "Pearl": [
             {
-                "feature_name": "general",
+                "agent": "Pearl",
+                "ability": "B-Site",
+                "category": "general",
+                "feature_name": "b-site",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "B-Site"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Pearl",
+                "ability": "B-Site",
+                "category": "general",
+                "feature_name": "b-site",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "B-Site"
+                "values": null
             }
         ],
         "Abyss": [
             {
-                "feature_name": "general",
+                "agent": "Abyss",
+                "ability": "B-Site",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "B-Site"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Abyss",
+                "ability": "Mid",
+                "category": "general",
+                "feature_name": "mid",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Mid"
+                "values": null
             }
         ],
         "Map Pool Updates": [
             {
+                "agent": "Map Pool Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Map Pool Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Rifles": [
             {
+                "agent": "Rifles",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Rifles",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Rifles",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Bulldog": [
             {
-                "feature_name": "general",
+                "agent": "Bulldog",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Bulldog",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Bulldog",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Phantom": [
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null
+            },
+            {
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
-            },
-            {
-                "feature_name": "general",
-                "type": "buff",
-                "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Vandal": [
             {
-                "feature_name": "general",
+                "agent": "Vandal",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Vandal",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Vandal",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "time",
+                "agent": "Vandal",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.5,
                     "new": 0.6
-                },
-                "ability": "General"
+                }
             },
             {
+                "agent": "Vandal",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Spectre": [
             {
+                "agent": "Spectre",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Spectre",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Spectre",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Spectre",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null
+            },
+            {
+                "agent": "Spectre",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Spectre",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
-            },
-            {
-                "feature_name": "general",
-                "type": "buff",
-                "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Stinger": [
             {
-                "feature_name": "general",
+                "agent": "Stinger",
+                "ability": "Full Auto",
+                "category": "general",
+                "feature_name": "full_auto",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Full Auto"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Stinger",
+                "ability": "Full Auto",
+                "category": "general",
+                "feature_name": "full_auto",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Full Auto"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Stinger",
+                "ability": "Full Auto",
+                "category": "general",
+                "feature_name": "full_auto",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Full Auto"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Stinger",
+                "ability": "Full Auto",
+                "category": "general",
+                "feature_name": "full_auto",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Full Auto"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Stinger",
+                "ability": "Full Auto",
+                "category": "general",
+                "feature_name": "full_auto",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Full Auto"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Stinger",
+                "ability": "Full Auto",
+                "category": "general",
+                "feature_name": "full_auto",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Full Auto"
+                "values": null
             }
         ]
     },

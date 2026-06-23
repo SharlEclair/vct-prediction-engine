@@ -2,18 +2,22 @@
     "Agent Updates": {
         "Harbor": [
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "general",
+                "feature_name": "reckoning",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Reckoning"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Cove"
+                "values": null
             }
         ]
     },

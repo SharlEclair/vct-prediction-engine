@@ -5,4 +5,6 @@ data/raw/*.json
 vct_match_ids.json
 .ipynb_checkpoints/
 catboost_info/
-
+.gemini/
+scratch/
+*.log

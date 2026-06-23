@@ -2,98 +2,122 @@
     "Agent Updates": {
         "General": [
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Chamber",
+                "category": "general",
+                "feature_name": "chamber",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Chamber"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Chamber",
+                "category": "general",
+                "feature_name": "chamber",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Chamber"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Sage",
+                "category": "general",
+                "feature_name": "sage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sage"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "Sage",
+                "category": "general",
                 "feature_name": "barrier_orb",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 10.0,
                     "new": 15.0
-                },
-                "ability": "Sage"
+                }
             },
             {
+                "agent": "General",
+                "ability": "Sage",
+                "category": "general",
                 "feature_name": "resurrection",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 6.0,
                     "new": 12.0
-                },
-                "ability": "Sage"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             }
         ],
         "Gameplay Systems Update": [
             {
+                "agent": "Gameplay Systems Update",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Gameplay Systems Update",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Gameplay Systems Update",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Map Updates": [
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "Map Pool Updates",
+                "category": "general",
+                "feature_name": "map_pool_updates",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Map Pool Updates"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "Map Pool Updates",
+                "category": "general",
+                "feature_name": "map_pool_updates",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Map Pool Updates"
+                "values": null
             }
         ]
     },

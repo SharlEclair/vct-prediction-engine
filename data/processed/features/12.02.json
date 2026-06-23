@@ -2,145 +2,181 @@
     "Agent Updates": {
         "General": [
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Harbor": [
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Cove"
+                "values": null
             },
             {
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 15.0,
                     "new": 19.25
-                },
-                "ability": "Cove"
+                }
             },
             {
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "ability",
                 "feature_name": "health",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 500.0,
                     "new": 680.0
-                },
-                "ability": "Cove"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "general",
+                "feature_name": "cove",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Cove"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Storm Surge",
+                "category": "general",
+                "feature_name": "storm_surge",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Storm Surge"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "High Tide",
+                "category": "general",
+                "feature_name": "high_tide",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "High Tide"
+                "values": null
             },
             {
+                "agent": "Harbor",
+                "ability": "High Tide",
+                "category": "general",
                 "feature_name": "length",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 50.0,
                     "new": 60.0
-                },
-                "ability": "High Tide"
+                }
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Reckoning"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "general",
+                "feature_name": "reckoning",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Reckoning"
+                "values": null
             }
         ],
         "Reyna": [
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Soul Orbs (Passive)",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Soul Orbs (Passive)"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Soul Orbs (Passive)",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Soul Orbs (Passive)"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Devour",
+                "category": "general",
+                "feature_name": "devour",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Devour"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Empress",
+                "category": "economy",
+                "feature_name": "ultimate_cost",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             }
         ],
         "Gameplay Systems Updates": [
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Trailblazer",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trailblazer"
+                "values": null
             }
         ]
     },

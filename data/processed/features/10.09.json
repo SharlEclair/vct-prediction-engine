@@ -2,127 +2,155 @@
     "Agent Updates": {
         "Tejo": [
             {
-                "feature_name": "cost",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "general",
                 "feature_name": "range",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 55.0,
                     "new": 45.0
-                },
-                "ability": "Guided Salvo"
+                }
             },
             {
+                "agent": "Tejo",
+                "ability": "Stealth Drone",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 300.0,
                     "new": 400.0
-                },
-                "ability": "Stealth Drone"
+                }
             },
             {
+                "agent": "Tejo",
+                "ability": "Special Delivery",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 300.0,
                     "new": 200.0
-                },
-                "ability": "Special Delivery"
+                }
             },
             {
+                "agent": "Tejo",
+                "ability": "Armageddon",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Armageddon"
+                "values": null
             },
             {
-                "feature_name": "points",
+                "agent": "Tejo",
+                "ability": "Armageddon",
+                "category": "economy",
+                "feature_name": "ultimate_cost",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 8.0,
                     "new": 9.0
-                },
-                "ability": "Armageddon"
+                }
             }
         ],
         "Breach": [
             {
-                "feature_name": "general",
+                "agent": "Breach",
+                "ability": "Fault Line",
+                "category": "general",
+                "feature_name": "fault_line",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Fault Line"
+                "values": null
             }
         ],
         "Swiftplay": [
             {
+                "agent": "Swiftplay",
+                "ability": "Breach",
+                "category": "general",
                 "feature_name": "points",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 2.0,
                     "new": 3.0
-                },
-                "ability": "Breach"
+                }
             },
             {
+                "agent": "Swiftplay",
+                "ability": "Killjoy",
+                "category": "general",
                 "feature_name": "points",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 2.0,
                     "new": 3.0
-                },
-                "ability": "Killjoy"
+                }
             },
             {
+                "agent": "Swiftplay",
+                "ability": "Viper",
+                "category": "general",
                 "feature_name": "points",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 2.0,
                     "new": 3.0
-                },
-                "ability": "Viper"
+                }
             }
         ]
     },

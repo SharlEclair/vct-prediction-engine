@@ -2,37 +2,45 @@
     "Agent Updates": {
         "Iso": [
             {
-                "feature_name": "general",
+                "agent": "Iso",
+                "ability": "Double Tap",
+                "category": "general",
+                "feature_name": "double_tap",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Double Tap"
+                "values": null
             },
             {
+                "agent": "Iso",
+                "ability": "Double Tap",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 20.0,
                     "new": 12.0
-                },
-                "ability": "Double Tap"
+                }
             },
             {
-                "feature_name": "signature_reset",
+                "agent": "Iso",
+                "ability": "Double Tap",
+                "category": "general",
+                "feature_name": "double_tap",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Double Tap"
+                "values": null
             }
         ],
         "Console": [
             {
-                "feature_name": "general",
+                "agent": "Console",
+                "ability": "Owl Drone",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Owl Drone"
+                "values": null
             }
         ]
     },

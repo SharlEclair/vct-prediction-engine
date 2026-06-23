@@ -2,113 +2,143 @@
     "Agent Updates": {
         "Tejo": [
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Special Delivery",
+                "category": "general",
+                "feature_name": "special_delivery",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Special Delivery"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Tejo",
+                "ability": "Stealth Drone",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Stealth Drone"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "general",
+                "feature_name": "guided_salvo",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "general",
+                "feature_name": "console_only",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Armageddon",
+                "category": "general",
+                "feature_name": "armageddon",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Armageddon"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Armageddon",
+                "category": "general",
+                "feature_name": "console_only",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Armageddon"
+                "values": null
             }
         ],
         "Brimstone": [
             {
-                "feature_name": "general",
+                "agent": "Brimstone",
+                "ability": "Stim Beacon",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Stim Beacon"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Brimstone",
+                "ability": "Stim Beacon",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Stim Beacon"
+                "values": null
             }
         ],
         "PC Only": [
             {
+                "agent": "PC Only",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "PC Only",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "PC Only",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "PC Only",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "PC Only",
+                "ability": "Matches start on January 15",
+                "category": "general",
+                "feature_name": "matches_start_on_january_15",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Matches start on January 15"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "PC Only",
+                "ability": "Matches start on January 15",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Matches start on January 15"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "PC Only",
+                "ability": "Matches start on January 15",
+                "category": "general",
+                "feature_name": "matches_start_on_january_15",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Matches start on January 15"
+                "values": null
             }
         ]
     },

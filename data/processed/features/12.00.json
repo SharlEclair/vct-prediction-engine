@@ -2,445 +2,561 @@
     "Agent Updates": {
         "Breach": [
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Breach",
+                "ability": "Flashpoint",
+                "category": "projectile",
+                "feature_name": "velocity",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 2000.0,
                     "new": 2400.0
-                },
-                "ability": "Flashpoint"
+                }
             },
             {
-                "feature_name": "width",
+                "agent": "Breach",
+                "ability": "Fault Line",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 7.5,
                     "new": 8.0
-                },
-                "ability": "Fault Line"
+                }
             }
         ],
         "Brimstone": [
             {
-                "feature_name": "general",
+                "agent": "Brimstone",
+                "ability": "Sky Smoke",
+                "category": "general",
+                "feature_name": "sky_smoke",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sky Smoke"
+                "values": null
             }
         ],
         "Harbor": [
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Storm Surge",
+                "category": "general",
+                "feature_name": "storm_surge",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Storm Surge"
+                "values": null
             },
             {
-                "feature_name": "windup",
+                "agent": "Harbor",
+                "ability": "Storm Surge",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.8,
                     "new": 0.6
-                },
-                "ability": "Storm Surge"
+                }
             },
             {
+                "agent": "Harbor",
+                "ability": "Storm Surge",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.6,
                     "new": 2.0
-                },
-                "ability": "Storm Surge"
+                }
             },
             {
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.6,
                     "new": 2.0
-                },
-                "ability": "Reckoning"
+                }
             }
         ],
         "Sage": [
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Healing Orb",
+                "category": "general",
+                "feature_name": "healing_orb",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Healing Orb"
+                "values": null
             }
         ],
         "Tejo": [
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Special Delivery",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Special Delivery"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Special Delivery",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Special Delivery"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Special Delivery",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Special Delivery"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Stealth Drone",
+                "category": "general",
+                "feature_name": "stealth_drone",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Stealth Drone"
+                "values": null
             },
             {
-                "feature_name": "radius",
+                "agent": "Tejo",
+                "ability": "Stealth Drone",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 30.0,
                     "new": 16.0
-                },
-                "ability": "Stealth Drone"
+                }
             }
         ],
         "Vyse": [
             {
-                "feature_name": "radius",
+                "agent": "Vyse",
+                "ability": "Steel Garden",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 26.0,
                     "new": 28.0
-                },
-                "ability": "Steel Garden"
+                }
             },
             {
-                "feature_name": "width",
+                "agent": "Vyse",
+                "ability": "Steel Garden",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 7.5,
                     "new": 8.0
-                },
-                "ability": "Steel Garden"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Vyse",
+                "ability": "Steel Garden",
+                "category": "general",
+                "feature_name": "steel_garden",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Steel Garden"
+                "values": null
             }
         ],
         "Breeze": [
             {
-                "feature_name": "general",
+                "agent": "Breeze",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Breeze",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Haven and Corrode": [
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Haven",
+                "category": "general",
+                "feature_name": "haven",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Haven"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Haven",
+                "category": "general",
+                "feature_name": "haven",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Haven"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Corrode",
+                "category": "general",
+                "feature_name": "corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Corrode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Corrode",
+                "category": "general",
+                "feature_name": "corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Corrode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Corrode",
+                "category": "general",
+                "feature_name": "corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Corrode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Corrode",
+                "category": "general",
+                "feature_name": "corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Corrode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Haven and Corrode",
+                "ability": "Corrode",
+                "category": "general",
+                "feature_name": "corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Corrode"
+                "values": null
             }
         ],
         "Map Pool Updates": [
             {
+                "agent": "Map Pool Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Map Pool Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "All Random One Site": [
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "cost",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "New Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "New Limited Time Mode"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "All Random One Site",
+                "ability": "Leaving Limited Time Mode",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Leaving Limited Time Mode"
+                "values": null
             }
         ]
     },
     "Weapon Updates": {
         "Bandit": [
             {
-                "feature_name": "General",
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "weapon_class",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
+                "weapon": "Bandit",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "General",
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "attachments",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "magazineSize",
+                "weapon": "Bandit",
+                "category": "combat",
+                "feature_name": "ammo",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "General",
+                "weapon": "Bandit",
+                "category": "combat",
+                "feature_name": "ammo",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "reloadTimeSeconds",
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "reload_timing",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "General",
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "equip_timing",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null
             },
             {
-                "feature_name": "General",
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "wall_penetration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null

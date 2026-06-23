@@ -2,85 +2,107 @@
     "Agent Updates": {
         "Harbor": [
             {
-                "feature_name": "cost",
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Cove"
+                "values": null
             },
             {
-                "feature_name": "reloadTimeSeconds",
+                "agent": "Harbor",
+                "ability": "Cove",
+                "category": "general",
+                "feature_name": "cove",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Cove"
+                "values": null
             },
             {
-                "feature_name": "signature_reset",
+                "agent": "Harbor",
+                "ability": "High Tide",
+                "category": "general",
+                "feature_name": "high_tide",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "High Tide"
+                "values": null
             },
             {
+                "agent": "Harbor",
+                "ability": "High Tide",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "High Tide"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Storm Surge",
+                "category": "general",
+                "feature_name": "storm_surge",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Storm Surge"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Storm Surge",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Storm Surge"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "general",
+                "feature_name": "reckoning",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Reckoning"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "general",
+                "feature_name": "reckoning",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Reckoning"
+                "values": null
             }
         ],
         "Clove": [
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Ruse",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Ruse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Pick-me-up",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Pick-me-up"
+                "values": null
             }
         ],
         "Omen": [
             {
+                "agent": "Omen",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },

@@ -2,58 +2,70 @@
     "Agent Updates": {
         "Omen": [
             {
+                "agent": "Omen",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Chamber": [
             {
-                "feature_name": "rendezvous",
+                "agent": "Chamber",
+                "ability": "Rendezvous",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 13.0,
                     "new": 18.0
-                },
-                "ability": "Rendezvous"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Chamber",
+                "ability": "Rendezvous",
+                "category": "general",
+                "feature_name": "rendezvous",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Rendezvous"
+                "values": null
             }
         ],
         "Astra": [
             {
+                "agent": "Astra",
+                "ability": "Stars",
+                "category": "general",
                 "feature_name": "stars",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 4.0,
                     "new": 5.0
-                },
-                "ability": "Stars"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Astra",
+                "ability": "Stars",
+                "category": "general",
+                "feature_name": "stars",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Stars"
+                "values": null
             }
         ],
         "Stim Behavior": [
             {
-                "feature_name": "general",
+                "agent": "Stim Behavior",
+                "ability": "Empress",
+                "category": "general",
+                "feature_name": "empress",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Empress"
+                "values": null
             }
         ]
     },

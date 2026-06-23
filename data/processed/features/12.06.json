@@ -2,36 +2,44 @@
     "Agent Updates": {
         "Waylay": [
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "general",
+                "feature_name": "saturate",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             }
         ],
         "Viper": [
             {
-                "feature_name": "general",
+                "agent": "Viper",
+                "ability": "Viper's Pit",
+                "category": "general",
+                "feature_name": "viper's_pit",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Viper's Pit"
+                "values": null
             }
         ],
         "Cosmetics Updates": [
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Cosmetics Updates",
+                "ability": "General",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Cosmetics Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },

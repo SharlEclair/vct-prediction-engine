@@ -2,18 +2,22 @@
     "Agent Updates": {
         "Gekko": [
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Globules",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Globules"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Mosh Pit",
+                "category": "general",
+                "feature_name": "mosh_pit",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Mosh Pit"
+                "values": null
             }
         ]
     },

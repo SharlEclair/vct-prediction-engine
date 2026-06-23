@@ -2,76 +2,96 @@
     "Agent Updates": {
         "General": [
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Cosmic Divide",
+                "category": "general",
+                "feature_name": "cosmic_divide",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Cosmic Divide"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "Barrier Orb",
+                "category": "general",
+                "feature_name": "barrier_orb",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Barrier Orb"
+                "values": null
             }
         ],
         "Progression Updates": [
             {
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "before",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "practice",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "practice",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "after",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "strategy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "strategy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Progression Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },

@@ -2,600 +2,750 @@
     "Agent Updates": {
         "Cypher": [
             {
+                "agent": "Cypher",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "cost",
+                "agent": "Cypher",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "general",
+                "feature_name": "trapwire",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Trapwire"
+                "values": null
             },
             {
+                "agent": "Cypher",
+                "ability": "Neural Theft",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 6.0,
                     "new": 7.0
-                },
-                "ability": "Neural Theft"
+                }
             }
         ],
         "Sage": [
             {
+                "agent": "Sage",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Sage",
+                "ability": "General",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Healing Orb",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Healing Orb"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Sage",
+                "ability": "Healing Orb",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Healing Orb"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Sage",
+                "ability": "Slow Orb",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Slow Orb"
+                "values": null
             },
             {
+                "agent": "Sage",
+                "ability": "Resurrection",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 8.0,
                     "new": 7.0
-                },
-                "ability": "Resurrection"
+                }
             }
         ],
         "Deadlock": [
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "Annihilation",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Annihilation"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "Barrier Mesh",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Barrier Mesh"
+                "values": null
             }
         ],
         "Omen": [
             {
-                "feature_name": "general",
+                "agent": "Omen",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Omen",
+                "ability": "Dark Cover",
+                "category": "general",
+                "feature_name": "dark_cover",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Dark Cover"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Omen",
+                "ability": "Dark Cover",
+                "category": "general",
+                "feature_name": "dark_cover",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Dark Cover"
+                "values": null
             }
         ],
         "Clove": [
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Ruse",
+                "category": "general",
+                "feature_name": "ruse",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Ruse"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Ruse",
+                "category": "general",
+                "feature_name": "ruse",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Ruse"
+                "values": null
             },
             {
-                "feature_name": "time",
+                "agent": "Clove",
+                "ability": "Not Dead Yet",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 12.0,
                     "new": 10.0
-                },
-                "ability": "Not Dead Yet"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Not Dead Yet",
+                "category": "general",
+                "feature_name": "not_dead_yet",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Not Dead Yet"
+                "values": null
             }
         ],
         "Phoenix": [
             {
+                "agent": "Phoenix",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phoenix",
+                "ability": "Heating Up",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Heating Up"
+                "values": null
             },
             {
-                "feature_name": "signature_reset",
+                "agent": "Phoenix",
+                "ability": "Curveball",
+                "category": "general",
+                "feature_name": "curveball",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Curveball"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phoenix",
+                "ability": "Curveball",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Curveball"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phoenix",
+                "ability": "Curveball",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Curveball"
+                "values": null
             },
             {
-                "feature_name": "signature_reset",
+                "agent": "Phoenix",
+                "ability": "Hot Hands",
+                "category": "general",
+                "feature_name": "hot_hands",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Hot Hands"
+                "values": null
             },
             {
+                "agent": "Phoenix",
+                "ability": "Hot Hands",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Hot Hands"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phoenix",
+                "ability": "Blaze",
+                "category": "general",
+                "feature_name": "blaze",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Blaze"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phoenix",
+                "ability": "Blaze",
+                "category": "general",
+                "feature_name": "blaze",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Blaze"
+                "values": null
             }
         ],
         "Jett": [
             {
-                "feature_name": "general",
+                "agent": "Jett",
+                "ability": "Drift (Passive)",
+                "category": "general",
+                "feature_name": "drift_(passive)",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Drift (Passive)"
+                "values": null
             }
         ],
         "Map Updates": [
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "Sunset",
+                "category": "general",
+                "feature_name": "sunset",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sunset"
+                "values": null
             }
         ],
         "Gameplay Systems Updates": [
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Combat Report",
+                "category": "general",
+                "feature_name": "combat_report",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Combat Report"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Combat Report",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Combat Report"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Combat Report",
+                "category": "general",
+                "feature_name": "combat_report",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Combat Report"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Combat Report",
+                "category": "general",
+                "feature_name": "combat_report",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Combat Report"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Combat Report",
+                "category": "general",
+                "feature_name": "combat_report",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Combat Report"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Concusses",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Concusses"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Concusses",
+                "category": "general",
+                "feature_name": "concusses",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Concusses"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Concusses",
+                "category": "general",
+                "feature_name": "concusses",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Concusses"
+                "values": null
             },
             {
-                "feature_name": "slideCount",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Concusses",
+                "category": "movement",
+                "feature_name": "slide_count",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Concusses"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Overheal UI Visual Update",
+                "category": "general",
+                "feature_name": "overheal_ui_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Overheal UI Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Overheal UI Visual Update",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Overheal UI Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Smoke Visual Update",
+                "category": "general",
+                "feature_name": "smoke_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Smoke Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Smoke Visual Update",
+                "category": "general",
+                "feature_name": "smoke_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Smoke Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Smoke Visual Update",
+                "category": "general",
+                "feature_name": "smoke_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Smoke Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Smoke Visual Update",
+                "category": "general",
+                "feature_name": "smoke_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Smoke Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Smoke Visual Update",
+                "category": "general",
+                "feature_name": "smoke_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Smoke Visual Update"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Smoke Visual Update",
+                "category": "general",
+                "feature_name": "smoke_visual_update",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Smoke Visual Update"
+                "values": null
             }
         ],
         "Weapons Updates": [
             {
+                "agent": "Weapons Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Weapons Updates",
+                "ability": "General",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Weapons Updates",
+                "ability": "General",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Weapons Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Weapons Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Pistol Inaccuracy Changes": [
             {
+                "agent": "Pistol Inaccuracy Changes",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Pistol Inaccuracy Changes",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.1,
                     "new": 0.5
-                },
-                "ability": "General"
+                }
             }
         ],
         "Classic": [
             {
+                "agent": "Classic",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 1.3,
                     "new": 1.5
-                },
-                "ability": "General"
+                }
             },
             {
+                "agent": "Classic",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.1,
                     "new": 2.25
-                },
-                "ability": "General"
+                }
             },
             {
+                "agent": "Classic",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "walking_inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.84,
                     "new": 1.1
-                },
-                "ability": "General"
+                }
             }
         ],
         "Ghost": [
             {
+                "agent": "Ghost",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "walking_inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.84,
                     "new": 1.1
-                },
-                "ability": "General"
+                }
             }
         ],
         "Rifles": [
             {
+                "agent": "Rifles",
+                "ability": "All Rifles",
+                "category": "general",
                 "feature_name": "walk_inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.0,
                     "new": 3.0
-                },
-                "ability": "All Rifles"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Rifles",
+                "ability": "All Rifles",
+                "category": "general",
+                "feature_name": "run_inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "All Rifles"
+                "values": null
             }
         ],
         "Machine Guns": [
             {
+                "agent": "Machine Guns",
+                "ability": "All Machine Guns",
+                "category": "general",
                 "feature_name": "walk_inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.4,
                     "new": 3.0
-                },
-                "ability": "All Machine Guns"
+                }
             },
             {
+                "agent": "Machine Guns",
+                "ability": "All Machine Guns",
+                "category": "general",
                 "feature_name": "run_inaccuracy",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 6.0,
                     "new": 6.5
-                },
-                "ability": "All Machine Guns"
+                }
             }
         ],
         "Pistol Bullet Count Changes": [
             {
+                "agent": "Pistol Bullet Count Changes",
+                "ability": "Frenzy",
+                "category": "general",
                 "feature_name": "count",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 13.0,
                     "new": 15.0
-                },
-                "ability": "Frenzy"
+                }
             },
             {
+                "agent": "Pistol Bullet Count Changes",
+                "ability": "Ghost",
+                "category": "general",
                 "feature_name": "count",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 15.0,
                     "new": 13.0
-                },
-                "ability": "Ghost"
+                }
             }
         ],
         "Phantom": [
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "previously",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "now",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Phantom",
+                "ability": "General",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },

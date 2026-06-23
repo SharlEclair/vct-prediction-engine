@@ -2,321 +2,401 @@
     "Agent Updates": {
         "Waylay": [
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Refract",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Refract"
+                "values": null
             },
             {
-                "feature_name": "refract",
+                "agent": "Waylay",
+                "ability": "Refract",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.5,
                     "new": 0.35
-                },
-                "ability": "Refract"
+                }
             },
             {
-                "feature_name": "refract",
+                "agent": "Waylay",
+                "ability": "Refract",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 3.0,
                     "new": 2.0
-                },
-                "ability": "Refract"
+                }
             },
             {
-                "feature_name": "time",
+                "agent": "Waylay",
+                "ability": "Refract",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 1.0,
                     "new": 0.8
-                },
-                "ability": "Refract"
+                }
             },
             {
+                "agent": "Waylay",
+                "ability": "Refract",
+                "category": "general",
                 "feature_name": "reactivation",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.1,
                     "new": 0.05
-                },
-                "ability": "Refract"
+                }
             },
             {
+                "agent": "Waylay",
+                "ability": "Lightspeed",
+                "category": "general",
                 "feature_name": "delay",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.8,
                     "new": 0.6
-                },
-                "ability": "Lightspeed"
+                }
             },
             {
-                "feature_name": "explosion",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.75,
                     "new": 0.6
-                },
-                "ability": "Saturate"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             }
         ],
         "Reyna": [
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Leer",
+                "category": "ability",
+                "feature_name": "health",
                 "type": "nerf",
                 "weight": 0.8,
-                "values": null,
-                "ability": "Leer"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Leer",
+                "category": "general",
+                "feature_name": "leer",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Leer"
+                "values": null
             }
         ],
         "Neon & Phoenix": [
             {
-                "feature_name": "windup",
+                "agent": "Neon & Phoenix",
+                "ability": "Neon",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 0.8,
                     "new": 1.0
-                },
-                "ability": "Neon"
+                }
             },
             {
-                "feature_name": "windup",
+                "agent": "Neon & Phoenix",
+                "ability": "Phoenix",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "nerf",
                 "weight": 0.8,
                 "values": {
                     "old": 0.5,
                     "new": 0.6
-                },
-                "ability": "Phoenix"
+                }
             }
         ],
         "Clarity and Consistency Updates": [
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Breach",
+                "category": "general",
+                "feature_name": "breach",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Breach"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Breach",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Breach"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "ability",
+                "feature_name": "size",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Sova",
+                "category": "general",
+                "feature_name": "sova",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Sova"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Clove",
+                "category": "general",
+                "feature_name": "clove",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Clove"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Clove",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Clove"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Killjoy",
+                "category": "general",
+                "feature_name": "killjoy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Killjoy"
+                "values": null
             },
             {
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Killjoy",
+                "category": "general",
                 "feature_name": "delay",
                 "type": "buff",
                 "weight": 0.0,
                 "values": {
                     "old": 0.5,
                     "new": 0.15
-                },
-                "ability": "Killjoy"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Killjoy",
+                "category": "general",
+                "feature_name": "killjoy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Killjoy"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Cypher",
+                "category": "general",
+                "feature_name": "cypher",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Cypher"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Cypher",
+                "category": "general",
+                "feature_name": "cypher",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Cypher"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Omen",
+                "category": "general",
+                "feature_name": "omen",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Omen"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Omen",
+                "category": "general",
+                "feature_name": "omen",
                 "type": "buff",
                 "weight": 0.0,
-                "values": null,
-                "ability": "Omen"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clarity and Consistency Updates",
+                "ability": "Brimstone",
+                "category": "general",
+                "feature_name": "brimstone",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Brimstone"
+                "values": null
             }
         ],
         "Map Updates": [
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "NEW MAP: CORRODE",
+                "category": "general",
+                "feature_name": "new_map:_corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NEW MAP: CORRODE"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "NEW MAP: CORRODE",
+                "category": "general",
+                "feature_name": "new_map:_corrode",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "NEW MAP: CORRODE"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "MAP POOL UPDATES",
+                "category": "general",
+                "feature_name": "map_pool_updates",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "MAP POOL UPDATES"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "MAP POOL UPDATES",
+                "category": "general",
+                "feature_name": "map_pool_updates",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "MAP POOL UPDATES"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "MAP POOL UPDATES",
+                "category": "general",
+                "feature_name": "map_pool_updates",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "MAP POOL UPDATES"
+                "values": null
             }
         ],
         "Modes Updates": [
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "CORRODE QUEUE",
+                "category": "general",
+                "feature_name": "corrode_queue",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "CORRODE QUEUE"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "CORRODE QUEUE",
+                "category": "general",
+                "feature_name": "corrode_queue",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "CORRODE QUEUE"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "Escalation",
+                "category": "general",
+                "feature_name": "escalation",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Escalation"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Modes Updates",
+                "ability": "Escalation",
+                "category": "general",
+                "feature_name": "escalation",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Escalation"
+                "values": null
             }
         ]
     },

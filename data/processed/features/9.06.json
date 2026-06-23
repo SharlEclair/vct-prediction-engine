@@ -2,71 +2,89 @@
     "Agent Updates": {
         "General": [
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "General",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "General",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Gameplay Systems Updates": [
             {
+                "agent": "Gameplay Systems Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Map Updates": [
             {
-                "feature_name": "general",
+                "agent": "Map Updates",
+                "ability": "Haven",
+                "category": "general",
+                "feature_name": "haven",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Haven"
+                "values": null
             }
         ]
     },
     "Weapon Updates": {
         "General": [
             {
-                "feature_name": "General",
+                "weapon": "General",
+                "category": "general",
+                "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": null

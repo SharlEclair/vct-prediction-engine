@@ -1,0 +1,2923 @@
+{
+    "9.0": {
+        "Iso": {
+            "score": 0.1114,
+            "features": [
+                {
+                    "feature": "general.double_tap",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.double_tap",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0333,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0333,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.double_tap",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.double_tap",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "9.01": {},
+    "9.02": {},
+    "9.03": {},
+    "9.04": {},
+    "9.05": {
+        "Chamber": {
+            "score": 0.0874,
+            "features": [
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0326,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0326,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.rendezvous",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.rendezvous",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Astra": {
+            "score": 0.0491,
+            "features": [
+                {
+                    "feature": "general.stars",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.stars",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.stars",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.stars",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Omen": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "9.06": {},
+    "9.07": {},
+    "9.08": {
+        "Gekko": {
+            "score": 0.2631,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.dizzy",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dizzy",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.dizzy",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dizzy",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.wingman",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.wingman",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.wingman",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.wingman",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.points",
+                    "impact": 0.0083,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.points",
+                    "impact": 0.0083,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Yoru": {
+            "score": 0.0957,
+            "features": [
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.neural_theft",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.neural_theft",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "9.09": {},
+    "9.10": {
+        "Deadlock": {
+            "score": 0.1421,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Cypher": {
+            "score": 0.2074,
+            "features": [
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.015,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.015,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Phoenix": {
+            "score": 0.2725,
+            "features": [
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.curveball",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.curveball",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.hot_hands",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.hot_hands",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.blaze",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.blaze",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.blaze",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.blaze",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Clove": {
+            "score": 0.1071,
+            "features": [
+                {
+                    "feature": "general.ruse",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.ruse",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.ruse",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.ruse",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0187,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0187,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.not_dead_yet",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.not_dead_yet",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Sage": {
+            "score": 0.2414,
+            "features": [
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.024,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.024,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Omen": {
+            "score": 0.096,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.dark_cover",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dark_cover",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.dark_cover",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dark_cover",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Jett": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.drift_(passive)",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.drift_(passive)",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "9.11": {
+        "Vyse": {
+            "score": 0.2682,
+            "features": [
+                {
+                    "feature": "general.razorvine",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.razorvine",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0514,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0514,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.height",
+                    "impact": 0.015,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.height",
+                    "impact": 0.015,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.razorvine",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.razorvine",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.razorvine",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.razorvine",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Neon": {
+            "score": 0.5622,
+            "features": [
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.1,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.1,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.high_gear",
+                    "impact": 0.0333,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.high_gear",
+                    "impact": 0.0333,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.points",
+                    "impact": 0.0083,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.points",
+                    "impact": 0.0083,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "10.00": {
+        "Tejo": {
+            "score": 0.1617,
+            "features": [
+                {
+                    "feature": "general.special_delivery",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.special_delivery",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.guided_salvo",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.guided_salvo",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.console_only",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.console_only",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.armageddon",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.armageddon",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.console_only",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.console_only",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Brimstone": {
+            "score": 0.0963,
+            "features": [
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "10.01": {},
+    "10.02": {},
+    "10.03": {},
+    "10.04": {
+        "Deadlock": {
+            "score": 0.1877,
+            "features": [
+                {
+                    "feature": "general.barrier_mesh",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.barrier_mesh",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0205,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0205,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.gravnet",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.gravnet",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.gravnet",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.gravnet",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Tejo": {
+            "score": 0.0802,
+            "features": [
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0112,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0112,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Iso": {
+            "score": 0.2879,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.0375,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.double_tap",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.double_tap",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Clove": {
+            "score": 0.2189,
+            "features": [
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0417,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0417,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Neon": {
+            "score": 0.1503,
+            "features": [
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0257,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0257,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0189,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.0189,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.second",
+                    "impact": 0.0058,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.second",
+                    "impact": 0.0058,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Yoru": {
+            "score": 0.2185,
+            "features": [
+                {
+                    "feature": "general.delay",
+                    "impact": 0.015,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.delay",
+                    "impact": 0.015,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.delay",
+                    "impact": 0.015,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.delay",
+                    "impact": 0.015,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.note",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.note",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0333,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0333,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.delay",
+                    "impact": 0.0083,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.delay",
+                    "impact": 0.0083,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Waylay": {
+            "score": 0.4241,
+            "features": [
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.fire_rate",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.fire_rate",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.reload",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.reload",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Reyna": {
+            "score": 0.1533,
+            "features": [
+                {
+                    "feature": "ability.health",
+                    "impact": 0.0562,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.0562,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "10.05": {},
+    "10.06": {},
+    "10.07": {},
+    "10.08": {
+        "Astra": {
+            "score": 0.03,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Brimstone": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.incendiary",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.incendiary",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Yoru": {
+            "score": 0.0632,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0375,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.0267,
+                    "reason": "nerf"
+                }
+            ]
+        }
+    },
+    "10.09": {
+        "Breach": {
+            "score": 0.025,
+            "features": [
+                {
+                    "feature": "general.fault_line",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Tejo": {
+            "score": 0.3477,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.04,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.range",
+                    "impact": 0.02,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.048,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.048,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.02,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.ultimate_cost",
+                    "impact": 0.024,
+                    "reason": "nerf"
+                }
+            ]
+        }
+    },
+    "10.10": {
+        "Raze": {
+            "score": 0.0494,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "10.11": {},
+    "11.00": {
+        "Waylay": {
+            "score": 0.3112,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0563,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.06,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.0429,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.reactivation",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.delay",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.0429,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.05,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Reyna": {
+            "score": 0.0736,
+            "features": [
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.leer",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.leer",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "11.01": {},
+    "11.02": {},
+    "11.04": {},
+    "11.05": {
+        "Harbor": {
+            "score": 0.073,
+            "features": [
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "11.06": {},
+    "11.07": {},
+    "11.08": {
+        "Gekko": {
+            "score": 0.1855,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Fade": {
+            "score": 0.2456,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.prowler",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Breach": {
+            "score": 0.2943,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.ultimate_cost",
+                    "impact": 0.04,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Deadlock": {
+            "score": 0.1769,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.04,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Raze": {
+            "score": 0.0492,
+            "features": [
+                {
+                    "feature": "general.blast_pack",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.blast_pack",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.blast_pack",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "KAY/O": {
+            "score": 0.3244,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.null/cmd",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.null/cmd",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.fire_rate",
+                    "impact": 0.06,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Cypher": {
+            "score": 0.2803,
+            "features": [
+                {
+                    "feature": "general.spycam",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.spycam",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.spycam",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.spycam",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.pc",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.console",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.trapwire",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Sova": {
+            "score": 0.05,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Killjoy": {
+            "score": 0.3007,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Vyse": {
+            "score": 0.3688,
+            "features": [
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.arc_rose",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.shear",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Viper": {
+            "score": 0.05,
+            "features": [
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Astra": {
+            "score": 0.2262,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Brimstone": {
+            "score": 0.1292,
+            "features": [
+                {
+                    "feature": "general.stim_beacon",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.stim_beacon",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.fire_rate",
+                    "impact": 0.06,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Iso": {
+            "score": 0.025,
+            "features": [
+                {
+                    "feature": "general.kill_contract",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Neon": {
+            "score": 0.1426,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Yoru": {
+            "score": 0.2528,
+            "features": [
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.gatecrash",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.gatecrash",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage_falloff",
+                    "impact": 0.06,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dimensional_drift",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dimensional_drift",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.dimensional_drift",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Waylay": {
+            "score": 0.301,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.convergent_paths",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.convergent_paths",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.convergent_paths",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.convergent_paths",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Sage": {
+            "score": 0.1108,
+            "features": [
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.04,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.barrier_orb",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Reyna": {
+            "score": 0.2612,
+            "features": [
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.empress",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.empress",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.reload",
+                    "impact": 0.06,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.fire_rate",
+                    "impact": 0.06,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Omen": {
+            "score": 0.0923,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "projectile.velocity",
+                    "impact": 0.02,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.paranoia",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                }
+            ]
+        }
+    },
+    "11.09": {},
+    "11.10": {
+        "Harbor": {
+            "score": 0.235,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.cove",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.cove",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.high_tide",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.high_tide",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "economy.cost",
+                    "impact": 0.04,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.storm_surge",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.storm_surge",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Clove": {
+            "score": 0.0975,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Omen": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.general",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "11.11": {},
+    "12.00": {
+        "Breach": {
+            "score": 0.0345,
+            "features": [
+                {
+                    "feature": "projectile.velocity",
+                    "impact": 0.0171,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0176,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Tejo": {
+            "score": 0.2394,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.stealth_drone",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0724,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Harbor": {
+            "score": 0.2885,
+            "features": [
+                {
+                    "feature": "general.storm_surge",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.1235,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.1235,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Vyse": {
+            "score": 0.0611,
+            "features": [
+                {
+                    "feature": "ability.size",
+                    "impact": 0.02,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0088,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.size",
+                    "impact": 0.0088,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.steel_garden",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.steel_garden",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Brimstone": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.sky_smoke",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.sky_smoke",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Sage": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.healing_orb",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.healing_orb",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "12.01": {},
+    "12.02": {
+        "Harbor": {
+            "score": 0.2924,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.0543,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.health",
+                    "impact": 0.0628,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.cove",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.storm_surge",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.storm_surge",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.high_tide",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.length",
+                    "impact": 0.0214,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.reckoning",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Reyna": {
+            "score": 0.1547,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.devour",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "economy.ultimate_cost",
+                    "impact": 0.04,
+                    "reason": "nerf"
+                }
+            ]
+        }
+    },
+    "12.03": {
+        "Gekko": {
+            "score": 0.0736,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.mosh_pit",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.mosh_pit",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "12.04": {
+        "Killjoy": {
+            "score": 0.025,
+            "features": [
+                {
+                    "feature": "general.turret",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "12.05": {
+        "Skye": {
+            "score": 0.0494,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.025,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Miks": {
+            "score": 0.1823,
+            "features": [
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.abilities:",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Clove": {
+            "score": 0.0738,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.meddle",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Yoru": {
+            "score": 0.0975,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.05,
+                    "reason": "nerf"
+                }
+            ]
+        },
+        "Sage": {
+            "score": 0.0727,
+            "features": [
+                {
+                    "feature": "general.healing_orb",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.healing_orb",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.healing_orb",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.healing_orb",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.crystal_model_update",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.crystal_model_update",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    },
+    "12.06": {
+        "Viper": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.viper's_pit",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.viper's_pit",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Waylay": {
+            "score": 0.025,
+            "features": [
+                {
+                    "feature": "general.saturate",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                }
+            ]
+        }
+    },
+    "12.07": {},
+    "12.08": {},
+    "12.09": {
+        "Neon": {
+            "score": 0.2822,
+            "features": [
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.1333,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.slide_count",
+                    "impact": 0.0667,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.energy",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.energy",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.energy",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        }
+    }
+}

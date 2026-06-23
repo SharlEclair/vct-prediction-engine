@@ -2,48 +2,60 @@
     "Agent Updates": {
         "Raze": [
             {
-                "feature_name": "general",
+                "agent": "Raze",
+                "ability": "Boom Bot",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Boom Bot"
+                "values": null
             }
         ],
         "Collection updates": [
             {
-                "feature_name": "general",
+                "agent": "Collection updates",
+                "ability": "Console changes:",
+                "category": "general",
+                "feature_name": "console_changes:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Console changes:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Collection updates",
+                "ability": "Console changes:",
+                "category": "general",
+                "feature_name": "console_changes:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Console changes:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Collection updates",
+                "ability": "Console changes:",
+                "category": "general",
+                "feature_name": "console_changes:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Console changes:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Collection updates",
+                "ability": "PC changes:",
+                "category": "general",
+                "feature_name": "pc_changes:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "PC changes:"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Collection updates",
+                "ability": "PC changes:",
+                "category": "general",
+                "feature_name": "pc_changes:",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "PC changes:"
+                "values": null
             }
         ]
     },

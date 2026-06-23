@@ -2,408 +2,504 @@
     "Agent Updates": {
         "Waylay": [
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Refract",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Refract"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Lightspeed",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Lightspeed"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "general",
+                "feature_name": "saturate",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "general",
+                "feature_name": "saturate",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "fireRate",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "combat",
+                "feature_name": "fire_rate",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "general",
+                "feature_name": "saturate",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "ability",
+                "feature_name": "cast_time",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "reloadTimeSeconds",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "combat",
+                "feature_name": "reload",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Saturate",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Saturate"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Waylay",
+                "ability": "Convergent Paths",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Convergent Paths"
+                "values": null
             }
         ],
         "Clove": [
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Meddle",
+                "category": "general",
+                "feature_name": "meddle",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Meddle"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Clove",
+                "ability": "Meddle",
+                "category": "general",
+                "feature_name": "meddle",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Meddle"
+                "values": null
             },
             {
+                "agent": "Clove",
+                "ability": "Ruse",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 30.0,
                     "new": 40.0
-                },
-                "ability": "Ruse"
+                }
             },
             {
+                "agent": "Clove",
+                "ability": "Pick-me-up",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 8.0,
                     "new": 10.0
-                },
-                "ability": "Pick-me-up"
+                }
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Clove",
+                "ability": "Pick-me-up",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 8.0,
                     "new": 3.0
-                },
-                "ability": "Pick-me-up"
+                }
             }
         ],
         "Deadlock": [
             {
-                "feature_name": "signature_reset",
+                "agent": "Deadlock",
+                "ability": "Barrier Mesh",
+                "category": "general",
+                "feature_name": "barrier_mesh",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Barrier Mesh"
+                "values": null
             },
             {
+                "agent": "Deadlock",
+                "ability": "Barrier Mesh",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Barrier Mesh"
+                "values": null
             },
             {
-                "feature_name": "signature_reset",
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "ability",
+                "feature_name": "cooldown",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "GravNet"
+                "values": null
             },
             {
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "ability",
                 "feature_name": "size",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 16.0,
                     "new": 13.0
-                },
-                "ability": "GravNet"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "general",
+                "feature_name": "gravnet",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "GravNet"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "general",
+                "feature_name": "gravnet",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "GravNet"
+                "values": null
             }
         ],
         "Iso": [
             {
-                "feature_name": "undercut",
+                "agent": "Iso",
+                "ability": "Undercut",
+                "category": "ability",
+                "feature_name": "charges",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.0,
                     "new": 1.0
-                },
-                "ability": "Undercut"
+                }
             },
             {
+                "agent": "Iso",
+                "ability": "Undercut",
+                "category": "economy",
                 "feature_name": "cost",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 200.0,
                     "new": 300.0
-                },
-                "ability": "Undercut"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Iso",
+                "ability": "Undercut",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Undercut"
+                "values": null
             },
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Iso",
+                "ability": "Contingency",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Contingency"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Iso",
+                "ability": "Contingency",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Contingency"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Iso",
+                "ability": "Double Tap",
+                "category": "general",
+                "feature_name": "double_tap",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Double Tap"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Iso",
+                "ability": "Kill Contract",
+                "category": "general",
+                "feature_name": "bugfix",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Kill Contract"
+                "values": null
             }
         ],
         "Tejo": [
             {
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "combat",
                 "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 70.0,
                     "new": 65.0
-                },
-                "ability": "Guided Salvo"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Tejo",
+                "ability": "Guided Salvo",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Guided Salvo"
+                "values": null
             }
         ],
         "Map Rotation": [
             {
+                "agent": "Map Rotation",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Map Rotation",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Ascent": [
             {
-                "feature_name": "general",
+                "agent": "Ascent",
+                "ability": "B Main",
+                "category": "general",
+                "feature_name": "b_main",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "B Main"
+                "values": null
             }
         ],
         "Gameplay Systems Updates": [
             {
-                "feature_name": "general",
+                "agent": "Gameplay Systems Updates",
+                "ability": "Combat Report",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Combat Report"
+                "values": null
             }
         ],
         "Neon": [
             {
-                "feature_name": "multiplier",
+                "agent": "Neon",
+                "ability": "Overdrive",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.5,
                     "new": 3.0
-                },
-                "ability": "Overdrive"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Neon",
+                "ability": "Overdrive",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Overdrive"
+                "values": null
             },
             {
-                "feature_name": "multiplier",
+                "agent": "Neon",
+                "ability": "Overdrive",
+                "category": "combat",
+                "feature_name": "damage",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.75,
                     "new": 0.85
-                },
-                "ability": "Overdrive"
+                }
             },
             {
+                "agent": "Neon",
+                "ability": "Energy",
+                "category": "general",
                 "feature_name": "second",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.11,
                     "new": 0.1
-                },
-                "ability": "Energy"
+                }
             }
         ],
         "Yoru": [
             {
+                "agent": "Yoru",
+                "ability": "Dimensional Drift",
+                "category": "general",
                 "feature_name": "delay",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 1.2,
                     "new": 0.8
-                },
-                "ability": "Dimensional Drift"
+                }
             },
             {
+                "agent": "Yoru",
+                "ability": "Fakeout",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 2.0,
                     "new": 3.0
-                },
-                "ability": "Fakeout"
+                }
             },
             {
+                "agent": "Yoru",
+                "ability": "Fakeout",
+                "category": "general",
                 "feature_name": "delay",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.6,
                     "new": 0.8
-                },
-                "ability": "Fakeout"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Fakeout",
+                "category": "general",
+                "feature_name": "note",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Fakeout"
+                "values": null
             },
             {
+                "agent": "Yoru",
+                "ability": "Blindside",
+                "category": "ability",
                 "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 1.25,
                     "new": 1.75
-                },
-                "ability": "Blindside"
+                }
             },
             {
+                "agent": "Yoru",
+                "ability": "Blindside",
+                "category": "general",
                 "feature_name": "delay",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 0.7,
                     "new": 0.6
-                },
-                "ability": "Blindside"
+                }
             }
         ],
         "Reyna": [
             {
+                "agent": "Reyna",
+                "ability": "Leer",
+                "category": "ability",
                 "feature_name": "health",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 40.0,
                     "new": 100.0
-                },
-                "ability": "Leer"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Reyna",
+                "ability": "Leer",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Leer"
+                "values": null
             }
         ]
     },

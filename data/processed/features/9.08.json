@@ -2,152 +2,188 @@
     "Agent Updates": {
         "Gekko": [
             {
-                "feature_name": "globules",
+                "agent": "Gekko",
+                "ability": "Globules",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 20.0,
                     "new": 15.0
-                },
-                "ability": "Globules"
+                }
             },
             {
-                "feature_name": "time",
+                "agent": "Gekko",
+                "ability": "Globules",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 1.0,
                     "new": 1.5
-                },
-                "ability": "Globules"
+                }
             },
             {
-                "feature_name": "is",
+                "agent": "Gekko",
+                "ability": "Dizzy",
+                "category": "ability",
+                "feature_name": "duration",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 1.5,
                     "new": 1.0
-                },
-                "ability": "Dizzy"
+                }
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Dizzy",
+                "category": "general",
+                "feature_name": "dizzy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Dizzy"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Dizzy",
+                "category": "general",
+                "feature_name": "dizzy",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Dizzy"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Wingman",
+                "category": "general",
+                "feature_name": "wingman",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Wingman"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Gekko",
+                "ability": "Wingman",
+                "category": "general",
+                "feature_name": "wingman",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Wingman"
+                "values": null
             },
             {
+                "agent": "Gekko",
+                "ability": "Thrash",
+                "category": "general",
                 "feature_name": "points",
                 "type": "adjustment",
                 "weight": 0.2,
                 "values": {
                     "old": 7.0,
                     "new": 8.0
-                },
-                "ability": "Thrash"
+                }
             }
         ],
         "Yoru": [
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Arc Rose",
+                "category": "general",
+                "feature_name": "arc_rose",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Arc Rose",
+                "category": "general",
+                "feature_name": "arc_rose",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Arc Rose"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Neural Theft",
+                "category": "general",
+                "feature_name": "neural_theft",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Neural Theft"
+                "values": null
             },
             {
-                "feature_name": "general",
+                "agent": "Yoru",
+                "ability": "Meddle",
+                "category": "general",
+                "feature_name": "meddle",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Meddle"
+                "values": null
             }
         ],
         "Skye and Jett": [
             {
-                "feature_name": "runSpeedMultiplier",
+                "agent": "Skye and Jett",
+                "ability": "Tailwind",
+                "category": "movement",
+                "feature_name": "movement_speed",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "Tailwind"
+                "values": null
             }
         ],
         "Cosmetic Updates": [
             {
+                "agent": "Cosmetic Updates",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Glitch": [
             {
+                "agent": "Glitch",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Glitch",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ],
         "Map Rotations": [
             {
+                "agent": "Map Rotations",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             },
             {
+                "agent": "Map Rotations",
+                "ability": "General",
+                "category": "general",
                 "feature_name": "general",
                 "type": "adjustment",
                 "weight": 0.2,
-                "values": null,
-                "ability": "General"
+                "values": null
             }
         ]
     },
