@@ -1,8 +1,10 @@
 import os
 import json
 import asyncio
+import random
 import logging
-import httpx
+from curl_cffi import requests
+from vlr_scraper import is_tier1_event
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -18,18 +20,8 @@ async def harvest_and_save_vct_match_ids(limit: int = 500) -> list[str]:
     match_ids = []
     page = 1
     
-    # We will exclude these strings from tournament names to filter out amateur/tier-3
-    exclude_keywords = [
-        'game changers', 'gc', 'premier', 'grassroots', 'fortress', 
-        'collegiate', 'university', 'showmatch', 'community', 'trial',
-        'open qualifier', 'cup', 'weekly', 'monthly', 'amateur'
-    ]
-    
-    # We require tournament names to contain at least one of these main VCT event keywords
-    vct_keywords = ['challengers', 'masters', 'champions', 'vct', 'champions tour']
-    
     consecutive_failures = 0
-    async with httpx.AsyncClient() as client:
+    async with requests.AsyncSession(impersonate="chrome") as client:
         while len(match_ids) < limit:
             if consecutive_failures >= 3:
                 logger.error("Too many consecutive failures fetching match IDs. Aborting harvest.")
@@ -38,7 +30,8 @@ async def harvest_and_save_vct_match_ids(limit: int = 500) -> list[str]:
             try:
                 logger.info(f"Fetching result page {page}...")
                 response = await client.get(url, timeout=30.0)
-                response.raise_for_status()
+                if response.status_code != 200:
+                    raise Exception(f"HTTP status {response.status_code}")
                 data = response.json()
                 
                 segments = data.get("data", {}).get("segments", [])
@@ -49,15 +42,8 @@ async def harvest_and_save_vct_match_ids(limit: int = 500) -> list[str]:
                 added_in_page = 0
                 for s in segments:
                     tournament = s.get('tournament_name', '')
-                    name_lower = tournament.lower()
                     
-                    # Filtering criteria
-                    is_vct = False
-                    if any(kw in name_lower for kw in vct_keywords):
-                        if not any(ex in name_lower for ex in exclude_keywords):
-                            is_vct = True
-                            
-                    if is_vct:
+                    if is_tier1_event(tournament):
                         match_page = s.get('match_page', '')
                         if match_page:
                             # Extract ID from e.g. "/248272/kiwoom-drx-vs-bilibili-gaming"

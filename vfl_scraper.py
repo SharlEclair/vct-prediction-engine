@@ -22,10 +22,12 @@ Field mapping (local schema ← API fields):
 import os
 import json
 import logging
+import random
+import time
 from datetime import datetime, timezone
 from typing import Optional
 
-import httpx
+from curl_cffi import requests
 
 logger = logging.getLogger("vfl_scraper")
 logging.basicConfig(
@@ -82,11 +84,15 @@ class VFLScraper:
         Falls back to seed data on any network/parse error.
         """
         try:
-            with httpx.Client(timeout=20.0, follow_redirects=True) as client:
+            with requests.Session(impersonate="chrome") as client:
                 # ── Step A: current event ──────────────────────────────────
+                sleep_time = 3.0 + random.uniform(0.5, 2.5)
+                logger.info(f"Sleeping for {sleep_time:.2f}s before fetching current event...")
+                time.sleep(sleep_time)
                 logger.info(f"Resolving current event from {CURRENT_EVENT_URL}")
-                r_event = client.get(CURRENT_EVENT_URL, headers=DEFAULT_HEADERS)
-                r_event.raise_for_status()
+                r_event = client.get(CURRENT_EVENT_URL, headers=DEFAULT_HEADERS, timeout=20.0)
+                if r_event.status_code != 200:
+                    raise Exception(f"HTTP Status {r_event.status_code}")
 
                 event_data  = r_event.json()
                 event_id    = event_data.get("id")
@@ -97,13 +103,18 @@ class VFLScraper:
                 logger.info(f"Active event: [{event_id}] {event_name}")
 
                 # ── Step B: all players ────────────────────────────────────
+                sleep_time2 = 3.0 + random.uniform(0.5, 2.5)
+                logger.info(f"Sleeping for {sleep_time2:.2f}s before fetching all players...")
+                time.sleep(sleep_time2)
                 logger.info(f"Fetching player roster from {ALL_PLAYERS_URL}?eventId={event_id}")
                 r_players = client.get(
                     ALL_PLAYERS_URL,
                     params={"eventId": event_id},
-                    headers=DEFAULT_HEADERS
+                    headers=DEFAULT_HEADERS,
+                    timeout=20.0
                 )
-                r_players.raise_for_status()
+                if r_players.status_code != 200:
+                    raise Exception(f"HTTP Status {r_players.status_code}")
 
                 raw_players: list[dict] = r_players.json()
 

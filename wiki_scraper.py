@@ -1,8 +1,10 @@
-import httpx
-import pandas as pd
-import re
 import os
 import logging
+import random
+import asyncio
+import pandas as pd
+import re
+from curl_cffi import requests
 from selectolax.parser import HTMLParser
 
 # Configure logging
@@ -11,33 +13,29 @@ logger = logging.getLogger("wiki_scraper")
 
 CACHE_DIR = os.path.join(".", "data", "cache")
 
-async def scrape_patch_notes(client: httpx.AsyncClient = None) -> pd.DataFrame:
+async def scrape_patch_notes(client=None) -> pd.DataFrame:
     """
     Scrapes patch version numbers and release dates from the Valorant Wiki.
     Falls back to a locally cached HTML file if the network request fails or is blocked.
     """
     url = "https://wiki.playvalorant.com/en-us/Patch_Notes"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:119.0) Gecko/20100101 Firefox/119.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5"
-    }
     
     is_local_client = False
     if client is None:
-        client = httpx.AsyncClient()
+        client = requests.AsyncSession(impersonate="chrome")
         is_local_client = True
         
     html_content = None
     try:
+        sleep_time = 3.0 + random.uniform(0.5, 2.5)
+        logger.info(f"Sleeping for {sleep_time:.2f}s before fetching patch notes...")
+        await asyncio.sleep(sleep_time)
         logger.info(f"Fetching patch notes from {url}...")
-        response = await client.get(url, headers=headers, timeout=20.0)
+        response = await client.get(url, timeout=20.0)
         
-        # If response is blocked, trigger Exception
-        if response.status_code == 403:
-            raise httpx.HTTPStatusError("403 Forbidden (likely Cloudflare block)", request=response.request, response=response)
+        if response.status_code != 200:
+            raise Exception(f"HTTP Status {response.status_code}")
             
-        response.raise_for_status()
         html_content = response.text
         logger.info("Successfully fetched patch notes from live wiki.")
     except Exception as e:
@@ -92,33 +90,29 @@ async def scrape_patch_notes(client: httpx.AsyncClient = None) -> pd.DataFrame:
     logger.info(f"Successfully processed {len(df)} patch versions.")
     return df
 
-async def scrape_agent_roles(client: httpx.AsyncClient = None) -> dict:
+async def scrape_agent_roles(client=None) -> dict:
     """
     Scrapes agent character names and tactical roles from the Valorant Wiki.
     Falls back to a locally cached HTML file if the network request fails or is blocked.
     """
     url = "https://wiki.playvalorant.com/en-us/Agents"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:119.0) Gecko/20100101 Firefox/119.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5"
-    }
     
     is_local_client = False
     if client is None:
-        client = httpx.AsyncClient()
+        client = requests.AsyncSession(impersonate="chrome")
         is_local_client = True
         
     html_content = None
     try:
+        sleep_time = 3.0 + random.uniform(0.5, 2.5)
+        logger.info(f"Sleeping for {sleep_time:.2f}s before fetching agent roles...")
+        await asyncio.sleep(sleep_time)
         logger.info(f"Fetching agent roles from {url}...")
-        response = await client.get(url, headers=headers, timeout=20.0)
+        response = await client.get(url, timeout=20.0)
         
-        # If response is blocked, trigger Exception
-        if response.status_code == 403:
-            raise httpx.HTTPStatusError("403 Forbidden (likely Cloudflare block)", request=response.request, response=response)
+        if response.status_code != 200:
+            raise Exception(f"HTTP Status {response.status_code}")
             
-        response.raise_for_status()
         html_content = response.text
         logger.info("Successfully fetched agent roles from live wiki.")
     except Exception as e:
@@ -132,8 +126,8 @@ async def scrape_agent_roles(client: httpx.AsyncClient = None) -> dict:
             logger.error("Local cache file for agent roles not found.")
             raise e
     finally:
-        if is_local_client:
-            await client.aclose()
+        if is_local_client and hasattr(client, "close"):
+            await client.close()
 
     # Parse the HTML content
     parser = HTMLParser(html_content)

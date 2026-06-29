@@ -13,6 +13,93 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 RAW_DIR = "./data/raw"
 PROCESSED_DIR = "./data/processed"
 
+
+# ---------------------------------------------------------------------------
+# Temporal Map Pool Registry
+# ---------------------------------------------------------------------------
+
+TEMPORAL_MAP_POOLS = [
+    {
+        "end_date": "2023-09-08",
+        "pool": ["Ascent", "Bind", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
+    },
+    {
+        "end_date": "2024-05-01",
+        "pool": ["Ascent", "Bind", "Breeze", "Icebox", "Lotus", "Split", "Sunset"]
+    },
+    {
+        "end_date": "2026-12-31",
+        "pool": ["Ascent", "Bind", "Haven", "Icebox", "Lotus", "Abyss", "Sunset"]
+    }
+]
+
+class TemporalMapRegistry:
+    """
+    Resolves the 7-map VCT competitive pool that was active on any given date.
+    Loaded from data/processed/temporal_map_registry.json or TEMPORAL_MAP_POOLS fallback.
+
+    Design: stateless lookup — no mutable state after __init__.
+    """
+    _FALLBACK_POOL = ["Ascent", "Bind", "Haven", "Icebox", "Lotus", "Abyss", "Sunset"]
+
+    def __init__(self, processed_dir: str = PROCESSED_DIR):
+        self.windows = []
+        self.re_entry_decay_rho = 0.65
+        registry_path = os.path.join(processed_dir, "temporal_map_registry.json")
+        if os.path.exists(registry_path):
+            try:
+                with open(registry_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                self.windows = data.get("patch_windows", [])
+                self.re_entry_decay_rho = data.get("re_entry_decay_rho", 0.65)
+                logger.info(f"TemporalMapRegistry loaded: {len(self.windows)} patch windows.")
+            except Exception as e:
+                logger.warning(f"TemporalMapRegistry: failed to load registry ({e}). Using fallback pool.")
+        else:
+            logger.warning("TemporalMapRegistry: registry file not found. Using static fallback pool.")
+
+    def resolve_pool(self, match_date: datetime) -> tuple[str, list[str]]:
+        """
+        Returns (window_id, active_maps_list) for the given match_date.
+        Cross-references match_date against TEMPORAL_MAP_POOLS and patch windows.
+        """
+        date_str = match_date.strftime("%Y-%m-%d") if isinstance(match_date, datetime) else str(match_date)[:10]
+        for entry in TEMPORAL_MAP_POOLS:
+            if date_str <= entry["end_date"]:
+                return f"temporal_{entry['end_date']}", entry["pool"]
+
+        if not self.windows:
+            return "fallback", self._FALLBACK_POOL
+        for window in reversed(self.windows):
+            start = datetime.fromisoformat(window["start_date_approx"])
+            end_str = window.get("end_date_approx")
+            end = datetime.fromisoformat(end_str) if end_str else datetime.max
+            if start <= match_date < end:
+                return window["window_id"], window["active_maps"]
+        earliest = self.windows[0]
+        return earliest["window_id"], earliest["active_maps"]
+
+    def is_map_active(self, map_name: str, match_date: datetime) -> bool:
+        _, pool = self.resolve_pool(match_date)
+        return map_name in pool
+
+    def resolve_current_pool(self) -> list[str]:
+        """Convenience: resolve pool for today (used by predict_veto default)."""
+        return self.resolve_pool(datetime.now())[1]
+
+    def get_window_id(self, match_date: datetime) -> str:
+        return self.resolve_pool(match_date)[0]
+
+
+# Module-level singleton — shared by MapVetoBandit and VCTv5SimulationEngine
+_temporal_registry: TemporalMapRegistry | None = None
+
+def _get_registry(processed_dir: str = PROCESSED_DIR) -> TemporalMapRegistry:
+    global _temporal_registry
+    if _temporal_registry is None:
+        _temporal_registry = TemporalMapRegistry(processed_dir)
+    return _temporal_registry
+
 # --- Math Sub-models ---
 
 class MapVetoBandit:
@@ -20,21 +107,43 @@ class MapVetoBandit:
     Sub-Model 1: Multi-armed Contextual Bandit for Map Vetoes.
     Uses Inverse Propensity Score (IPS) off-policy evaluation to estimate unbiased map win-rates
     and simulates the pick/ban sequence.
+
+    V5 upgrade: map pool is resolved from TemporalMapRegistry, not hardcoded.
+    IPS propensity is computed per-window (not globally) to avoid retired-map
+    frequency pollution.
     """
-    def __init__(self, raw_dir=RAW_DIR):
+    # All known VCT maps across all time — used only as the superset when
+    # accumulating raw data; active arms are pruned per-date at predict-time.
+    _ALL_MAPS = [
+        "Abyss", "Ascent", "Bind", "Breeze", "Fracture",
+        "Haven", "Icebox", "Lotus", "Pearl", "Split", "Sunset",
+    ]
+
+    def __init__(self, raw_dir=RAW_DIR, processed_dir=PROCESSED_DIR):
         self.raw_dir = raw_dir
-        self.map_pool = ["Ascent", "Bind", "Breeze", "Icebox", "Lotus", "Split", "Sunset", "Fracture", "Haven", "Pearl"]
-        self.team_plays = {}
-        self.team_wins = {}
-        self.map_frequency = {}
+        self.processed_dir = processed_dir
+        self.registry = _get_registry(processed_dir)
+        # Legacy flat pool kept for callers that inspect self.map_pool
+        self.map_pool = self.registry.resolve_current_pool()
+        # Per-window IPS accumulators: {window_id: {map: {plays, wins}}}
+        self.window_plays: dict[str, dict[str, dict]] = {}
+        # Cross-window aggregated team stats (date-aware build)
+        self.team_plays: dict[str, dict[str, int]] = {}
+        self.team_wins:  dict[str, dict[str, int]] = {}
+        # Per-window propensity (frequency of play within window)
+        self.window_propensity: dict[str, dict[str, float]] = {}
+        # Global fallback propensity over the current active pool
+        self.map_frequency: dict[str, float] = {}
         self.fit()
 
     def fit(self):
+        """
+        Build per-window IPS accumulators and cross-window team stats.
+        Each match observation is tagged with its temporal window so that
+        propensity scores are not polluted by retired-map frequencies.
+        """
         files = glob.glob(os.path.join(self.raw_dir, "match_*.json"))
-        # Count global play frequencies for propensity estimations
-        map_counts = {m: 0 for m in self.map_pool}
-        total_plays = 0
-        
+
         for f in files:
             try:
                 with open(f, "r", encoding="utf-8") as file:
@@ -42,120 +151,188 @@ class MapVetoBandit:
                 if "data" not in content or "segments" not in content["data"] or not content["data"]["segments"]:
                     continue
                 seg = content["data"]["segments"][0]
+                if len(seg.get("teams", [])) < 2:
+                    continue
+
                 team_a = seg["teams"][0]["name"]
                 team_b = seg["teams"][1]["name"]
-                
-                if team_a not in self.team_plays:
-                    self.team_plays[team_a] = {m: 0 for m in self.map_pool}
-                    self.team_wins[team_a] = {m: 0 for m in self.map_pool}
-                if team_b not in self.team_plays:
-                    self.team_plays[team_b] = {m: 0 for m in self.map_pool}
-                    self.team_wins[team_b] = {m: 0 for m in self.map_pool}
-                
+                match_date = parse_simulation_match_date(seg.get("date", ""))
+                window_id, active_maps = self.registry.resolve_pool(match_date)
+
+                # Initialise per-window bucket
+                if window_id not in self.window_plays:
+                    self.window_plays[window_id] = {m: {"plays": 0, "wins_a": 0} for m in self._ALL_MAPS}
+
+                # Initialise team trackers (over ALL maps — pruned at predict-time)
+                for team in (team_a, team_b):
+                    if team not in self.team_plays:
+                        self.team_plays[team] = {m: 0 for m in self._ALL_MAPS}
+                        self.team_wins[team] = {m: 0 for m in self._ALL_MAPS}
+
                 for map_data in seg.get("maps", []):
                     m_name = map_data.get("map_name")
-                    if m_name in self.map_pool:
-                        self.team_plays[team_a][m_name] += 1
-                        self.team_plays[team_b][m_name] += 1
-                        map_counts[m_name] += 1
-                        total_plays += 1
-                        
-                        score = map_data.get("score", {})
-                        t1_score = score.get("team1")
-                        t2_score = score.get("team2")
-                        if t1_score is not None and t2_score is not None:
-                            if t1_score > t2_score:
-                                self.team_wins[team_a][m_name] += 1
-                            elif t2_score > t1_score:
-                                self.team_wins[team_b][m_name] += 1
+                    if not m_name or m_name not in active_maps:
+                        # Retired/inactive map for this match's window — skip
+                        continue
+
+                    # Per-window play count (for propensity)
+                    self.window_plays[window_id][m_name]["plays"] += 1
+
+                    # Team-level accumulation
+                    self.team_plays[team_a][m_name] = self.team_plays[team_a].get(m_name, 0) + 1
+                    self.team_plays[team_b][m_name] = self.team_plays[team_b].get(m_name, 0) + 1
+
+                    score = map_data.get("score", {})
+                    t1_score = score.get("team1")
+                    t2_score = score.get("team2")
+                    if t1_score is not None and t2_score is not None:
+                        if t1_score > t2_score:
+                            self.team_wins[team_a][m_name] = self.team_wins[team_a].get(m_name, 0) + 1
+                        elif t2_score > t1_score:
+                            self.team_wins[team_b][m_name] = self.team_wins[team_b].get(m_name, 0) + 1
+
             except Exception:
                 pass
-                
-        # Propensity behavior policy estimation (frequency of play)
-        self.map_frequency = {m: (map_counts[m] + 1) / (total_plays + len(self.map_pool)) for m in self.map_pool}
 
-    def predict_map_win_rate_ips(self, team: str, opponent: str, map_name: str) -> float:
-        """Estimates win rate on a map using IPS off-policy weighting to correct selection bias."""
-        if team not in self.team_plays or map_name not in self.team_plays[team]:
+        # Build per-window propensity scores
+        for wid, map_buckets in self.window_plays.items():
+            total_w = sum(b["plays"] for b in map_buckets.values()) + 1
+            self.window_propensity[wid] = {
+                m: (b["plays"] + 1) / (total_w + len(self._ALL_MAPS))
+                for m, b in map_buckets.items()
+            }
+
+        # Global fallback propensity for the CURRENT active pool only
+        current_pool = self.registry.resolve_current_pool()
+        _, latest_window_id = self.registry.get_window_id(datetime.now()), None
+        current_wid = self.registry.get_window_id(datetime.now())
+        if current_wid in self.window_propensity:
+            self.map_frequency = {
+                m: self.window_propensity[current_wid].get(m, 0.05)
+                for m in current_pool
+            }
+        else:
+            self.map_frequency = {m: 1.0 / len(current_pool) for m in current_pool}
+
+        # Update self.map_pool to always reflect current active pool
+        self.map_pool = current_pool
+        logger.info(f"MapVetoBandit fitted: {len(self.window_plays)} temporal windows, "
+                    f"current pool = {self.map_pool}")
+
+    def predict_map_win_rate_ips(self, team: str, opponent: str, map_name: str,
+                                  target_date: datetime | None = None) -> float:
+        """
+        Estimates win rate on a map using IPS off-policy weighting.
+
+        Propensity is sourced from the window matching target_date so that
+        retired maps never inflate the denominator for active maps.
+        If target_date is None, uses the current active window propensity.
+        """
+        if team not in self.team_plays:
             return 0.5
-            
-        plays = self.team_plays[team][map_name]
-        wins = self.team_wins[team][map_name]
-        
-        # Propensity propensity score
-        propensity = self.map_frequency.get(map_name, 0.1)
-        
-        # IPS Weighted Win Rate:
-        # Standard estimate is wins / plays. IPS adjusts this by the probability of map selection.
-        # Here we use an IPS-weighted score representing the shadow reward.
-        ips_wins = wins / propensity
+
+        plays = self.team_plays[team].get(map_name, 0)
+        wins  = self.team_wins[team].get(map_name, 0)
+
+        # Resolve propensity from the correct temporal window
+        if target_date is not None:
+            wid = self.registry.get_window_id(target_date)
+            propensity = self.window_propensity.get(wid, {}).get(map_name, 0.1)
+        else:
+            propensity = self.map_frequency.get(map_name, 0.1)
+
+        ips_wins  = wins  / propensity
         ips_plays = plays / propensity
-        
+
         if ips_plays > 0:
             raw_ips = ips_wins / ips_plays
-            # Smooth/bound
-            return np.clip(raw_ips * 0.8 + 0.1, 0.1, 0.9)
+            return float(np.clip(raw_ips * 0.8 + 0.1, 0.1, 0.9))
         return 0.5
 
-    def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3", stochastic: bool = False) -> dict:
-        """Simulates veto picks/bans using IPS map win rate preferences, with optional stochasticity."""
-        available_maps = list(self.map_pool)
+    def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3",
+                     stochastic: bool = False,
+                     target_date: datetime | None = None,
+                     ub_advantage: bool | str = False) -> dict:
+        """
+        Simulates veto picks/bans using IPS map win rate preferences.
+
+        V5 upgrade: Arms A(t) are dynamically resolved from TemporalMapRegistry
+        for target_date so retired maps are never available for selection.
+        If Bo5 and upper bracket advantage holds, pops opponent's 2 strongest maps from pool.
+        """
+        if target_date is None:
+            target_date = datetime.now()
+        _, active_pool = self.registry.resolve_pool(target_date)
+        available_maps = list(active_pool)
         banned_maps = []
         picked_maps = []
         veto_weights = {}
         veto_steps = []
         
-        # Scores represent expected map win rates for Team A
-        scores_a = {m: self.predict_map_win_rate_ips(team_a, team_b, m) for m in available_maps}
-        scores_b = {m: self.predict_map_win_rate_ips(team_b, team_a, m) for m in available_maps}
-        
+        # Scores represent expected map win rates for Team A and Team B
+        scores_a = {m: self.predict_map_win_rate_ips(team_a, team_b, m, target_date) for m in available_maps}
+        scores_b = {m: self.predict_map_win_rate_ips(team_b, team_a, m, target_date) for m in available_maps}
+
         if stochastic:
             # Inject small random noise representing tactical variability
             scores_a = {m: val + np.random.normal(0, 0.05) for m, val in scores_a.items()}
             scores_b = {m: val + np.random.normal(0, 0.05) for m, val in scores_b.items()}
         
-        # Team A prefers maps where scores_a is highest.
-        # Team B prefers maps where scores_b is highest (i.e. scores_a is lowest).
         if series_type == "Bo5":
+            if ub_advantage:
+                ub_holder = team_a if (ub_advantage is True or str(ub_advantage).lower() == team_a.lower()) else team_b
+                target_opp_scores = scores_b if ub_holder == team_a else scores_a
+                strongest_opp_maps = sorted(available_maps, key=lambda m: target_opp_scores[m], reverse=True)[:2]
+                for m_pop in strongest_opp_maps:
+                    available_maps.remove(m_pop)
+                    banned_maps.append(m_pop)
+                    veto_steps.append(f"{ub_holder} UB ban {m_pop}")
+
             # Ban 1: Team A bans worst map
-            m_ban_a = min(available_maps, key=lambda m: scores_a[m])
-            available_maps.remove(m_ban_a)
-            banned_maps.append(m_ban_a)
-            veto_steps.append(f"{team_a} ban {m_ban_a}")
+            if available_maps:
+                m_ban_a = min(available_maps, key=lambda m: scores_a[m])
+                available_maps.remove(m_ban_a)
+                banned_maps.append(m_ban_a)
+                veto_steps.append(f"{team_a} ban {m_ban_a}")
             
             # Ban 2: Team B bans worst map
-            m_ban_b = min(available_maps, key=lambda m: scores_b[m])
-            available_maps.remove(m_ban_b)
-            banned_maps.append(m_ban_b)
-            veto_steps.append(f"{team_b} ban {m_ban_b}")
+            if available_maps:
+                m_ban_b = min(available_maps, key=lambda m: scores_b[m])
+                available_maps.remove(m_ban_b)
+                banned_maps.append(m_ban_b)
+                veto_steps.append(f"{team_b} ban {m_ban_b}")
             
             # Pick 1: Team A picks best map
-            m_pick_a1 = max(available_maps, key=lambda m: scores_a[m])
-            available_maps.remove(m_pick_a1)
-            picked_maps.append(m_pick_a1)
-            veto_weights[m_pick_a1] = 1
-            veto_steps.append(f"{team_a} pick {m_pick_a1}")
+            if available_maps:
+                m_pick_a1 = max(available_maps, key=lambda m: scores_a[m])
+                available_maps.remove(m_pick_a1)
+                picked_maps.append(m_pick_a1)
+                veto_weights[m_pick_a1] = 1
+                veto_steps.append(f"{team_a} pick {m_pick_a1}")
             
             # Pick 2: Team B picks best map
-            m_pick_b1 = max(available_maps, key=lambda m: scores_b[m])
-            available_maps.remove(m_pick_b1)
-            picked_maps.append(m_pick_b1)
-            veto_weights[m_pick_b1] = -1
-            veto_steps.append(f"{team_b} pick {m_pick_b1}")
+            if available_maps:
+                m_pick_b1 = max(available_maps, key=lambda m: scores_b[m])
+                available_maps.remove(m_pick_b1)
+                picked_maps.append(m_pick_b1)
+                veto_weights[m_pick_b1] = -1
+                veto_steps.append(f"{team_b} pick {m_pick_b1}")
             
             # Pick 3: Team A picks second best
-            m_pick_a2 = max(available_maps, key=lambda m: scores_a[m])
-            available_maps.remove(m_pick_a2)
-            picked_maps.append(m_pick_a2)
-            veto_weights[m_pick_a2] = 1
-            veto_steps.append(f"{team_a} pick {m_pick_a2}")
+            if available_maps:
+                m_pick_a2 = max(available_maps, key=lambda m: scores_a[m])
+                available_maps.remove(m_pick_a2)
+                picked_maps.append(m_pick_a2)
+                veto_weights[m_pick_a2] = 1
+                veto_steps.append(f"{team_a} pick {m_pick_a2}")
             
             # Pick 4: Team B picks second best
-            m_pick_b2 = max(available_maps, key=lambda m: scores_b[m])
-            available_maps.remove(m_pick_b2)
-            picked_maps.append(m_pick_b2)
-            veto_weights[m_pick_b2] = -1
-            veto_steps.append(f"{team_b} pick {m_pick_b2}")
+            if available_maps:
+                m_pick_b2 = max(available_maps, key=lambda m: scores_b[m])
+                available_maps.remove(m_pick_b2)
+                picked_maps.append(m_pick_b2)
+                veto_weights[m_pick_b2] = -1
+                veto_steps.append(f"{team_b} pick {m_pick_b2}")
             
             # Decider: remains
             if available_maps:
@@ -217,10 +394,14 @@ class MapVetoBandit:
         }
 
 
-class AgentCompositionTransformer:
+class HungarianAgentAssigner:
     """
-    Sub-Model 2: Autoregressive attention-based Transformer logic for Agent Composition.
-    Self-attention layer incorporates co-occurrence JSD Patch Distance penalties.
+    Sub-Model 2: Hungarian Algorithm linear sum assignment solver for optimal Agent Composition.
+    Maximizes multi-factor utility incorporating Bayesian comfort and historical pick rates.
+
+    V5 upgrade: comfort data is sourced from the Global Player Entity Ledger
+    (global_player_ledger.json) which is team-decoupled and EMA-weighted.
+    Fallback to legacy agent_comfort_matrix is preserved for backward compatibility.
     """
     def __init__(self, raw_dir=RAW_DIR, processed_dir=PROCESSED_DIR):
         self.raw_dir = raw_dir
@@ -228,165 +409,268 @@ class AgentCompositionTransformer:
         self.agent_roles = {}
         self.jsd_matrix = {}
         self.nerf_registry = {}
-        self.agent_comfort_matrix = {}
-        
+        self.agent_comfort_matrix = {}   # legacy fallback
+        self.player_global_stats = {}    # legacy fallback
+        self.player_ledger: dict = {}    # V5: global player entity ledger
+
         self.load_configurations()
-        
+
     def load_configurations(self):
         roles_path = os.path.join(self.raw_dir, "agent_roles.json")
         if os.path.exists(roles_path):
             with open(roles_path, "r", encoding="utf-8") as f:
                 self.agent_roles = json.load(f)
-                
+
         jsd_path = os.path.join(self.processed_dir, "patch_distance_matrix.json")
         if os.path.exists(jsd_path):
             with open(jsd_path, "r", encoding="utf-8") as f:
                 self.jsd_matrix = json.load(f)
-                
+
         nerfs_path = os.path.join(self.processed_dir, "automated_patch_nerf_registry.json")
         if os.path.exists(nerfs_path):
             with open(nerfs_path, "r", encoding="utf-8") as f:
                 self.nerf_registry = json.load(f)
 
+        # V5: load global player ledger (team-decoupled career stats)
+        ledger_path = os.path.join(self.processed_dir, "global_player_ledger.json")
+        if os.path.exists(ledger_path):
+            try:
+                with open(ledger_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                self.player_ledger = data.get("players", {})
+                logger.info(f"HungarianAgentAssigner: loaded ledger with "
+                            f"{len(self.player_ledger)} players.")
+            except Exception as e:
+                logger.warning(f"HungarianAgentAssigner: ledger load failed ({e}). "
+                               f"Falling back to legacy comfort matrix.")
+        else:
+            logger.warning("HungarianAgentAssigner: global_player_ledger.json not found. "
+                           "Run build_global_player_ledger.py to generate it.")
+
     def fit_comfort(self, player_agent_stats, player_global_stats=None):
-        """Compiles players' historical comfort on all agents."""
+        """Legacy fallback path — kept for backward compatibility with predict_match.py."""
         self.agent_comfort_matrix = player_agent_stats
         self.player_global_stats = player_global_stats or {}
 
-    def predict_composition(self, team_name: str, map_name: str, roster: list[str], target_patch: str = "9.02", temperature: float = 25.0) -> list[str]:
+    def resolve_comfort(self, player: str, map_name: str, agent: str) -> tuple[float, int]:
+        """
+        V5: Resolve Bayesian-smoothed ACS comfort from the global player ledger.
+        Returns (bayesian_acs, observation_count).
+        Falls back to legacy agent_comfort_matrix if ledger has no data for this player.
+        """
+        pdata = self.player_ledger.get(player)
+        if pdata:
+            global_acs = pdata["career_stats"].get("global_acs_ema", 200.0)
+            agent_data = pdata.get("agent_comfort", {}).get(agent, {})
+            map_specific = agent_data.get("per_map_comfort", {}).get(map_name)
+
+            if map_specific and map_specific["maps"] >= 3:
+                map_acs = map_specific["acs_avg"]
+                count = map_specific["maps"]
+            elif agent_data.get("global_maps", 0) > 0:
+                map_acs = agent_data["global_acs_avg"]
+                count = agent_data["global_maps"]
+            else:
+                # Agent never played by this player in ledger
+                return global_acs * 0.9, 0  # mild penalty for untested agent
+
+            alpha_smooth = 3.0
+            bayesian_acs = (count * map_acs + alpha_smooth * global_acs) / (count + alpha_smooth)
+            return bayesian_acs, count
+
+        # Fallback: legacy in-memory dict
+        comfort_stat = self.agent_comfort_matrix.get((player, map_name, agent), {"sum_acs": 0.0, "count": 0})
+        count = comfort_stat.get("count", 0)
+        acs = comfort_stat["sum_acs"] / count if count > 0 else 0.0
+        global_stat = self.player_global_stats.get(player, {"sum_acs": 0.0, "count": 0})
+        global_acs = global_stat["sum_acs"] / global_stat["count"] if global_stat.get("count", 0) > 0 else 200.0
+        if count > 0:
+            alpha_smooth = 3.0
+            bayesian_acs = (count * acs + alpha_smooth * global_acs) / (count + alpha_smooth)
+        else:
+            bayesian_acs = global_acs * 0.9
+        return bayesian_acs, count
+
+    def get_player_global_acs(self, player: str) -> float:
+        """Returns global career ACS EMA from ledger, or legacy fallback."""
+        pdata = self.player_ledger.get(player)
+        if pdata:
+            return pdata["career_stats"].get("global_acs_ema", 200.0)
+        global_stat = self.player_global_stats.get(player, {"sum_acs": 0.0, "count": 0})
+        if global_stat.get("count", 0) > 0:
+            return global_stat["sum_acs"] / global_stat["count"]
+        return 200.0
+
+    def predict_composition(self, team_name: str, map_name: str, roster: list[str],
+                             target_patch: str = "9.02", temperature: float = 25.0) -> list[str]:
         """
         Simultaneous optimal constrained agent composition selection.
         Uses scipy.optimize.linear_sum_assignment to globally maximize team utility.
+
+        V5: comfort scores sourced from global player ledger (team-decoupled).
         """
         from scipy.optimize import linear_sum_assignment
-        
+
         agents_pool = list(self.agent_roles.keys())
         if not agents_pool:
             agents_pool = ["Jett", "Raze", "Omen", "Breach", "Killjoy", "Sova", "Cypher", "Sage", "Viper", "Phoenix"]
-            
+
         n_players = min(5, len(roster))
         n_agents = len(agents_pool)
-        
+
         # 1. Initialize utility matrix
         utility_matrix = np.zeros((n_players, n_agents))
-        
+
         for i in range(n_players):
             player = roster[i]
-            
-            # Compute total matches played by this player on this map (for pick rate denominator)
-            total_map_matches = sum(self.agent_comfort_matrix.get((player, map_name, a), {}).get("count", 0) for a in agents_pool)
-            
-            # Fetch global baseline ACS for normalizing Comfort Score
-            global_stat = self.player_global_stats.get(player, {"sum_acs": 0.0, "count": 0})
-            player_global_acs = global_stat["sum_acs"] / global_stat["count"] if global_stat["count"] > 0 else 200.0
-            
+            player_global_acs = self.get_player_global_acs(player)
+            if player_global_acs <= 0:
+                player_global_acs = 200.0
+
+            # Total map matches for pick-rate denominator (from ledger or fallback)
+            pdata = self.player_ledger.get(player)
+            if pdata:
+                total_map_matches = sum(
+                    pdata.get("agent_comfort", {}).get(a, {}).get("per_map_comfort", {}).get(map_name, {}).get("maps", 0)
+                    for a in agents_pool
+                )
+            else:
+                total_map_matches = sum(
+                    self.agent_comfort_matrix.get((player, map_name, a), {}).get("count", 0)
+                    for a in agents_pool
+                )
+
             for j in range(n_agents):
                 agent = agents_pool[j]
-                
-                # 1.1 Base Comfort Pick rating (Bayesian smoothed on map-specific keys)
-                comfort_stat = self.agent_comfort_matrix.get((player, map_name, agent), {"sum_acs": 0.0, "count": 0})
-                count = comfort_stat["count"]
-                map_agent_acs = comfort_stat["sum_acs"] / count if count > 0 else 0.0
-                
-                # Check if the player has ever played this agent globally
-                global_agent_stat = self.agent_comfort_matrix.get((player, agent), {"sum_acs": 0.0, "count": 0})
-                
-                if global_agent_stat["count"] > 0:
-                    alpha = 3.0
-                    base_comfort = ((count * map_agent_acs) + (alpha * player_global_acs)) / (count + alpha)
-                else:
-                    base_comfort = 180.0
-                    
-                # Incorporate nerf penalties in normalized comfort score
+
+                # 1.1 Bayesian-smoothed comfort ACS (V5 ledger-sourced)
+                base_comfort, count = self.resolve_comfort(player, map_name, agent)
+
+                # 1.2 Nerf penalty from patch registry
                 nerfs = self.nerf_registry.get(target_patch, {})
                 nerf_penalty = nerfs.get(agent, 0.0)
                 comfort_score = base_comfort - 100.0 * nerf_penalty
-                
                 normalized_comfort = comfort_score / player_global_acs
-                
-                # 1.2 Historical Pick Rate on map M
-                if total_map_matches > 0:
-                    historical_pick_rate = count / total_map_matches
-                else:
-                    historical_pick_rate = 0.0
-                    
-                # 1.3 Multi-Factor Utility (30% Comfort, 70% Pick Rate)
+
+                # 1.3 Historical pick rate on this map
+                historical_pick_rate = count / total_map_matches if total_map_matches > 0 else 0.0
+
+                # 1.4 Multi-Factor Utility (30% Comfort, 70% Pick Rate)
                 utility = 0.3 * normalized_comfort + 0.7 * historical_pick_rate
                 utility_matrix[i, j] = utility
-                
+
         # 2. Inject Controlled Stochastic Noise (Monte Carlo exploration)
         utility_matrix += np.random.normal(0, 0.05, size=utility_matrix.shape)
-        
+
         # 3. Solve the assignment problem to maximize utility (minimize negative utility)
         row_ind, col_ind = linear_sum_assignment(-utility_matrix)
-        
+
         # Build the final selected agents in the roster order
         selected_agents = [None] * n_players
         for r, c in zip(row_ind, col_ind):
             selected_agents[r] = agents_pool[c]
-            
+
         return selected_agents
 
 
-class BivariatePoissonMCMC:
+MAP_SIDE_BIAS = {
+    "Ascent": {"type": "DEF", "bias": 0.044},
+    "Split": {"type": "DEF", "bias": 0.030},
+    "Summit": {"type": "DEF", "bias": 0.022},
+    "Lotus": {"type": "ATK", "bias": 0.028},
+    "Abyss": {"type": "ATK", "bias": 0.043},
+}
+
+class SideConditionedMarkovSimulator:
     """
-    Sub-Model 3: Bivariate Poisson Regression & discrete-time MCMC round score simulator.
-    Simulates round momentum and economy state changes.
+    Sub-Model 3: Side-Conditioned Markov Simulator.
+    Replaces legacy Poisson model with discrete round state tracking:
+      - Score A & Score B
+      - Dynamic Economy Differential
+      - Current Side (DEF vs ATK)
+      - Round Number (Round 13 side-swap & 12-12 Overtime logic)
     """
-    def __init__(self):
-        # Estimated regression constants mapping stats to round rates (Poisson lambda)
-        self.intercept_rate = 1.2
-        self.acs_coeff = 0.002
-        self.loadout_coeff = 0.00001
+    def __init__(self, team_a_stats: dict | float = 200.0, team_b_stats: dict | float = 200.0, map_name: str = "Ascent"):
+        if isinstance(team_a_stats, (int, float)):
+            self.acs_a = float(team_a_stats)
+        else:
+            self.acs_a = float(team_a_stats.get("acs", 200.0))
+            
+        if isinstance(team_b_stats, (int, float)):
+            self.acs_b = float(team_b_stats)
+        else:
+            self.acs_b = float(team_b_stats.get("acs", 200.0))
+            
+        self.map_name = map_name
         
-    def simulate_rounds(self, lambda_a: float, lambda_b: float, covariance_lambda: float = 0.1) -> tuple[int, int]:
+    def get_side_advantage_a(self, current_side_a: str) -> float:
+        """Computes side advantage multiplier for Team A based on current side and map bias."""
+        info = MAP_SIDE_BIAS.get(self.map_name, {"type": "NEUTRAL", "bias": 0.0})
+        if info["type"] == "NEUTRAL" or info["bias"] == 0.0:
+            return 0.0
+            
+        if current_side_a == info["type"]:
+            return info["bias"]
+        else:
+            return -info["bias"]
+
+    def simulate_rounds(self, rate_a: float = None, rate_b: float = None) -> tuple[int, int]:
         """
-        Discrete-time Markov Chain simulation for rounds.
-        Starts at {0,0} and runs round-by-round update incorporating econ loadouts.
+        Runs discrete-time Markov round simulation from Round 1 up to terminal state (13 wins or OT).
+        Tracks score, economy loadout, side alignment, and round number.
         """
-        score_a, score_b = 0, 0
-        
-        # Dynamic economy state
+        score_a = 0
+        score_b = 0
         loadout_a = 20000.0
         loadout_b = 20000.0
-        
-        # Loss streaks (influences loss bonus economy)
         loss_streak_a = 0
         loss_streak_b = 0
         
+        # Initial side assignment (Team A starts DEF, Team B starts ATK)
+        current_side_a = "DEF"
+        round_number = 1
+        
         while True:
-            # Multipliers based on dynamic loadouts
-            m_a = 1.0 + 0.15 * np.log(loadout_a / 20000.0)
-            m_b = 1.0 + 0.15 * np.log(loadout_b / 20000.0)
+            # Check Round 13 Side Swap
+            if round_number == 13:
+                current_side_a = "ATK" if current_side_a == "DEF" else "DEF"
+                
+            # Check Overtime (12-12)
+            is_ot = (score_a >= 12 and score_b >= 12)
+            if is_ot:
+                side_adv_a = 0.0
+            else:
+                side_adv_a = self.get_side_advantage_a(current_side_a)
+                
+            # Compute log-odds Z
+            acs_diff = self.acs_a - self.acs_b
+            eco_diff = loadout_a - loadout_b
             
-            # Adjusted scoring rates
-            rate_a = (lambda_a + covariance_lambda) * m_a
-            rate_b = (lambda_b + covariance_lambda) * m_b
+            z = 0.003 * acs_diff + 0.00015 * eco_diff + 2.0 * side_adv_a
+            prob_win_a = 1.0 / (1.0 + np.exp(-z))
+            prob_win_a = float(np.clip(prob_win_a, 0.05, 0.95))
             
-            # Probability of winning this round
-            prob_win_a = rate_a / (rate_a + rate_b)
-            
-            # Sample winner
+            # Sample round winner
             if np.random.rand() < prob_win_a:
                 score_a += 1
                 loss_streak_a = 0
                 loss_streak_b += 1
-                
-                # Economy update
-                loadout_a = 20000.0 # Winner buys full
-                loadout_b = min(20000.0, loadout_b + 3000.0 + min(loss_streak_b - 1, 4) * 500.0) # Loss bonus
+                loadout_a = 20000.0
+                loadout_b = min(20000.0, loadout_b + 3000.0 + min(loss_streak_b - 1, 4) * 500.0)
             else:
                 score_b += 1
                 loss_streak_b = 0
                 loss_streak_a += 1
-                
-                # Economy update
                 loadout_b = 20000.0
                 loadout_a = min(20000.0, loadout_a + 3000.0 + min(loss_streak_a - 1, 4) * 500.0)
                 
+            round_number += 1
+            
             # Check terminal states
-            if score_a >= 13 or score_b >= 13:
-                # Must win by 2
+            if not is_ot:
+                if score_a >= 13 or score_b >= 13:
+                    break
+            else:
                 if abs(score_a - score_b) >= 2:
                     break
                     
@@ -396,44 +680,72 @@ class BivariatePoissonMCMC:
 class KillShareDirichlet:
     """
     Sub-Model 4: Dirichlet Regression to enforce player kill-share summation constraint.
+
+    V5 upgrade: alpha concentration parameters are gated by Roster Cohesion Coefficient (CF).
+    New signings have wider variance (lower concentration) while preserving raw skill priors.
     """
-    def __init__(self, agent_roles):
+    COHESION_SAT_MAPS = 25   # M_sat: maps to reach full cohesion (CF=1.0)
+    CF_MIN_SCALE = 0.60       # At CF=0, alpha is scaled down to 60% (40% wider variance)
+
+    def __init__(self, agent_roles, player_ledger: dict | None = None):
         self.agent_roles = agent_roles
-        
-    def sample_kills(self, roster: list[str], agents: list[str], total_kills: int, player_emas: dict, baseline_lookup: dict) -> dict:
+        self.player_ledger = player_ledger or {}
+
+    def get_cohesion_coefficient(self, player: str) -> float:
+        """
+        CF(player) = min(maps_with_current_team, M_sat) / M_sat.
+        Returns 1.0 if ledger has no data (assume full cohesion for known veterans).
+        """
+        pdata = self.player_ledger.get(player)
+        if not pdata or not pdata.get("team_history"):
+            return 1.0  # no transfer history data — assume veteran
+        current_team_entry = pdata["team_history"][-1]
+        maps_with_team = current_team_entry.get("maps_played_with_team", 0)
+        return min(maps_with_team, self.COHESION_SAT_MAPS) / self.COHESION_SAT_MAPS
+
+    def sample_kills(self, roster: list[str], agents: list[str], total_kills: int,
+                     player_emas: dict, baseline_lookup: dict) -> dict:
         """
         Samples individual kills matching total_kills constraint exactly.
-        Prior alpha parameters set from agent role and historical comfort.
+        Prior alpha parameters set from agent role, historical ACS, and cohesion CF.
+
+        CF gates the concentration: low CF (new signing) → wider kill-share variance.
+        Raw skill priors (ACS, duel_diff) are NOT penalised by CF.
         """
         alphas = []
         for idx, player in enumerate(roster):
             agent = agents[idx]
             role = self.agent_roles.get(agent, "Sentinel")
-            
+
             # Base alpha for role
             alpha_0 = {"Duelist": 3.8, "Initiator": 2.3, "Controller": 1.6, "Sentinel": 1.2}.get(role, 1.5)
-            
+
             # Scale by player historical ACS EMA and duel diff
             feat = player_emas.get(player, baseline_lookup.get(player, {"acs": 200.0, "duel_diff": 0.0}))
             acs = feat.get("acs", 200.0)
             duel_diff = feat.get("duel_diff", 0.0)
-            
             alpha_scaled = alpha_0 * np.exp(0.004 * (acs - 200.0) + 0.3 * duel_diff)
-            alphas.append(max(alpha_scaled, 0.1))
-            
+
+            # V5: apply cohesion gating (only widens variance, doesn’t affect mean)
+            cf = self.get_cohesion_coefficient(player)
+            cohesion_gate = self.CF_MIN_SCALE + (1.0 - self.CF_MIN_SCALE) * cf
+            alpha_final = alpha_scaled * cohesion_gate
+
+            alphas.append(max(alpha_final, 0.1))
+
         # Draw proportions from Dirichlet
         proportions = np.random.dirichlet(alphas)
-        
+
         # Enforce sum constraint via integer rounding
         kills = np.floor(proportions * total_kills).astype(int)
         remainder = total_kills - np.sum(kills)
-        
+
         # Distribute remaining kills to largest fractional parts
         fractional_parts = (proportions * total_kills) - kills
         indices = np.argsort(fractional_parts)[::-1]
         for i in range(int(remainder)):
             kills[indices[i]] += 1
-            
+
         return {roster[i]: int(kills[i]) for i in range(len(roster))}
 
 
@@ -443,14 +755,20 @@ class VCTv5SimulationEngine:
     def __init__(self, raw_dir=RAW_DIR, processed_dir=PROCESSED_DIR):
         self.raw_dir = raw_dir
         self.processed_dir = processed_dir
-        self.veto_bandit = MapVetoBandit(self.raw_dir)
-        self.agent_transformer = AgentCompositionTransformer(self.raw_dir, self.processed_dir)
-        self.round_mcmc = BivariatePoissonMCMC()
-        self.kill_dirichlet = KillShareDirichlet(self.agent_transformer.agent_roles)
-        
-        # Load datasets
+        # V5: MapVetoBandit now receives processed_dir for TemporalMapRegistry
+        self.veto_bandit = MapVetoBandit(self.raw_dir, self.processed_dir)
+        self.agent_assigner = HungarianAgentAssigner(self.raw_dir, self.processed_dir)
+        self.agent_transformer = self.agent_assigner  # Alias for backward compatibility
+
+        # Load datasets (legacy path: populates player_emas, baseline_lookup)
         self.player_emas, self.baseline_lookup, self.team_stats, self.player_global_stats, self.player_agent_stats = get_simulation_historical_stats(self.raw_dir)
-        self.agent_transformer.fit_comfort(self.player_agent_stats, self.player_global_stats)
+        self.agent_assigner.fit_comfort(self.player_agent_stats, self.player_global_stats)
+
+        # V5: pass global player ledger to KillShareDirichlet for cohesion gating
+        self.kill_dirichlet = KillShareDirichlet(
+            self.agent_assigner.agent_roles,
+            player_ledger=self.agent_assigner.player_ledger
+        )
         
     def sample_deaths(self, roster: list[str], agents: list[str], total_deaths: int) -> dict:
         """
@@ -460,7 +778,7 @@ class VCTv5SimulationEngine:
         alphas = []
         for idx, player in enumerate(roster):
             agent = agents[idx]
-            role = self.agent_transformer.agent_roles.get(agent, "Sentinel")
+            role = self.agent_assigner.agent_roles.get(agent, "Sentinel")
             alpha_0 = {"Duelist": 2.8, "Initiator": 2.2, "Controller": 1.9, "Sentinel": 1.6}.get(role, 2.0)
             feat = self.player_emas.get(player, self.baseline_lookup.get(player, {"duel_diff": 0.0}))
             duel_diff = feat.get("duel_diff", 0.0)
@@ -486,7 +804,7 @@ class VCTv5SimulationEngine:
         alphas = []
         for idx, player in enumerate(roster):
             agent = agents[idx]
-            role = self.agent_transformer.agent_roles.get(agent, "Sentinel")
+            role = self.agent_assigner.agent_roles.get(agent, "Sentinel")
             alpha_0 = {"Initiator": 3.2, "Controller": 2.8, "Sentinel": 1.6, "Duelist": 1.2}.get(role, 2.0)
             alphas.append(max(alpha_0, 0.1))
             
@@ -512,13 +830,15 @@ class VCTv5SimulationEngine:
         estimated_acs = 170.0 * kpr + 45.0 * apr + base_acs * 0.35 + np.random.normal(0, 12.0)
         return int(max(estimated_acs, 30.0))
 
-    def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000, override_maps: list[str] = None) -> dict:
+    def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000, override_maps: list[str] = None, target_date: datetime | None = None, ub_advantage: bool | str = False) -> dict:
         """
-        Runs Monte Carlo pipeline (10,000 iterations) with Probabilistic Beam Search
-        to generate player EV fantasy projections. Supports manual map overrides.
+        Runs Monte Carlo pipeline (10,000 iterations) with Side-Conditioned Markov Simulator
+        and Hungarian Agent Assignment to generate player EV fantasy projections. Supports target_date and ub_advantage.
         """
         logger.info(f"V5 Engine: Starting {num_iterations} Monte Carlo iterations for {team_a} vs {team_b}...")
-        
+        if target_date is None:
+            target_date = datetime.now()
+            
         # 1. Identify rosters from history
         roster_a = get_simulation_roster(team_a, self.raw_dir)
         roster_b = get_simulation_roster(team_b, self.raw_dir)
@@ -540,14 +860,14 @@ class VCTv5SimulationEngine:
             veto_confidences = [(f"Force Play {m}", 1.0) for m in override_maps]
         else:
             # Deterministic base veto prediction
-            veto_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=False)
+            veto_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=False, target_date=target_date, ub_advantage=ub_advantage)
             series_maps = veto_res["maps"]
             
             # Stochastic veto simulations to calculate veto confidences
             veto_step_counts = defaultdict(lambda: defaultdict(int))
             num_veto_sims = 1000
             for _ in range(num_veto_sims):
-                v_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=True)
+                v_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=True, target_date=target_date, ub_advantage=ub_advantage)
                 steps = v_res["veto_str"].split("; ")
                 for step_idx, step in enumerate(steps):
                     veto_step_counts[step_idx][step] += 1
@@ -578,17 +898,16 @@ class VCTv5SimulationEngine:
         team_a_wins = 0
         team_b_wins = 0
         
-        # Compute Poisson λ rates for both teams
-        def get_team_poisson_rate(roster):
+        # Compute team ACS stats for Markov simulator
+        def get_team_avg_acs(roster):
             acs_list = []
             for p in roster:
                 feat = self.player_emas.get(p, self.baseline_lookup.get(p, {"acs": 200.0}))
                 acs_list.append(feat["acs"])
-            avg_acs = sum(acs_list) / len(acs_list) if acs_list else 200.0
-            return 1.0 + 0.003 * avg_acs
+            return sum(acs_list) / len(acs_list) if acs_list else 200.0
             
-        rate_a = get_team_poisson_rate(roster_a)
-        rate_b = get_team_poisson_rate(roster_b)
+        acs_team_a = get_team_avg_acs(roster_a)
+        acs_team_b = get_team_avg_acs(roster_b)
         
         # Run MC Loop
         for it in range(num_iterations):
@@ -600,17 +919,17 @@ class VCTv5SimulationEngine:
             series_map_scores = []
             
             # Predict agent comps for this iteration
-            # We run the autoregressive transformer once per series/map
             map_compositions = {}
             for map_name in series_maps:
-                comp_a = self.agent_transformer.predict_composition(team_a, map_name, roster_a, target_patch)
-                comp_b = self.agent_transformer.predict_composition(team_b, map_name, roster_b, target_patch)
+                comp_a = self.agent_assigner.predict_composition(team_a, map_name, roster_a, target_patch)
+                comp_b = self.agent_assigner.predict_composition(team_b, map_name, roster_b, target_patch)
                 map_compositions[map_name] = (comp_a, comp_b)
                 
             # Simulate each map
             for map_idx, map_name in enumerate(series_maps):
-                # Run MCMC round simulation
-                score_a, score_b = self.round_mcmc.simulate_rounds(rate_a, rate_b)
+                # Run Side-Conditioned Markov round simulation
+                markov_sim = SideConditionedMarkovSimulator(acs_team_a, acs_team_b, map_name)
+                score_a, score_b = markov_sim.simulate_rounds()
                 series_map_scores.append((score_a, score_b))
                 
                 # Check map winner
@@ -806,6 +1125,7 @@ class VCTv5SimulationEngine:
                     "Team": team_a if p in roster_a else team_b,
                     "Role": role,
                     "Kills": f"{kills_mean:.1f} ({kills_p10:.0f} - {kills_p90:.0f})",
+                    "kills_mean": round(float(kills_mean), 2),
                     "Deaths": f"{deaths_mean:.1f} ({deaths_p10:.0f} - {deaths_p90:.0f})",
                     "Assists": f"{assists_mean:.1f} ({assists_p10:.0f} - {assists_p90:.0f})",
                     "ACS": f"{acs_mean:.1f} ({acs_p10:.0f} - {acs_p90:.0f})",
@@ -963,31 +1283,91 @@ def get_simulation_historical_stats(raw_dir: str):
                     acs_val = float(p.get('acs') or 0.0)
                     
                     if p_name not in player_global_stats:
-                        player_global_stats[p_name] = {'sum_acs': 0.0, 'count': 0}
+                        player_global_stats[p_name] = {'sum_acs': 0.0, 'count': 0, 'acs_history': []}
                     if acs_val > 0:
                         player_global_stats[p_name]['sum_acs'] += acs_val
                         player_global_stats[p_name]['count'] += 1
+                        player_global_stats[p_name].setdefault('acs_history', []).append(acs_val)
                         
                         if agent:
                             # Global key
                             if (p_name, agent) not in player_agent_stats:
-                                player_agent_stats[(p_name, agent)] = {'sum_acs': 0.0, 'count': 0}
+                                player_agent_stats[(p_name, agent)] = {'sum_acs': 0.0, 'count': 0, 'acs_history': []}
                             player_agent_stats[(p_name, agent)]['sum_acs'] += acs_val
                             player_agent_stats[(p_name, agent)]['count'] += 1
+                            player_agent_stats[(p_name, agent)].setdefault('acs_history', []).append(acs_val)
                             
                             # Map-specific key
                             if (p_name, map_name, agent) not in player_agent_stats:
-                                player_agent_stats[(p_name, map_name, agent)] = {'sum_acs': 0.0, 'count': 0}
+                                player_agent_stats[(p_name, map_name, agent)] = {'sum_acs': 0.0, 'count': 0, 'acs_history': []}
                             player_agent_stats[(p_name, map_name, agent)]['sum_acs'] += acs_val
                             player_agent_stats[(p_name, map_name, agent)]['count'] += 1
+                            player_agent_stats[(p_name, map_name, agent)].setdefault('acs_history', []).append(acs_val)
+                    
+                    # V5 fix: accumulate kast and duel_diff from actual match fields
+                    kast_raw = p.get('kast')
+                    fk_raw   = p.get('fk')
+                    fd_raw   = p.get('fd')
 
-    # Fill EMAs using historical global averages
+                    if kast_raw is not None:
+                        try:
+                            kast_str = str(kast_raw).replace('%', '')
+                            kast_val = float(kast_str) / 100.0 if float(kast_str) > 1.0 else float(kast_str)
+                            gs = player_global_stats.setdefault(p_name, {'sum_acs': 0.0, 'count': 0, 'acs_history': []})
+                            gs['sum_kast'] = gs.get('sum_kast', 0.0) + kast_val
+                            gs['kast_count'] = gs.get('kast_count', 0) + 1
+                        except (ValueError, TypeError):
+                            pass
+
+                    if fk_raw is not None and fd_raw is not None:
+                        try:
+                            fk_val = float(fk_raw)
+                            fd_val = float(fd_raw)
+                            gs = player_global_stats.setdefault(p_name, {'sum_acs': 0.0, 'count': 0, 'acs_history': []})
+                            gs['sum_duel_diff'] = gs.get('sum_duel_diff', 0.0) + (fk_val - fd_val)
+                            gs['duel_count']    = gs.get('duel_count', 0) + 1
+                        except (ValueError, TypeError):
+                            pass
+
+    # Helper function for 5th/95th percentile outlier clipping
+    def compute_clipped_acs(stat_dict: dict) -> float:
+        history = stat_dict.get('acs_history', [])
+        if len(history) > 3:
+            p5 = np.percentile(history, 5)
+            p95 = np.percentile(history, 95)
+            clipped = np.clip(history, p5, p95)
+            return float(np.mean(clipped))
+        elif len(history) > 0:
+            return float(np.mean(history))
+        elif stat_dict.get('count', 0) > 0:
+            return stat_dict['sum_acs'] / stat_dict['count']
+        return 200.0
+
+    # Apply outlier clipping to all player_agent_stats sum_acs entries for legacy fallback accuracy
+    for k, stat_dict in player_agent_stats.items():
+        stat_dict['sum_acs'] = compute_clipped_acs(stat_dict) * stat_dict['count']
+
+    # Fill EMAs using historical global averages with outlier clipping applied
     for p_name, stats in player_global_stats.items():
         if stats['count'] > 0:
+            if stats.get('kast_count', 0) > 0:
+                kast_ema = stats['sum_kast'] / stats['kast_count']
+            elif p_name in baseline_lookup:
+                kast_ema = baseline_lookup[p_name]['kast']
+            else:
+                kast_ema = 0.72
+
+            if stats.get('duel_count', 0) > 0:
+                duel_ema = stats['sum_duel_diff'] / stats['duel_count']
+            elif p_name in baseline_lookup:
+                duel_ema = baseline_lookup[p_name]['duel_diff']
+            else:
+                duel_ema = 0.0
+
             player_emas[p_name] = {
-                "acs": stats['sum_acs'] / stats['count'],
-                "kast": 0.72,
-                "duel_diff": 0.01
+                "acs": compute_clipped_acs(stats),
+                "kast": float(np.clip(kast_ema, 0.0, 1.0)),
+                "duel_diff": float(np.clip(duel_ema, -0.5, 0.5))
             }
             
     # Default fallback for any unseen player

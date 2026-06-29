@@ -12,15 +12,25 @@ logging.basicConfig(level=logging.INFO)
 
 VLR_BASE_URL = "https://www.vlr.gg"
 
-def fetch_url_with_curl(url: str) -> str:
-    """Fetch URL using curl_cffi to bypass Cloudflare WAF, with randomized jitter."""
-    # Randomized jitter delay: 3.0s + U(0, 2.0s)
-    sleep_time = 3.0 + random.uniform(0.0, 2.0)
+_session = None
+
+def get_curl_session() -> requests.Session:
+    global _session
+    if _session is None:
+        _session = requests.Session(impersonate="chrome")
+    return _session
+
+def fetch_url_with_curl(url: str, session: requests.Session = None) -> str:
+    """Fetch URL using curl_cffi Session to bypass Cloudflare WAF, with randomized jitter."""
+    sleep_time = 3.0 + random.uniform(0.5, 2.5)
     logger.info(f"Sleeping for {sleep_time:.2f}s to prevent IP throttling/shadow-bans...")
     time.sleep(sleep_time)
     
+    if session is None:
+        session = get_curl_session()
+        
     try:
-        response = requests.get(url, impersonate="chrome", timeout=20.0)
+        response = session.get(url, timeout=20.0)
         if response.status_code != 200:
             logger.error(f"HTTP request returned status {response.status_code} for URL {url}")
             return ""
@@ -28,6 +38,21 @@ def fetch_url_with_curl(url: str) -> str:
     except Exception as e:
         logger.error(f"curl_cffi fetch failed for URL {url}: {e}")
         return ""
+
+def is_tier1_event(event_name: str) -> bool:
+    """Tier 1 Strict Filtering: Blacklist strictly overrides whitelist globally."""
+    if not event_name:
+        return False
+    name_lower = event_name.lower()
+    blacklist_keywords = [
+        'challengers', 'ascension', 'game changers', 'gc', 'premier', 'grassroots',
+        'fortress', 'collegiate', 'university', 'showmatch', 'community', 'trial',
+        'open qualifier', 'cup', 'weekly', 'monthly', 'amateur'
+    ]
+    whitelist_keywords = ['masters', 'champions', 'vct', 'champions tour']
+    if any(ex in name_lower for ex in blacklist_keywords):
+        return False
+    return any(kw in name_lower for kw in whitelist_keywords)
 
 def clean_text(text: str) -> str:
     if not text:

@@ -471,8 +471,11 @@ def optimize_roster(
 
     # Loop over all players as potential IGL candidates
     for k in range(n):
+        if forced_idx is not None and k != forced_idx:
+            continue
+            
         is_forced_igl_run = (forced_idx is not None and k == forced_idx)
-        is_other_igl_run = (forced_idx is not None and k != forced_idx)
+        is_other_igl_run = False
         
         # Candidate IGL floor
         igl_floor = filtered_players[k]["floor"]
@@ -765,13 +768,14 @@ def generate_stage_2_baseline(vfl_players: list[dict]) -> dict:
 def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remaining_bank_balance: float = 0.0, forced_igl_name: str = None) -> dict:
     """
     Transfer Advisor component. Enforces VFL ruleset.
-    Calculates salary_cap based on current roster cost + remaining bank balance, up to 50 VP max.
+    Hardcodes floating_bank calculation: floating_bank = 50.0 - sum(player_costs).
     Finds up to 3 distinct optimal transfer recommendations.
     """
-    current_roster_value = sum(p["price"] for p in current_roster)
-    salary_cap = min(50.0, current_roster_value + remaining_bank_balance)
+    current_roster_costs = [p.get("price", p.get("cost", 0)) for p in current_roster]
+    floating_bank = 50.0 - sum(current_roster_costs)
+    salary_cap = 50.0
     
-    logger.info(f"Running VFL Transfer Advisor: Current roster value: {current_roster_value} VP | Bank balance: {remaining_bank_balance} VP | Combined limit: {salary_cap} VP")
+    logger.info(f"Running VFL Transfer Advisor: Floating bank: {floating_bank:.2f} VP | Cap: {salary_cap} VP")
     
     recommendations = []
     excluded_rosters = []
@@ -845,15 +849,25 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remai
                 
         if result is not None and result["solver_status"] == "optimal":
             new_roster = result["optimal_roster"]
-            # Exclude this roster combination from subsequent option searches
-            roster_names = [p["player_name"] for p in new_roster]
-            excluded_rosters.append(roster_names)
             
             curr_names = set(p["player_name"] for p in current_roster)
             new_names = set(p["player_name"] for p in new_roster)
             
             transfers_out = [p for p in current_roster if p["player_name"] not in new_names]
             transfers_in = [p for p in new_roster if p["player_name"] not in curr_names]
+            
+            incoming_cost = sum(p.get("price", p.get("cost", 0)) for p in transfers_in)
+            outgoing_cost = sum(p.get("price", p.get("cost", 0)) for p in transfers_out)
+            
+            # Strict liquidity condition check
+            if incoming_cost > outgoing_cost + floating_bank:
+                roster_names = [p["player_name"] for p in new_roster]
+                excluded_rosters.append(roster_names)
+                continue
+
+            # Exclude this roster combination from subsequent option searches
+            roster_names = [p["player_name"] for p in new_roster]
+            excluded_rosters.append(roster_names)
             
             # Calculate projected gain (difference in points)
             current_roster_enriched = []
