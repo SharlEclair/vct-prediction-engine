@@ -1,0 +1,72 @@
+[
+  {
+    "player_id": "P0_TeamA",
+    "name": "Aspas",
+    "team": "Sentinels",
+    "role": "Duelist",
+    "salary": 9.8
+  },
+  {
+    "player_id": "P1_TeamA",
+    "name": "Leo",
+    "team": "Sentinels",
+    "role": "Initiator",
+    "salary": 8.5
+  },
+  {
+    "player_id": "P2_TeamA",
+    "name": "Chronicle",
+    "team": "Fnatic",
+    "role": "Flex",
+    "salary": 7.6
+  },
+  {
+    "player_id": "P3_TeamA",
+    "name": "Boaster",
+    "team": "Fnatic",
+    "role": "Controller",
+    "salary": 7.0
+  },
+  {
+    "player_id": "P4_TeamA",
+    "name": "Alfa",
+    "team": "Fnatic",
+    "role": "Sentinel",
+    "salary": 6.5
+  },
+  {
+    "player_id": "P5_TeamB",
+    "name": "ZmjjKK",
+    "team": "EDG",
+    "role": "Duelist",
+    "salary": 9.5
+  },
+  {
+    "player_id": "P6_TeamB",
+    "name": "Nobody",
+    "team": "EDG",
+    "role": "Initiator",
+    "salary": 8.2
+  },
+  {
+    "player_id": "P7_TeamB",
+    "name": "CHICHOO",
+    "team": "EDG",
+    "role": "Controller",
+    "salary": 7.2
+  },
+  {
+    "player_id": "P8_TeamB",
+    "name": "fORSKEN",
+    "team": "PRX",
+    "role": "Flex",
+    "salary": 7.5
+  },
+  {
+    "player_id": "P9_TeamB",
+    "name": "mindfreak",
+    "team": "PRX",
+    "role": "Sentinel",
+    "salary": 6.2
+  }
+]

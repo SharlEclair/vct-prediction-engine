@@ -16,6 +16,7 @@ import xgboost as xgb
 
 from data_ingestion import generate_mock_match_telemetry, process_match_telemetry, apply_winsorization
 from feature_engineering import compute_player_ema, generate_odr_matrix, attach_odr_features
+from utils import load_config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -124,8 +125,9 @@ def train_and_evaluate_xgboost(
     naive_preds = np.full_like(y_test, fill_value=y_train.mean())
     sample_naive_mae = mean_absolute_error(y_test, naive_preds)
     
-    # Standard Benchmark reference from spec
-    SPEC_NAIVE_BASELINE_MAE = 4.37
+    # Load benchmark reference dynamically from config.yaml
+    config = load_config()
+    SPEC_NAIVE_BASELINE_MAE = float(config.get("BENCHMARKS", {}).get("spec_naive_baseline_mae", 4.37))
     
     outperforms_spec = model_mae < SPEC_NAIVE_BASELINE_MAE
     
