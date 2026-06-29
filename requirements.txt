@@ -9,3 +9,4 @@ streamlit
 scipy
 matplotlib
 xgboost
+pulp
