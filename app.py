@@ -62,6 +62,8 @@ id_to_team_name = {v: k for k, v in team_name_to_id.items()}
 def load_automated_registry():
     path = os.path.join(PROCESSED_DIR, "automated_patch_nerf_registry.json")
     if not os.path.exists(path):
+        path = os.path.join(PROCESSED_DIR, "patch_nerf_registry.json")
+    if not os.path.exists(path):
         return "None", {}
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -445,7 +447,22 @@ with tab_sim:
     with sim_col5:
         sim_iterations = st.selectbox("Simulation Depth", [1000, 5000, 10000], index=1, key="sim_iterations")
     with sim_col6:
-        sim_patch_select = st.selectbox("Target Simulation Patch", ["Patch 9.04", "Patch 9.02", "Patch 8.11 (June 11, 2024)"], index=1, key="sim_target_patch")
+        # Dynamically load patch options from registry
+        try:
+            path_reg = os.path.join(PROCESSED_DIR, "automated_patch_nerf_registry.json")
+            if not os.path.exists(path_reg):
+                path_reg = os.path.join(PROCESSED_DIR, "patch_nerf_registry.json")
+            with open(path_reg, "r", encoding="utf-8") as f_reg:
+                reg_keys = json.load(f_reg).keys()
+            available_patches = sorted(list(reg_keys), key=lambda x: [int(i) if i.isdigit() else i for i in x.split('.')], reverse=True)
+            patch_options = [f"Patch {p}" for p in available_patches]
+        except Exception:
+            patch_options = []
+            
+        if not patch_options:
+            patch_options = ["Patch 9.04", "Patch 9.02", "Patch 8.11 (June 11, 2024)"]
+            
+        sim_patch_select = st.selectbox("Target Simulation Patch", patch_options, index=min(1, len(patch_options)-1), key="sim_target_patch")
         patch_match = re.search(r'([0-9.]+)', sim_patch_select)
         sim_target_patch_val = patch_match.group(1) if patch_match else "9.02"
 

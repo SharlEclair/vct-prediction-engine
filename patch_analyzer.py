@@ -148,15 +148,19 @@ def generate_patch_distances():
     # Export registry
     os.makedirs(PROCESSED_DIR, exist_ok=True)
     registry_path = os.path.join(PROCESSED_DIR, "automated_patch_nerf_registry.json")
+    legacy_registry_path = os.path.join(PROCESSED_DIR, "patch_nerf_registry.json")
     trace_path = os.path.join(PROCESSED_DIR, "patch_impact_trace.json")
     
     with open(registry_path, "w", encoding="utf-8") as f:
         json.dump(automated_nerf_registry, f, indent=4)
         
+    with open(legacy_registry_path, "w", encoding="utf-8") as f:
+        json.dump(automated_nerf_registry, f, indent=4)
+        
     with open(trace_path, "w", encoding="utf-8") as f:
         json.dump(patch_impact_trace, f, indent=4)
         
-    logger.info(f"Automated Patch Registry successfully saved to {registry_path}")
+    logger.info(f"Automated Patch Registry successfully saved to {registry_path} and {legacy_registry_path}")
     logger.info(f"Patch Impact Trace successfully saved to {trace_path}")
     
     return registry_path
