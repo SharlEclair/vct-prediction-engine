@@ -74,7 +74,7 @@ logger = logging.getLogger("app")
 
 RAW_DIR = "./data/raw"
 PROCESSED_DIR = "./data/processed"
-ROSTER_STATE_PATH = "./data/user_roster_state.json"
+ROSTER_STATE_PATH = "./data/processed/roster_state.json"
 
 # ============================================================
 # DATA LOADING HELPERS
@@ -470,7 +470,17 @@ with st.sidebar:
         patch_options = ["Patch 9.04", "Patch 9.02", "Patch 8.11 (June 11, 2024)"]
     opt_patch = st.selectbox("Select Target Patch Window", patch_options, key="opt_target_patch")
     
-    st.markdown("#### 3. Simulation Depth")
+    st.markdown("#### 3. Available Fantasy Budget")
+    opt_salary_cap = st.slider(
+        "Roster Budget Cap (VP)",
+        min_value=35.0,
+        max_value=60.0,
+        value=50.0,
+        step=0.5,
+        key="opt_salary_cap"
+    )
+    
+    st.markdown("#### 4. Simulation Depth")
     opt_depth = st.select_slider(
         "Monte Carlo Iterations",
         options=[1000, 5000, 10000],
@@ -490,11 +500,12 @@ if btn_generate_lineup:
             from knapsack_solver import prepare_player_slate, solve_vfl_knapsack, run_portfolio_simulation
             
             df_meta_slate, df_fused_slate = prepare_player_slate(num_iterations=opt_depth)
-            opt_solution = solve_vfl_knapsack(df_meta_slate)
+            opt_solution = solve_vfl_knapsack(df_meta_slate, salary_cap=opt_salary_cap)
             portfolio_results = run_portfolio_simulation(opt_solution, df_fused_slate)
             
             st.session_state["gpp_solution"] = opt_solution
             st.session_state["gpp_portfolio"] = portfolio_results
+            st.session_state["gpp_meta_df"] = df_meta_slate
             st.session_state["gpp_generated"] = True
             st.toast("GPP Optimization Pipeline succeeded!", icon="✅")
         except Exception as e:
@@ -1271,10 +1282,29 @@ with tab_match:
 with tab_optimizer:
     st.markdown("### 🧠 VFL Fantasy Manager Hub")
 
-    # Live Meta Radar
-    st.markdown(f"#### 📡 Live Meta Radar (Patch {latest_patch})")
-    if active_penalties:
-        sorted_penalties = sorted(active_penalties.items(), key=lambda x: x[1], reverse=True)
+    # Live Meta Radar (Task 7.1)
+    match_patch = re.search(r'([0-9.]+)', opt_patch)
+    active_patch_val = match_patch.group(1) if match_patch else "9.02"
+    
+    # Load dynamic patch penalties
+    from pathlib import Path
+    base_dir = Path(__file__).resolve().parent
+    path_reg = base_dir / "data" / "processed" / "automated_patch_nerf_registry.json"
+    if not path_reg.exists():
+        path_reg = base_dir / "data" / "processed" / "patch_nerf_registry.json"
+        
+    radar_penalties = {}
+    if path_reg.exists():
+        try:
+            with open(path_reg, "r", encoding="utf-8") as f_reg:
+                registry_data = json.load(f_reg)
+            radar_penalties = registry_data.get(active_patch_val, {})
+        except Exception as e:
+            logger.warning(f"Error parsing patch registry for radar: {e}")
+
+    st.markdown(f"#### 📡 Live Meta Radar (Patch {active_patch_val})")
+    if radar_penalties:
+        sorted_penalties = sorted(radar_penalties.items(), key=lambda x: x[1], reverse=True)
         top_3 = sorted_penalties[:3]
         cols = st.columns(3)
         for idx, (agent_name, score) in enumerate(top_3):
@@ -1297,93 +1327,287 @@ with tab_optimizer:
                     </div>
                 """), unsafe_allow_html=True)
     else:
-        st.info("No active patch nerfs registered in the automated registry.")
+        st.info(f"No active patch nerfs registered for Patch {active_patch_val}.")
 
     st.markdown("---")
-    st.markdown("### 🏆 Hybrid Valorant GPP Optimizer")
     
-    if "gpp_solution" in st.session_state and st.session_state.get("gpp_generated", False):
-        sol = st.session_state["gpp_solution"]
-        port = st.session_state["gpp_portfolio"]
-        
-        # Task 6.3: The Upside Hook (Metrics)
-        st.markdown("#### 📈 Portfolio Simulation & Tournament Upside")
-        
-        m_col1, m_col2, m_col3 = st.columns(3)
-        with m_col1:
-            st.metric(
-                label="Total Salary Used",
-                value=f"{sol['total_salary']:.1f} / {sol.get('salary_cap', 50.0):.1f} VP",
-                help="Maximum roster budget allowed: 50.0 VP"
-            )
-        with m_col2:
-            st.metric(
-                label="Lineup Median EV Points",
-                value=f"{port['simulated_lineup_mean']:.2f} Pts",
-                help="Expected Value projection from copula fusion"
-            )
-        with m_col3:
-            delta_val = port['simulated_lineup_ceiling_p85'] - port['simulated_lineup_mean']
-            st.metric(
-                label="Tournament GPP Ceiling (85th %)",
-                value=f"{port['simulated_lineup_ceiling_p85']:.2f} Pts",
-                delta=f"+{delta_val:.2f} Pts (GPP Upside Hook)",
-                delta_color="normal",
-                help="85th percentile ceiling from Monte Carlo simulation runs"
-            )
+    col_left, col_right = st.columns([3, 2])
+    
+    with col_left:
+        st.markdown("### 🏆 Hybrid Valorant GPP Optimizer")
+        if "gpp_solution" in st.session_state and st.session_state.get("gpp_generated", False):
+            sol = st.session_state["gpp_solution"]
+            port = st.session_state["gpp_portfolio"]
             
+            # Task 6.3: The Upside Hook (Metrics)
+            st.markdown("#### 📈 Portfolio Simulation & Tournament Upside")
+            
+            m_col1, m_col2, m_col3 = st.columns(3)
+            with m_col1:
+                st.metric(
+                    label="Total Salary Used",
+                    value=f"{sol['total_salary']:.1f} / {sol.get('salary_cap', 50.0):.1f} VP",
+                    help="Maximum roster budget allowed"
+                )
+            with m_col2:
+                st.metric(
+                    label="Lineup Median EV Points",
+                    value=f"{port['simulated_lineup_mean']:.2f} Pts",
+                    help="Expected Value projection from copula fusion"
+                )
+            with m_col3:
+                delta_val = port['simulated_lineup_ceiling_p85'] - port['simulated_lineup_mean']
+                st.metric(
+                    label="Tournament GPP Ceiling (85th %)",
+                    value=f"{port['simulated_lineup_ceiling_p85']:.2f} Pts",
+                    delta=f"+{delta_val:.2f} Pts (GPP Upside Hook)",
+                    delta_color="normal",
+                    help="85th percentile ceiling from Monte Carlo simulation runs"
+                )
+                
+            st.markdown("---")
+            
+            # Task 6.2: Roster Visualization (Main UI)
+            st.markdown("#### 👥 Optimal 6-Man Tournament Lineup")
+            
+            # Use 2 rows of 3 columns to avoid squishing in 3/5 width column layout
+            row1_cols = st.columns(3)
+            row2_cols = st.columns(3)
+            for idx, p in enumerate(sol["lineup"]):
+                col_container = row1_cols[idx] if idx < 3 else row2_cols[idx - 3]
+                with col_container:
+                    p_name = p["name"]
+                    p_role = p["role"]
+                    p_sal = p["salary"]
+                    p_ev = p["EV"]
+                    p_ceil = p["Ceiling_p85"]
+                    p_igl = p["is_igl"]
+                    
+                    icon_url = get_player_icon(p_role, p_name)
+                    
+                    igl_badge_html = """
+                        <div style="background: rgba(255, 70, 85, 0.15); color: #ff4655; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; text-align: center; border-radius: 6px; padding: 3px 6px; border: 1px solid rgba(255, 70, 85, 0.3); margin-top: 8px;">
+                            👑 IGL (1.5x)
+                        </div>
+                    """ if p_igl else ""
+                    
+                    st.markdown(clean_html(f"""
+                        <div style="background: rgba(26, 29, 36, 0.75); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; text-align: center; backdrop-filter: blur(10px); min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div style="position: relative; width: 64px; height: 64px;">
+                                <img src="{icon_url}" width="64" height="64" style="border-radius: 50%; border: 2px solid {'#ff4655' if p_igl else '#4f46e5'}; background: #0f172a;"/>
+                            </div>
+                            <div style="margin-top: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="font-weight: 700; font-size: 1.05rem; color: #f8fafc; word-break: break-all;">{p_name}</div>
+                                <div style="font-size: 0.75rem; color: #a78bfa; font-weight: 600; text-transform: uppercase; margin-top: 2px;">{p_role}</div>
+                                <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 4px;">{p['team']}</div>
+                            </div>
+                            <div style="margin-top: auto; width: 100%;">
+                                <div style="font-weight: 700; font-size: 1.2rem; color: #4ade80; margin-top: 6px;">{p_sal:.1f} VP</div>
+                                <div style="font-size: 0.72rem; color: #64748b; margin-top: 2px;">EV: {p_ev:.1f} | ceil: {p_ceil:.1f}</div>
+                                {igl_badge_html}
+                            </div>
+                        </div>
+                    """), unsafe_allow_html=True)
+                    
+            st.markdown("<br/>", unsafe_allow_html=True)
+            st.markdown(clean_html(f"""
+                <div class="optimizer-card" style="margin-top: 15px;">
+                    <h5 style="color: #a78bfa; font-weight: 700; margin-top: 0; margin-bottom: 8px;">📊 Portfolio Simulation Summary</h5>
+                    <p style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.5; margin: 0;">
+                        Based on <strong>{st.session_state.get('opt_sim_depth', 10000)}</strong> Monte Carlo iterations, the optimal roster secures an aggregate <strong>Floor (p15) of {port['simulated_lineup_floor_p15']:.2f} points</strong>, an <strong>Expected Value of {port['simulated_lineup_mean']:.2f} points</strong>, and a peak <strong>Tournament Max of {port['simulated_lineup_max']:.2f} points</strong>.
+                    </p>
+                </div>
+            """), unsafe_allow_html=True)
+        else:
+            st.info("👈 Use the Command Center in the sidebar and click 'Generate Optimal GPP Lineup' to compute the GPP optimal roster!")
+
+    with col_right:
+        st.markdown("### 🔄 3-Transfer Advisor")
+        st.markdown("<p style='color: #94a3b8; font-size: 0.85rem; margin-top: -10px;'>Select your current fantasy roster to evaluate trades and analyze GPP points gain.</p>", unsafe_allow_html=True)
+        
+        # 1. Load slate names and data
+        from utils import load_slate_payload
+        try:
+            slate_data = load_slate_payload()
+            slate_names = sorted([p["name"] for p in slate_data])
+            slate_lookup = {p["name"]: p for p in slate_data}
+        except Exception as e:
+            st.error(f"Failed to load players from current_slate.json: {e}")
+            slate_data = []
+            slate_names = []
+            slate_lookup = {}
+            
+        # Initialize defaultSelections: prefer saved state from ROSTER_STATE_PATH
+        saved_names, saved_igl = load_roster_state()
+        valid_saved_names = [n for n in saved_names if n in slate_names]
+        
+        # Multiselect loaded with the active slate from current_slate.json
+        selected_roster = st.multiselect(
+            "Select Your Current 6 Players",
+            options=slate_names,
+            default=valid_saved_names if len(valid_saved_names) > 0 else (slate_names[:6] if len(slate_names) >= 6 else []),
+            key="user_multiselect_roster"
+        )
+        
+        # Validation checks for select count
+        num_selected = len(selected_roster)
+        if num_selected != 6:
+            st.warning(f"⚠️ Please select exactly 6 players to evaluate transfers. (Currently selected: {num_selected})")
+            
+        # Floating Bank & Cost calculations
+        roster_cost = sum(slate_lookup[name]["salary"] for name in selected_roster if name in slate_lookup)
+        floating_bank = opt_salary_cap - roster_cost
+        
+        # IGL Selection dropdown (IGL must be one of the selected players)
+        igl_options = selected_roster
+        default_igl_name = None
+        if igl_options:
+            if saved_igl in igl_options:
+                igl_default_name = saved_igl
+            else:
+                igl_default_name = igl_options[0]
+                
+        selected_igl = st.selectbox(
+            "👑 Designate In-Game Leader (IGL)",
+            options=igl_options,
+            index=igl_options.index(igl_default_name) if (igl_options and igl_default_name in igl_options) else 0,
+            key="user_igl_selectbox"
+        )
+        
+        # Dynamic Roster EV calculator applying 1.5x IGL multiplier
+        roster_ev = 0.0
+        has_ev = False
+        if "gpp_meta_df" in st.session_state:
+            df_m = st.session_state["gpp_meta_df"]
+            has_ev = True
+            for name in selected_roster:
+                ev_val = 0.0
+                player_row = df_m[df_m["name"] == name]
+                if not player_row.empty:
+                    ev_val = float(player_row.iloc[0]["EV"])
+                mult = 1.5 if name == selected_igl else 1.0
+                roster_ev += ev_val * mult
+                
+        # Persist selected roster and IGL to session state on change
+        st.session_state["saved_roster_names"] = selected_roster
+        st.session_state["saved_igl_name"] = selected_igl
+        
+        # State Persistence buttons using standard file I/O
+        p_col1, p_col2 = st.columns(2)
+        with p_col1:
+            if st.button("💾 Save Roster State", key="btn_save_roster_state", use_container_width=True):
+                if num_selected == 6:
+                    save_roster_state(selected_roster, selected_igl)
+                    st.toast("Roster state successfully saved!", icon="💾")
+                else:
+                    st.warning("Roster must have exactly 6 players to save.")
+        with p_col2:
+            roster_exists = os.path.exists(ROSTER_STATE_PATH)
+            if st.button("📂 Load Roster State", key="btn_load_roster_state", disabled=not roster_exists, use_container_width=True):
+                loaded_players, loaded_igl = load_roster_state()
+                st.session_state["saved_roster_names"] = loaded_players
+                st.session_state["saved_igl_name"] = loaded_igl
+                st.rerun()
+
+        # Display Metrics
+        st.markdown("#### 📊 Roster Metrics")
+        met_col1, met_col2 = st.columns(2)
+        with met_col1:
+            st.metric(
+                label="Selected Roster Cost",
+                value=f"{roster_cost:.1f} VP",
+                help="Sum of salaries of the 6 selected players"
+            )
+        with met_col2:
+            if floating_bank < 0:
+                st.markdown(f"<div style='color: #ef4444; font-size: 1.1rem; font-weight: 700; padding: 4px 0;'>Floating Bank: {floating_bank:.1f} VP<br/>(BUDGET EXCEEDED!)</div>", unsafe_allow_html=True)
+            else:
+                st.metric(
+                    label="Floating Bank",
+                    value=f"{floating_bank:.1f} VP",
+                    help="Available budget remaining (Budget Cap - Roster Cost)"
+                )
+                
+        # Display selected roster EV
+        if has_ev:
+            st.info(f"Projected Current Roster EV: **{roster_ev:.2f} Pts** (Applying {selected_igl}'s 1.5x IGL multiplier)")
+        else:
+            st.info("Run the GPP Optimizer in the sidebar to populate Expected Value (EV) projections.")
+
+        # Trades Engine Section
         st.markdown("---")
+        st.markdown("#### 🚀 Trade Recommendations Engine")
+        btn_calc_trades = st.button("Calculate Optimal Trades", key="btn_calc_trades", type="primary", use_container_width=True)
         
-        # Task 6.2: Roster Visualization (Main UI)
-        st.markdown("#### 👥 Optimal 6-Man Tournament Lineup")
-        
-        player_cols = st.columns(6)
-        for idx, p in enumerate(sol["lineup"]):
-            with player_cols[idx]:
-                p_name = p["name"]
-                p_role = p["role"]
-                p_sal = p["salary"]
-                p_ev = p["EV"]
-                p_ceil = p["Ceiling_p85"]
-                p_igl = p["is_igl"]
+        if btn_calc_trades:
+            if num_selected != 6:
+                st.error("Roster must have exactly 6 players selected to calculate trades.")
+            elif "gpp_solution" not in st.session_state or not st.session_state.get("gpp_generated", False):
+                st.error("Please run 'Generate Optimal GPP Lineup' first to compute the target optimal roster.")
+            else:
+                sol = st.session_state["gpp_solution"]
+                opt_lineup = sol["lineup"]
+                opt_pids = {p["player_id"] for p in opt_lineup}
+                opt_lookup = {p["player_id"]: p for p in opt_lineup}
                 
-                icon_url = get_player_icon(p_role, p_name)
+                # Get user selected player IDs
+                user_pids = set()
+                user_lookup = {}
+                for name in selected_roster:
+                    if name in slate_lookup:
+                        p_dict = slate_lookup[name]
+                        user_pids.add(p_dict["player_id"])
+                        user_lookup[p_dict["player_id"]] = p_dict
+                        
+                # Compute difference: OUT = user - opt; IN = opt - user
+                pids_out = user_pids - opt_pids
+                pids_in = opt_pids - user_pids
                 
-                igl_badge_html = """
-                    <div style="background: rgba(255, 70, 85, 0.15); color: #ff4655; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; text-align: center; border-radius: 6px; padding: 3px 6px; border: 1px solid rgba(255, 70, 85, 0.3); margin-top: 8px;">
-                        👑 IGL (1.5x)
-                    </div>
-                """ if p_igl else ""
+                # Check IGL swap:
+                igl_swap = False
+                opt_igl_pid = sol["igl_player"]
+                opt_igl_name = next((p["name"] for p in opt_lineup if p["is_igl"]), "")
+                if selected_igl != opt_igl_name:
+                    igl_swap = True
                 
-                st.markdown(clean_html(f"""
-                    <div style="background: rgba(26, 29, 36, 0.75); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; text-align: center; backdrop-filter: blur(10px); min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
-                        <div style="position: relative; width: 64px; height: 64px;">
-                            <img src="{icon_url}" width="64" height="64" style="border-radius: 50%; border: 2px solid {'#ff4655' if p_igl else '#4f46e5'}; background: #0f172a;"/>
-                        </div>
-                        <div style="margin-top: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                            <div style="font-weight: 700; font-size: 1.05rem; color: #f8fafc; word-break: break-all;">{p_name}</div>
-                            <div style="font-size: 0.75rem; color: #a78bfa; font-weight: 600; text-transform: uppercase; margin-top: 2px;">{p_role}</div>
-                            <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 4px;">{p['team']}</div>
-                        </div>
-                        <div style="margin-top: auto; width: 100%;">
-                            <div style="font-weight: 700; font-size: 1.2rem; color: #4ade80; margin-top: 6px;">{p_sal:.1f} VP</div>
-                            <div style="font-size: 0.72rem; color: #64748b; margin-top: 2px;">EV: {p_ev:.1f} | ceil: {p_ceil:.1f}</div>
-                            {igl_badge_html}
-                        </div>
-                    </div>
-                """), unsafe_allow_html=True)
-                
-        st.markdown("<br/>", unsafe_allow_html=True)
-        st.markdown(clean_html(f"""
-            <div class="optimizer-card" style="margin-top: 15px;">
-                <h5 style="color: #a78bfa; font-weight: 700; margin-top: 0; margin-bottom: 8px;">📊 Portfolio Simulation Summary</h5>
-                <p style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.5; margin: 0;">
-                    Based on <strong>{st.session_state.get('opt_sim_depth', 10000)}</strong> Monte Carlo iterations, the optimal roster secures an aggregate <strong>Floor (p15) of {port['simulated_lineup_floor_p15']:.2f} points</strong>, an <strong>Expected Value of {port['simulated_lineup_mean']:.2f} points</strong>, and a peak <strong>Tournament Max of {port['simulated_lineup_max']:.2f} points</strong>.
-                </p>
-            </div>
-        """), unsafe_allow_html=True)
-    else:
-        st.info("👈 Use the Command Center in the sidebar and click 'Generate Optimal GPP Lineup' to compute the GPP optimal roster!")
+                if not pids_out and not pids_in and not igl_swap:
+                    st.success("🎉 Roster is already 100% mathematically optimal! No transfers needed.")
+                else:
+                    st.markdown("**Suggested Swaps (Mathematical Set Difference):**")
+                    
+                    # Display OUT cards
+                    for pid in pids_out:
+                        p_out = user_lookup[pid]
+                        primary_agent = p_out.get("primary_agent")
+                        penalty = radar_penalties.get(primary_agent, 0.0) if primary_agent else 0.0
+                        reason = "Transfer out to optimize salary cap and match target GPP ceiling."
+                        if penalty > 0.05:
+                            reason = f"Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
+                        st.markdown(clean_html(f"""
+                            <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05); border-radius: 6px;">
+                                <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
+                                <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{p_out['name']}</span>
+                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p_out['salary']} VP · Role: {p_out['role']}</span>
+                                <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
+                            </div>
+                        """), unsafe_allow_html=True)
+                        
+                    # Display IN cards
+                    for pid in pids_in:
+                        p_in = opt_lookup[pid]
+                        igl_tag = " 👑 IGL" if p_in["is_igl"] else ""
+                        reason = "Drafted into optimal lineup to maximize GPP ceiling under salary constraint."
+                        st.markdown(clean_html(f"""
+                            <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05); border-radius: 6px;">
+                                <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
+                                <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{p_in['name']}{igl_tag}</span>
+                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p_in['salary']} VP · Role: {p_in['role']}</span>
+                                <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
+                            </div>
+                        """), unsafe_allow_html=True)
+                        
+                    if igl_swap and opt_igl_name:
+                        st.info(f"👑 Note: Swap designated In-Game Leader (IGL) from **{selected_igl}** to **{opt_igl_name}** (1.5x bonus).")
 
 # ============================================================
 # TAB 4: VFL PLAYERS DATABASE
