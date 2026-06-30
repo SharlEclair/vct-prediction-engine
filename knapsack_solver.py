@@ -23,10 +23,13 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 logger = logging.getLogger(__name__)
 
 
-def prepare_player_slate() -> Tuple[pd.DataFrame, pd.DataFrame]:
+def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Ingest Phase 3 fused projections and matrix, and construct slate metadata dynamically from current_slate.json.
     
+    Args:
+        num_iterations (int): Monte Carlo simulation depth.
+        
     Returns:
         Tuple[pd.DataFrame, pd.DataFrame]: (Player Metadata DF, Fused Simulation Matrix DF)
     """
@@ -34,9 +37,9 @@ def prepare_player_slate() -> Tuple[pd.DataFrame, pd.DataFrame]:
     
     # Run Phase 1 -> Phase 2 -> Phase 3 pipeline
     predictions_td = get_top_down_predictions()
-    df_sim_matrix = extract_simulation_matrix(num_iterations=10000, seed=42)
+    df_sim_matrix = extract_simulation_matrix(num_iterations=num_iterations, seed=42)
     df_target_corr, _ = compute_spearman_covariance(df_sim_matrix)
-    df_marginal = generate_independent_marginals(predictions_td, num_iterations=10000, seed=42)
+    df_marginal = generate_independent_marginals(predictions_td, num_iterations=num_iterations, seed=42)
     df_fused = run_iman_conover_fusion(df_marginal, df_target_corr)
     projections = validate_and_extract_metrics(df_marginal, df_fused, df_target_corr)
     

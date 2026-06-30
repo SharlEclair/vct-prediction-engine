@@ -43,6 +43,31 @@ def clean_html(html_str: str) -> str:
         return ""
     return "\n".join(line.strip() for line in html_str.splitlines())
 
+def get_player_icon(role: str, name: str) -> str:
+    # Match standard roles to clean defaults
+    role_defaults = {
+        "Duelist": "Jett",
+        "Initiator": "Sova",
+        "Controller": "Omen",
+        "Sentinel": "Killjoy",
+        "Flex": "Phoenix"
+    }
+    name_lower = name.lower()
+    if "aspas" in name_lower or "zmjjkk" in name_lower:
+        agent = "Jett"
+    elif "leo" in name_lower or "nobody" in name_lower:
+        agent = "Sova"
+    elif "chronicle" in name_lower or "forsken" in name_lower or "smoggy" in name_lower:
+        agent = "Phoenix"
+    elif "boaster" in name_lower or "chichoo" in name_lower:
+        agent = "Omen"
+    elif "alfa" in name_lower or "haodong" in name_lower:
+        agent = "Killjoy"
+    else:
+        agent = role_defaults.get(role, "Jett")
+        
+    return AGENT_ICONS.get(agent, AGENT_ICONS.get("Jett"))
+
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("app")
@@ -177,7 +202,7 @@ st.set_page_config(
     page_title="VCT Predictive Engine & Fantasy Dashboard",
     page_icon="🔥",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 st.markdown("""
@@ -189,9 +214,6 @@ st.markdown("""
         background-color: #0d0e12;
         color: #e2e8f0;
     }
-
-    /* Hide sidebar toggle arrow when collapsed */
-    [data-testid="collapsedControl"] { display: none; }
 
     .dashboard-title {
         background: linear-gradient(135deg, #ff4655 0%, #ff7676 50%, #a78bfa 100%);
@@ -428,6 +450,56 @@ if "roster_state_loaded" not in st.session_state:
     st.session_state["roster_state_loaded"] = True
     st.session_state["saved_roster_names"] = _saved_players
     st.session_state["saved_igl_name"] = _saved_igl
+
+# ============================================================
+# TASK 6.1: THE COMMAND CENTER (SIDEBAR)
+# ============================================================
+with st.sidebar:
+    st.markdown('<div style="text-align: center; margin-bottom: 10px;"><img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" width="80" style="border-radius: 12px; border: 2px solid #ff4655;"/></div>', unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #ff4655;'>⚔️ DFS Command Center</h3>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: -10px;'>Hybrid Valorant DFS Micro Engine (v6)</p>", unsafe_allow_html=True)
+    st.markdown("---")
+    
+    st.markdown("#### 1. Roster Date Tracker")
+    opt_slate_date = st.date_input("VFL Slate Date", value=datetime(2026, 6, 22), key="opt_slate_date")
+    
+    st.markdown("#### 2. Concept Drift Registry")
+    try:
+        patch_options = get_available_patches()
+    except Exception:
+        patch_options = ["Patch 9.04", "Patch 9.02", "Patch 8.11 (June 11, 2024)"]
+    opt_patch = st.selectbox("Select Target Patch Window", patch_options, key="opt_target_patch")
+    
+    st.markdown("#### 3. Simulation Depth")
+    opt_depth = st.select_slider(
+        "Monte Carlo Iterations",
+        options=[1000, 5000, 10000],
+        value=10000,
+        format_func=lambda x: f"{x // 1000}K Depth",
+        key="opt_sim_depth"
+    )
+    
+    st.markdown("---")
+    btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", use_container_width=True, key="btn_generate_lineup")
+
+# Trigger button execution logic
+if btn_generate_lineup:
+    # Run the optimization solver pipeline inside the sidebar trigger
+    with st.spinner("Initializing Copula Fusion & Solving MILP..."):
+        try:
+            from knapsack_solver import prepare_player_slate, solve_vfl_knapsack, run_portfolio_simulation
+            
+            df_meta_slate, df_fused_slate = prepare_player_slate(num_iterations=opt_depth)
+            opt_solution = solve_vfl_knapsack(df_meta_slate)
+            portfolio_results = run_portfolio_simulation(opt_solution, df_fused_slate)
+            
+            st.session_state["gpp_solution"] = opt_solution
+            st.session_state["gpp_portfolio"] = portfolio_results
+            st.session_state["gpp_generated"] = True
+            st.toast("GPP Optimization Pipeline succeeded!", icon="✅")
+        except Exception as e:
+            st.error(f"Solver Error: {str(e)}")
+            st.session_state["gpp_generated"] = False
 
 # ============================================================
 # MAIN TABS — Simulation first per v5_frontend_architecture.md
@@ -1227,277 +1299,91 @@ with tab_optimizer:
     else:
         st.info("No active patch nerfs registered in the automated registry.")
 
-    # Budget slider
-    salary_cap = st.slider("Available Fantasy Budget (VP)", min_value=35.0, max_value=60.0, value=50.0, step=0.5, key="global_salary_cap")
-
-    col_roster, col_transfer = st.columns([3, 2])
-
-    with col_roster:
-        st.markdown("#### 🏆 VCT 2026 Stage 2 Optimal Roster")
-        st.markdown(clean_html("""
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: -10px;">
-                Mathematically optimized using MILP to maximize projected points under strict VFL constraints.
-            </p>
-        """), unsafe_allow_html=True)
-
-        with st.spinner("Computing optimal Stage 2 baseline roster..."):
-            baseline_result = optimize_roster(vfl_players_data, salary_cap=salary_cap, survival_threshold=0.35)
-
-        if baseline_result["solver_status"] == "optimal":
-            st.markdown(clean_html(f"""
-                <div class="optimizer-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; padding: 4px 12px; border-radius: 12px; background: rgba(34, 197, 94, 0.15); color: #4ade80;">
-                                optimal
-                            </span>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 0.8rem; color: #94a3b8;">Projected Score</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: #f8fafc;">{baseline_result['projected_points']} pts</div>
-                        </div>
+    st.markdown("---")
+    st.markdown("### 🏆 Hybrid Valorant GPP Optimizer")
+    
+    if "gpp_solution" in st.session_state and st.session_state.get("gpp_generated", False):
+        sol = st.session_state["gpp_solution"]
+        port = st.session_state["gpp_portfolio"]
+        
+        # Task 6.3: The Upside Hook (Metrics)
+        st.markdown("#### 📈 Portfolio Simulation & Tournament Upside")
+        
+        m_col1, m_col2, m_col3 = st.columns(3)
+        with m_col1:
+            st.metric(
+                label="Total Salary Used",
+                value=f"{sol['total_salary']:.1f} / {sol.get('salary_cap', 50.0):.1f} VP",
+                help="Maximum roster budget allowed: 50.0 VP"
+            )
+        with m_col2:
+            st.metric(
+                label="Lineup Median EV Points",
+                value=f"{port['simulated_lineup_mean']:.2f} Pts",
+                help="Expected Value projection from copula fusion"
+            )
+        with m_col3:
+            delta_val = port['simulated_lineup_ceiling_p85'] - port['simulated_lineup_mean']
+            st.metric(
+                label="Tournament GPP Ceiling (85th %)",
+                value=f"{port['simulated_lineup_ceiling_p85']:.2f} Pts",
+                delta=f"+{delta_val:.2f} Pts (GPP Upside Hook)",
+                delta_color="normal",
+                help="85th percentile ceiling from Monte Carlo simulation runs"
+            )
+            
+        st.markdown("---")
+        
+        # Task 6.2: Roster Visualization (Main UI)
+        st.markdown("#### 👥 Optimal 6-Man Tournament Lineup")
+        
+        player_cols = st.columns(6)
+        for idx, p in enumerate(sol["lineup"]):
+            with player_cols[idx]:
+                p_name = p["name"]
+                p_role = p["role"]
+                p_sal = p["salary"]
+                p_ev = p["EV"]
+                p_ceil = p["Ceiling_p85"]
+                p_igl = p["is_igl"]
+                
+                icon_url = get_player_icon(p_role, p_name)
+                
+                igl_badge_html = """
+                    <div style="background: rgba(255, 70, 85, 0.15); color: #ff4655; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; text-align: center; border-radius: 6px; padding: 3px 6px; border: 1px solid rgba(255, 70, 85, 0.3); margin-top: 8px;">
+                        👑 IGL (1.5x)
                     </div>
-                    <div style="display: flex; gap: 20px; margin-top: 10px;">
-                        <div>
-                            <span style="color: #94a3b8; font-size: 0.8rem;">Total Cost</span>
-                            <div style="font-weight: 600;">{baseline_result['total_cost']} VP</div>
-                        </div>
-                        <div>
-                            <span style="color: #94a3b8; font-size: 0.8rem;">Buffer Float</span>
-                            <div style="font-weight: 600; color: #4ade80;">{salary_cap - baseline_result['total_cost']} VP</div>
-                        </div>
-                        <div>
-                            <span style="color: #94a3b8; font-size: 0.8rem;">Active IGL</span>
-                            <div style="font-weight: 600; color: #38bdf8;">👑 {baseline_result['igl_player']}</div>
-                        </div>
-                    </div>
-                </div>
-            """), unsafe_allow_html=True)
-
-            for idx, p in enumerate(baseline_result["optimal_roster"]):
-                role_emoji = {"Duelist": "⚔️", "Controller": "🌀", "Initiator": "🔍", "Sentinel": "🛡️", "Flex": "🔄"}.get(p["role"], "🎮")
-                igl_badge = '<span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; margin-left: 8px;">👑 IGL (2x Multiplier)</span>' if p["is_igl"] else ""
-                wc_badge = '<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: #facc15; margin-left: 8px;">Wildcard</span>' if p["is_wildcard"] else f'<span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: #a78bfa; margin-left: 8px;">{p["role"]}</span>'
-                penalty_badge = get_meta_penalty_badge(p["player_name"], player_agent_stats, active_penalties)
-
+                """ if p_igl else ""
+                
                 st.markdown(clean_html(f"""
-                    <div class="glass-card" style="padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <span style="font-size: 1.3rem; font-weight: 700; color: #6366f1;">#{idx+1}</span>
-                            <div>
-                                <div style="font-weight: 600; font-size: 1.0rem; display: flex; align-items: center;">
-                                    {p['player_name']} {igl_badge} {penalty_badge}
-                                </div>
-                                <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 2px;">
-                                    Role: {role_emoji} {wc_badge} · Team: <span style="color: #4ade80;">{id_to_team_name.get(p['vlr_team_id'], f"ID: {p['vlr_team_id']}")}</span>
-                                </div>
-                             </div>
+                    <div style="background: rgba(26, 29, 36, 0.75); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px; text-align: center; backdrop-filter: blur(10px); min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; align-items: center;">
+                        <div style="position: relative; width: 64px; height: 64px;">
+                            <img src="{icon_url}" width="64" height="64" style="border-radius: 50%; border: 2px solid {'#ff4655' if p_igl else '#4f46e5'}; background: #0f172a;"/>
                         </div>
-                        <div style="text-align: right;">
-                            <div style="font-weight: 600; color: #f8fafc;">{p['price']} VP</div>
-                            <div style="font-size: 0.75rem; color: #4ade80;">{p['ppg']:.1f} projected pts</div>
+                        <div style="margin-top: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                            <div style="font-weight: 700; font-size: 1.05rem; color: #f8fafc; word-break: break-all;">{p_name}</div>
+                            <div style="font-size: 0.75rem; color: #a78bfa; font-weight: 600; text-transform: uppercase; margin-top: 2px;">{p_role}</div>
+                            <div style="font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-top: 4px;">{p['team']}</div>
+                        </div>
+                        <div style="margin-top: auto; width: 100%;">
+                            <div style="font-weight: 700; font-size: 1.2rem; color: #4ade80; margin-top: 6px;">{p_sal:.1f} VP</div>
+                            <div style="font-size: 0.72rem; color: #64748b; margin-top: 2px;">EV: {p_ev:.1f} | ceil: {p_ceil:.1f}</div>
+                            {igl_badge_html}
                         </div>
                     </div>
                 """), unsafe_allow_html=True)
-        else:
-            st.error("Roster Optimizer was unable to calculate an optimal starting lineup. Try updating the database.")
-
-    # ── Transfer Advisor with Persistence ──
-    with col_transfer:
-        st.markdown("#### 🔄 3-Transfer Advisor")
-        st.markdown(clean_html("""
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: -10px;">
-                Enter your current fantasy roster. Bank balance is auto-calculated from the VP cap.
-            </p>
-        """), unsafe_allow_html=True)
-
-        player_names_list = sorted([p["player_name"] for p in vfl_players_data])
-
-        # Determine default selections: prefer saved state
-        saved_names = st.session_state.get("saved_roster_names", [])
-        valid_saved = [n for n in saved_names if n in player_names_list]
-        if len(valid_saved) == 6:
-            default_selections = valid_saved
-        else:
-            # Fallback defaults
-            fallback_defaults = [n for n in ["aspas", "zekken", "wo0t", "Derke", "Leo", "something"] if n in player_names_list]
-            if len(fallback_defaults) < 6:
-                fallback_defaults = player_names_list[:6]
-            default_selections = fallback_defaults[:6]
-
-        current_roster_names = st.multiselect(
-            "Select Your Current 6 Players",
-            player_names_list,
-            default=default_selections,
-            key="transfer_current_roster_new"
-        )
-
-        # Auto floating-bank calculation (v5_fantasy_state_management.md §1)
-        current_roster_objs = []
-        for name in current_roster_names:
-            for p in vfl_players_data:
-                if p["player_name"] == name:
-                    current_roster_objs.append(p)
-                    break
-
-        current_roster_value = sum(p["price"] for p in current_roster_objs)
-        floating_bank = salary_cap - current_roster_value
-
+                
+        st.markdown("<br/>", unsafe_allow_html=True)
         st.markdown(clean_html(f"""
-            <div style="display: flex; gap: 12px; margin: 10px 0 14px;">
-                <div style="flex: 1; padding: 10px 14px; border-radius: 10px; background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); text-align: center;">
-                    <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Roster Cost</div>
-                    <div style="font-size: 1.4rem; font-weight: 700; color: #f8fafc;">{current_roster_value} VP</div>
-                </div>
-                <div style="flex: 1; padding: 10px 14px; border-radius: 10px; background: {'rgba(34,197,94,0.08)' if floating_bank >= 0 else 'rgba(239,68,68,0.08)'}; border: 1px solid {'rgba(34,197,94,0.2)' if floating_bank >= 0 else 'rgba(239,68,68,0.2)'}; text-align: center;">
-                    <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Floating Bank</div>
-                    <div style="font-size: 1.4rem; font-weight: 700; color: {'#4ade80' if floating_bank >= 0 else '#ef4444'};">{floating_bank:.1f} VP</div>
-                </div>
+            <div class="optimizer-card" style="margin-top: 15px;">
+                <h5 style="color: #a78bfa; font-weight: 700; margin-top: 0; margin-bottom: 8px;">📊 Portfolio Simulation Summary</h5>
+                <p style="color: #e2e8f0; font-size: 0.9rem; line-height: 1.5; margin: 0;">
+                    Based on <strong>{st.session_state.get('opt_sim_depth', 10000)}</strong> Monte Carlo iterations, the optimal roster secures an aggregate <strong>Floor (p15) of {port['simulated_lineup_floor_p15']:.2f} points</strong>, an <strong>Expected Value of {port['simulated_lineup_mean']:.2f} points</strong>, and a peak <strong>Tournament Max of {port['simulated_lineup_max']:.2f} points</strong>.
+                </p>
             </div>
         """), unsafe_allow_html=True)
-
-        # IGL Designation (v5_fantasy_state_management.md §2)
-        forced_igl_name = None
-        if len(current_roster_names) > 0:
-            igl_options = ["Auto-Detect (Highest Floor)"] + current_roster_names
-            saved_igl = st.session_state.get("saved_igl_name")
-            igl_default_idx = 0
-            if saved_igl in igl_options:
-                igl_default_idx = igl_options.index(saved_igl)
-            selected_igl_opt = st.selectbox(
-                "👑 Designate IGL (2× EV Multiplier)",
-                igl_options,
-                index=igl_default_idx,
-                key="igl_selector_v5"
-            )
-            if selected_igl_opt != "Auto-Detect (Highest Floor)":
-                forced_igl_name = selected_igl_opt
-
-            # Show IGL EV preview if IGL is selected
-            if forced_igl_name:
-                igl_obj = next((p for p in vfl_players_data if p["player_name"] == forced_igl_name), None)
-                if igl_obj:
-                    non_igl_ev = sum(p["ppg"] for p in current_roster_objs if p["player_name"] != forced_igl_name)
-                    total_ev = non_igl_ev + 2.0 * igl_obj["ppg"]
-                    st.markdown(clean_html(f"""
-                        <div style="padding: 8px 14px; border-radius: 8px; background: rgba(56,189,248,0.08);
-                                    border: 1px solid rgba(56,189,248,0.2); font-size: 0.85rem; color: #38bdf8; margin-bottom: 10px;">
-                            👑 IGL: <b>{forced_igl_name}</b> ({igl_obj['ppg']:.1f} pts × 2) — Total Roster EV: <b>{total_ev:.1f} pts</b>
-                        </div>
-                    """), unsafe_allow_html=True)
-        else:
-            st.info("Select players to enable IGL selection.")
-
-        # Save / Load Roster Persistence (v5_fantasy_state_management.md §3)
-        persist_col1, persist_col2 = st.columns(2)
-        with persist_col1:
-            if st.button("💾 Save Current Roster", key="btn_save_roster", use_container_width=True):
-                if len(current_roster_names) == 6:
-                    save_roster_state(current_roster_names, forced_igl_name)
-                    st.session_state["saved_roster_names"] = current_roster_names
-                    st.session_state["saved_igl_name"] = forced_igl_name
-                    st.success("✅ Roster saved to disk!")
-                else:
-                    st.warning("Select exactly 6 players to save.")
-        with persist_col2:
-            roster_exists = os.path.exists(ROSTER_STATE_PATH)
-            if st.button("📂 Load Saved Roster", key="btn_load_roster", disabled=not roster_exists, use_container_width=True):
-                loaded_names, loaded_igl = load_roster_state()
-                st.session_state["saved_roster_names"] = loaded_names
-                st.session_state["saved_igl_name"] = loaded_igl
-                st.rerun()
-
-        st.markdown("---")
-
-        # Transfer calculation
-        if st.button("🔮 Calculate Optimal Trades", key="btn_suggest_transfers_new", type="primary", use_container_width=True):
-            if len(current_roster_names) != 6:
-                st.error("Please select exactly 6 players currently in your roster.")
-            else:
-                with st.spinner("Analyzing transfer combinations..."):
-                    transfer_result = suggest_transfers(
-                        current_roster_objs,
-                        vfl_players_data,
-                        remaining_bank_balance=float(max(0.0, floating_bank)),
-                        forced_igl_name=forced_igl_name
-                    )
-
-                if transfer_result["solver_status"] == "optimal":
-                    recs = transfer_result.get("recommendations", [])
-                    if recs:
-                        tabs = st.tabs([f"Option {idx+1} (+{rec['projected_gain']:.1f} pts)" for idx, rec in enumerate(recs)])
-                        for idx, rec in enumerate(recs):
-                            with tabs[idx]:
-                                if rec["projected_gain"] > 0:
-                                    st.markdown(clean_html(f"""
-                                        <div class="optimizer-card" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2); padding: 15px; border-radius: 8px; border: 1px solid; margin-bottom: 15px;">
-                                            <div style="font-weight: 700; font-size: 1.1rem; color: #4ade80;">
-                                                📈 Projected Score Velocity: +{rec['projected_gain']:.1f} pts
-                                            </div>
-                                        </div>
-                                    """), unsafe_allow_html=True)
-
-                                    st.markdown("**Suggested Swaps (Max 3 Trades):**")
-
-                                    for p in rec["transfers_out"]:
-                                        p_name = p["player_name"]
-                                        p_name_clean = p_name.lower().strip()
-                                        primary_agent = None
-                                        max_count = -1
-                                        for (name, agent), info in player_agent_stats.items():
-                                            if name.lower().strip() == p_name_clean:
-                                                if info['count'] > max_count:
-                                                    max_count = info['count']
-                                                    primary_agent = agent
-                                        reason = "Transfer Reason: Budget optimization and roster rebalancing to maximize score velocity."
-                                        if primary_agent:
-                                            penalty = active_penalties.get(primary_agent, 0.0)
-                                            if penalty > 0.10:
-                                                reason = f"Transfer Reason: Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
-                                        st.markdown(clean_html(f"""
-                                            <div class="transfer-out" style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05);">
-                                                <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
-                                                <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}</span>
-                                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
-                                                <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
-                                            </div>
-                                        """), unsafe_allow_html=True)
-
-                                    for p in rec["transfers_in"]:
-                                        igl_tag = " 👑" if p["is_igl"] else ""
-                                        p_name = p["player_name"]
-                                        p_name_clean = p_name.lower().strip()
-                                        primary_agent = None
-                                        max_count = -1
-                                        for (name, agent), info in player_agent_stats.items():
-                                            if name.lower().strip() == p_name_clean:
-                                                if info['count'] > max_count:
-                                                    max_count = info['count']
-                                                    primary_agent = agent
-                                        if primary_agent:
-                                            reason = f"Transfer Reason: High-performing meta asset on comfort agent ({primary_agent}) with 0.00 penalty."
-                                        else:
-                                            reason = "Transfer Reason: Optimal target pickup to maximize projected score under budget cap."
-                                        st.markdown(clean_html(f"""
-                                            <div class="transfer-in" style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05);">
-                                                <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
-                                                <span style="margin-left: 12px; font-weight: 600;">{p['player_name']}{igl_tag}</span>
-                                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p['price']} VP · PPG: {p['ppg']:.1f}</span>
-                                                <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
-                                            </div>
-                                        """), unsafe_allow_html=True)
-
-                                    st.markdown(clean_html(f"""
-                                        <div style="margin-top: 10px; color: #94a3b8; font-size: 0.8rem; text-align: right;">
-                                            New Total Cost: <b>{rec['new_total_cost']} VP</b> | New Projected Points: <b>{rec['new_projected_points']:.1f} pts</b>
-                                        </div>
-                                    """), unsafe_allow_html=True)
-                                else:
-                                    st.success("✅ Your current roster is already optimally positioned! No transfers recommended.")
-                    else:
-                        st.success("✅ Your current roster is already optimally positioned! No transfers recommended.")
-                else:
-                    st.error(f"Solver Error: {transfer_result['solver_status']}. Try adjusting the inputs.")
+    else:
+        st.info("👈 Use the Command Center in the sidebar and click 'Generate Optimal GPP Lineup' to compute the GPP optimal roster!")
 
 # ============================================================
 # TAB 4: VFL PLAYERS DATABASE
