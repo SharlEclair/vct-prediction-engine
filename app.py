@@ -72,9 +72,12 @@ def get_player_icon(role: str, name: str) -> str:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("app")
 
-RAW_DIR = "./data/raw"
-PROCESSED_DIR = "./data/processed"
-ROSTER_STATE_PATH = "./data/processed/roster_state.json"
+from pathlib import Path
+ROOT_DIR = Path(__file__).resolve().parent
+
+RAW_DIR = str(ROOT_DIR / "data" / "raw")
+PROCESSED_DIR = str(ROOT_DIR / "data" / "processed")
+ROSTER_STATE_PATH = str(ROOT_DIR / "data" / "processed" / "roster_state.json")
 
 # ============================================================
 # DATA LOADING HELPERS
@@ -109,11 +112,9 @@ def get_available_patches() -> list[str]:
     Dynamically loads all available patch versions from the JSON registry.
     Uses pathlib for absolute path resolution based on the script location.
     """
-    from pathlib import Path
-    base_dir = Path(__file__).resolve().parent
-    path_reg = base_dir / "data" / "processed" / "automated_patch_nerf_registry.json"
+    path_reg = ROOT_DIR / "data" / "processed" / "automated_patch_nerf_registry.json"
     if not path_reg.exists():
-        path_reg = base_dir / "data" / "processed" / "patch_nerf_registry.json"
+        path_reg = ROOT_DIR / "data" / "processed" / "patch_nerf_registry.json"
         
     if not path_reg.exists():
         raise FileNotFoundError(f"Neither automated_patch_nerf_registry.json nor patch_nerf_registry.json found at {path_reg.parent}")

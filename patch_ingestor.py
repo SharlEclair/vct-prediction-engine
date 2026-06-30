@@ -51,21 +51,27 @@ def get_mock_patch_text(version: str) -> str:
 
 logger = logging.getLogger("patch_ingestor")
 
-PATCHES_CACHE_DIR = "./data/patches"
-PROCESSED_PATCHES_DIR = "./data/processed/patches"
-REPORTS_DIR = "./data/reports"
+from pathlib import Path
+ROOT_DIR = Path(__file__).resolve().parent
+
+PATCHES_CACHE_DIR = str(ROOT_DIR / "data" / "patches")
+PROCESSED_PATCHES_DIR = str(ROOT_DIR / "data" / "processed" / "patches")
+REPORTS_DIR = str(ROOT_DIR / "data" / "reports")
 
 class PatchFetchError(Exception):
     """Exception raised when patch notes cannot be retrieved from remote wiki and cache is missing."""
     pass
 
-def load_version_dates(csv_path="./data/raw/patch_notes.csv"):
+def load_version_dates(csv_path="data/raw/patch_notes.csv"):
+    csv_p = Path(csv_path)
+    if not csv_p.is_absolute():
+        csv_p = ROOT_DIR / csv_p
     dates = {}
-    if not os.path.exists(csv_path):
-        logger.warning(f"CSV not found: {csv_path}")
+    if not csv_p.exists():
+        logger.warning(f"CSV not found: {csv_p}")
         return dates
     try:
-        with open(csv_path, "r", encoding="utf-8") as f:
+        with open(csv_p, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 val = row.get("patch_version", "").strip()
@@ -88,13 +94,16 @@ def parse_version_tuple(v_str):
     except ValueError:
         return (0, 0)
 
-def get_patch_versions(csv_path="./data/raw/patch_notes.csv", limit=5):
+def get_patch_versions(csv_path="data/raw/patch_notes.csv", limit=5):
+    csv_p = Path(csv_path)
+    if not csv_p.is_absolute():
+        csv_p = ROOT_DIR / csv_p
     versions = []
-    if not os.path.exists(csv_path):
-        logger.warning(f"CSV not found: {csv_path}")
+    if not csv_p.exists():
+        logger.warning(f"CSV not found: {csv_p}")
         return versions
         
-    with open(csv_path, "r", encoding="utf-8") as f:
+    with open(csv_p, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             val = row.get("patch_version", "").strip()

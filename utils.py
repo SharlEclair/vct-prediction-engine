@@ -25,17 +25,23 @@ def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Parsed configuration dictionary.
     """
-    if not os.path.exists(config_path):
-        logger.error("Config file not found at %s. Returning empty config.", config_path)
-        raise FileNotFoundError(f"Configuration file not found: {config_path}")
+    from pathlib import Path
+    root_dir = Path(__file__).resolve().parent
+    config_p = Path(config_path)
+    if not config_p.is_absolute():
+        config_p = root_dir / config_p
+        
+    if not config_p.exists():
+        logger.error("Config file not found at %s. Returning empty config.", config_p)
+        raise FileNotFoundError(f"Configuration file not found: {config_p}")
         
     try:
-        with open(config_path, "r", encoding="utf-8") as f:
+        with open(config_p, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
-        logger.debug("Successfully loaded config from %s", config_path)
+        logger.debug("Successfully loaded config from %s", config_p)
         return config
     except Exception as e:
-        logger.error("Failed to parse config file %s: %s", config_path, e)
+        logger.error("Failed to parse config file %s: %s", config_p, e)
         raise e
 
 
@@ -49,15 +55,21 @@ def load_slate_payload(slate_path: str = "data/processed/current_slate.json") ->
     Returns:
         List[Dict[str, Any]]: List of player metadata dictionaries.
     """
-    if not os.path.exists(slate_path):
-        logger.error("Slate payload file not found at %s.", slate_path)
-        raise FileNotFoundError(f"Slate payload file not found: {slate_path}")
+    from pathlib import Path
+    root_dir = Path(__file__).resolve().parent
+    slate_p = Path(slate_path)
+    if not slate_p.is_absolute():
+        slate_p = root_dir / slate_p
+        
+    if not slate_p.exists():
+        logger.error("Slate payload file not found at %s.", slate_p)
+        raise FileNotFoundError(f"Slate payload file not found: {slate_p}")
         
     try:
-        with open(slate_path, "r", encoding="utf-8") as f:
+        with open(slate_p, "r", encoding="utf-8") as f:
             slate = json.load(f)
-        logger.debug("Successfully loaded %d player records from %s", len(slate), slate_path)
+        logger.debug("Successfully loaded %d player records from %s", len(slate), slate_p)
         return slate
     except Exception as e:
-        logger.error("Failed to parse slate payload file %s: %s", slate_path, e)
+        logger.error("Failed to parse slate payload file %s: %s", slate_p, e)
         raise e

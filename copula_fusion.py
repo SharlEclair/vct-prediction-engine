@@ -23,21 +23,48 @@ logger = logging.getLogger(__name__)
 def get_top_down_predictions() -> Dict[str, float]:
     """
     Retrieve Phase 1 XGBoost expected value predictions (mu_TD) dynamically for players in active slate.
+    Loads predictions from xgb_predictions.json and raises ValueError if missing.
     
     Returns:
         Dict[str, float]: Player ID to predicted mean DFS points.
     """
-    slate = load_slate_payload()
-    # Baseline expectations derived dynamically from player salary tier and role expectations
+    from pathlib import Path
+    import json
+    
+    root_dir = Path(__file__).resolve().parent
+    slate_path = root_dir / "data" / "processed" / "current_slate.json"
+    pred_path = root_dir / "data" / "processed" / "xgb_predictions.json"
+    
+    if not pred_path.exists():
+        raise ValueError(f"XGBoost predictions file not found at {pred_path}. Please run model_training.py first.")
+        
+    with open(pred_path, "r", encoding="utf-8") as f:
+        xgb_preds = json.load(f)
+        
+    if not slate_path.exists():
+        raise ValueError(f"Slate payload file not found at {slate_path}.")
+        
+    with open(slate_path, "r", encoding="utf-8") as f:
+        slate = json.load(f)
+        
     predictions = {}
     for item in slate:
         pid = item["player_id"]
-        salary = item["salary"]
-        # Generate model expected value expectation proportional to salary tier (e.g. 9.8 VP -> ~48.5 pts)
-        base_ev = salary * 4.95
-        predictions[pid] = float(round(base_ev, 2))
+        name = item["name"]
         
-    logger.info("Dynamically loaded Top-Down XGBoost predictions (mu_TD) for %d players from slate payload.", len(predictions))
+        # Look up by player_id or player name in the predictions
+        ev = None
+        if pid in xgb_preds:
+            ev = xgb_preds[pid]
+        elif name in xgb_preds:
+            ev = xgb_preds[name]
+            
+        if ev is None:
+            raise ValueError(f"XGBoost expected value prediction is missing for player {name} (ID: {pid}) in predictions file.")
+            
+        predictions[pid] = float(ev)
+        
+    logger.info("Dynamically loaded Top-Down XGBoost predictions (mu_TD) for %d players from %s.", len(predictions), pred_path)
     return predictions
 
 
