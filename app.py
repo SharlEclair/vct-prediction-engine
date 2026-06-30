@@ -79,6 +79,27 @@ def load_automated_registry():
         logger.error(f"Failed to load automated patch registry: {e}")
         return "None", {}
 
+def get_available_patches() -> list[str]:
+    """
+    Dynamically loads all available patch versions from the JSON registry.
+    Uses pathlib for absolute path resolution based on the script location.
+    """
+    from pathlib import Path
+    base_dir = Path(__file__).resolve().parent
+    path_reg = base_dir / "data" / "processed" / "automated_patch_nerf_registry.json"
+    if not path_reg.exists():
+        path_reg = base_dir / "data" / "processed" / "patch_nerf_registry.json"
+        
+    if not path_reg.exists():
+        raise FileNotFoundError(f"Neither automated_patch_nerf_registry.json nor patch_nerf_registry.json found at {path_reg.parent}")
+        
+    with open(path_reg, "r", encoding="utf-8") as f_reg:
+        reg_data = json.load(f_reg)
+        
+    reg_keys = reg_data.keys()
+    available_patches = sorted(list(reg_keys), key=lambda x: [int(i) if i.isdigit() else i for i in x.split('.')], reverse=True)
+    return [f"Patch {p}" for p in available_patches]
+
 def load_roster_state():
     """Load saved roster state from disk. Returns (player_names, igl_name)."""
     if os.path.exists(ROSTER_STATE_PATH):
@@ -447,19 +468,11 @@ with tab_sim:
     with sim_col5:
         sim_iterations = st.selectbox("Simulation Depth", [1000, 5000, 10000], index=1, key="sim_iterations")
     with sim_col6:
-        # Dynamically load patch options from registry
+        # Dynamically load patch options from registry using pathlib
         try:
-            path_reg = os.path.join(PROCESSED_DIR, "automated_patch_nerf_registry.json")
-            if not os.path.exists(path_reg):
-                path_reg = os.path.join(PROCESSED_DIR, "patch_nerf_registry.json")
-            with open(path_reg, "r", encoding="utf-8") as f_reg:
-                reg_keys = json.load(f_reg).keys()
-            available_patches = sorted(list(reg_keys), key=lambda x: [int(i) if i.isdigit() else i for i in x.split('.')], reverse=True)
-            patch_options = [f"Patch {p}" for p in available_patches]
-        except Exception:
-            patch_options = []
-            
-        if not patch_options:
+            patch_options = get_available_patches()
+        except Exception as e:
+            logger.warning(f"Failed to dynamically load patches from registry: {e}. Falling back to default list.")
             patch_options = ["Patch 9.04", "Patch 9.02", "Patch 8.11 (June 11, 2024)"]
             
         sim_patch_select = st.selectbox("Target Simulation Patch", patch_options, index=min(1, len(patch_options)-1), key="sim_target_patch")
