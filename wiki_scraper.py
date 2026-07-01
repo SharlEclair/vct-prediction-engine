@@ -50,7 +50,7 @@ async def scrape_patch_notes(client=None) -> pd.DataFrame:
             raise e
     finally:
         if is_local_client:
-            await client.aclose()
+            await client.close()
 
     # Parse the HTML content
     parser = HTMLParser(html_content)
@@ -158,3 +158,16 @@ async def scrape_agent_roles(client=None) -> dict:
                 
     logger.info(f"Successfully processed {len(agent_roles)} agent roles.")
     return agent_roles
+
+if __name__ == "__main__":
+    import asyncio
+    async def main():
+        df = await scrape_patch_notes()
+        if not df.empty:
+            out_dir = os.path.join(".", "data", "raw")
+            os.makedirs(out_dir, exist_ok=True)
+            csv_path = os.path.join(out_dir, "patch_notes.csv")
+            df.to_csv(csv_path, index=False)
+            logger.info(f"Saved {len(df)} scraped patch versions to {csv_path}")
+            
+    asyncio.run(main())

@@ -9,13 +9,12 @@ ROLE_ALPHA_WEIGHTS:
 
 COMPETITIVE_MAP_POOL:
   - "Ascent"
-  - "Bind"
+  - "Breeze"
+  - "Fracture"
   - "Haven"
   - "Lotus"
-  - "Sunset"
   - "Pearl"
-  - "Fracture"
-
+  - "Split"
 BENCHMARKS:
   spec_naive_baseline_mae: 4.37
 

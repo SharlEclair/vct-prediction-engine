@@ -270,7 +270,7 @@ def run_backfill():
     all_csv_versions = get_patch_versions(limit=None)
     
     start_v = parse_version_tuple("9.0")
-    end_v = parse_version_tuple("12.09")
+    end_v = parse_version_tuple("20.0")
     
     target_versions = []
     for v in all_csv_versions:
@@ -385,11 +385,5 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    if args.backfill:
+    if args.backfill or True:  # Default to running the full backfill/update
         run_backfill()
-    else:
-        try:
-            data = ingest_latest_patches(version_list=["9.0", "9.01", "9.02", "9.03", "9.04", "12.09"])
-            print("\nSuccessfully ingested and parsed patches:", list(data.keys()))
-        except Exception as e:
-            logger.error(f"Ingestion failed: {e}")

@@ -494,6 +494,9 @@ with st.sidebar:
     btn_sync_live = st.button("🔄 Sync Live VFL Slate (API)", use_container_width=True, key="btn_sync_live")
     uploaded_file = st.file_uploader("Fallback: Upload DFS Slate (CSV)", type=["csv"], key="uploaded_file_slate")
     
+    st.markdown("#### 6. System Administration")
+    btn_full_system_update = st.button("⚙️ Run Full System Update", use_container_width=True, key="btn_full_system_update")
+    
     st.markdown("---")
     btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", use_container_width=True, key="btn_generate_lineup")
 
@@ -694,6 +697,36 @@ if uploaded_file is not None:
         
     except Exception as e:
         st.error(f"CSV Ingestion Failed: {e}")
+
+# Trigger Full System Update logic
+if btn_full_system_update:
+    with st.spinner("Executing Full System Update... (syncing map rotation, scraping wiki patches, computing concept drift, and retraining XGBoost model)"):
+        try:
+            import subprocess
+            import sys
+            
+            # Execute run_pipeline.py via subprocess
+            logger.info("Executing run_pipeline.py autonomously via subprocess...")
+            result = subprocess.run(
+                [sys.executable, str(ROOT_DIR / "run_pipeline.py")],
+                check=True,
+                capture_output=True,
+                text=True
+            )
+            
+            # Clear solver session state
+            for key in ["gpp_solution", "gpp_portfolio", "gpp_meta_df", "gpp_generated", "optimal_lineup", "portfolio_metrics"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+                    
+            st.success("✅ Full System Update Completed Successfully! Active VCT Map rotation, wiki patches, drift indices, and predictions have been re-calibrated.")
+            with st.expander("Show Detailed Execution Logs"):
+                st.code(result.stdout)
+                
+        except Exception as e:
+            st.error(f"❌ Full System Update Pipeline Failed: {e}")
+            if 'result' in locals() and hasattr(result, 'stderr') and result.stderr:
+                st.code(result.stderr)
 
 # ============================================================
 # MAIN TABS — Simulation first per v5_frontend_architecture.md
