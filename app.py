@@ -496,8 +496,19 @@ with st.sidebar:
 # Trigger button execution logic
 if btn_generate_lineup:
     # Run the optimization solver pipeline inside the sidebar trigger
-    with st.spinner("Initializing Copula Fusion & Solving MILP..."):
+    with st.spinner("Initializing GPP Optimization..."):
         try:
+            from pathlib import Path
+            root_dir = Path(__file__).resolve().parent
+            pred_path = root_dir / "data" / "processed" / "xgb_predictions.json"
+            
+            if not pred_path.exists():
+                logger.info("Predictions file missing. Launching model_training.py autonomously...")
+                import subprocess
+                import sys
+                with st.spinner("Training XGBoost Model..."):
+                    subprocess.run([sys.executable, str(root_dir / "model_training.py")], check=True)
+            
             from knapsack_solver import prepare_player_slate, solve_vfl_knapsack, run_portfolio_simulation
             
             df_meta_slate, df_fused_slate = prepare_player_slate(num_iterations=opt_depth)
@@ -510,7 +521,8 @@ if btn_generate_lineup:
             st.session_state["gpp_generated"] = True
             st.toast("GPP Optimization Pipeline succeeded!", icon="✅")
         except Exception as e:
-            st.error(f"Solver Error: {str(e)}")
+            import traceback
+            st.error(f"Solver Crash: {e}\n{traceback.format_exc()}")
             st.session_state["gpp_generated"] = False
 
 # ============================================================
@@ -1310,7 +1322,7 @@ with tab_optimizer:
         cols = st.columns(3)
         for idx, (agent_name, score) in enumerate(top_3):
             with cols[idx]:
-                if score >= 0.5:
+                if score >= 0.05:
                     color = "#ef4444"
                     severity = "CRITICAL NERF"
                 else:
