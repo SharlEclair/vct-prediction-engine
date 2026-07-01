@@ -38,7 +38,43 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
     # Run Phase 1 -> Phase 2 -> Phase 3 pipeline
     predictions_td = get_top_down_predictions()
     df_sim_matrix = extract_simulation_matrix(num_iterations=num_iterations, seed=42)
-    df_target_corr, _ = compute_spearman_covariance(df_sim_matrix)
+    
+    from pathlib import Path
+    root_dir = Path(__file__).resolve().parent
+    slate_path = root_dir / "data" / "processed" / "current_slate.json"
+    
+    player_ids = list(predictions_td.keys())
+    k = len(player_ids)
+    
+    if k == 10:
+        df_target_corr, _ = compute_spearman_covariance(df_sim_matrix)
+    else:
+        # Dynamically build a k x k target correlation matrix matching slate dimensions
+        import json
+        with open(slate_path, "r", encoding="utf-8") as f:
+            slate_data = json.load(f)
+        id_to_team = {item["player_id"]: item["team"] for item in slate_data}
+        id_to_team.update({item["name"]: item["team"] for item in slate_data})
+        
+        teams = list(set(id_to_team.values()))
+        C = np.eye(k)
+        for i in range(k):
+            for j in range(i + 1, k):
+                t_i = id_to_team.get(player_ids[i])
+                t_j = id_to_team.get(player_ids[j])
+                if t_i is not None and t_j is not None:
+                    if t_i == t_j:
+                        C[i, j] = 0.45
+                        C[j, i] = 0.45
+                    else:
+                        if len(teams) == 2:
+                            C[i, j] = -0.40
+                            C[j, i] = -0.40
+                        else:
+                            C[i, j] = -0.05
+                            C[j, i] = -0.05
+        df_target_corr = pd.DataFrame(C, index=player_ids, columns=player_ids)
+        
     df_marginal = generate_independent_marginals(predictions_td, num_iterations=num_iterations, seed=42)
     df_fused = run_iman_conover_fusion(df_marginal, df_target_corr)
     projections = validate_and_extract_metrics(df_marginal, df_fused, df_target_corr)
@@ -118,8 +154,10 @@ def solve_vfl_knapsack(
         
     # Positional Role Constraints
     for r, count in role_counts.items():
+        if r.lower() == "flex":
+            continue
         role_players = [p for p in players if roles[p] == r]
-        prob += pulp.lpSum([x[p] for p in role_players]) == count, f"Role_Req_{r}"
+        prob += pulp.lpSum([x[p] for p in role_players]) >= count, f"Role_Req_{r}"
         
     # IGL Multiplier Constraints
     prob += pulp.lpSum([y[p] for p in players]) == 1, "Exactly_One_IGL"

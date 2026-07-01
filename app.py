@@ -490,6 +490,10 @@ with st.sidebar:
         key="opt_sim_depth"
     )
     
+    st.markdown("#### 5. Daily Slate Ingestion")
+    btn_sync_live = st.button("🔄 Sync Live VFL Slate (API)", use_container_width=True, key="btn_sync_live")
+    uploaded_file = st.file_uploader("Fallback: Upload DFS Slate (CSV)", type=["csv"], key="uploaded_file_slate")
+    
     st.markdown("---")
     btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", use_container_width=True, key="btn_generate_lineup")
 
@@ -524,6 +528,172 @@ if btn_generate_lineup:
             import traceback
             st.error(f"Solver Crash: {e}\n{traceback.format_exc()}")
             st.session_state["gpp_generated"] = False
+
+# Helper to map roles to strings for Phase 9 Ingestion
+def map_role(role_raw) -> str:
+    role_map = {
+        0: "Duelist",
+        1: "Initiator",
+        2: "Controller",
+        3: "Sentinel",
+        4: "Flex",
+        "0": "Duelist",
+        "1": "Initiator",
+        "2": "Controller",
+        "3": "Sentinel",
+        "4": "Flex"
+    }
+    if role_raw in role_map:
+        return role_map[role_raw]
+    if isinstance(role_raw, str):
+        role_str = role_raw.strip().capitalize()
+        if role_str in ["Duelist", "Initiator", "Controller", "Sentinel", "Flex"]:
+            return role_str
+    return "Flex"
+
+# Trigger live API sync logic
+if btn_sync_live:
+    with st.spinner("Syncing Live VFL Slate (API)..."):
+        try:
+            import subprocess
+            import sys
+            import json
+            
+            scraper_path = ROOT_DIR / "vfl_scraper.py"
+            
+            # Execute scraper via subprocess
+            logger.info("Executing vfl_scraper.py autonomously via subprocess...")
+            subprocess.run([sys.executable, str(scraper_path)], check=True)
+            
+            # Load resulting vfl_players_db.json
+            db_path = ROOT_DIR / "data" / "processed" / "vfl_players_db.json"
+            if not db_path.exists():
+                raise FileNotFoundError(f"VFL player cache not found at {db_path} after scraping.")
+                
+            with open(db_path, "r", encoding="utf-8") as f:
+                raw_data = json.load(f)
+                
+            # Handle both legacy flat list and envelope cache format
+            raw_players = raw_data.get("players", []) if isinstance(raw_data, dict) else raw_data
+            if not isinstance(raw_players, list):
+                raise ValueError("Unexpected vfl_players_db.json format. Expected list of players.")
+                
+            # Map schema
+            mapped_players = []
+            for idx, p in enumerate(raw_players):
+                name = p.get("player_name", p.get("name", "Unknown")).strip()
+                team = p.get("team_name", p.get("team", "Unknown")).strip()
+                team_short = p.get("team_short", p.get("team_name", "UNK")[:3]).strip().upper()
+                salary = p.get("price", p.get("salary", p.get("cost", 8.0)))
+                try:
+                    salary = float(salary)
+                except (ValueError, TypeError):
+                    salary = 8.0
+                    
+                role = map_role(p.get("role", p.get("playerRole", 4)))
+                
+                mapped_players.append({
+                    "player_id": f"P{idx}_{team_short}",
+                    "name": name,
+                    "team": team,
+                    "role": role,
+                    "salary": salary
+                })
+                
+            # Overwrite current_slate.json
+            slate_path = ROOT_DIR / "data" / "processed" / "current_slate.json"
+            slate_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(slate_path, "w", encoding="utf-8") as f:
+                json.dump(mapped_players, f, indent=4, ensure_ascii=False)
+                
+            # Task 9.3: Pipeline Reset (Delete predictions & clear UI session states)
+            pred_path = ROOT_DIR / "data" / "processed" / "xgb_predictions.json"
+            pred_path.unlink(missing_ok=True)
+            
+            for key in ["gpp_solution", "gpp_portfolio", "gpp_meta_df", "gpp_generated", "optimal_lineup", "portfolio_metrics"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+                    
+            st.success(f"Successfully loaded and mapped {len(mapped_players)} players from VFL API slate!")
+            st.rerun()
+            
+        except Exception as e:
+            st.error(f"Live API Sync Failed: {e}")
+
+# Trigger CSV upload logic
+if uploaded_file is not None:
+    try:
+        df_csv = pd.read_csv(uploaded_file)
+        
+        # Find columns case-insensitively
+        col_mapping = {}
+        for col in df_csv.columns:
+            col_lower = col.lower().strip()
+            if "name" in col_lower:
+                col_mapping["name"] = col
+            elif "team" in col_lower:
+                col_mapping["team"] = col
+            elif "role" in col_lower:
+                col_mapping["role"] = col
+            elif "salary" in col_lower or "price" in col_lower or "cost" in col_lower:
+                col_mapping["salary"] = col
+                
+        raw_players = []
+        for idx, row in df_csv.iterrows():
+            p_name = row.get(col_mapping.get("name", "name"), f"Player_{idx}")
+            p_team = row.get(col_mapping.get("team", "team"), "Unknown")
+            p_role = row.get(col_mapping.get("role", "role"), 4)
+            p_salary = row.get(col_mapping.get("salary", "salary"), 8.0)
+            
+            raw_players.append({
+                "player_name": str(p_name),
+                "team_name": str(p_team),
+                "team_short": str(p_team)[:3].upper(),
+                "role": p_role,
+                "price": p_salary
+            })
+            
+        # Map schema
+        mapped_players = []
+        for idx, p in enumerate(raw_players):
+            name = p["player_name"].strip()
+            team = p["team_name"].strip()
+            team_short = p["team_short"].strip().upper()
+            salary = p["price"]
+            try:
+                salary = float(salary)
+            except (ValueError, TypeError):
+                salary = 8.0
+                
+            role = map_role(p["role"])
+            
+            mapped_players.append({
+                "player_id": f"P{idx}_{team_short}",
+                "name": name,
+                "team": team,
+                "role": role,
+                "salary": salary
+            })
+            
+        # Overwrite current_slate.json
+        slate_path = ROOT_DIR / "data" / "processed" / "current_slate.json"
+        slate_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(slate_path, "w", encoding="utf-8") as f:
+            json.dump(mapped_players, f, indent=4, ensure_ascii=False)
+            
+        # Task 9.3: Pipeline Reset
+        pred_path = ROOT_DIR / "data" / "processed" / "xgb_predictions.json"
+        pred_path.unlink(missing_ok=True)
+        
+        for key in ["gpp_solution", "gpp_portfolio", "gpp_meta_df", "gpp_generated", "optimal_lineup", "portfolio_metrics"]:
+            if key in st.session_state:
+                del st.session_state[key]
+                
+        st.success(f"Successfully loaded and mapped {len(mapped_players)} players from CSV slate!")
+        st.rerun()
+        
+    except Exception as e:
+        st.error(f"CSV Ingestion Failed: {e}")
 
 # ============================================================
 # MAIN TABS — Simulation first per v5_frontend_architecture.md
