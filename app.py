@@ -1159,305 +1159,321 @@ with tab_match:
     ta_loadout = ta_feat.get("loadout", 20000.0)
     tb_loadout = tb_feat.get("loadout", 20000.0)
 
-    # Run V5 engine
-    v5_engine = get_v5_simulation_engine()
-    with st.spinner("Running V5 Bottom-Up Micro-Simulation (2,000 iterations)..."):
-        v5_res = v5_engine.simulate_match(ma_team_a, ma_team_b, ma_series_type, target_patch="9.02", num_iterations=2000)
-    win_prob_a = v5_res["win_prob_a"]
-    win_prob_b = v5_res["win_prob_b"]
-    predicted_winner = ma_team_a if win_prob_a > win_prob_b else ma_team_b
+    # Initialize simulation cache in session state to prevent running on every load
+    if "v5_sim_results" not in st.session_state:
+        st.session_state["v5_sim_results"] = {}
+        
+    current_run_hash = f"{selected_match_id}_{ma_series_type}_{veto_override}_{predicted_veto.get('maps') if predicted_veto else None}"
+    
+    st.markdown("---")
+    btn_run_match_sim = st.button("🚀 Run Match Simulation Analysis", key="btn_run_match_sim", type="primary", use_container_width=True)
+    
+    if btn_run_match_sim:
+        v5_engine = get_v5_simulation_engine()
+        with st.spinner("Running V5 Bottom-Up Micro-Simulation (2,000 iterations)..."):
+            v5_res = v5_engine.simulate_match(ma_team_a, ma_team_b, ma_series_type, target_patch="9.02", num_iterations=2000)
+            st.session_state["v5_sim_results"][current_run_hash] = v5_res
+            st.rerun()
+            
+    if current_run_hash in st.session_state["v5_sim_results"]:
+        v5_res = st.session_state["v5_sim_results"][current_run_hash]
+        win_prob_a = v5_res["win_prob_a"]
+        win_prob_b = v5_res["win_prob_b"]
+        predicted_winner = ma_team_a if win_prob_a > win_prob_b else ma_team_b
 
-    # ── Actual vs Predicted Side-by-Side ──
-    st.markdown("### 📊 Actual vs. Predicted — Series Overview")
-    avp_col_actual, avp_col_divider, avp_col_predicted = st.columns([5, 1, 5])
+        # ── Actual vs Predicted Side-by-Side ──
+        st.markdown("### 📊 Actual vs. Predicted — Series Overview")
+        avp_col_actual, avp_col_divider, avp_col_predicted = st.columns([5, 1, 5])
 
-    with avp_col_actual:
-        st.markdown(clean_html(f"""
-            <div class="glass-card" style="border-color: rgba(34,197,94,0.2);">
-                <div class="metric-title" style="color: #4ade80; margin-bottom: 14px;">
-                    ✅ ACTUAL RESULT
-                </div>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 14px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_a}</div>
-                        <div style="font-size: 3rem; font-weight: 800; color: #f8fafc; line-height: 1;">{actual_team_a_score}</div>
-                    </div>
-                    <div style="font-size: 1.4rem; color: #334155; font-weight: 700;">—</div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_b}</div>
-                        <div style="font-size: 3rem; font-weight: 800; color: #f8fafc; line-height: 1;">{actual_team_b_score}</div>
-                    </div>
-                </div>
-                <div style="text-align: center; padding: 8px 16px; border-radius: 8px; background: rgba(34,197,94,0.1);
-                            border: 1px solid rgba(34,197,94,0.2); color: #4ade80; font-weight: 700; font-size: 0.95rem;">
-                    🏆 Winner: {actual_winner_name}
-                </div>
-                <div style="margin-top: 14px;">
-                    <div style="font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">Maps Played</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                        {''.join(f'<span style="padding: 3px 10px; border-radius: 99px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ade80; font-size: 0.78rem; font-weight: 600;">{mn}</span>' for mn in actual_map_names)}
-                    </div>
-                </div>
-            </div>
-        """), unsafe_allow_html=True)
-
-    with avp_col_divider:
-        st.markdown('<div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #334155; font-size: 1.4rem; font-weight: 700; padding-top: 60px;">VS</div>', unsafe_allow_html=True)
-
-    with avp_col_predicted:
-        pred_a_score_str = f"~{round(win_prob_a * (3 if ma_series_type == 'Bo5' else 2))}"
-        pred_b_score_str = f"~{round(win_prob_b * (3 if ma_series_type == 'Bo5' else 2))}"
-        pred_map_names = predicted_veto.get("maps", [])
-        st.markdown(clean_html(f"""
-            <div class="glass-card" style="border-color: rgba(168,85,247,0.2);">
-                <div class="metric-title" style="color: #a78bfa; margin-bottom: 14px;">
-                    🔮 ENGINE PREDICTION
-                </div>
-                <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 14px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_a}</div>
-                        <div style="font-size: 2.2rem; font-weight: 800; color: #a78bfa; line-height: 1;">{win_prob_a:.0%}</div>
-                    </div>
-                    <div style="font-size: 1.4rem; color: #334155; font-weight: 700;">—</div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_b}</div>
-                        <div style="font-size: 2.2rem; font-weight: 800; color: #f59e0b; line-height: 1;">{win_prob_b:.0%}</div>
-                    </div>
-                </div>
-                <div style="text-align: center; padding: 8px 16px; border-radius: 8px; background: rgba(168,85,247,0.1);
-                            border: 1px solid rgba(168,85,247,0.2); color: #a78bfa; font-weight: 700; font-size: 0.95rem;">
-                    🔮 Predicted: {predicted_winner}
-                </div>
-                <div style="margin-top: 14px;">
-                    <div style="font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">Predicted Map Pool</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                        {''.join(f'<span style="padding: 3px 10px; border-radius: 99px; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); color: #a78bfa; font-size: 0.78rem; font-weight: 600;">{mn}</span>' for mn in pred_map_names)}
-                    </div>
-                </div>
-            </div>
-        """), unsafe_allow_html=True)
-
-    # ── Accuracy Callout ──
-    winner_correct = actual_winner_name.strip().lower() == predicted_winner.strip().lower()
-    accuracy_msg = "✅ Winner Prediction: CORRECT" if winner_correct else "❌ Winner Prediction: INCORRECT"
-    accuracy_color = "#4ade80" if winner_correct else "#ef4444"
-    map_overlap = len(set(actual_map_names) & set(pred_map_names))
-    st.markdown(clean_html(f"""
-        <div style="display: flex; gap: 14px; margin-bottom: 24px;">
-            <div style="flex: 1; padding: 12px 18px; border-radius: 10px; background: {accuracy_color}11;
-                        border: 1px solid {accuracy_color}33; text-align: center; font-weight: 700; color: {accuracy_color}; font-size: 0.9rem;">
-                {accuracy_msg}
-            </div>
-            <div style="flex: 1; padding: 12px 18px; border-radius: 10px; background: rgba(56,189,248,0.08);
-                        border: 1px solid rgba(56,189,248,0.2); text-align: center; font-weight: 600; color: #38bdf8; font-size: 0.9rem;">
-                🗺️ Map Overlap: {map_overlap}/{len(actual_map_names)} maps correctly predicted
-            </div>
-        </div>
-    """), unsafe_allow_html=True)
-
-    # ── Series Winner Projection ──
-    col1, col2 = st.columns([2, 1])
-    with col1:
-        st.markdown(clean_html(f"""
-            <div class="glass-card">
-                <div class="metric-title">SERIES WIN PROBABILITY</div>
-                <div style="display: flex; justify-content: space-between; gap: 24px; margin-top: 18px;">
-                    <div style="flex: 1; text-align: center;">
-                        <div style="font-size: 1.1rem; font-weight: 600; color: #a78bfa;">{ma_team_a}</div>
-                        <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin: 4px 0;">{win_prob_a:.1%}</div>
-                        <div style="background: rgba(167, 139, 250, 0.15); border-radius: 99px; height: 8px; overflow: hidden; margin-top: 6px;">
-                            <div style="background: #a78bfa; width: {win_prob_a * 100}%; height: 100%; border-radius: 99px;"></div>
-                        </div>
-                    </div>
-                    <div style="width: 1px; background: rgba(255, 255, 255, 0.05); align-self: stretch;"></div>
-                    <div style="flex: 1; text-align: center;">
-                        <div style="font-size: 1.1rem; font-weight: 600; color: #f59e0b;">{ma_team_b}</div>
-                        <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin: 4px 0;">{win_prob_b:.1%}</div>
-                        <div style="background: rgba(245, 158, 11, 0.15); border-radius: 99px; height: 8px; overflow: hidden; margin-top: 6px;">
-                            <div style="background: #f59e0b; width: {win_prob_b * 100}%; height: 100%; border-radius: 99px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        """), unsafe_allow_html=True)
-
-    with col2:
-        winner_name = ma_team_a if win_prob_a > win_prob_b else ma_team_b
-        win_conf = win_prob_a if win_prob_a > win_prob_b else win_prob_b
-        st.markdown(clean_html(f"""
-            <div class="glass-card" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-                <div>
-                    <div class="metric-title">PREDICTED WINNER</div>
-                    <div class="winner-box" style="margin-top: 15px;">
-                        🏆 {winner_name} ({win_conf:.1%})
-                    </div>
-                </div>
-                <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">
-                    {predicted_veto['veto_str']}
-                </div>
-            </div>
-        """), unsafe_allow_html=True)
-
-    # ── Projected Map Scores ──
-    st.markdown("### Projected Map Scores")
-    cols_maps = st.columns(len(predicted_veto["maps"]))
-    for idx, m_name in enumerate(predicted_veto["maps"]):
-        with cols_maps[idx]:
-            team_a_features = {"acs_ema": ta_acs, "avg_loadout": ta_loadout, "comfort_diff": 0.0}
-            team_b_features = {"acs_ema": tb_acs, "avg_loadout": tb_loadout, "comfort_diff": 0.0}
-            veto_w = predicted_veto["veto_weights"].get(m_name, 0)
-            rounds_a, rounds_b = score_reg.predict_score(team_a_features, team_b_features, m_name, veto_w)
-
-            picker = "Decider"
-            if veto_w == 1:
-                picker = f"Picked by {ma_team_a}"
-            elif veto_w == -1:
-                picker = f"Picked by {ma_team_b}"
-
-            # Check actual score if this map was played
-            actual_score_str = ""
-            for am in actual_maps_data:
-                if am.get("map_name") == m_name:
-                    sc = am.get("score", {})
-                    actual_score_str = f"Actual: {sc.get('team1','?')}-{sc.get('team2','?')}"
-                    break
-
+        with avp_col_actual:
             st.markdown(clean_html(f"""
-                <div class="glass-card" style="text-align: center; padding: 20px 14px;">
-                    <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">MAP {idx+1}</div>
-                    <div style="font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin: 6px 0;">{m_name}</div>
-                    <div style="font-size: 1.8rem; font-weight: 800; color: #ff4655; margin: 8px 0; letter-spacing: -1px;">{rounds_a} - {rounds_b}</div>
-                    <div style="color: #94a3b8; font-size: 0.8rem; font-weight: 500;">{picker}</div>
-                    {f'<div style="margin-top: 8px; font-size: 0.78rem; color: #4ade80; font-weight: 600;">{actual_score_str}</div>' if actual_score_str else ''}
+                <div class="glass-card" style="border-color: rgba(34,197,94,0.2);">
+                    <div class="metric-title" style="color: #4ade80; margin-bottom: 14px;">
+                        ✅ ACTUAL RESULT
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 14px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_a}</div>
+                            <div style="font-size: 3rem; font-weight: 800; color: #f8fafc; line-height: 1;">{actual_team_a_score}</div>
+                        </div>
+                        <div style="font-size: 1.4rem; color: #334155; font-weight: 700;">—</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_b}</div>
+                            <div style="font-size: 3rem; font-weight: 800; color: #f8fafc; line-height: 1;">{actual_team_b_score}</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 8px 16px; border-radius: 8px; background: rgba(34,197,94,0.1);
+                                border: 1px solid rgba(34,197,94,0.2); color: #4ade80; font-weight: 700; font-size: 0.95rem;">
+                        🏆 Winner: {actual_winner_name}
+                    </div>
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">Maps Played</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            {''.join(f'<span style="padding: 3px 10px; border-radius: 99px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #4ade80; font-size: 0.78rem; font-weight: 600;">{mn}</span>' for mn in actual_map_names)}
+                        </div>
+                    </div>
                 </div>
             """), unsafe_allow_html=True)
 
-    # ── Predicted Agent Compositions with Actual Side-by-Side ──
-    st.markdown("### Projected vs. Actual Agent Compositions")
-    tab_maps = st.tabs([f"Map {i+1}: {name}" for i, name in enumerate(predicted_veto["maps"])])
+        with avp_col_divider:
+            st.markdown('<div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #334155; font-size: 1.4rem; font-weight: 700; padding-top: 60px;">VS</div>', unsafe_allow_html=True)
 
-    # Build actual compositions lookup
-    actual_comp_lookup = {}
-    for am in actual_maps_data:
-        mname = am.get("map_name")
-        if mname:
-            actual_comp_lookup[mname] = {
-                "team1": [(p["name"], p.get("agent", "?")) for p in am.get("players", {}).get("team1", [])],
-                "team2": [(p["name"], p.get("agent", "?")) for p in am.get("players", {}).get("team2", [])],
-            }
-
-    for idx, m_name in enumerate(predicted_veto["maps"]):
-        with tab_maps[idx]:
-            comp_a_map = agent_comp.predict_composition(ma_team_a, m_name)
-            comp_b_map = agent_comp.predict_composition(ma_team_b, m_name)
-            actual_this_map = actual_comp_lookup.get(m_name, {})
-
-            col_la, col_lb = st.columns(2)
-
-            with col_la:
-                st.markdown(f"#### {ma_team_a}")
-                # Predicted
-                st.markdown('<span class="predicted-badge">🔮 Predicted</span>', unsafe_allow_html=True)
-                cards_a_html = ""
-                for p_name, details in comp_a_map.items():
-                    agent = details["agent"]
-                    role = details["role"]
-                    icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
-                    cards_a_html += f"""
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <img src="{icon}" width="34" height="34" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 0.93rem; color: #f8fafc;">{p_name}</div>
-                                    <div style="font-size: 0.73rem; color: #94a3b8;">{agent}</div>
-                                </div>
-                            </div>
-                            <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
+        with avp_col_predicted:
+            pred_a_score_str = f"~{round(win_prob_a * (3 if ma_series_type == 'Bo5' else 2))}"
+            pred_b_score_str = f"~{round(win_prob_b * (3 if ma_series_type == 'Bo5' else 2))}"
+            pred_map_names = predicted_veto.get("maps", [])
+            st.markdown(clean_html(f"""
+                <div class="glass-card" style="border-color: rgba(168,85,247,0.2);">
+                    <div class="metric-title" style="color: #a78bfa; margin-bottom: 14px;">
+                        🔮 ENGINE PREDICTION
+                    </div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 14px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_a}</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #a78bfa; line-height: 1;">{win_prob_a:.0%}</div>
                         </div>
-                    """
-                st.markdown(clean_html(f'<div class="glass-card">{cards_a_html}</div>'), unsafe_allow_html=True)
+                        <div style="font-size: 1.4rem; color: #334155; font-weight: 700;">—</div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">{ma_team_b}</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #f59e0b; line-height: 1;">{win_prob_b:.0%}</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 8px 16px; border-radius: 8px; background: rgba(168,85,247,0.1);
+                                border: 1px solid rgba(168,85,247,0.2); color: #a78bfa; font-weight: 700; font-size: 0.95rem;">
+                        🔮 Predicted: {predicted_winner}
+                    </div>
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 0.72rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">Predicted Map Pool</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            {''.join(f'<span style="padding: 3px 10px; border-radius: 99px; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); color: #a78bfa; font-size: 0.78rem; font-weight: 600;">{mn}</span>' for mn in pred_map_names)}
+                        </div>
+                    </div>
+                </div>
+            """), unsafe_allow_html=True)
 
-                # Actual (if available)
-                if actual_this_map.get("team1"):
-                    st.markdown('<span class="actual-badge">✅ Actual</span>', unsafe_allow_html=True)
-                    actual_a_html = ""
-                    for p_name, agent in actual_this_map["team1"]:
+        # ── Accuracy Callout ──
+        winner_correct = actual_winner_name.strip().lower() == predicted_winner.strip().lower()
+        accuracy_msg = "✅ Winner Prediction: CORRECT" if winner_correct else "❌ Winner Prediction: INCORRECT"
+        accuracy_color = "#4ade80" if winner_correct else "#ef4444"
+        map_overlap = len(set(actual_map_names) & set(pred_map_names))
+        st.markdown(clean_html(f"""
+            <div style="display: flex; gap: 14px; margin-bottom: 24px;">
+                <div style="flex: 1; padding: 12px 18px; border-radius: 10px; background: {accuracy_color}11;
+                            border: 1px solid {accuracy_color}33; text-align: center; font-weight: 700; color: {accuracy_color}; font-size: 0.9rem;">
+                    {accuracy_msg}
+                </div>
+                <div style="flex: 1; padding: 12px 18px; border-radius: 10px; background: rgba(56,189,248,0.08);
+                            border: 1px solid rgba(56,189,248,0.2); text-align: center; font-weight: 600; color: #38bdf8; font-size: 0.9rem;">
+                    🗺️ Map Overlap: {map_overlap}/{len(actual_map_names)} maps correctly predicted
+                </div>
+            </div>
+        """), unsafe_allow_html=True)
+
+        # ── Series Winner Projection ──
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(clean_html(f"""
+                <div class="glass-card">
+                    <div class="metric-title">SERIES WIN PROBABILITY</div>
+                    <div style="display: flex; justify-content: space-between; gap: 24px; margin-top: 18px;">
+                        <div style="flex: 1; text-align: center;">
+                            <div style="font-size: 1.1rem; font-weight: 600; color: #a78bfa;">{ma_team_a}</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin: 4px 0;">{win_prob_a:.1%}</div>
+                            <div style="background: rgba(167, 139, 250, 0.15); border-radius: 99px; height: 8px; overflow: hidden; margin-top: 6px;">
+                                <div style="background: #a78bfa; width: {win_prob_a * 100}%; height: 100%; border-radius: 99px;"></div>
+                            </div>
+                        </div>
+                        <div style="width: 1px; background: rgba(255, 255, 255, 0.05); align-self: stretch;"></div>
+                        <div style="flex: 1; text-align: center;">
+                            <div style="font-size: 1.1rem; font-weight: 600; color: #f59e0b;">{ma_team_b}</div>
+                            <div style="font-size: 2.2rem; font-weight: 800; color: #f8fafc; margin: 4px 0;">{win_prob_b:.1%}</div>
+                            <div style="background: rgba(245, 158, 11, 0.15); border-radius: 99px; height: 8px; overflow: hidden; margin-top: 6px;">
+                                <div style="background: #f59e0b; width: {win_prob_b * 100}%; height: 100%; border-radius: 99px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            """), unsafe_allow_html=True)
+
+        with col2:
+            winner_name = ma_team_a if win_prob_a > win_prob_b else ma_team_b
+            win_conf = win_prob_a if win_prob_a > win_prob_b else win_prob_b
+            st.markdown(clean_html(f"""
+                <div class="glass-card" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="metric-title">PREDICTED WINNER</div>
+                        <div class="winner-box" style="margin-top: 15px;">
+                            🏆 {winner_name} ({win_conf:.1%})
+                        </div>
+                    </div>
+                    <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">
+                        {predicted_veto['veto_str']}
+                    </div>
+                </div>
+            """), unsafe_allow_html=True)
+
+        # ── Projected Map Scores ──
+        st.markdown("### Projected Map Scores")
+        cols_maps = st.columns(len(predicted_veto["maps"]))
+        for idx, m_name in enumerate(predicted_veto["maps"]):
+            with cols_maps[idx]:
+                team_a_features = {"acs_ema": ta_acs, "avg_loadout": ta_loadout, "comfort_diff": 0.0}
+                team_b_features = {"acs_ema": tb_acs, "avg_loadout": tb_loadout, "comfort_diff": 0.0}
+                veto_w = predicted_veto["veto_weights"].get(m_name, 0)
+                rounds_a, rounds_b = score_reg.predict_score(team_a_features, team_b_features, m_name, veto_w)
+
+                picker = "Decider"
+                if veto_w == 1:
+                    picker = f"Picked by {ma_team_a}"
+                elif veto_w == -1:
+                    picker = f"Picked by {ma_team_b}"
+
+                # Check actual score if this map was played
+                actual_score_str = ""
+                for am in actual_maps_data:
+                    if am.get("map_name") == m_name:
+                        sc = am.get("score", {})
+                        actual_score_str = f"Actual: {sc.get('team1','?')}-{sc.get('team2','?')}"
+                        break
+
+                st.markdown(clean_html(f"""
+                    <div class="glass-card" style="text-align: center; padding: 20px 14px;">
+                        <div style="font-size: 0.78rem; font-weight: 700; color: #94a3b8; text-transform: uppercase;">MAP {idx+1}</div>
+                        <div style="font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin: 6px 0;">{m_name}</div>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #ff4655; margin: 8px 0; letter-spacing: -1px;">{rounds_a} - {rounds_b}</div>
+                        <div style="color: #94a3b8; font-size: 0.8rem; font-weight: 500;">{picker}</div>
+                        {f'<div style="margin-top: 8px; font-size: 0.78rem; color: #4ade80; font-weight: 600;">{actual_score_str}</div>' if actual_score_str else ''}
+                    </div>
+                """), unsafe_allow_html=True)
+
+        # ── Predicted Agent Compositions with Actual Side-by-Side ──
+        st.markdown("### Projected vs. Actual Agent Compositions")
+        tab_maps = st.tabs([f"Map {i+1}: {name}" for i, name in enumerate(predicted_veto["maps"])])
+
+        # Build actual compositions lookup
+        actual_comp_lookup = {}
+        for am in actual_maps_data:
+            mname = am.get("map_name")
+            if mname:
+                actual_comp_lookup[mname] = {
+                    "team1": [(p["name"], p.get("agent", "?")) for p in am.get("players", {}).get("team1", [])],
+                    "team2": [(p["name"], p.get("agent", "?")) for p in am.get("players", {}).get("team2", [])],
+                }
+
+        for idx, m_name in enumerate(predicted_veto["maps"]):
+            with tab_maps[idx]:
+                comp_a_map = agent_comp.predict_composition(ma_team_a, m_name)
+                comp_b_map = agent_comp.predict_composition(ma_team_b, m_name)
+                actual_this_map = actual_comp_lookup.get(m_name, {})
+
+                col_la, col_lb = st.columns(2)
+
+                with col_la:
+                    st.markdown(f"#### {ma_team_a}")
+                    # Predicted
+                    st.markdown('<span class="predicted-badge">🔮 Predicted</span>', unsafe_allow_html=True)
+                    cards_a_html = ""
+                    for p_name, details in comp_a_map.items():
+                        agent = details["agent"]
+                        role = details["role"]
                         icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
-                        actual_a_html += f"""
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                                <img src="{icon}" width="30" height="30" style="border-radius: 4px; border: 1px solid rgba(34,197,94,0.3);"/>
-                                <div style="font-size: 0.88rem; color: #e2e8f0; font-weight: 500;">{p_name} <span style="color:#64748b; font-size:0.75rem;">· {agent}</span></div>
+                        cards_a_html += f"""
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <img src="{icon}" width="34" height="34" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 0.93rem; color: #f8fafc;">{p_name}</div>
+                                        <div style="font-size: 0.73rem; color: #94a3b8;">{agent}</div>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
                             </div>
                         """
-                    st.markdown(clean_html(f'<div class="glass-card" style="border-color: rgba(34,197,94,0.2);">{actual_a_html}</div>'), unsafe_allow_html=True)
+                    st.markdown(clean_html(f'<div class="glass-card">{cards_a_html}</div>'), unsafe_allow_html=True)
 
-            with col_lb:
-                st.markdown(f"#### {ma_team_b}")
-                st.markdown('<span class="predicted-badge">🔮 Predicted</span>', unsafe_allow_html=True)
-                cards_b_html = ""
-                for p_name, details in comp_b_map.items():
-                    agent = details["agent"]
-                    role = details["role"]
-                    icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
-                    cards_b_html += f"""
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <img src="{icon}" width="34" height="34" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
-                                <div>
-                                    <div style="font-weight: 600; font-size: 0.93rem; color: #f8fafc;">{p_name}</div>
-                                    <div style="font-size: 0.73rem; color: #94a3b8;">{agent}</div>
+                    # Actual (if available)
+                    if actual_this_map.get("team1"):
+                        st.markdown('<span class="actual-badge">✅ Actual</span>', unsafe_allow_html=True)
+                        actual_a_html = ""
+                        for p_name, agent in actual_this_map["team1"]:
+                            icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
+                            actual_a_html += f"""
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                    <img src="{icon}" width="30" height="30" style="border-radius: 4px; border: 1px solid rgba(34,197,94,0.3);"/>
+                                    <div style="font-size: 0.88rem; color: #e2e8f0; font-weight: 500;">{p_name} <span style="color:#64748b; font-size:0.75rem;">· {agent}</span></div>
                                 </div>
-                            </div>
-                            <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
-                        </div>
-                    """
-                st.markdown(clean_html(f'<div class="glass-card">{cards_b_html}</div>'), unsafe_allow_html=True)
+                            """
+                        st.markdown(clean_html(f'<div class="glass-card" style="border-color: rgba(34,197,94,0.2);">{actual_a_html}</div>'), unsafe_allow_html=True)
 
-                if actual_this_map.get("team2"):
-                    st.markdown('<span class="actual-badge">✅ Actual</span>', unsafe_allow_html=True)
-                    actual_b_html = ""
-                    for p_name, agent in actual_this_map["team2"]:
+                with col_lb:
+                    st.markdown(f"#### {ma_team_b}")
+                    st.markdown('<span class="predicted-badge">🔮 Predicted</span>', unsafe_allow_html=True)
+                    cards_b_html = ""
+                    for p_name, details in comp_b_map.items():
+                        agent = details["agent"]
+                        role = details["role"]
                         icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
-                        actual_b_html += f"""
-                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                                <img src="{icon}" width="30" height="30" style="border-radius: 4px; border: 1px solid rgba(34,197,94,0.3);"/>
-                                <div style="font-size: 0.88rem; color: #e2e8f0; font-weight: 500;">{p_name} <span style="color:#64748b; font-size:0.75rem;">· {agent}</span></div>
+                        cards_b_html += f"""
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 8px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <img src="{icon}" width="34" height="34" style="border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);"/>
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 0.93rem; color: #f8fafc;">{p_name}</div>
+                                        <div style="font-size: 0.73rem; color: #94a3b8;">{agent}</div>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(255,255,255,0.05); color: #38bdf8;">{role}</span>
                             </div>
                         """
-                    st.markdown(clean_html(f'<div class="glass-card" style="border-color: rgba(34,197,94,0.2);">{actual_b_html}</div>'), unsafe_allow_html=True)
+                    st.markdown(clean_html(f'<div class="glass-card">{cards_b_html}</div>'), unsafe_allow_html=True)
 
-    # ── Fantasy Leaderboard ──
-    st.markdown("### Valorant Fantasy League Leaderboard")
-    fantasy_eng = VCTFantasyEngine()
-    filepath = selected_match["filepath"]
-    leaderboard = fantasy_eng.score_match_json(filepath)
-    if leaderboard:
-        lead_df = pd.DataFrame(leaderboard)
-        lead_df = lead_df.rename(columns={
-            "player": "Player Name",
-            "team": "VCT Team",
-            "avg_rating": "VLR Rating",
-            "map_score_agg": "Map Points Agg (Top 2)",
-            "series_bonus": "Series Bonus",
-            "rating_placement_bonus": "Placement Bonus",
-            "rating_scaling_bonus": "Rating Scaling Bonus",
-            "total_score": "Total Fantasy Score"
-        })
-        display_df = lead_df.drop(columns=["map_scores"])
-        st.dataframe(display_df, use_container_width=True, hide_index=True)
-    else:
-        st.info("Leaderboard scores currently unavailable for this match.")
+                    if actual_this_map.get("team2"):
+                        st.markdown('<span class="actual-badge">✅ Actual</span>', unsafe_allow_html=True)
+                        actual_b_html = ""
+                        for p_name, agent in actual_this_map["team2"]:
+                            icon = AGENT_ICONS.get(agent, "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png")
+                            actual_b_html += f"""
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                    <img src="{icon}" width="30" height="30" style="border-radius: 4px; border: 1px solid rgba(34,197,94,0.3);"/>
+                                    <div style="font-size: 0.88rem; color: #e2e8f0; font-weight: 500;">{p_name} <span style="color:#64748b; font-size:0.75rem;">· {agent}</span></div>
+                                </div>
+                            """
+                        st.markdown(clean_html(f'<div class="glass-card" style="border-color: rgba(34,197,94,0.2);">{actual_b_html}</div>'), unsafe_allow_html=True)
 
-    st.markdown("### V5 Projected Fantasy Points (Expected Value)")
-    if "projections" in v5_res:
-        proj_data = []
-        for p, ev in v5_res["projections"].items():
-            team = ma_team_a if p in v5_res["roster_a"] else ma_team_b
-            proj_data.append({"Player": p, "Team": team, "Expected Value (EV) Points": ev})
-        proj_df = pd.DataFrame(proj_data).sort_values("Expected Value (EV) Points", ascending=False)
-        st.dataframe(proj_df, use_container_width=True, hide_index=True)
+        # ── Fantasy Leaderboard ──
+        st.markdown("### Valorant Fantasy League Leaderboard")
+        fantasy_eng = VCTFantasyEngine()
+        filepath = selected_match["filepath"]
+        leaderboard = fantasy_eng.score_match_json(filepath)
+        if leaderboard:
+            lead_df = pd.DataFrame(leaderboard)
+            lead_df = lead_df.rename(columns={
+                "player": "Player Name",
+                "team": "VCT Team",
+                "avg_rating": "VLR Rating",
+                "map_score_agg": "Map Points Agg (Top 2)",
+                "series_bonus": "Series Bonus",
+                "rating_placement_bonus": "Placement Bonus",
+                "rating_scaling_bonus": "Rating Scaling Bonus",
+                "total_score": "Total Fantasy Score"
+            })
+            display_df = lead_df.drop(columns=["map_scores"])
+            st.dataframe(display_df, use_container_width=True, hide_index=True)
+        else:
+            st.info("Leaderboard scores currently unavailable for this match.")
+
+        st.markdown("### V5 Projected Fantasy Points (Expected Value)")
+        if "projections" in v5_res:
+            proj_data = []
+            for p, ev in v5_res["projections"].items():
+                team = ma_team_a if p in v5_res["roster_a"] else ma_team_b
+                proj_data.append({"Player": p, "Team": team, "Expected Value (EV) Points": ev})
+            proj_df = pd.DataFrame(proj_data).sort_values("Expected Value (EV) Points", ascending=False)
+            st.dataframe(proj_df, use_container_width=True, hide_index=True)
+        else:
+            st.info("EV Projections unavailable.")
     else:
-        st.info("EV Projections unavailable.")
+        st.info("💡 Select a target match and click the **Run Match Simulation Analysis** button above to generate bottom-up simulation projections, agent metrics, and performance charts.")
 
 # ============================================================
 # TAB 3: ROSTER OPTIMIZER
