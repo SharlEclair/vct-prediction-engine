@@ -23,7 +23,7 @@ DFS_CONSTRAINTS:
   salary_cap: 50.0
   lineup_size: 6
   max_players_per_team: 2
-  igl_multiplier: 1.5
+  igl_multiplier: 2.0
   role_counts:
     Duelist: 1
     Initiator: 1

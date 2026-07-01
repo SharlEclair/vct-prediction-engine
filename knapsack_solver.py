@@ -116,7 +116,7 @@ def solve_vfl_knapsack(
     if salary_cap is None:
         salary_cap = float(dfs_constraints.get("salary_cap", 50.0))
     if igl_multiplier is None:
-        igl_multiplier = float(dfs_constraints.get("igl_multiplier", 1.5))
+        igl_multiplier = float(dfs_constraints.get("igl_multiplier", 2.0))
         
     lineup_size = int(dfs_constraints.get("lineup_size", 6))
     max_per_team = int(dfs_constraints.get("max_players_per_team", 2))
@@ -217,7 +217,7 @@ def run_portfolio_simulation(
     
     if igl_multiplier is None:
         config = load_config()
-        igl_multiplier = float(config.get("DFS_CONSTRAINTS", {}).get("igl_multiplier", 1.5))
+        igl_multiplier = float(config.get("DFS_CONSTRAINTS", {}).get("igl_multiplier", 2.0))
         
     drafted_pids = [item["player_id"] for item in solution["lineup"]]
     igl_pid = solution["igl_player"]
@@ -241,7 +241,7 @@ def print_optimal_lineup_summary(solution: Dict[str, Any], sim_metrics: Dict[str
     Console Output: Print formatted optimal lineup and optimization summary.
     """
     df_lineup = pd.DataFrame(solution["lineup"])
-    df_lineup["IGL"] = df_lineup["is_igl"].map(lambda x: "YES (1.5x)" if x else "")
+    df_lineup["IGL"] = df_lineup["is_igl"].map(lambda x: "YES (2x)" if x else "")
     display_cols = ["name", "team", "role", "salary", "EV", "Ceiling_p85", "IGL"]
     
     sal_cap = solution.get("salary_cap", 50.0)

@@ -1570,7 +1570,7 @@ with tab_optimizer:
                     
                     igl_badge_html = """
                         <div style="background: rgba(255, 70, 85, 0.15); color: #ff4655; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; text-align: center; border-radius: 6px; padding: 3px 6px; border: 1px solid rgba(255, 70, 85, 0.3); margin-top: 8px;">
-                            👑 IGL (1.5x)
+                            👑 IGL (2x)
                         </div>
                     """ if p_igl else ""
                     
@@ -1657,7 +1657,7 @@ with tab_optimizer:
             key="user_igl_selectbox"
         )
         
-        # Dynamic Roster EV calculator applying 1.5x IGL multiplier
+        # Dynamic Roster EV calculator applying 2x IGL multiplier
         roster_ev = 0.0
         has_ev = False
         if "gpp_meta_df" in st.session_state:
@@ -1668,7 +1668,7 @@ with tab_optimizer:
                 player_row = df_m[df_m["name"] == name]
                 if not player_row.empty:
                     ev_val = float(player_row.iloc[0]["EV"])
-                mult = 1.5 if name == selected_igl else 1.0
+                mult = 2.0 if name == selected_igl else 1.0
                 roster_ev += ev_val * mult
                 
         # Persist selected roster and IGL to session state on change
@@ -1713,7 +1713,7 @@ with tab_optimizer:
                 
         # Display selected roster EV
         if has_ev:
-            st.info(f"Projected Current Roster EV: **{roster_ev:.2f} Pts** (Applying {selected_igl}'s 1.5x IGL multiplier)")
+            st.info(f"Projected Current Roster EV: **{roster_ev:.2f} Pts** (Applying {selected_igl}'s 2x IGL multiplier)")
         else:
             st.info("Run the GPP Optimizer in the sidebar to populate Expected Value (EV) projections.")
 
@@ -1790,7 +1790,7 @@ with tab_optimizer:
                         """), unsafe_allow_html=True)
                         
                     if igl_swap and opt_igl_name:
-                        st.info(f"👑 Note: Swap designated In-Game Leader (IGL) from **{selected_igl}** to **{opt_igl_name}** (1.5x bonus).")
+                        st.info(f"👑 Note: Swap designated In-Game Leader (IGL) from **{selected_igl}** to **{opt_igl_name}** (2x bonus).")
 
 # ============================================================
 # TAB 4: VFL PLAYERS DATABASE
