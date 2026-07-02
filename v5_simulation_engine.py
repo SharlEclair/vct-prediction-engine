@@ -20,16 +20,44 @@ PROCESSED_DIR = "./data/processed"
 
 TEMPORAL_MAP_POOLS = [
     {
-        "end_date": "2023-09-08",
-        "pool": ["Ascent", "Bind", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
+        "end_date": "2024-10-21",
+        "pool": ["Abyss", "Ascent", "Bind", "Haven", "Icebox", "Lotus", "Sunset"]
     },
     {
-        "end_date": "2024-05-01",
-        "pool": ["Ascent", "Bind", "Breeze", "Icebox", "Lotus", "Split", "Sunset"]
+        "end_date": "2025-01-06",
+        "pool": ["Abyss", "Ascent", "Bind", "Haven", "Pearl", "Split", "Sunset"]
+    },
+    {
+        "end_date": "2025-03-03",
+        "pool": ["Abyss", "Bind", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
+    },
+    {
+        "end_date": "2025-06-23",
+        "pool": ["Ascent", "Fracture", "Haven", "Icebox", "Lotus", "Pearl", "Split"]
+    },
+    {
+        "end_date": "2025-08-18",
+        "pool": ["Ascent", "Bind", "Corrode", "Fracture", "Haven", "Icebox", "Lotus"]
+    },
+    {
+        "end_date": "2025-10-13",
+        "pool": ["Abyss", "Ascent", "Bind", "Corrode", "Fracture", "Haven", "Lotus"]
+    },
+    {
+        "end_date": "2026-01-05",
+        "pool": ["Abyss", "Bind", "Corrode", "Fracture", "Haven", "Pearl", "Split"]
+    },
+    {
+        "end_date": "2026-03-16",
+        "pool": ["Abyss", "Bind", "Breeze", "Corrode", "Haven", "Pearl", "Split"]
+    },
+    {
+        "end_date": "2026-04-27",
+        "pool": ["Bind", "Breeze", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
     },
     {
         "end_date": "2026-12-31",
-        "pool": ["Ascent", "Bind", "Haven", "Icebox", "Lotus", "Abyss", "Sunset"]
+        "pool": ["Ascent", "Breeze", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
     }
 ]
 

@@ -1,126 +1,12 @@
 {
   "_schema_version": "1.0",
-  "_generated_at": "2026-06-24T00:00:00Z",
-  "_note": "Competitive VCT map pool by patch window. Maps listed are the 7 active in official VCT competition for that window. Source: liquipedia.net/valorant/Map_Pool.",
+  "_generated_at": "2026-07-02T11:03:31Z",
+  "_note": "Competitive VCT map pool by patch window. Maps listed are the active in official VCT competition for that window. Source: liquipedia.net/valorant/Map_Pool.",
   "patch_windows": [
     {
-      "window_id": "2022_launch",
-      "start_patch": "4.00",
-      "end_patch": "4.09",
-      "start_date_approx": "2022-01-11",
-      "end_date_approx": "2022-04-27",
-      "active_maps": [
-        "Ascent",
-        "Bind",
-        "Breeze",
-        "Fracture",
-        "Haven",
-        "Icebox",
-        "Split"
-      ],
-      "entering_maps": [
-        "Fracture"
-      ],
-      "retiring_maps": [],
-      "_note": "Fracture joins the launch-era competitive pool."
-    },
-    {
-      "window_id": "2022_act2",
-      "start_patch": "4.10",
-      "end_patch": "4.11",
-      "start_date_approx": "2022-04-27",
-      "end_date_approx": "2022-08-24",
-      "active_maps": [
-        "Ascent",
-        "Bind",
-        "Fracture",
-        "Haven",
-        "Icebox",
-        "Pearl",
-        "Split"
-      ],
-      "entering_maps": [
-        "Pearl"
-      ],
-      "retiring_maps": [
-        "Breeze"
-      ],
-      "_note": "Pearl enters, Breeze departs."
-    },
-    {
-      "window_id": "2023_act1",
-      "start_patch": "6.00",
-      "end_patch": "6.08",
-      "start_date_approx": "2023-01-10",
-      "end_date_approx": "2023-04-25",
-      "active_maps": [
-        "Ascent",
-        "Bind",
-        "Fracture",
-        "Haven",
-        "Lotus",
-        "Pearl",
-        "Split"
-      ],
-      "entering_maps": [
-        "Lotus"
-      ],
-      "retiring_maps": [
-        "Icebox"
-      ]
-    },
-    {
-      "window_id": "2023_act2",
-      "start_patch": "6.10",
-      "end_patch": "7.04",
-      "start_date_approx": "2023-04-25",
-      "end_date_approx": "2023-08-29",
-      "active_maps": [
-        "Ascent",
-        "Bind",
-        "Breeze",
-        "Haven",
-        "Lotus",
-        "Pearl",
-        "Split"
-      ],
-      "entering_maps": [
-        "Breeze"
-      ],
-      "retiring_maps": [
-        "Fracture"
-      ]
-    },
-    {
-      "window_id": "2023_act3",
-      "start_patch": "7.05",
-      "end_patch": "8.10",
-      "start_date_approx": "2023-08-29",
-      "end_date_approx": "2024-01-09",
-      "active_maps": [
-        "Ascent",
-        "Bind",
-        "Breeze",
-        "Haven",
-        "Icebox",
-        "Lotus",
-        "Sunset"
-      ],
-      "entering_maps": [
-        "Icebox",
-        "Sunset"
-      ],
-      "retiring_maps": [
-        "Pearl",
-        "Fracture"
-      ]
-    },
-    {
-      "window_id": "2024_act1",
-      "start_patch": "8.11",
-      "end_patch": "9.09",
+      "window_id": "temporal_2024-10-21",
       "start_date_approx": "2024-01-09",
-      "end_date_approx": "2024-08-27",
+      "end_date_approx": "2024-10-21",
       "active_maps": [
         "Abyss",
         "Ascent",
@@ -129,20 +15,26 @@
         "Icebox",
         "Lotus",
         "Sunset"
-      ],
-      "entering_maps": [
-        "Abyss"
-      ],
-      "retiring_maps": [
-        "Breeze"
       ]
     },
     {
-      "window_id": "2025_act1",
-      "start_patch": "9.10",
-      "end_patch": "11.99",
-      "start_date_approx": "2024-08-27",
-      "end_date_approx": "2026-01-07",
+      "window_id": "temporal_2025-01-06",
+      "start_date_approx": "2024-10-22",
+      "end_date_approx": "2025-01-06",
+      "active_maps": [
+        "Abyss",
+        "Ascent",
+        "Bind",
+        "Haven",
+        "Pearl",
+        "Split",
+        "Sunset"
+      ]
+    },
+    {
+      "window_id": "temporal_2025-03-03",
+      "start_date_approx": "2025-01-07",
+      "end_date_approx": "2025-03-03",
       "active_maps": [
         "Abyss",
         "Bind",
@@ -151,24 +43,96 @@
         "Lotus",
         "Pearl",
         "Split"
-      ],
-      "entering_maps": [
-        "Fracture",
-        "Pearl",
-        "Split"
-      ],
-      "retiring_maps": [
-        "Ascent",
-        "Icebox",
-        "Sunset"
       ]
     },
     {
-      "window_id": "2026_current",
-      "start_patch": "12.00",
-      "end_patch": "9999.99",
-      "start_date_approx": "2026-01-07",
-      "end_date_approx": null,
+      "window_id": "temporal_2025-06-23",
+      "start_date_approx": "2025-03-04",
+      "end_date_approx": "2025-06-23",
+      "active_maps": [
+        "Ascent",
+        "Fracture",
+        "Haven",
+        "Icebox",
+        "Lotus",
+        "Pearl",
+        "Split"
+      ]
+    },
+    {
+      "window_id": "temporal_2025-08-18",
+      "start_date_approx": "2025-06-24",
+      "end_date_approx": "2025-08-18",
+      "active_maps": [
+        "Ascent",
+        "Bind",
+        "Corrode",
+        "Fracture",
+        "Haven",
+        "Icebox",
+        "Lotus"
+      ]
+    },
+    {
+      "window_id": "temporal_2025-10-13",
+      "start_date_approx": "2025-08-19",
+      "end_date_approx": "2025-10-13",
+      "active_maps": [
+        "Abyss",
+        "Ascent",
+        "Bind",
+        "Corrode",
+        "Fracture",
+        "Haven",
+        "Lotus"
+      ]
+    },
+    {
+      "window_id": "temporal_2026-01-05",
+      "start_date_approx": "2025-10-14",
+      "end_date_approx": "2026-01-05",
+      "active_maps": [
+        "Abyss",
+        "Bind",
+        "Corrode",
+        "Fracture",
+        "Haven",
+        "Pearl",
+        "Split"
+      ]
+    },
+    {
+      "window_id": "temporal_2026-03-16",
+      "start_date_approx": "2026-01-06",
+      "end_date_approx": "2026-03-16",
+      "active_maps": [
+        "Abyss",
+        "Bind",
+        "Breeze",
+        "Corrode",
+        "Haven",
+        "Pearl",
+        "Split"
+      ]
+    },
+    {
+      "window_id": "temporal_2026-04-27",
+      "start_date_approx": "2026-03-17",
+      "end_date_approx": "2026-04-27",
+      "active_maps": [
+        "Bind",
+        "Breeze",
+        "Fracture",
+        "Haven",
+        "Lotus",
+        "Pearl",
+        "Split"
+      ]
+    },
+    {
+      "window_id": "temporal_2026-12-31",
+      "start_date_approx": "2026-04-28",
+      "end_date_approx": "2026-12-31",
       "active_maps": [
         "Ascent",
         "Breeze",
@@ -177,19 +141,10 @@
         "Lotus",
         "Pearl",
         "Split"
-      ],
-      "entering_maps": [
-        "Ascent",
-        "Breeze"
-      ],
-      "retiring_maps": [
-        "Bind",
-        "Abyss"
-      ],
-      "_note": "Pool as of 2026 VCT season. Update end_date_approx and add new window when pool rotates."
+      ]
     }
   ],
   "re_entry_decay_rho": 0.65,
   "cohesion_saturation_maps": 25,
-  "ema_alpha": 0.10
+  "ema_alpha": 0.1
 }
