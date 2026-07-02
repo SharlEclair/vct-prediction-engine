@@ -4,7 +4,7 @@ import logging
 from curl_cffi import requests
 import numpy as np
 from feature_engineering import load_raw_matches
-from v4_skills import parse_patch_deltas, compute_feature_shock, compute_ghost_nerf
+from utils.v4_skills import parse_patch_deltas, compute_feature_shock, compute_ghost_nerf
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")

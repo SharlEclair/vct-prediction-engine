@@ -16,7 +16,7 @@ import xgboost as xgb
 
 from data_ingestion import generate_mock_match_telemetry, process_match_telemetry, apply_winsorization
 from feature_engineering import compute_player_ema, generate_odr_matrix, attach_odr_features
-from utils import load_config
+from utils.utils import load_config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")

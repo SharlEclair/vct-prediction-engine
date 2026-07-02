@@ -95,6 +95,14 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
         if patch_match:
             patch = patch_match.group(1).strip()
             
+    # Extract Date
+    date_str = ""
+    date_elem = parser.css_first(".match-header-date")
+    if date_elem:
+        date_str = clean_text(date_elem.text())
+    if patch and patch != "Unknown" and "Patch" not in date_str:
+        date_str = f"{date_str} Patch {patch}"
+
     # Extract Teams
     team1_elem = parser.css_first(".match-header-link-name.mod-1")
     team1 = clean_text(team1_elem.text()) if team1_elem else "Team 1"
@@ -308,6 +316,7 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
                         economy_data.append(row_dict)
                         
         map_segments.append({
+            "date": date_str,
             "patch": patch,
             "event": event,
             "map": map_name,

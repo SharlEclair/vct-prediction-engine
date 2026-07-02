@@ -42,10 +42,10 @@ def main():
         run_step(["sync_map_pool.py"], "Sync Dynamic Map Pool Rotation")
         
         # Step 2: Scrape Patch Notes List
-        run_step(["wiki_scraper.py"], "Scrape Patch Notes List from VCT Wiki")
+        run_step(["scrapers/wiki_scraper.py"], "Scrape Patch Notes List from VCT Wiki")
         
         # Step 3: Ingest Latest Patch Wikitext
-        run_step(["patch_ingestor.py"], "Fetch & Parse Wikitext for New Patches")
+        run_step(["scrapers/patch_ingestor.py"], "Fetch & Parse Wikitext for New Patches")
         
         # Step 4: Analyze Patches and Compute Concept Drift
         run_step(["patch_analyzer.py"], "Calculate Concept Drift & Update Nerf Registry")

@@ -1,0 +1,34 @@
+{
+    "Agent Updates": {},
+    "Weapon Updates": {
+        "General": [
+            {
+                "weapon": "General",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "General",
+                "category": "general",
+                "feature_name": "minimum_spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 2.25,
+                    "new": 2.5
+                }
+            },
+            {
+                "weapon": "General",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ]
+    }
+}

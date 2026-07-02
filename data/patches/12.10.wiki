@@ -1,0 +1,73 @@
+{{PatchNav|previous=12.09|next=12.11}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.10.jpg
+|date    = May 27th, 2026
+|act     = [[Season 2026: Act 3]]
+|changes = '''All Platforms:'''
+*Replay Sharing
+*Esports
+*[[Game Modes]]
+|bundle  = *{{capsule|Rogue}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-10/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.10'''.
+----
+
+{{Quote1|Hi folks, it’s a light patch this time around, but notably, Replays are now accessible through your friends’ list!}}
+==All Platforms==
+
+=== GENERAL UPDATES ===
+
+* Replay Friend Sharing: You can now access and watch your friends’ replays for all eligible modes (Competitive, Unrated, Swiftplay, Premier, Custom) directly from their Career page. 
+** Replays for Custom games are only available when the lobby owner enables recording in the Custom options menu before the game starts. Recording must be enabled again for each new game.
+
+=== ESPORTS FEATURES ===
+
+* Masters London Pick’Ems
+** Pick'Ems are back for Masters London! Starting May 27 (PT), you can make your picks for the Swiss Stage in-client and on the web.
+** For the Swiss Stage, you’ll be tasked with trying to predict who will advance from the 8-team Swiss Groups. For extra bonus points, try to predict a team who will make it out flawlessly with a 2-0 record.
+** You can earn an exclusive title just for playing, but win additional prizes depending on how you fare against other players.
+
+=== MODES UPDATES ===
+
+* '''SKIRMISH: ASCENSION''' - All selectable [[Agents]] are available for both 1v1 and 2v2 modes even if you do not have them unlocked
+* '''NEW SKIRMISH MAPS'''
+** Added Skirmish Maps D and E
+*** Available in all queues and customs.
+*** Both feature ramps for more peek angle variety
+
+===Bug Fixes===
+*[[Agents]]
+**{{ai|Harbor}}
+***{{ui|Bugfix Buff}} Fixed a bug where Harbor's '''{{abi text|Reckoning}}''' could disappear early if the player spammed the cast button.
+**{{ai|Miks}}
+*** {{ui|Bugfix Buff}} Fixed a bug where Miks's '''{{abi text|M-pulse}}''' healing would persist briefly on enemies after they exit its range.
+*** {{ui|Bugfix Buff}} Fixed a bug where Miks's '''{{abi text|M-pulse}}''' could cancel other ability and weapon equip animations
+*** {{ui|Bugfix Buff}} Fixed a bug where spamming alt-fire with '''{{abi text|M-pulse}}''' could cause it to be used in the wrong form
+* Gameplay
+** {{ui|Bugfix}} Fixed a bug that allowed players to inadvertently kill enemies from spawn during the buy phase. This fix was rolled out with a patch redeploy during 12.09.
+* [[Game Modes|Modes]]
+** [[Skirmish|Skirmish 2v2]]
+*** {{ui|Bugfix}} Fixed a bug where the timer was stuck at 0.5 seconds in overtime
+* [[Store]]
+** {{ui|Bugfix}} Fixed an issue where bundle details were not displayed on the confirmation page when purchasing VCT bundles.
+
+==PC Only==
+
+=== PREMIER UPDATES ===
+
+* '''V26A3 Contender and Invite Division schedule changes:'''
+** Playoffs now take place across multiple days.
+*** The first round of playoffs will be on June 20
+*** Teams that advance from the first round return on June 21 for their next matchup
+*** Make sure to check the schedule in client for round start times for your zone!
+
+==Console Only==
+
+=== BUG FIXES ===
+
+* [[Store]]
+** {{ui|Bugfix}} Fixed a clipping issue when confirming a gun buddy purchase from the battlepass.
+
+[[Category:Patch Notes]]

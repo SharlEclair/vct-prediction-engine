@@ -1,0 +1,32 @@
+{
+    "version": "12.10",
+    "date": "May 27th, 2026",
+    "agent_changes": [],
+    "weapon_changes": [],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Harbor",
+        "Bugfix Buff Fixed a bug where Harbor's Reckoning could disappear early if the player spammed the cast button.",
+        "Miks",
+        "Bugfix Buff Fixed a bug where Miks's M-pulse healing would persist briefly on enemies after they exit its range.",
+        "Bugfix Buff Fixed a bug where Miks's M-pulse could cancel other ability and weapon equip animations",
+        "Bugfix Buff Fixed a bug where spamming alt-fire with M-pulse could cause it to be used in the wrong form",
+        "Gameplay",
+        "Bugfix Fixed a bug that allowed players to inadvertently kill enemies from spawn during the buy phase. This fix was rolled out with a patch redeploy during 12.09.",
+        "Modes",
+        "Skirmish 2v2",
+        "Bugfix Fixed a bug where the timer was stuck at 0.5 seconds in overtime",
+        "Store",
+        "Bugfix Fixed an issue where bundle details were not displayed on the confirmation page when purchasing VCT bundles.",
+        "V26A3 Contender and Invite Division schedule changes:",
+        "Playoffs now take place across multiple days.",
+        "The first round of playoffs will be on June 20",
+        "Teams that advance from the first round return on June 21 for their next matchup",
+        "Make sure to check the schedule in client for round start times for your zone!",
+        "Store",
+        "Bugfix Fixed a clipping issue when confirming a gun buddy purchase from the battlepass."
+    ],
+    "player_behavior_changes": []
+}

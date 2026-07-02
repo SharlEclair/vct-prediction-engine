@@ -15,7 +15,7 @@ import veto_predictor
 import generative_pipeline
 import fantasy_engine
 import predict_match
-import vfl_scraper
+from scrapers import vfl_scraper
 import v5_simulation_engine
 
 importlib.reload(veto_predictor)
@@ -29,7 +29,7 @@ from veto_predictor import VCTMapVetoPredictor
 from generative_pipeline import MapScoreRegressor, AgentCompositionGenerator
 from fantasy_engine import VCTFantasyEngine, optimize_roster, suggest_transfers, generate_stage_2_baseline, get_team_win_rates_by_id
 from predict_match import get_historical_stats, get_latest_roster, simulate_arbitrary_match
-from vfl_scraper import VFLScraper
+from scrapers.vfl_scraper import VFLScraper
 from v5_simulation_engine import VCTv5SimulationEngine
 
 @st.cache_resource
@@ -496,6 +496,7 @@ with st.sidebar:
     
     st.markdown("#### 6. System Administration")
     btn_full_system_update = st.button("⚙️ Run Full System Update", use_container_width=True, key="btn_full_system_update")
+    btn_scrape_vlr_incremental = st.button("📥 Scrape Latest VLR Matches (Incremental)", use_container_width=True, key="btn_scrape_vlr_incremental")
     
     st.markdown("---")
     btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", use_container_width=True, key="btn_generate_lineup")
@@ -562,7 +563,7 @@ if btn_sync_live:
             import sys
             import json
             
-            scraper_path = ROOT_DIR / "vfl_scraper.py"
+            scraper_path = ROOT_DIR / "scrapers" / "vfl_scraper.py"
             
             # Execute scraper via subprocess
             logger.info("Executing vfl_scraper.py autonomously via subprocess...")
@@ -725,6 +726,39 @@ if btn_full_system_update:
                 
         except Exception as e:
             st.error(f"❌ Full System Update Pipeline Failed: {e}")
+            if 'result' in locals() and hasattr(result, 'stderr') and result.stderr:
+                st.code(result.stderr)
+
+# Trigger Incremental VLR Scrape logic
+if btn_scrape_vlr_incremental:
+    with st.spinner("Executing Incremental VLR Scrape... (fetching matches from VLR.gg until hitting previously scraped data)"):
+        try:
+            import subprocess
+            import sys
+            
+            logger.info("Executing incremental_vlr_scraper.py autonomously via subprocess...")
+            result = subprocess.run(
+                [sys.executable, str(ROOT_DIR / "scrapers" / "incremental_vlr_scraper.py")],
+                check=True,
+                capture_output=True,
+                text=True
+            )
+            
+            # Find the match count from stdout if printed
+            new_matches = 0
+            for line in result.stdout.splitlines():
+                if "NEW_MATCHES_SCRAPED:" in line:
+                    try:
+                        new_matches = int(line.split("NEW_MATCHES_SCRAPED:")[-1].strip())
+                    except ValueError:
+                        pass
+            
+            st.success(f"✅ Incremental Scrape Completed Successfully! Added {new_matches} new Tier-1 matches to the database.")
+            with st.expander("Show Detailed Scraping Logs"):
+                st.code(result.stdout)
+                
+        except Exception as e:
+            st.error(f"❌ Incremental Scrape Failed: {e}")
             if 'result' in locals() and hasattr(result, 'stderr') and result.stderr:
                 st.code(result.stderr)
 
@@ -1658,7 +1692,7 @@ with tab_optimizer:
         st.markdown("<p style='color: #94a3b8; font-size: 0.85rem; margin-top: -10px;'>Select your current fantasy roster to evaluate trades and analyze GPP points gain.</p>", unsafe_allow_html=True)
         
         # 1. Load slate names and data
-        from utils import load_slate_payload
+        from utils.utils import load_slate_payload
         try:
             slate_data = load_slate_payload()
             slate_names = sorted([p["name"] for p in slate_data])

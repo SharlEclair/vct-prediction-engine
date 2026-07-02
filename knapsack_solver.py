@@ -15,8 +15,8 @@ import pandas as pd
 import pulp
 
 from copula_fusion import get_top_down_predictions, generate_independent_marginals, run_iman_conover_fusion, validate_and_extract_metrics
-from covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
-from utils import load_config, load_slate_payload
+from archive.covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
+from utils.utils import load_config, load_slate_payload
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")

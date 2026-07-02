@@ -921,7 +921,7 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remai
 
 
 if __name__ == "__main__":
-    from vfl_scraper import VFLScraper
+    from scrapers.vfl_scraper import VFLScraper
     scraper = VFLScraper()
     players = scraper.get_players()
     

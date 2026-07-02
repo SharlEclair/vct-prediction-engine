@@ -1,0 +1,70 @@
+{
+    "version": "12.11",
+    "date": "May 27th, 2026",
+    "agent_changes": [],
+    "weapon_changes": [
+        {
+            "weapon": "General",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Judge Judge"
+        },
+        {
+            "weapon": "General",
+            "stat": "Minimum spread",
+            "old_value": 2.25,
+            "new_value": 2.5,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "General",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "This change was made in Patch 12.09 for PC and is now being implemented for Console as we previously mentioned in the [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-09/ Patch 12.09 Patch Notes.]"
+        }
+    ],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [
+        "Agents",
+        "Clove",
+        "Bugfix Fixed a bug where Clove\u2019s Not Dead Yet first person and third person SFX were not playing when the ability was available and when the ability timed out.",
+        "Gekko",
+        "Bugfix Buff Fixed an issue where Gekko\u2019s reclaimable ability globules would disappear after using Thrash.",
+        "Miks",
+        "Bugfix Fixed a bug where Miks was getting assists for healing uninjured allies with M-pulse.",
+        "Bugfix Buff Fixed a bug where Miks\u2019 M-pulse could not be toggled after quickly swapping between abilities.",
+        "Raze",
+        "Bugfix Buff Fixed an issue where Raze'sBlast Pack wasn't dealing damage to destructible enemy abilities.",
+        "Sage",
+        "Bugfix Buff Fixed a bug where Sage\u2019s Healing Orb was not usable during the buy phase.",
+        "Viper",
+        "Bugfix Buff Fixed a bug where Viper's Pit was getting stuck unable to expand in a few specific spots.",
+        "Maps",
+        "Breeze",
+        "Bugfix Fixed a bug on Breeze that allowed multiple Agent abilities to lock onto enemies who were out of sight behind the large boxes on A Main.",
+        "Store",
+        "Bugfix Fixed an overlap issue on buy button prompts in Arabic while previewing bundles.",
+        "Agents",
+        "Waylay",
+        "We\u2019re aware of the issue with Waylay where she can place her Refract on a roof on Ascent.",
+        "Maps",
+        "Lotus",
+        "We\u2019re aware of the issue on Lotus where the doors sometimes don\u2019t open.",
+        "V26A3 Contender and Invite Division schedule changes:",
+        "Playoffs now take place across multiple days.",
+        "The first round of playoffs will be on June 20",
+        "Teams that advance from the first round return on June 21 for their next matchup",
+        "Make sure to check the schedule in client for round start times for your zone!",
+        "Premier",
+        "Bugfix Fixed a bug where Premier team tags would not show up in the Buy menu during pre-round phase.",
+        "Bugfix Added clearer error messaging during the \u2018Create Team\u2019 flow when a name and tag is already taken.",
+        "Cypher",
+        "Bugfix Buff Fixed an issue where you couldn't see the Cypher camera model when placing the ability."
+    ],
+    "player_behavior_changes": []
+}

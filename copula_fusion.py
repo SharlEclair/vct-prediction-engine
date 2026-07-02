@@ -12,8 +12,8 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 
-from covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
-from utils import load_slate_payload
+from archive.covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
+from utils.utils import load_slate_payload
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")

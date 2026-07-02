@@ -6,6 +6,9 @@ import json
 import time
 import argparse
 
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from patch_parser import PatchParser
 
 def get_mock_patch_text(version: str) -> str:

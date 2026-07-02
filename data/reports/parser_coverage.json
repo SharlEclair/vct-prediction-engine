@@ -231,6 +231,20 @@
         "bug_fixes": 25
     },
     {
+        "version": "12.10",
+        "agent_changes": 0,
+        "weapon_changes": 0,
+        "competitive_changes": 0,
+        "bug_fixes": 21
+    },
+    {
+        "version": "12.11",
+        "agent_changes": 0,
+        "weapon_changes": 3,
+        "competitive_changes": 0,
+        "bug_fixes": 35
+    },
+    {
         "version": "9.0",
         "agent_changes": 5,
         "weapon_changes": 0,
