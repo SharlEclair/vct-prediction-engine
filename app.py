@@ -495,7 +495,9 @@ with st.sidebar:
     uploaded_file = st.file_uploader("Fallback: Upload DFS Slate (CSV)", type=["csv"], key="uploaded_file_slate")
     
     st.markdown("#### 6. System Administration")
-    btn_full_system_update = st.button("⚙️ Run Full System Update", use_container_width=True, key="btn_full_system_update")
+    whitelist_input = st.text_input("VLR Event Whitelist (comma-separated)", placeholder="e.g. Esports World Cup 2026", key="vlr_whitelist")
+    btn_master_update = st.button("🚀 Master Update: Sync All Data & Retrain", type="primary", use_container_width=True, key="btn_master_update")
+    btn_patch_update_only = st.button("🔄 Scrape Latest Patches & Rebuild Meta", use_container_width=True, key="btn_patch_update_only")
     btn_scrape_vlr_incremental = st.button("📥 Scrape Latest VLR Matches (Incremental)", use_container_width=True, key="btn_scrape_vlr_incremental")
     
     st.markdown("---")
@@ -699,17 +701,20 @@ if uploaded_file is not None:
     except Exception as e:
         st.error(f"CSV Ingestion Failed: {e}")
 
-# Trigger Full System Update logic
-if btn_full_system_update:
-    with st.spinner("Executing Full System Update... (syncing map rotation, scraping wiki patches, computing concept drift, and retraining XGBoost model)"):
+# Trigger Master Update logic
+if btn_master_update:
+    with st.spinner("Executing Master Update... (scraping matches, syncing map pool, checking patch wikis, analyzing concept drift, and retraining models)"):
         try:
             import subprocess
             import sys
             
-            # Execute run_pipeline.py via subprocess
-            logger.info("Executing run_pipeline.py autonomously via subprocess...")
+            cmd = [sys.executable, str(ROOT_DIR / "run_pipeline.py")]
+            if whitelist_input.strip():
+                cmd += ["--whitelist", whitelist_input.strip()]
+                
+            logger.info(f"Executing master update pipeline via subprocess: {cmd}")
             result = subprocess.run(
-                [sys.executable, str(ROOT_DIR / "run_pipeline.py")],
+                cmd,
                 check=True,
                 capture_output=True,
                 text=True
@@ -720,14 +725,55 @@ if btn_full_system_update:
                 if key in st.session_state:
                     del st.session_state[key]
                     
-            st.success("✅ Full System Update Completed Successfully! Active VCT Map rotation, wiki patches, drift indices, and predictions have been re-calibrated.")
+            st.success("✅ Master Update Completed Successfully! VCT matches, active map rotation, wiki patches, drift indices, and predictions have been re-calibrated.")
             with st.expander("Show Detailed Execution Logs"):
                 st.code(result.stdout)
                 
         except Exception as e:
-            st.error(f"❌ Full System Update Pipeline Failed: {e}")
+            st.error(f"❌ Master Update Pipeline Failed: {e}")
             if 'result' in locals() and hasattr(result, 'stderr') and result.stderr:
                 st.code(result.stderr)
+
+# Trigger Patch-Only Update logic
+if btn_patch_update_only:
+    with st.spinner("Executing Patch-Only Update... (scraping wiki, parsing patches, updating drift indices, and rebuilding models)"):
+        try:
+            import subprocess
+            import sys
+            
+            steps = [
+                (["scrapers/wiki_scraper.py"], "Scrape VCT wiki patch list"),
+                (["scrapers/patch_ingestor.py"], "Ingest new patch notes"),
+                (["patch_analyzer.py"], "Compute concept drift nerf registry"),
+                (["feature_engineering.py"], "Rebuild feature matrix store"),
+                (["model_training.py"], "Retrain XGBoost & update slate predictions")
+            ]
+            
+            stdout_accumulator = []
+            for cmd_args, desc in steps:
+                logger.info(f"Running patch pipeline step: {desc} ({cmd_args})")
+                res = subprocess.run(
+                    [sys.executable] + cmd_args,
+                    cwd=str(ROOT_DIR),
+                    check=True,
+                    capture_output=True,
+                    text=True
+                )
+                stdout_accumulator.append(f"=== {desc} ===\n{res.stdout or ''}")
+                
+            # Clear solver session state
+            for key in ["gpp_solution", "gpp_portfolio", "gpp_meta_df", "gpp_generated", "optimal_lineup", "portfolio_metrics"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+                    
+            st.success("✅ Patch Notes Scrape & Meta Rebuild Completed Successfully!")
+            with st.expander("Show Detailed Rebuild Logs"):
+                st.code("\n\n".join(stdout_accumulator))
+                
+        except Exception as e:
+            st.error(f"❌ Patch Update Rebuild Failed: {e}")
+            if 'res' in locals() and hasattr(res, 'stderr') and res.stderr:
+                st.code(res.stderr)
 
 # Trigger Incremental VLR Scrape logic
 if btn_scrape_vlr_incremental:

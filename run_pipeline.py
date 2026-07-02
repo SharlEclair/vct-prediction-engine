@@ -34,29 +34,36 @@ def run_step(command, description):
                 logger.error(f"  [STDERR] {line}")
         raise e
 
-def main():
+def main(whitelist: str = None):
     logger.info("=== STARTING FULL SYSTEM UPDATE PIPELINE ===")
     
     try:
-        # Step 1: Sync Map Pool
+        # Step 1: Incremental VLR Scrape
+        cmd_vlr = ["scrapers/incremental_vlr_scraper.py"]
+        if whitelist:
+            cmd_vlr += ["--whitelist", whitelist]
+        run_step(cmd_vlr, "Incremental VLR Matches Scrape")
+        
+        # Step 2: Ingest VFL pricing/roster state
+        run_step(["scrapers/vfl_scraper.py"], "Scrape VFL Slate & Player Projections")
+        
+        # Step 3: Sync Map Pool
         run_step(["sync_map_pool.py"], "Sync Dynamic Map Pool Rotation")
         
-        # Step 2: Scrape Patch Notes List
+        # Step 4: Scrape Patch Notes List
         run_step(["scrapers/wiki_scraper.py"], "Scrape Patch Notes List from VCT Wiki")
         
-        # Step 3: Ingest Latest Patch Wikitext
+        # Step 5: Ingest Latest Patch Wikitext
         run_step(["scrapers/patch_ingestor.py"], "Fetch & Parse Wikitext for New Patches")
         
-        # Step 4: Analyze Patches and Compute Concept Drift
+        # Step 6: Analyze Patches and Compute Concept Drift
         run_step(["patch_analyzer.py"], "Calculate Concept Drift & Update Nerf Registry")
         
-        # Step 5: Retrain XGBoost Model & Save Predictions
-        run_step(["model_training.py"], "Retrain XGBoost Regressor on Decayed Feature Matrices")
+        # Step 7: Build Features
+        run_step(["feature_engineering.py"], "Build Feature Matrix Store")
         
-        # Step 6: Pipeline Reset Trigger
-        predictions_path = ROOT_DIR / "data" / "processed" / "xgb_predictions.json"
-        # We can also delete it just to make sure the state is clean (although model_training.py writes it)
-        # But actually, keeping it is fine as model_training.py wrote the fresh ones.
+        # Step 8: Retrain XGBoost Model & Save Predictions
+        run_step(["model_training.py"], "Retrain XGBoost Regressor on Decayed Feature Matrices")
         
         logger.info("=== FULL SYSTEM UPDATE PIPELINE COMPLETED SUCCESSFULLY ===")
         print("SUCCESS")
@@ -67,4 +74,9 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="VCT Prediction Model Pipeline Orchestrator")
+    parser.add_argument("--whitelist", type=str, default=None, help="Comma-separated whitelisted VLR events")
+    args = parser.parse_args()
+    
+    main(whitelist=args.whitelist)

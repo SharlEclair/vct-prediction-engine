@@ -49,11 +49,15 @@ def get_latest_local_match_date() -> datetime:
     logger.info(f"Most recent cached match date found: {latest_date}")
     return latest_date
 
-def run_incremental_scrape():
+def run_incremental_scrape(whitelist: str = None):
     """Paginate and scrape new VCT Tier 1 matches until hitting a match older than latest cached date."""
     latest_local_date = get_latest_local_match_date()
     os.makedirs(RAW_DIR, exist_ok=True)
     
+    whitelist_list = [w.strip().lower() for w in whitelist.split(",") if w.strip()] if whitelist else []
+    if whitelist_list:
+        logger.info(f"Using dynamic event whitelist: {whitelist_list}")
+        
     page = 1
     new_matches_scraped = 0
     stop_scraping = False
@@ -87,16 +91,19 @@ def run_incremental_scrape():
             tourney_elem = item.css_first("div.match-item-event")
             tourney_name = clean_text(tourney_elem.text()) if tourney_elem else ""
             
-            # We only care about Tier 1 events
-            if not is_tier1_event(tourney_name):
+            # Check standard Tier 1 event or Whitelist match
+            is_match_t1 = is_tier1_event(tourney_name)
+            is_match_whitelisted = False
+            if tourney_name and whitelist_list:
+                is_match_whitelisted = any(w in tourney_name.lower() for w in whitelist_list)
+                
+            if not (is_match_t1 or is_match_whitelisted):
                 continue
                 
             # Check if we already have it
             dest_filepath = os.path.join(RAW_DIR, f"match_{match_id}.json")
             if os.path.exists(dest_filepath):
                 logger.info(f"Match {match_id} already exists locally. Skipping details page fetch.")
-                # We still need to parse the date to see if we should stop. But wait!
-                # Since we already have this match, let's load it from disk to check the date!
                 try:
                     with open(dest_filepath, "r", encoding="utf-8") as f:
                         data = json.load(f)
@@ -112,7 +119,7 @@ def run_incremental_scrape():
                 continue
                 
             # Scrape match details
-            logger.info(f"New Tier 1 match detected: {match_id} ({tourney_name}). Scraping details...")
+            logger.info(f"New target match detected: {match_id} ({tourney_name}). Scraping details...")
             segments = parse_vlr_match(match_id)
             if not segments:
                 logger.warning(f"Could not parse match details for {match_id}. Skipping.")
@@ -151,4 +158,9 @@ def run_incremental_scrape():
     return new_matches_scraped
 
 if __name__ == "__main__":
-    run_incremental_scrape()
+    import argparse
+    parser = argparse.ArgumentParser(description="Incremental VLR match scraper with dynamic whitelisting")
+    parser.add_argument("--whitelist", type=str, default=None, help="Comma-separated list of whitelisted event strings")
+    args = parser.parse_args()
+    
+    run_incremental_scrape(whitelist=args.whitelist)
