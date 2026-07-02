@@ -56,8 +56,12 @@ TEMPORAL_MAP_POOLS = [
         "pool": ["Bind", "Breeze", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
     },
     {
-        "end_date": "2026-12-31",
+        "end_date": "2026-06-22",
         "pool": ["Ascent", "Breeze", "Fracture", "Haven", "Lotus", "Pearl", "Split"]
+    },
+    {
+        "end_date": "2026-12-31",
+        "pool": ["Ascent", "Breeze", "Haven", "Lotus", "Split", "Summit", "Sunset"]
     }
 ]
 

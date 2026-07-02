@@ -130,9 +130,9 @@
       ]
     },
     {
-      "window_id": "temporal_2026-12-31",
+      "window_id": "temporal_2026-06-22",
       "start_date_approx": "2026-04-28",
-      "end_date_approx": "2026-12-31",
+      "end_date_approx": "2026-06-22",
       "active_maps": [
         "Ascent",
         "Breeze",
@@ -141,6 +141,20 @@
         "Lotus",
         "Pearl",
         "Split"
+      ]
+    },
+    {
+      "window_id": "temporal_2026-12-31",
+      "start_date_approx": "2026-06-23",
+      "end_date_approx": "2026-12-31",
+      "active_maps": [
+        "Ascent",
+        "Breeze",
+        "Haven",
+        "Lotus",
+        "Split",
+        "Summit",
+        "Sunset"
       ]
     }
   ],

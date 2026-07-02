@@ -55,7 +55,7 @@ def get_mock_patch_text(version: str) -> str:
 logger = logging.getLogger("patch_ingestor")
 
 from pathlib import Path
-ROOT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
 PATCHES_CACHE_DIR = str(ROOT_DIR / "data" / "patches")
 PROCESSED_PATCHES_DIR = str(ROOT_DIR / "data" / "processed" / "patches")
@@ -120,7 +120,7 @@ def get_patch_versions(csv_path="data/raw/patch_notes.csv", limit=5):
     return versions
 
 def fetch_from_wiki_api(version: str) -> str:
-    api_url = "https://valorant.fandom.com/api.php"
+    api_url = "https://wiki.playvalorant.com/en-us/api.php"
     params = {
         "action": "query",
         "prop": "revisions",

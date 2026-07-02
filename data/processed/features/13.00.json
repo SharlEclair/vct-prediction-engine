@@ -1,0 +1,897 @@
+{
+    "Agent Updates": {
+        "Breach": [
+            {
+                "agent": "Breach",
+                "ability": "Fault Line",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 60.0,
+                    "new": 50.0
+                }
+            }
+        ],
+        "Cypher": [
+            {
+                "agent": "Cypher",
+                "ability": "Trapwire",
+                "category": "ability",
+                "feature_name": "cast_time",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.9,
+                    "new": 0.7
+                }
+            }
+        ],
+        "Deadlock": [
+            {
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 60.0,
+                    "new": 50.0
+                }
+            }
+        ],
+        "Fade": [
+            {
+                "agent": "Fade",
+                "ability": "Haunt",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 60.0,
+                    "new": 50.0
+                }
+            }
+        ],
+        "Gekko": [
+            {
+                "agent": "Gekko",
+                "ability": "Globules",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 20.0,
+                    "new": 15.0
+                }
+            }
+        ],
+        "Harbor": [
+            {
+                "agent": "Harbor",
+                "ability": "Reckoning",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "KAY/O": [
+            {
+                "agent": "KAY/O",
+                "ability": "ZERO/point",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 60.0,
+                    "new": 50.0
+                }
+            }
+        ],
+        "Killjoy": [
+            {
+                "agent": "Killjoy",
+                "ability": "Nanoswarm",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 4.0,
+                    "new": 5.0
+                }
+            },
+            {
+                "agent": "Killjoy",
+                "ability": "Nanoswarm",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Killjoy",
+                "ability": "Alarmbot",
+                "category": "movement",
+                "feature_name": "movement_speed",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null
+            },
+            {
+                "agent": "Killjoy",
+                "ability": "Turret",
+                "category": "general",
+                "feature_name": "rate",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 8.0,
+                    "new": 12.0
+                }
+            }
+        ],
+        "Omen": [
+            {
+                "agent": "Omen",
+                "ability": "Shrouded Step",
+                "category": "general",
+                "feature_name": "shrouded_step",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": null
+            }
+        ],
+        "Sage": [
+            {
+                "agent": "Sage",
+                "ability": "Healing Orb",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 50.0,
+                    "new": 100.0
+                }
+            }
+        ],
+        "Skye": [
+            {
+                "agent": "Skye",
+                "ability": "Guiding Light",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 60.0,
+                    "new": 50.0
+                }
+            }
+        ],
+        "Sova": [
+            {
+                "agent": "Sova",
+                "ability": "Recon Bolt",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 60.0,
+                    "new": 50.0
+                }
+            }
+        ],
+        "Veto": [
+            {
+                "agent": "Veto",
+                "ability": "Crosscut",
+                "category": "ability",
+                "feature_name": "size",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 24.0,
+                    "new": 30.0
+                }
+            },
+            {
+                "agent": "Veto",
+                "ability": "Crosscut",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 1.5,
+                    "new": 0.75
+                }
+            },
+            {
+                "agent": "Veto",
+                "ability": "Interceptor",
+                "category": "ability",
+                "feature_name": "cooldown",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 30.0,
+                    "new": 20.0
+                }
+            }
+        ],
+        "Viper": [
+            {
+                "agent": "Viper",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Viper",
+                "ability": "Viper's Pit",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Viper",
+                "ability": "Viper's Pit",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Viper",
+                "ability": "Viper's Pit",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ]
+    },
+    "Weapon Updates": {
+        "Bandit": [
+            {
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "recovery",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 0.45,
+                    "new": 0.4
+                }
+            },
+            {
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "tap_efficiency",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 3.0,
+                    "new": 4.0
+                }
+            },
+            {
+                "weapon": "Bandit",
+                "category": "general",
+                "feature_name": "vertical_recoil_at_max",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 4.0,
+                    "new": 3.0
+                }
+            }
+        ],
+        "Blackspyre": [
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Blackspyre",
+                "category": "general",
+                "feature_name": "accessories",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Matchday": [
+            {
+                "weapon": "Matchday",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Matchday",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Matchday",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Night.Market": [
+            {
+                "weapon": "Night.Market",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "V26 A4 Battle Pass": [
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 A4 Battle Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "VALORANT FC Event Pass": [
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "VALORANT FC Event Pass",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Other": [
+            {
+                "weapon": "Other",
+                "category": "general",
+                "feature_name": "miscellaneous_additions",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Other",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Other",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "V26 Range Lore Elements": [
+            {
+                "weapon": "V26 Range Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 Range Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 Range Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Summit Lore Elements": [
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "General": [
+            {
+                "weapon": "General",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "General",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Client": [
+            {
+                "weapon": "Client",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Client",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Client",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Client",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Client",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Client",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ]
+    }
+}

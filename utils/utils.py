@@ -26,7 +26,7 @@ def load_config(config_path: str = "config.yaml") -> Dict[str, Any]:
         Dict[str, Any]: Parsed configuration dictionary.
     """
     from pathlib import Path
-    root_dir = Path(__file__).resolve().parent
+    root_dir = Path(__file__).resolve().parent.parent
     config_p = Path(config_path)
     if not config_p.is_absolute():
         config_p = root_dir / config_p
@@ -56,7 +56,7 @@ def load_slate_payload(slate_path: str = "data/processed/current_slate.json") ->
         List[Dict[str, Any]]: List of player metadata dictionaries.
     """
     from pathlib import Path
-    root_dir = Path(__file__).resolve().parent
+    root_dir = Path(__file__).resolve().parent.parent
     slate_p = Path(slate_path)
     if not slate_p.is_absolute():
         slate_p = root_dir / slate_p

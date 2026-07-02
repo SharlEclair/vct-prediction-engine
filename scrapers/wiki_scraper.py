@@ -7,11 +7,12 @@ import re
 from curl_cffi import requests
 from selectolax.parser import HTMLParser
 
-# Configure logging
+from pathlib import Path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+CACHE_DIR = str(ROOT_DIR / "data" / "cache")
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("wiki_scraper")
-
-CACHE_DIR = os.path.join(".", "data", "cache")
 
 async def scrape_patch_notes(client=None) -> pd.DataFrame:
     """
@@ -164,7 +165,7 @@ if __name__ == "__main__":
     async def main():
         df = await scrape_patch_notes()
         if not df.empty:
-            out_dir = os.path.join(".", "data", "raw")
+            out_dir = str(ROOT_DIR / "data" / "raw")
             os.makedirs(out_dir, exist_ok=True)
             csv_path = os.path.join(out_dir, "patch_notes.csv")
             df.to_csv(csv_path, index=False)

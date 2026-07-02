@@ -24,7 +24,9 @@ from feature_engineering import parse_match_date
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("incremental_vlr_scraper")
 
-RAW_DIR = os.path.join(os.path.dirname(__file__), "../data/raw")
+from pathlib import Path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+RAW_DIR = str(ROOT_DIR / "data" / "raw")
 
 def get_latest_local_match_date() -> datetime:
     """Scan all raw match files to find the latest match timestamp."""

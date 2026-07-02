@@ -36,7 +36,9 @@ logging.basicConfig(
 )
 
 # ── Constants ──────────────────────────────────────────────────────────────────
-CACHE_DIR             = os.path.join(".", "data", "processed")
+from pathlib import Path
+ROOT_DIR              = Path(__file__).resolve().parent.parent
+CACHE_DIR             = str(ROOT_DIR / "data" / "processed")
 VFL_PLAYERS_DB_CACHE  = os.path.join(CACHE_DIR, "vfl_players_db.json")
 
 VFL_API_BASE          = "https://api.valorantfantasyleague.net/api"

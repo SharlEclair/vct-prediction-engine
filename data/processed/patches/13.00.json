@@ -1,0 +1,734 @@
+{
+    "version": "13.00",
+    "date": "June 23rd, 2026",
+    "agent_changes": [
+        {
+            "agent": "Breach",
+            "ability": "Fault Line",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 60s >>> 50s"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Trapwire",
+            "change_type": "Buff",
+            "description": "Windup decreased 0.9s >>> 0.7s"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 60s >>> 50s"
+        },
+        {
+            "agent": "Fade",
+            "ability": "Haunt",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 60s >>> 50s"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Globules",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 20s >>> 15s"
+        },
+        {
+            "agent": "Harbor",
+            "ability": "Reckoning",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Debuff lingering briefly after VFX disappeared"
+        },
+        {
+            "agent": "KAY/O",
+            "ability": "ZERO/point",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 60s >>> 50s"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Nanoswarm",
+            "change_type": "Buff",
+            "description": "Duration increased 4s >>> 5s"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Nanoswarm",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Cast VO line not playing"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Alarmbot",
+            "change_type": "Buff",
+            "description": "Movement speed increased 15m/s >>> 22.5m/s"
+        },
+        {
+            "agent": "Killjoy",
+            "ability": "Turret",
+            "change_type": "Buff",
+            "description": "Rate of fire increased 8 >>> 12"
+        },
+        {
+            "agent": "Omen",
+            "ability": "Shrouded Step",
+            "change_type": "Nerf",
+            "description": "Improved clarity of SFX at target location for enemies"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Healing Orb",
+            "change_type": "Buff",
+            "description": "Self Heal-Over-Time increased 50 >>> 100"
+        },
+        {
+            "agent": "Skye",
+            "ability": "Guiding Light",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 60s >>> 50s"
+        },
+        {
+            "agent": "Sova",
+            "ability": "Recon Bolt",
+            "change_type": "Buff",
+            "description": "Cooldown decreased 60s >>> 50s"
+        },
+        {
+            "agent": "Veto",
+            "ability": "Crosscut",
+            "change_type": "Buff",
+            "description": "Vortex radius increased 24m >>> 30m"
+        },
+        {
+            "agent": "Veto",
+            "ability": "Crosscut",
+            "change_type": "Buff",
+            "description": "Deployment time decreased 1.5s >>> 0.75s"
+        },
+        {
+            "agent": "Veto",
+            "ability": "Interceptor",
+            "change_type": "Buff",
+            "description": "Reclaim cooldown decreased 30s >>> 20s"
+        },
+        {
+            "agent": "Viper",
+            "ability": "General",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Viper's Pit VFX failing to appear in Replays after scrubbing the timeline and switching to Free Cam"
+        },
+        {
+            "agent": "Viper",
+            "ability": "Viper's Pit",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Not losing integrity on Abyss if crouching outside the pit"
+        },
+        {
+            "agent": "Viper",
+            "ability": "Viper's Pit",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Incorrectly spreading through certain placements of Barrier Orb and Shear that created a divider inside the pit"
+        },
+        {
+            "agent": "Viper",
+            "ability": "Viper's Pit",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Cloud appearing with artifacts or forming incorrectly on some maps (Abyss, Ascent, Haven, Icebox, Split)"
+        }
+    ],
+    "weapon_changes": [
+        {
+            "weapon": "Bandit",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Buff",
+            "description": "Recovery decreased 0.45s >>> 0.4s"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "Tap efficiency",
+            "old_value": 3.0,
+            "new_value": 4.0,
+            "change_type": "Buff"
+        },
+        {
+            "weapon": "Bandit",
+            "stat": "Vertical recoil at max",
+            "old_value": 4.0,
+            "new_value": 3.0,
+            "change_type": "Buff"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Exclusive Exclusive edition gun skins:"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Sheriff"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Spectre"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Phantom"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Ares"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Divide melee"
+        },
+        {
+            "weapon": "Blackspyre",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Accessories: 1 player card, 1 gunbuddy, 1 spray"
+        },
+        {
+            "weapon": "Matchday",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Matchday buddy"
+        },
+        {
+            "weapon": "Matchday",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Matchday spray"
+        },
+        {
+            "weapon": "Matchday",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Matchday flex"
+        },
+        {
+            "weapon": "Night.Market",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Pool updated with eligible skins from Season 2026: Act 2: Jellybeam"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Deluxe Deluxe edition skinline: Sky Reaper"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Includes free Tier 50 sidearm skin (Ghost) and Tier 50 melee skin (Sword)"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Contains variants"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Select Select edition skinlines:"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Intertwine"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Tacti-Guild"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Boom Ball flex"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Tier 45 (Premium track)"
+        },
+        {
+            "weapon": "V26 A4 Battle Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Number of weapon skins subsequently reduced to 12 for this pass"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "From June 23-July 20 (active through 13.01)"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "81,100 XP total to complete"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "5 tiers containing the following rewards:"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Boom-Bola buddy"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Vamos spray"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "GOOOOALLLL!!! title"
+        },
+        {
+            "weapon": "VALORANT FC Event Pass",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "2 lots of 10"
+        },
+        {
+            "weapon": "Other",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Miscellaneous additions:"
+        },
+        {
+            "weapon": "Other",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "With Sage, Comes Fame spray"
+        },
+        {
+            "weapon": "Other",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Not directly visible in-game, assumed China-exclusive"
+        },
+        {
+            "weapon": "V26 Range Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New Skye email in Brimstone's office"
+        },
+        {
+            "weapon": "V26 Range Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New Viper voicemail in Brimstone's office"
+        },
+        {
+            "weapon": "V26 Range Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New Legion audio log featuring Viper|icon=true in Cypher's office"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Summit launches with two messages between Sage and Yuan Xiuyi."
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "The message from Sage can be found at Attacker Side Spawn"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "The message from Yuan Xiuyi can be found at Defender Side Spawn"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Added New lines added for the following agents:"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Gekko (# lines)"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Jett (# lines)"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Miks (# lines)"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Phoenix (# lines)"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Sage (# lines)"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Viper (# lines)"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Removed Lines removed from the following agents:"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Astra"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Breach"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Chamber"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Clove"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Deadlock"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Fade"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Harbor"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Iso"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Jett"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Killjoy"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Neon"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Omen"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Reyna"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Skye"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Sova"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Tejo"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Viper"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Vyse"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Yoru-->"
+        },
+        {
+            "weapon": "General",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Bugfix Fixed a bug where if a player was spectating an ally who got an Ace or Clutch in the previous round, the pre-round commend VO could become directional for the spectator."
+        },
+        {
+            "weapon": "General",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Bugfix Fixed a bug where the bottom HUD color for Signature and Ultimate abilities would be an incorrect color after Side Swap or Overtime."
+        },
+        {
+            "weapon": "Client",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "AddedInbox is now live, featuring notifications for:"
+        },
+        {
+            "weapon": "Client",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Gifting updates"
+        },
+        {
+            "weapon": "Client",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Premier updates"
+        },
+        {
+            "weapon": "Client",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "RR refunds"
+        },
+        {
+            "weapon": "Client",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Reporter feedback"
+        },
+        {
+            "weapon": "Client",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Act Introduction messages"
+        }
+    ],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [],
+    "player_behavior_changes": []
+}
