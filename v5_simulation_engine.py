@@ -829,9 +829,9 @@ class StatefulEconomySimulator:
             # Compute log-odds Z based on true economy difference
             acs_diff = self.acs_a - self.acs_b
             eco_diff = loadout_a - loadout_b
-            z = 0.003 * acs_diff + 0.00015 * eco_diff + 2.0 * side_adv_a
+            z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
             prob_win_a = 1.0 / (1.0 + np.exp(-z))
-            prob_win_a = float(np.clip(prob_win_a, 0.05, 0.95))
+            prob_win_a = float(np.clip(prob_win_a, 0.20, 0.80))
             
             # Sample round winner
             if np.random.rand() < prob_win_a:
@@ -847,9 +847,9 @@ class StatefulEconomySimulator:
                 
                 # Saving check: 15% probability of saving weapon
                 if np.random.rand() < 0.15:
-                    econ_power_b = min(9000.0, 1000.0 + 0.70 * econ_power_b)
+                    econ_power_b = min(9000.0, 1000.0 + 0.70 * econ_power_b + bonus_b)
                 else:
-                    econ_power_b = min(9000.0, bonus_b)
+                    econ_power_b = min(9000.0, econ_power_b + bonus_b)
             else:
                 score_b += 1
                 
@@ -863,9 +863,9 @@ class StatefulEconomySimulator:
                 
                 # Saving check
                 if np.random.rand() < 0.15:
-                    econ_power_a = min(9000.0, 1000.0 + 0.70 * econ_power_a)
+                    econ_power_a = min(9000.0, 1000.0 + 0.70 * econ_power_a + bonus_a)
                 else:
-                    econ_power_a = min(9000.0, bonus_a)
+                    econ_power_a = min(9000.0, econ_power_a + bonus_a)
                 
             round_number += 1
             
