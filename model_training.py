@@ -15,7 +15,7 @@ from sklearn.metrics import mean_absolute_error
 import xgboost as xgb
 
 from data_ingestion import generate_mock_match_telemetry, process_match_telemetry, apply_winsorization
-from feature_engineering import compute_player_ema, generate_odr_matrix, attach_odr_features
+from feature_engineering import compute_bayesian_features, generate_odr_matrix, attach_odr_features
 from utils.utils import load_config
 
 # Configure logging
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 def prepare_phase_1_dataset(num_matches: int = 200) -> Tuple[pd.DataFrame, list, str]:
     """
-    Execute end-to-end telemetry ingestion, Winsorization, EMA construction, and ODR matrix generation.
+    Execute end-to-end telemetry ingestion, Winsorization, Bayesian tracker, and ODR matrix generation.
     
     Args:
         num_matches (int): Number of mock matches to ingest and process.
@@ -41,8 +41,8 @@ def prepare_phase_1_dataset(num_matches: int = 200) -> Tuple[pd.DataFrame, list,
     
     # Task 1.2: Winsorization on KPR (Removed for Phase 13)
     
-    # Task 1.3: EMA construction (slow alpha=0.1, rapid alpha=0.4)
-    df = compute_player_ema(df, target_col="kpr", alphas=(0.1, 0.4))
+    # Task 1.3: Bayesian feature calculation
+    df = compute_bayesian_features(df)
     
     # Task 1.4: ODR matrix generation via Ridge regression
     odr_matrix = generate_odr_matrix(df, target_col="kpr", alpha_ridge=1.0)
@@ -54,8 +54,8 @@ def prepare_phase_1_dataset(num_matches: int = 200) -> Tuple[pd.DataFrame, list,
     
     feature_cols = [
         "kpr",
-        "ema_kpr_alpha_0.1",
-        "ema_kpr_alpha_0.4",
+        "player_kpr_mu",
+        "player_kpr_sigma",
         "opponent_odr"
     ]
     
@@ -161,7 +161,7 @@ def generate_slate_predictions(model: xgb.XGBRegressor, feature_cols: list) -> N
     # Establish root directory absolutely
     root_dir = Path(__file__).resolve().parent
     slate_path = root_dir / "data" / "processed" / "current_slate.json"
-    ledger_path = root_dir / "data" / "processed" / "global_player_ledger.json"
+    ledger_path = root_dir / "data" / "processed" / "bayesian_player_ledger.json"
     out_path = root_dir / "data" / "processed" / "xgb_predictions.json"
     
     if not slate_path.exists():
@@ -176,7 +176,7 @@ def generate_slate_predictions(model: xgb.XGBRegressor, feature_cols: list) -> N
             with open(ledger_path, "r", encoding="utf-8") as f:
                 ledger = json.load(f)
         except Exception as e:
-            logger.warning(f"Failed to load global player ledger from {ledger_path}: {e}")
+            logger.warning(f"Failed to load Bayesian player ledger from {ledger_path}: {e}")
             
     predictions = {}
     for item in slate:
@@ -186,28 +186,31 @@ def generate_slate_predictions(model: xgb.XGBRegressor, feature_cols: list) -> N
         role = item["role"]
         
         # Look up in ledger
-        player_key = name.lower().strip()
-        global_acs_ema = None
-        if player_key in ledger:
-            global_acs_ema = ledger[player_key].get("career_stats", {}).get("global_acs_ema")
-            
-        if global_acs_ema is None:
+        p_feat = None
+        for k, v in ledger.items():
+            if k.lower().strip() == name.lower().strip():
+                p_feat = v
+                break
+                
+        if p_feat is not None:
+            prev_player_kpr_mu = p_feat["kpr_mu"]
+            prev_player_kpr_sigma = p_feat["kpr_sigma"]
+            prev_kpr = prev_player_kpr_mu
+        else:
             # Fallback default ACS based on role and salary if not in ledger
             role_defaults = {"Duelist": 220, "Initiator": 200, "Controller": 190, "Sentinel": 180, "Flex": 200}
             base_acs = role_defaults.get(role, 200)
-            # scale ACS slightly by salary
-            global_acs_ema = base_acs * (salary / 8.0)
+            global_acs = base_acs * (salary / 8.0)
+            prev_kpr = global_acs / 300.0
+            prev_player_kpr_mu = prev_kpr
+            prev_player_kpr_sigma = 0.20
             
-        # Construct feature vector based on global career ACS
-        prev_kpr = global_acs_ema / 300.0
-        prev_ema_kpr_alpha_0_1 = global_acs_ema / 300.0
-        prev_ema_kpr_alpha_0_4 = global_acs_ema / 300.0
         prev_opponent_odr = 0.0 # baseline neutral opponent ODR
         
         X_pred = pd.DataFrame([{
             "prev_kpr": prev_kpr,
-            "prev_ema_kpr_alpha_0.1": prev_ema_kpr_alpha_0_1,
-            "prev_ema_kpr_alpha_0.4": prev_ema_kpr_alpha_0_4,
+            "prev_player_kpr_mu": prev_player_kpr_mu,
+            "prev_player_kpr_sigma": prev_player_kpr_sigma,
             "prev_opponent_odr": prev_opponent_odr
         }])
         

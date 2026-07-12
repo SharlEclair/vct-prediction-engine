@@ -330,6 +330,7 @@ def build_feature_store():
                     kast_val = float(kast_str.replace('%', '')) / 100.0 if (kast_str and '%' in kast_str) else 0.70
                     fk_val = float(p['fk']) if (p.get('fk') and str(p['fk']).isdigit()) else 0.0
                     fd_val = float(p['fd']) if (p.get('fd') and str(p['fd']).isdigit()) else 0.0
+                    kills_val = float(p['kills']) if (p.get('kills') and str(p['kills']).isdigit()) else 0.0
                     
                     if p_name not in player_map_stats:
                         player_map_stats[p_name] = []
@@ -338,6 +339,7 @@ def build_feature_store():
                         'kast': kast_val,
                         'fk': fk_val,
                         'fd': fd_val,
+                        'kills': kills_val,
                         'rounds': rounds_count,
                         'agent': p.get('agent', '')
                     })
@@ -347,10 +349,12 @@ def build_feature_store():
             avg_kast = sum(s['kast'] for s in stats_list) / len(stats_list)
             total_fk = sum(s['fk'] for s in stats_list)
             total_fd = sum(s['fd'] for s in stats_list)
+            total_kills = sum(s['kills'] for s in stats_list)
             total_rounds = sum(s['rounds'] for s in stats_list)
             
             fk_per_round = total_fk / total_rounds if total_rounds > 0 else 0.0
             fd_per_round = total_fd / total_rounds if total_rounds > 0 else 0.0
+            avg_kpr = total_kills / total_rounds if total_rounds > 0 else 0.0
             
             from collections import Counter
             agent_counts = Counter(s['agent'] for s in stats_list if s.get('agent'))
@@ -364,131 +368,96 @@ def build_feature_store():
                 'agent': most_common_agent,
                 'acs': avg_acs,
                 'kast': avg_kast,
-                'duel_diff': fk_per_round - fd_per_round
+                'duel_diff': fk_per_round - fd_per_round,
+                'kpr': avg_kpr
             })
             
     df_player_perf = pd.DataFrame(player_performances)
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
-    # 2D Composite Decay WMA calculation
-    # Load patch release dates
-    patch_dates = {}
-    csv_path = os.path.join(RAW_DIR, "patch_notes.csv")
-    if os.path.exists(csv_path):
-        try:
-            df_patches = pd.read_csv(csv_path)
-            for _, row in df_patches.iterrows():
-                version = str(row['patch_version']).strip().lower()
-                if version.startswith('v'):
-                    version = version[1:]
-                date_str_val = str(row['release_date'])
-                clean_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_str_val)
-                parsed_dt = datetime.strptime(clean_date, '%B %d, %Y')
-                patch_dates[version] = parsed_dt
-        except Exception as e:
-            logger.error(f"Failed to load patch notes: {e}")
-            
-    # Load patch nerf registry and patch distance matrix
-    nerf_registry_path = os.path.join(PROCESSED_DIR, "automated_patch_nerf_registry.json")
-    with open(nerf_registry_path, "r", encoding="utf-8") as f:
-        nerf_registry = json.load(f)
-        
-    distance_matrix_path = os.path.join(PROCESSED_DIR, "patch_distance_matrix.json")
-    with open(distance_matrix_path, "r", encoding="utf-8") as f:
-        patch_distance_matrix = json.load(f)
-        
-    def get_agent_nerf_penalty(agent: str, p_hist: str, p_target: str) -> float:
-        if p_hist == p_target:
-            return 0.0
-        dt_hist = patch_dates.get(p_hist.lower() if p_hist else '')
-        dt_target = patch_dates.get(p_target.lower() if p_target else '')
-        if dt_hist is None or dt_target is None:
-            return 0.0
-        if dt_hist >= dt_target:
-            return 0.0
-        penalty = 0.0
-        for patch, nerf_agents in nerf_registry.items():
-            dt_patch = patch_dates.get(patch.lower())
-            if dt_patch is not None:
-                if dt_hist < dt_patch <= dt_target:
-                    penalty += nerf_agents.get(agent, 0.0)
-        return penalty
-        
-    unique_agents = sorted(list(df_player_perf["agent"].unique()))
-    unique_patches = sorted(list(df_player_perf["patch"].unique()))
+    # Initialize trackers
+    # KPR prior: mu_0 = 0.75, var_prior = 0.04 (sigma_0 = 0.20)
+    # var_obs = 0.0225 (sigma_obs = 0.15)
+    # var_time = 0.0025 (tau^2 = 0.0025)
+    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, var_time=0.0025)
     
-    agent_nerf_lookup = {}
-    for agent in unique_agents:
-        for p_hist in unique_patches:
-            for p_target in unique_patches:
-                agent_nerf_lookup[(agent, p_hist, p_target)] = get_agent_nerf_penalty(agent, p_hist, p_target)
+    # ACS prior: mu_0 = 200.0, var_prior = 2500.0 (sigma_0 = 50.0)
+    # var_obs = 1600.0 (sigma_obs = 40.0)
+    # var_time = 100.0 (tau^2 = 100.0)
+    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, var_time=100.0)
+    
+    # KAST prior: mu_0 = 0.70, var_prior = 0.01 (sigma_0 = 0.10)
+    # var_obs = 0.01 (sigma_obs = 0.10)
+    # var_time = 0.0005 (tau^2 = 0.0005)
+    tracker_kast = BayesianSkillTracker(mu_prior=0.70, var_prior=0.01, var_obs=0.01, var_time=0.0005)
+    
+    # Duel Diff prior: mu_0 = 0.0, var_prior = 0.01 (sigma_0 = 0.10)
+    # var_obs = 0.01 (sigma_obs = 0.10)
+    # var_time = 0.0005 (tau^2 = 0.0005)
+    tracker_duel = BayesianSkillTracker(mu_prior=0.0, var_prior=0.01, var_obs=0.01, var_time=0.0005)
+    
+    player_features_lookup = {}
+    
+    # Loop matches chronologically to calculate pre-match player state and update trackers
+    for m in matches:
+        match_id = m['match_id']
+        
+        # 1. Fetch pre-match state for players active in this match
+        roster_a = set()
+        roster_b = set()
+        for map_data in m.get('maps', []):
+            for p in map_data['players']['team1']:
+                roster_a.add(p['name'])
+            for p in map_data['players']['team2']:
+                roster_b.add(p['name'])
                 
-    jsd_lookup = {}
-    for p1 in unique_patches:
-        for p2 in unique_patches:
-            jsd_lookup[(p1, p2)] = patch_distance_matrix.get(p1, {}).get(p2, 0.0)
+        all_players = roster_a.union(roster_b)
+        
+        for p_name in all_players:
+            kpr_mu, kpr_sigma = tracker_kpr.get_state(p_name)
+            acs_mu, acs_sigma = tracker_acs.get_state(p_name)
+            kast_mu, kast_sigma = tracker_kast.get_state(p_name)
+            duel_mu, duel_sigma = tracker_duel.get_state(p_name)
             
-    df_merged = pd.merge(
-        df_player_perf,
-        df_player_perf,
-        on="player",
-        suffixes=("_target", "_hist")
-    )
-    df_merged = df_merged[df_merged["timestamp_hist"] < df_merged["timestamp_target"]]
-    
-    df_merged["delta_days"] = (df_merged["timestamp_target"] - df_merged["timestamp_hist"]).dt.total_seconds() / 86400.0
-    df_merged["time_decay"] = np.exp(-0.02 * df_merged["delta_days"])
-    df_merged["is_same_agent"] = (df_merged["agent_hist"] == df_merged["agent_target"]).astype(int)
-    
-    target_keys = list(zip(df_merged["agent_target"], df_merged["patch_hist"], df_merged["patch_target"]))
-    df_merged["delta_p_agent"] = [agent_nerf_lookup.get(k, 0.0) for k in target_keys]
-    
-    global_keys = list(zip(df_merged["patch_hist"], df_merged["patch_target"]))
-    df_merged["delta_p_global"] = [jsd_lookup.get(k, 0.0) for k in global_keys]
-    
-    df_merged["state_penalty"] = (
-        df_merged["is_same_agent"] * np.exp(-2.0 * df_merged["delta_p_agent"]) +
-        (1 - df_merged["is_same_agent"]) * np.exp(-0.5 * df_merged["delta_p_global"])
-    )
-    df_merged["final_weight"] = df_merged["time_decay"] * df_merged["state_penalty"]
-    
-    df_merged["acs_weighted"] = df_merged["acs_hist"] * df_merged["final_weight"]
-    df_merged["kast_weighted"] = df_merged["kast_hist"] * df_merged["final_weight"]
-    df_merged["duel_diff_weighted"] = df_merged["duel_diff_hist"] * df_merged["final_weight"]
-    
-    df_wma = df_merged.groupby(["player", "match_id_target"]).agg(
-        acs_weighted_sum=("acs_weighted", "sum"),
-        kast_weighted_sum=("kast_weighted", "sum"),
-        duel_diff_weighted_sum=("duel_diff_weighted", "sum"),
-        weight_sum=("final_weight", "sum")
-    ).reset_index()
-    
-    df_wma["weight_sum_clean"] = df_wma["weight_sum"].replace(0, 1.0)
-    df_wma["acs_ema_shifted"] = df_wma["acs_weighted_sum"] / df_wma["weight_sum_clean"]
-    df_wma["kast_ema_shifted"] = df_wma["kast_weighted_sum"] / df_wma["weight_sum_clean"]
-    df_wma["duel_diff_ema_shifted"] = df_wma["duel_diff_weighted_sum"] / df_wma["weight_sum_clean"]
-    
-    df_wma = df_wma.rename(columns={"match_id_target": "match_id"})
-    
-    df_player_perf = pd.merge(
-        df_player_perf,
-        df_wma[["player", "match_id", "acs_ema_shifted", "kast_ema_shifted", "duel_diff_ema_shifted"]],
-        on=["player", "match_id"],
-        how="left"
-    )
-    
-    baseline_acs = df_player_perf["player"].map(lambda p: baseline_lookup.get(p, {}).get("acs", 200.0))
-    baseline_kast = df_player_perf["player"].map(lambda p: baseline_lookup.get(p, {}).get("kast", 0.70))
-    baseline_duel = df_player_perf["player"].map(lambda p: baseline_lookup.get(p, {}).get("duel_diff", 0.0))
-    
-    df_player_perf["acs_ema_shifted"] = df_player_perf["acs_ema_shifted"].fillna(baseline_acs)
-    df_player_perf["kast_ema_shifted"] = df_player_perf["kast_ema_shifted"].fillna(baseline_kast)
-    df_player_perf["duel_diff_ema_shifted"] = df_player_perf["duel_diff_ema_shifted"].fillna(baseline_duel)
-    
-    # Create player feature lookup mapping
-    player_features_lookup = df_player_perf.set_index(["player", "match_id"])[
-        ["acs_ema_shifted", "kast_ema_shifted", "duel_diff_ema_shifted"]
-    ].to_dict(orient="index")
+            player_features_lookup[(p_name, match_id)] = {
+                "kpr_mu": kpr_mu,
+                "kpr_sigma": kpr_sigma,
+                "acs_mu": acs_mu,
+                "acs_sigma": acs_sigma,
+                "kast_mu": kast_mu,
+                "duel_mu": duel_mu
+            }
+            
+        # 2. Update state with match results
+        match_perf = df_player_perf[df_player_perf["match_id"] == match_id]
+        for _, row in match_perf.iterrows():
+            p_name = row["player"]
+            y_kpr = float(row.get("kpr", 0.75))
+            y_acs = float(row.get("acs", 200.0))
+            y_kast = float(row.get("kast", 0.70))
+            y_duel = float(row.get("duel_diff", 0.0))
+            
+            tracker_kpr.update(p_name, y_kpr)
+            tracker_acs.update(p_name, y_acs)
+            tracker_kast.update(p_name, y_kast)
+            tracker_duel.update(p_name, y_duel)
+            
+    # Save the latest post-match states of the trackers to the Bayesian player ledger
+    bayesian_ledger = {}
+    for p_name in set(tracker_kpr.player_states.keys()).union(tracker_acs.player_states.keys()):
+        k_mu, k_sigma = tracker_kpr.get_state(p_name)
+        a_mu, a_sigma = tracker_acs.get_state(p_name)
+        bayesian_ledger[p_name] = {
+            "kpr_mu": k_mu,
+            "kpr_sigma": k_sigma,
+            "acs_mu": a_mu,
+            "acs_sigma": a_sigma
+        }
+        
+    bayesian_ledger_path = os.path.join(PROCESSED_DIR, "bayesian_player_ledger.json")
+    with open(bayesian_ledger_path, "w", encoding="utf-8") as f:
+        json.dump(bayesian_ledger, f, indent=4)
+    logger.info("Saved latest active player states to bayesian_player_ledger.json")
     
     logger.info("Extracting team-match economy, comfort pick, and round closeness metrics...")
     
@@ -766,29 +735,41 @@ def build_feature_store():
         roster_a = list(roster_a)
         roster_b = list(roster_b)
         
-        # Function to compute aggregate player-level prior EMAs
-        def get_roster_features(roster):
-            acs_list, kast_list, duel_list = [], [], []
+        # Function to compute aggregate player-level prior Bayesian features
+        def get_roster_bayesian_features(roster):
+            kpr_mu_list, kpr_sigma_list = [], []
+            acs_mu_list, acs_sigma_list = [], []
+            kast_mu_list, duel_mu_list = [], []
+            
             for p_name in roster:
                 p_feat = player_features_lookup.get((p_name, match_id))
                 if p_feat is not None:
-                    acs_list.append(p_feat["acs_ema_shifted"])
-                    kast_list.append(p_feat["kast_ema_shifted"])
-                    duel_list.append(p_feat["duel_diff_ema_shifted"])
+                    kpr_mu_list.append(p_feat["kpr_mu"])
+                    kpr_sigma_list.append(p_feat["kpr_sigma"])
+                    acs_mu_list.append(p_feat["acs_mu"])
+                    acs_sigma_list.append(p_feat["acs_sigma"])
+                    kast_mu_list.append(p_feat["kast_mu"])
+                    duel_mu_list.append(p_feat["duel_mu"])
                 else:
-                    # Fallback to player statistics baseline
                     p_base = baseline_lookup.get(p_name, {"acs": 200.0, "kast": 0.70, "duel_diff": 0.0})
-                    acs_list.append(p_base["acs"])
-                    kast_list.append(p_base["kast"])
-                    duel_list.append(p_base["duel_diff"])
+                    kpr_mu_list.append(0.75)
+                    kpr_sigma_list.append(0.20)
+                    acs_mu_list.append(p_base["acs"])
+                    acs_sigma_list.append(50.0)
+                    kast_mu_list.append(p_base["kast"])
+                    duel_mu_list.append(p_base["duel_diff"])
+                    
             return (
-                sum(acs_list) / len(acs_list) if acs_list else 200.0,
-                sum(kast_list) / len(kast_list) if kast_list else 0.70,
-                sum(duel_list) / len(duel_list) if duel_list else 0.0
+                sum(kpr_mu_list) / len(kpr_mu_list) if kpr_mu_list else 0.75,
+                sum(kpr_sigma_list) / len(kpr_sigma_list) if kpr_sigma_list else 0.20,
+                sum(acs_mu_list) / len(acs_mu_list) if acs_mu_list else 200.0,
+                sum(acs_sigma_list) / len(acs_sigma_list) if acs_sigma_list else 50.0,
+                sum(kast_mu_list) / len(kast_mu_list) if kast_mu_list else 0.70,
+                sum(duel_mu_list) / len(duel_mu_list) if duel_mu_list else 0.0
             )
             
-        ta_acs, ta_kast, ta_duel = get_roster_features(roster_a)
-        tb_acs, tb_kast, tb_duel = get_roster_features(roster_b)
+        ta_kpr_mu, ta_kpr_sigma, ta_acs_mu, ta_acs_sigma, ta_kast_mu, ta_duel_mu = get_roster_bayesian_features(roster_a)
+        tb_kpr_mu, tb_kpr_sigma, tb_acs_mu, tb_acs_sigma, tb_kast_mu, tb_duel_mu = get_roster_bayesian_features(roster_b)
         
         # Look up team economy and round closeness features
         ta_feat = team_features_lookup.get((team_a_name, match_id), {})
@@ -820,9 +801,13 @@ def build_feature_store():
             "timestamp": ts,
             "team_a_name": team_a_name,
             "team_b_name": team_b_name,
-            "team_a_historical_acs_ema": ta_acs,
-            "team_a_historical_kast_ema": ta_kast,
-            "team_a_historical_duel_diff": ta_duel,
+            "team_a_kpr_mu": ta_kpr_mu,
+            "team_a_kpr_sigma": ta_kpr_sigma,
+            "team_a_acs_mu": ta_acs_mu,
+            "team_a_acs_sigma": ta_acs_sigma,
+            "team_a_historical_acs_ema": ta_acs_mu,
+            "team_a_historical_kast_ema": ta_kast_mu,
+            "team_a_historical_duel_diff": ta_duel_mu,
             "team_a_historical_avg_loadout": ta_loadout,
             "team_a_historical_clutch_rate": ta_clutch,
             "team_a_historical_thrifty_rate": ta_thrifty,
@@ -832,9 +817,13 @@ def build_feature_store():
             "team_a_controller_count": comp_a.get('Controller', 0.0),
             "team_a_initiator_count": comp_a.get('Initiator', 0.0),
             "team_a_sentinel_count": comp_a.get('Sentinel', 0.0),
-            "team_b_historical_acs_ema": tb_acs,
-            "team_b_historical_kast_ema": tb_kast,
-            "team_b_historical_duel_diff": tb_duel,
+            "team_b_kpr_mu": tb_kpr_mu,
+            "team_b_kpr_sigma": tb_kpr_sigma,
+            "team_b_acs_mu": tb_acs_mu,
+            "team_b_acs_sigma": tb_acs_sigma,
+            "team_b_historical_acs_ema": tb_acs_mu,
+            "team_b_historical_kast_ema": tb_kast_mu,
+            "team_b_historical_duel_diff": tb_duel_mu,
             "team_b_historical_avg_loadout": tb_loadout,
             "team_b_historical_clutch_rate": tb_clutch,
             "team_b_historical_thrifty_rate": tb_thrifty,
@@ -871,29 +860,84 @@ def build_feature_store():
     return X_features_df.shape, y_target_df.shape
 
 
-def compute_player_ema(
-    df: pd.DataFrame, 
-    target_col: str = "kpr", 
-    alphas: Tuple[float, ...] = (0.1, 0.4)
-) -> pd.DataFrame:
-    from typing import Tuple
+class BayesianSkillTracker:
+    def __init__(self, mu_prior: float, var_prior: float, var_obs: float, var_time: float):
+        self.mu_prior = mu_prior
+        self.var_prior = var_prior
+        self.var_obs = var_obs
+        self.var_time = var_time
+        self.player_states = {}
+
+    def get_state(self, player_id: str) -> Tuple[float, float]:
+        """Returns (mu, std_dev) for the player."""
+        if player_id not in self.player_states:
+            self.player_states[player_id] = (self.mu_prior, self.var_prior)
+        mu, var = self.player_states[player_id]
+        return float(mu), float(np.sqrt(var))
+
+    def update(self, player_id: str, y: float):
+        """Observation update followed by temporal transition update."""
+        if player_id not in self.player_states:
+            self.player_states[player_id] = (self.mu_prior, self.var_prior)
+            
+        mu_old, var_old = self.player_states[player_id]
+        
+        # 1. Observation Update
+        denom = var_old + self.var_obs
+        mu_new = (mu_old * self.var_obs + y * var_old) / denom
+        var_new = (var_old * self.var_obs) / denom
+        
+        # 2. Time Transition Update
+        var_next = var_new + self.var_time
+        
+        self.player_states[player_id] = (mu_new, var_next)
+
+
+def compute_bayesian_features(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     
     # Ensure dataframe is sorted by timestamp and player
     if "match_timestamp" in df.columns:
-        df.sort_values(by=["player_id", "match_timestamp"], inplace=True)
+        df = df.sort_values(by=["player_id", "match_timestamp"])
     df.reset_index(drop=True, inplace=True)
     
-    for alpha in alphas:
-        col_name = f"ema_kpr_alpha_{alpha}"
+    # Initialize trackers
+    # KPR prior: mu_0 = 0.75, var_prior = 0.04 (sigma_0 = 0.20)
+    # var_obs = 0.0225 (sigma_obs = 0.15)
+    # var_time = 0.0025 (tau^2 = 0.0025)
+    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, var_time=0.0025)
+    
+    # ACS prior: mu_0 = 200.0, var_prior = 2500.0 (sigma_0 = 50.0)
+    # var_obs = 1600.0 (sigma_obs = 40.0)
+    # var_time = 100.0 (tau^2 = 100.0)
+    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, var_time=100.0)
+    
+    kpr_mus, kpr_sigmas = [], []
+    acs_mus, acs_sigmas = [], []
+    
+    for idx, row in df.iterrows():
+        p_id = str(row.get("player_id", row.get("player", "Unknown")))
         
-        # Calculate expanding/exponentially weighted moving average per player
-        df[col_name] = (
-            df.groupby("player_id")[target_col]
-            .transform(lambda x: x.ewm(alpha=alpha, adjust=False).mean())
-        )
-        logger.info("Task 1.3 complete: Computed EMA feature '%s'.", col_name)
+        y_kpr = float(row.get("kpr", 0.75))
+        y_acs = float(row.get("acs", 200.0))
         
+        tracker_kpr.update(p_id, y_kpr)
+        tracker_acs.update(p_id, y_acs)
+        
+        kpr_mu, kpr_sigma = tracker_kpr.get_state(p_id)
+        acs_mu, acs_sigma = tracker_acs.get_state(p_id)
+        
+        kpr_mus.append(kpr_mu)
+        kpr_sigmas.append(kpr_sigma)
+        acs_mus.append(acs_mu)
+        acs_sigmas.append(acs_sigma)
+        
+    df["player_kpr_mu"] = kpr_mus
+    df["player_kpr_sigma"] = kpr_sigmas
+    df["player_acs_mu"] = acs_mus
+    df["player_acs_sigma"] = acs_sigmas
+    
+    logger.info("Task 1.3 complete: Computed Bayesian features.")
     return df
 
 
