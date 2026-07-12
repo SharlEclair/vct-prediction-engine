@@ -751,14 +751,11 @@ MAP_SIDE_BIAS = {
     "Abyss": {"type": "ATK", "bias": 0.043},
 }
 
-class SideConditionedMarkovSimulator:
+class StatefulEconomySimulator:
     """
-    Sub-Model 3: Side-Conditioned Markov Simulator.
-    Replaces legacy Poisson model with discrete round state tracking:
-      - Score A & Score B
-      - Dynamic Economy Differential
-      - Current Side (DEF vs ATK)
-      - Round Number (Round 13 side-swap & 12-12 Overtime logic)
+    Sub-Model 3: Stateful Economy Simulator.
+    Tracks scoring, team-level loss-streaks, dynamic credit injections (loss bonuses),
+    halftime/OT resets, and weapon saving survival penalties.
     """
     def __init__(self, team_a_stats: dict | float = 200.0, team_b_stats: dict | float = 200.0, map_name: str = "Ascent", starting_side_a: str = "DEF"):
         if isinstance(team_a_stats, (int, float)):
@@ -787,15 +784,17 @@ class SideConditionedMarkovSimulator:
 
     def simulate_rounds(self, rate_a: float = None, rate_b: float = None) -> tuple[int, int]:
         """
-        Runs discrete-time Markov round simulation from Round 1 up to terminal state (13 wins or OT).
-        Tracks score, economy loadout, side alignment, and round number.
+        Runs discrete-time round simulation from Round 1 up to terminal state (13 wins or OT).
+        Tracks scores, loss streaks, and stateful credit balances.
         """
         score_a = 0
         score_b = 0
-        loadout_a = 20000.0
-        loadout_b = 20000.0
         loss_streak_a = 0
         loss_streak_b = 0
+        
+        # Initial pistol round economy
+        econ_power_a = 800.0
+        econ_power_b = 800.0
         
         # Initial side assignment
         current_side_a = self.starting_side_a
@@ -805,18 +804,31 @@ class SideConditionedMarkovSimulator:
             # Check Round 13 Side Swap
             if round_number == 13:
                 current_side_a = "ATK" if current_side_a == "DEF" else "DEF"
+                # Halftime Reset: reset economy and streaks
+                econ_power_a = 800.0
+                econ_power_b = 800.0
+                loss_streak_a = 0
+                loss_streak_b = 0
                 
             # Check Overtime (12-12)
             is_ot = (score_a >= 12 and score_b >= 12)
             if is_ot:
                 side_adv_a = 0.0
+                # Overtime Reset: standard OT buy credits
+                econ_power_a = 5000.0
+                econ_power_b = 5000.0
+                loss_streak_a = 0
+                loss_streak_b = 0
             else:
                 side_adv_a = self.get_side_advantage_a(current_side_a)
                 
-            # Compute log-odds Z
+            # Scale team economy to drive loadout delta
+            loadout_a = econ_power_a * 4.0
+            loadout_b = econ_power_b * 4.0
+            
+            # Compute log-odds Z based on true economy difference
             acs_diff = self.acs_a - self.acs_b
             eco_diff = loadout_a - loadout_b
-            
             z = 0.003 * acs_diff + 0.00015 * eco_diff + 2.0 * side_adv_a
             prob_win_a = 1.0 / (1.0 + np.exp(-z))
             prob_win_a = float(np.clip(prob_win_a, 0.05, 0.95))
@@ -824,27 +836,47 @@ class SideConditionedMarkovSimulator:
             # Sample round winner
             if np.random.rand() < prob_win_a:
                 score_a += 1
+                
+                # Winner updates
                 loss_streak_a = 0
-                loss_streak_b += 1
-                loadout_a = 20000.0
-                loadout_b = min(20000.0, loadout_b + 3000.0 + min(loss_streak_b - 1, 4) * 500.0)
+                econ_power_a = min(9000.0, max(4500.0, econ_power_a + 3000.0))
+                
+                # Loser updates
+                loss_streak_b = min(3, loss_streak_b + 1)
+                bonus_b = 1900.0 if loss_streak_b == 1 else (2400.0 if loss_streak_b == 2 else 2900.0)
+                
+                # Saving check: 15% probability of saving weapon
+                if np.random.rand() < 0.15:
+                    econ_power_b = min(9000.0, 1000.0 + 0.70 * econ_power_b)
+                else:
+                    econ_power_b = min(9000.0, bonus_b)
             else:
                 score_b += 1
+                
+                # Winner updates
                 loss_streak_b = 0
-                loss_streak_a += 1
-                loadout_b = 20000.0
-                loadout_a = min(20000.0, loadout_a + 3000.0 + min(loss_streak_a - 1, 4) * 500.0)
+                econ_power_b = min(9000.0, max(4500.0, econ_power_b + 3000.0))
+                
+                # Loser updates
+                loss_streak_a = min(3, loss_streak_a + 1)
+                bonus_a = 1900.0 if loss_streak_a == 1 else (2400.0 if loss_streak_a == 2 else 2900.0)
+                
+                # Saving check
+                if np.random.rand() < 0.15:
+                    econ_power_a = min(9000.0, 1000.0 + 0.70 * econ_power_a)
+                else:
+                    econ_power_a = min(9000.0, bonus_a)
                 
             round_number += 1
             
             # Check terminal states
             if not is_ot:
                 if score_a >= 13 or score_b >= 13:
-                    break
+                     break
             else:
                 if abs(score_a - score_b) >= 2:
-                    break
-                    
+                     break
+                     
         return score_a, score_b
 
 
@@ -1132,8 +1164,8 @@ class VCTv5SimulationEngine:
             # Simulate each map
             for map_idx, map_name in enumerate(series_maps):
                 starting_side_a = veto_res.get("starting_sides_a", ["DEF"] * len(series_maps))[map_idx]
-                # Run Side-Conditioned Markov round simulation
-                markov_sim = SideConditionedMarkovSimulator(acs_team_a, acs_team_b, map_name, starting_side_a=starting_side_a)
+                # Run Stateful Economy round simulation
+                markov_sim = StatefulEconomySimulator(acs_team_a, acs_team_b, map_name, starting_side_a=starting_side_a)
                 score_a, score_b = markov_sim.simulate_rounds()
                 series_map_scores.append((score_a, score_b))
                 
