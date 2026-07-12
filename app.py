@@ -1789,13 +1789,15 @@ with tab_optimizer:
             st.markdown("---")
             
             # Task 6.2: Roster Visualization (Main UI)
-            st.markdown("#### 👥 Optimal 6-Man Tournament Lineup")
+            st.markdown(f"#### 👥 Optimal {len(sol['lineup'])}-Man Tournament Lineup")
             
-            # Use 2 rows of 3 columns to avoid squishing in 3/5 width column layout
-            row1_cols = st.columns(3)
-            row2_cols = st.columns(3)
+            # Use dynamic rows of 3 columns to support different lineup sizes
+            cols_per_row = 3
+            cols = None
             for idx, p in enumerate(sol["lineup"]):
-                col_container = row1_cols[idx] if idx < 3 else row2_cols[idx - 3]
+                if idx % cols_per_row == 0:
+                    cols = st.columns(cols_per_row)
+                col_container = cols[idx % cols_per_row]
                 with col_container:
                     p_name = p["name"]
                     p_role = p["role"]
