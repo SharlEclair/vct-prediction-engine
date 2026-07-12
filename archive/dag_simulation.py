@@ -16,7 +16,7 @@ from typing import Dict, List, Tuple, Any
 import numpy as np
 import pandas as pd
 
-from utils import load_config
+from utils.utils import load_config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
