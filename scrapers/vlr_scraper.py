@@ -14,6 +14,22 @@ VLR_BASE_URL = "https://www.vlr.gg"
 
 _session = None
 
+def clean_numeric(val):
+    if val is None or str(val).strip() == "" or str(val).strip().lower() == "null":
+        return None
+    val_str = str(val).strip()
+    if "%" in val_str:
+        try:
+            return round(float(val_str.replace("%", "")) / 100.0, 4)
+        except ValueError:
+            return None
+    try:
+        if "." in val_str:
+            return float(val_str)
+        return int(val_str)
+    except ValueError:
+        return val_str
+
 def get_curl_session() -> requests.Session:
     global _session
     if _session is None:
@@ -411,6 +427,44 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
             "vetoes": vetoes
         })
         
+    # Clean parsed segments inline to match v7.8 data quality standards
+    for raw_map in map_segments:
+        team_a = raw_map.get("team1")
+        team_b = raw_map.get("team2")
+        
+        # 1. Clean mixed map field
+        map_field = raw_map.get("map", "")
+        if map_field and ("PICK" in map_field or "DECIDER" in map_field or ":" in map_field):
+            match_map = re.match(r'^([A-Za-z0-9\s\-\_]+?)\s+(PICK|DECIDER|BAN)?\s*([0-9\:]+)?$', map_field)
+            if match_map:
+                raw_map["map"] = match_map.group(1).strip()
+                raw_map["picked_by"] = match_map.group(2) or ""
+                raw_map["duration"] = match_map.group(3) or ""
+                
+        # 2. Clean empty rounds padding
+        rounds = raw_map.get("round_history", [])
+        clean_rounds = [r for r in rounds if r.get("winner") != "" and r.get("side") != ""]
+        raw_map["round_history"] = clean_rounds
+        
+        # 3. Clean winner contradictions
+        t1_wins = sum(1 for r in clean_rounds if r.get("winner") == team_a)
+        t2_wins = sum(1 for r in clean_rounds if r.get("winner") == team_b)
+        if max(t1_wins, t2_wins) >= 13:
+            expected_winner = team_a if t1_wins > t2_wins else team_b
+            if raw_map.get("winner") != expected_winner:
+                raw_map["winner"] = expected_winner
+                
+        # 4. Clean players stats
+        stat_keys = ["kills", "deaths", "assists", "acs", "rating", "adr", "hs_pct", "kast", "fk", "fd", "average_combat_score"]
+        for p in raw_map.get("players", []):
+            for k in stat_keys:
+                if k in p:
+                    p[k] = clean_numeric(p[k])
+                    
+        # 5. Clean patch Unknown
+        if raw_map.get("patch") == "Unknown":
+            raw_map["patch"] = None
+            
     return map_segments
 
 if __name__ == "__main__":
