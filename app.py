@@ -68,6 +68,41 @@ def get_player_icon(role: str, name: str) -> str:
         
     return AGENT_ICONS.get(agent, AGENT_ICONS.get("Jett"))
 
+def get_composition_synergy_badges(team_roster, player_agents, agent_roles_map):
+    # Extract agents selected for the team
+    agents = []
+    for p in team_roster:
+        if p in player_agents:
+            agents.append(player_agents[p]["agent"])
+    
+    roles = [agent_roles_map.get(a, "Flex") for a in agents]
+    
+    badges = []
+    if "Duelist" in roles and "Initiator" in roles:
+        badges.append('<span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(34, 197, 94, 0.15); color: #22c55e; margin-right: 6px;">✨ +10% Duelist/Initiator Synergy</span>')
+    if "Controller" not in roles:
+        badges.append('<span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); color: #ef4444; margin-right: 6px;">⚠️ -15% Missing Controller Penalty</span>')
+    if "Sentinel" not in roles:
+        badges.append('<span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); color: #ef4444; margin-right: 6px;">⚠️ -15% Missing Sentinel Penalty</span>')
+    
+    if not badges:
+        return '<div style="margin-top: 6px;"><span style="font-size: 0.75rem; color: #64748b; font-style: italic;">No active synergy/penalty modifiers</span></div>'
+    return f'<div style="margin-top: 6px;">{" ".join(badges)}</div>'
+
+def get_composition_synergy_badges_dict(comp_map):
+    roles = [details["role"] for details in comp_map.values()]
+    badges = []
+    if "Duelist" in roles and "Initiator" in roles:
+        badges.append('<span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(34, 197, 94, 0.15); color: #22c55e; margin-right: 6px;">✨ +10% Duelist/Initiator Synergy</span>')
+    if "Controller" not in roles:
+        badges.append('<span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); color: #ef4444; margin-right: 6px;">⚠️ -15% Missing Controller Penalty</span>')
+    if "Sentinel" not in roles:
+        badges.append('<span style="font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(239, 68, 68, 0.15); color: #ef4444; margin-right: 6px;">⚠️ -15% Missing Sentinel Penalty</span>')
+    
+    if not badges:
+        return '<div style="margin-top: 6px;"><span style="font-size: 0.75rem; color: #64748b; font-style: italic;">No active synergy/penalty modifiers</span></div>'
+    return f'<div style="margin-top: 6px;">{" ".join(badges)}</div>'
+
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("app")
@@ -359,7 +394,7 @@ st.markdown("""
 
 # Title Header
 st.markdown('<div class="dashboard-title">VCT FANTASY & PREDICTIVE ENGINE</div>', unsafe_allow_html=True)
-st.markdown('<div class="dashboard-subtitle">V5 · Open Match Simulation · Fantasy Optimizer · Backtesting Visualizer</div>', unsafe_allow_html=True)
+st.markdown('<div class="dashboard-subtitle">v7 · Open Match Simulation · Fantasy Optimizer · Backtesting Visualizer</div>', unsafe_allow_html=True)
 
 # ============================================================
 # GLOBAL DATA INITIALIZATION (outside tabs for shared use)
@@ -458,7 +493,7 @@ if "roster_state_loaded" not in st.session_state:
 with st.sidebar:
     st.markdown('<div style="text-align: center; margin-bottom: 10px;"><img src="https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayicon.png" width="80" style="border-radius: 12px; border: 2px solid #ff4655;"/></div>', unsafe_allow_html=True)
     st.markdown("<h3 style='text-align: center; color: #ff4655;'>⚔️ DFS Command Center</h3>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: -10px;'>Hybrid Valorant DFS Micro Engine (v6)</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: -10px;'>Hybrid Valorant DFS Micro Engine (v7)</p>", unsafe_allow_html=True)
     st.markdown("---")
     
     st.markdown("#### 1. Roster Date Tracker")
@@ -867,7 +902,7 @@ with tab_sim:
             <div class="metric-title">ARBITRARY MATCH SIMULATOR</div>
             <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;">
                 Simulate any hypothetical VCT matchup using time-decay weighted historical data.
-                The engine dynamically resolves rosters, computes EMAs, and runs V5 micro-simulation.
+                The engine dynamically resolves rosters, resolves Bayesian skill states, and runs stateful economy rounds.
             </p>
         </div>
     """), unsafe_allow_html=True)
@@ -932,7 +967,7 @@ with tab_sim:
         elif enable_override and len(override_maps) != max_maps:
             st.error(f"Please select exactly {max_maps} override maps to simulate.")
         else:
-            with st.spinner(f"Running V5 Bottom-Up Micro-Simulation ({sim_iterations:,} iterations) for {sim_team_a} vs {sim_team_b}..."):
+            with st.spinner(f"Running v7 Stateful Economy & Synergistic Draft ({sim_iterations:,} iterations) for {sim_team_a} vs {sim_team_b}..."):
                 v5_engine = get_v5_simulation_engine()
                 sim_target_datetime = datetime.combine(sim_ref_date, datetime.min.time()) if hasattr(sim_ref_date, 'year') else datetime.now()
                 sim_result = v5_engine.simulate_match(
@@ -1042,9 +1077,12 @@ with tab_sim:
             # V5 Deep Simulation Analytics: Map-by-Map Tabs
             st.markdown(clean_html("""
                 <div style="font-size: 1.3rem; font-weight: 700; color: #f8fafc; margin: 28px 0 16px;">
-                    📊 V5 Deep Simulation Analytics
+                    📊 v7 Stateful Simulation Analytics
                 </div>
             """), unsafe_allow_html=True)
+
+            # Stateful Economy Info
+            st.info("💡 **v7 Stateful Economy Simulation Engine Active:** Round win probabilities are dynamically driven by stateful round-to-round credit accumulations, multi-round loss-streaks, and weapon-save survival penalties.")
 
             final_maps = sim_result["predicted_maps"]
             map_tab_labels = []
@@ -1160,6 +1198,8 @@ with tab_sim:
                             <div style="margin-bottom: 6px; font-weight: 700; font-size: 0.95rem; color: #a78bfa;">{sim_team_a}</div>
                             <div class="glass-card">{cards_a or '<div style="color:#64748b;font-size:0.85rem;">No composition data.</div>'}</div>
                         """), unsafe_allow_html=True)
+                        badges_a = get_composition_synergy_badges(sim_result.get("roster_a", []), player_agents, v5_engine.agent_transformer.agent_roles)
+                        st.markdown(badges_a, unsafe_allow_html=True)
 
                     with comp_col_b:
                         cards_b = "".join(
@@ -1170,6 +1210,8 @@ with tab_sim:
                             <div style="margin-bottom: 6px; font-weight: 700; font-size: 0.95rem; color: #fbbf24;">{sim_team_b}</div>
                             <div class="glass-card">{cards_b or '<div style="color:#64748b;font-size:0.85rem;">No composition data.</div>'}</div>
                         """), unsafe_allow_html=True)
+                        badges_b = get_composition_synergy_badges(sim_result.get("roster_b", []), player_agents, v5_engine.agent_transformer.agent_roles)
+                        st.markdown(badges_b, unsafe_allow_html=True)
 
                     # Player Performance Table
                     st.markdown(clean_html("""
@@ -1331,7 +1373,7 @@ with tab_match:
     
     if btn_run_match_sim:
         v5_engine = get_v5_simulation_engine()
-        with st.spinner("Running V5 Bottom-Up Micro-Simulation (2,000 iterations)..."):
+        with st.spinner("Running v7 Stateful Economy & Synergistic Draft (2,000 iterations)..."):
             v5_res = v5_engine.simulate_match(ma_team_a, ma_team_b, ma_series_type, target_patch="9.02", num_iterations=2000)
             st.session_state["v5_sim_results"][current_run_hash] = v5_res
             st.rerun()
@@ -1430,6 +1472,9 @@ with tab_match:
             </div>
         """), unsafe_allow_html=True)
 
+        # Stateful Economy Info
+        st.info("💡 **v7 Stateful Economy Simulation Engine Active:** Round win probabilities are dynamically driven by stateful round-to-round credit accumulations, multi-round loss-streaks, and weapon-save survival penalties.")
+
         # ── Series Winner Projection ──
         col1, col2 = st.columns([2, 1])
         with col1:
@@ -1478,8 +1523,8 @@ with tab_match:
         cols_maps = st.columns(len(predicted_veto["maps"]))
         for idx, m_name in enumerate(predicted_veto["maps"]):
             with cols_maps[idx]:
-                team_a_features = {"acs_ema": ta_acs, "avg_loadout": ta_loadout, "comfort_diff": 0.0}
-                team_b_features = {"acs_ema": tb_acs, "avg_loadout": tb_loadout, "comfort_diff": 0.0}
+                team_a_features = {"acs_mu": ta_acs, "avg_loadout": ta_loadout, "comfort_diff": 0.0}
+                team_b_features = {"acs_mu": tb_acs, "avg_loadout": tb_loadout, "comfort_diff": 0.0}
                 veto_w = predicted_veto["veto_weights"].get(m_name, 0)
                 rounds_a, rounds_b = score_reg.predict_score(team_a_features, team_b_features, m_name, veto_w)
 
@@ -1551,6 +1596,8 @@ with tab_match:
                             </div>
                         """
                     st.markdown(clean_html(f'<div class="glass-card">{cards_a_html}</div>'), unsafe_allow_html=True)
+                    badges_a = get_composition_synergy_badges_dict(comp_a_map)
+                    st.markdown(badges_a, unsafe_allow_html=True)
 
                     # Actual (if available)
                     if actual_this_map.get("team1"):
@@ -1587,6 +1634,8 @@ with tab_match:
                             </div>
                         """
                     st.markdown(clean_html(f'<div class="glass-card">{cards_b_html}</div>'), unsafe_allow_html=True)
+                    badges_b = get_composition_synergy_badges_dict(comp_b_map)
+                    st.markdown(badges_b, unsafe_allow_html=True)
 
                     if actual_this_map.get("team2"):
                         st.markdown('<span class="actual-badge">✅ Actual</span>', unsafe_allow_html=True)
@@ -1623,7 +1672,7 @@ with tab_match:
         else:
             st.info("Leaderboard scores currently unavailable for this match.")
 
-        st.markdown("### V5 Projected Fantasy Points (Expected Value)")
+        st.markdown("### v7 Projected Fantasy Points (Expected Value)")
         if "projections" in v5_res:
             proj_data = []
             for p, ev in v5_res["projections"].items():
@@ -1983,7 +2032,41 @@ with tab_vfl:
             st.success(f"Rebuilt VFL Database Cache with {len(vfl_players_data_refreshed)} players!")
 
     if vfl_players_data:
-        vfl_df = pd.DataFrame(vfl_players_data)
+        # Load Bayesian Player Ledger
+        ledger_path = os.path.join(PROCESSED_DIR, "bayesian_player_ledger.json")
+        bayesian_ledger = {}
+        if os.path.exists(ledger_path):
+            try:
+                with open(ledger_path, "r", encoding="utf-8") as f:
+                    bayesian_ledger = json.load(f)
+            except Exception as e:
+                logger.error(f"Failed to load Bayesian ledger: {e}")
+
+        # Merge Bayesian ledger details
+        enriched_players = []
+        for p in vfl_players_data:
+            p_copy = dict(p)
+            p_name = p_copy.get("player_name", "")
+            b_stats = bayesian_ledger.get(p_name)
+            if not b_stats:
+                p_name_lower = p_name.lower().strip()
+                for k, v in bayesian_ledger.items():
+                    if k.lower().strip() == p_name_lower:
+                        b_stats = v
+                        break
+            if b_stats:
+                p_copy["KPR Expected (μ)"] = round(b_stats.get("kpr_mu", 0.75), 3)
+                p_copy["KPR Volatility (σ)"] = round(b_stats.get("kpr_sigma", 0.20), 3)
+                p_copy["ACS Expected (μ)"] = round(b_stats.get("acs_mu", 200.0), 1)
+                p_copy["ACS Volatility (σ)"] = round(b_stats.get("acs_sigma", 50.0), 1)
+            else:
+                p_copy["KPR Expected (μ)"] = 0.75
+                p_copy["KPR Volatility (σ)"] = 0.20
+                p_copy["ACS Expected (μ)"] = 200.0
+                p_copy["ACS Volatility (σ)"] = 50.0
+            enriched_players.append(p_copy)
+
+        vfl_df = pd.DataFrame(enriched_players)
 
         if not vfl_df.empty:
             if 'cost' not in vfl_df.columns and 'price' in vfl_df.columns:
@@ -1998,6 +2081,9 @@ with tab_vfl:
                 vfl_df['total_points'] = vfl_df['tot_pts']
             if 'ownership_pct' not in vfl_df.columns:
                 vfl_df['ownership_pct'] = 0.0
+
+        # Display Volatility Caption / Metric
+        st.info("💡 **Bayesian Volatility Alert:** Higher Volatility (σ) indicates high-variance players who have unstable form or meta shifts. These high-volatility players are excellent targets for high-upside GPP tournament lineups, while low-volatility players are safer for cash games.")
 
         m_col1, m_col2, m_col3, m_col4 = st.columns(4)
         with m_col1:
@@ -2036,6 +2122,15 @@ with tab_vfl:
             "avg_points": "Avg PPG",
             "ownership_pct": "Ownership %"
         })
+
+        # Order columns nicely so our new Bayesian ones are prominent
+        cols_order = [
+            "Player", "Team", "Role", "Cost", "Total Points", "Avg PPG", "Ownership %",
+            "KPR Expected (μ)", "KPR Volatility (σ)", "ACS Expected (μ)", "ACS Volatility (σ)"
+        ]
+        # Keep only columns that exist in the dataframe to be safe
+        cols_order = [c for c in cols_order if c in display_vfl_df.columns]
+        display_vfl_df = display_vfl_df[cols_order]
 
         st.dataframe(display_vfl_df, use_container_width=True, hide_index=True)
     else:
