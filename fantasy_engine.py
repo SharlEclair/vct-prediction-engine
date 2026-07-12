@@ -383,7 +383,7 @@ def optimize_roster(
 ) -> dict:
     """
     Solves VFL roster selection as a Mixed-Integer Linear Program (MILP).
-    Enforces constraints:
+    Enforces Phase 18 strict constraints:
       - Budget <= salary_cap (50 VP). Soft penalty for cost > 48 VP.
       - Roster length = exactly roster_size (6).
       - Max max_per_team (2) from same team.
