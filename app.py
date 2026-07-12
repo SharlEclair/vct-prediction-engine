@@ -44,29 +44,15 @@ def clean_html(html_str: str) -> str:
     return "\n".join(line.strip() for line in html_str.splitlines())
 
 def get_player_icon(role: str, name: str) -> str:
-    # Match standard roles to clean defaults
-    role_defaults = {
-        "Duelist": "Jett",
-        "Initiator": "Sova",
-        "Controller": "Omen",
-        "Sentinel": "Killjoy",
-        "Flex": "Phoenix"
+    # Use proper agent role icons for the lineup page
+    role_icons = {
+        "Duelist": "https://media.valorant-api.com/agents/roles/dbe8757e-9e92-4ed4-b39f-9dfc589691d4/displayicon.png",
+        "Initiator": "https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png",
+        "Sentinel": "https://media.valorant-api.com/agents/roles/5fc02f99-4091-4486-a531-98459a3e95e9/displayicon.png",
+        "Controller": "https://media.valorant-api.com/agents/roles/4ee40330-ecdd-4f2f-98a8-eb1243428373/displayicon.png",
+        "Flex": "https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png"
     }
-    name_lower = name.lower()
-    if "aspas" in name_lower or "zmjjkk" in name_lower:
-        agent = "Jett"
-    elif "leo" in name_lower or "nobody" in name_lower:
-        agent = "Sova"
-    elif "chronicle" in name_lower or "forsken" in name_lower or "smoggy" in name_lower:
-        agent = "Phoenix"
-    elif "boaster" in name_lower or "chichoo" in name_lower:
-        agent = "Omen"
-    elif "alfa" in name_lower or "haodong" in name_lower:
-        agent = "Killjoy"
-    else:
-        agent = role_defaults.get(role, "Jett")
-        
-    return AGENT_ICONS.get(agent, AGENT_ICONS.get("Jett"))
+    return role_icons.get(role, role_icons["Duelist"])
 
 def get_composition_synergy_badges(team_roster, player_agents, agent_roles_map):
     # Extract agents selected for the team
