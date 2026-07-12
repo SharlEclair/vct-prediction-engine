@@ -185,58 +185,138 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
         players_list = []
         
         tables = gb.css("table.wf-table-inset.mod-overview")
-        for t_idx, table in enumerate(tables):
-            current_team = team1 if t_idx == 0 else team2
-            for row in table.css("tbody tr"):
-                cells = row.css("td")
-                if len(cells) < 5:
-                    continue
-                
-                # Player Name
-                p_cell = cells[0]
-                p_name_el = p_cell.css_first(".text-of")
-                p_name = clean_text(p_name_el.text()) if p_name_el else clean_text(p_cell.text())
-                
-                # Agent
-                agent = ""
-                img = cells[1].css_first("img")
-                if img:
-                    agent = img.attributes.get("title", "") or img.attributes.get("alt", "")
-                
-                if agent:
-                    composition[current_team].append(agent)
+        if tables:
+            for t_idx, table in enumerate(tables):
+                current_team = team1 if t_idx == 0 else team2
+                for row in table.css("tbody tr"):
+                    cells = row.css("td")
+                    if len(cells) < 5:
+                        continue
                     
-                # Stats
-                def get_val(c) -> str:
-                    both = c.css_first(".side.mod-both")
-                    return both.text(strip=True) if both else c.text(strip=True)
+                    # Player Name
+                    p_cell = cells[0]
+                    p_name_el = p_cell.css_first(".text-of")
+                    p_name = clean_text(p_name_el.text()) if p_name_el else clean_text(p_cell.text())
                     
-                rating = get_val(cells[2])
-                acs = get_val(cells[3])
-                kills = get_val(cells[4])
-                deaths = get_val(cells[5])
-                assists = get_val(cells[6])
-                kast = get_val(cells[8])
-                adr = get_val(cells[9])
-                hs_pct = get_val(cells[10])
-                fk = get_val(cells[11])
-                fd = get_val(cells[12])
-                
-                players_list.append({
-                    "name": p_name,
-                    "team": current_team,
-                    "agent": agent,
-                    "rating": rating,
-                    "acs": acs,
-                    "kills": kills,
-                    "deaths": deaths,
-                    "assists": assists,
-                    "kast": kast,
-                    "adr": adr,
-                    "hs_pct": hs_pct,
-                    "fk": fk,
-                    "fd": fd
-                })
+                    # Agent
+                    agent = ""
+                    img = cells[1].css_first("img")
+                    if img:
+                        agent = img.attributes.get("title", "") or img.attributes.get("alt", "")
+                    
+                    if agent:
+                        composition[current_team].append(agent)
+                        
+                    # Stats
+                    def get_val(c) -> str:
+                        both = c.css_first(".side.mod-both")
+                        return both.text(strip=True) if both else c.text(strip=True)
+                        
+                    rating = get_val(cells[2])
+                    acs = get_val(cells[3])
+                    kills = get_val(cells[4])
+                    deaths = get_val(cells[5])
+                    assists = get_val(cells[6])
+                    kast = get_val(cells[8])
+                    adr = get_val(cells[9])
+                    hs_pct = get_val(cells[10])
+                    fk = get_val(cells[11])
+                    fd = get_val(cells[12])
+                    
+                    players_list.append({
+                        "name": p_name,
+                        "team": current_team,
+                        "agent": agent,
+                        "rating": rating,
+                        "acs": acs,
+                        "kills": kills,
+                        "deaths": deaths,
+                        "assists": assists,
+                        "kast": kast,
+                        "adr": adr,
+                        "hs_pct": hs_pct,
+                        "fk": fk,
+                        "fd": fd
+                    })
+        else:
+            div_tables = gb.css("div.ovw-table")
+            for t_idx, div_table in enumerate(div_tables):
+                current_team = team1 if t_idx == 0 else team2
+                for row in div_table.css("div.ovw-row"):
+                    if "mod-head" in row.attributes.get("class", ""):
+                        continue
+                    
+                    cells = [c for c in row.css("div") if c.parent == row]
+                    if len(cells) < 2:
+                        continue
+                        
+                    p_cell = cells[0]
+                    p_name_el = p_cell.css_first(".ovw-player-name.text-of")
+                    p_name = clean_text(p_name_el.text()) if p_name_el else "Unknown"
+                    
+                    agent = ""
+                    img = p_cell.css_first(".ovw-agents img")
+                    if img:
+                        agent = img.attributes.get("title", "") or img.attributes.get("alt", "")
+                        
+                    if agent:
+                        composition[current_team].append(agent)
+                        
+                    def get_div_val(col_name: str, fallback_idx: int) -> str:
+                        match_cell = None
+                        for c in cells[1:]:
+                            if c.attributes.get("data-col") == col_name:
+                                match_cell = c
+                                break
+                        if not match_cell and fallback_idx < len(cells):
+                            match_cell = cells[fallback_idx]
+                            
+                        if match_cell:
+                            both = match_cell.css_first(".side.mod-both")
+                            return both.text(strip=True) if both else match_cell.text(strip=True)
+                        return "0"
+                        
+                    kda_cell = None
+                    for c in cells[1:]:
+                        if "mod-kda" in c.attributes.get("class", ""):
+                            kda_cell = c
+                            break
+                    if not kda_cell and len(cells) > 3:
+                        kda_cell = cells[3]
+                        
+                    kills, deaths, assists = "0", "0", "0"
+                    if kda_cell:
+                        k_both = kda_cell.css_first(".ovw-kda-stat[data-col=kills] .side.mod-both")
+                        d_both = kda_cell.css_first(".ovw-kda-stat[data-col=deaths] .side.mod-both")
+                        a_both = kda_cell.css_first(".ovw-kda-stat[data-col=assists] .side.mod-both")
+                        
+                        kills = k_both.text(strip=True) if k_both else "0"
+                        deaths = d_both.text(strip=True) if d_both else "0"
+                        assists = a_both.text(strip=True) if a_both else "0"
+                        
+                    rating = get_div_val("rating2", 1)
+                    acs = get_div_val("acs", 2)
+                    kast = get_div_val("kast", 5)
+                    adr = get_div_val("adr", 6)
+                    hs_pct = get_div_val("hsp", 7)
+                    fk = get_div_val("fb", 8)
+                    fd = get_div_val("fd", 9)
+                    
+                    players_list.append({
+                        "name": p_name,
+                        "team": current_team,
+                        "agent": agent,
+                        "rating": rating,
+                        "acs": acs,
+                        "kills": kills,
+                        "deaths": deaths,
+                        "assists": assists,
+                        "kast": kast,
+                        "adr": adr,
+                        "hs_pct": hs_pct,
+                        "fk": fk,
+                        "fd": fd
+                    })
                 
         # Round History
         round_history = []
@@ -273,7 +353,7 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
         
         if game_id:
             # Fetch Performance Tab
-            perf_url = f"{VLR_BASE_URL}/match/tab/performance?match_id={match_id}&game_id={game_id}"
+            perf_url = f"{VLR_BASE_URL}/{match_id}/?game={game_id}&tab=performance"
             logger.info(f"Fetching performance tab for game {game_id}...")
             perf_html = fetch_url_with_curl(perf_url)
             if perf_html:
@@ -297,7 +377,7 @@ def parse_vlr_match(match_id_or_url: str) -> list[dict]:
                 performance_data = {"advanced_stats": advanced_list}
                 
             # Fetch Economy Tab
-            econ_url = f"{VLR_BASE_URL}/match/tab/economy?match_id={match_id}&game_id={game_id}"
+            econ_url = f"{VLR_BASE_URL}/{match_id}/?game={game_id}&tab=economy"
             logger.info(f"Fetching economy tab for game {game_id}...")
             econ_html = fetch_url_with_curl(econ_url)
             if econ_html:

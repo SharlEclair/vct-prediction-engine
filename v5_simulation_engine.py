@@ -816,12 +816,9 @@ class SideConditionedMarkovSimulator:
         return score_a, score_b
 
 
-class KillShareDirichlet:
+class KDACopulaEngine:
     """
-    Sub-Model 4: Dirichlet Regression to enforce player kill-share summation constraint.
-
-    V5 upgrade: alpha concentration parameters are gated by Roster Cohesion Coefficient (CF).
-    New signings have wider variance (lower concentration) while preserving raw skill priors.
+    Sub-Model 4: Copula covariance to enforce player K/D/A summation constraint and retain positive correlation.
     """
     COHESION_SAT_MAPS = 25   # M_sat: maps to reach full cohesion (CF=1.0)
     CF_MIN_SCALE = 0.60       # At CF=0, alpha is scaled down to 60% (40% wider variance)
@@ -842,50 +839,111 @@ class KillShareDirichlet:
         maps_with_team = current_team_entry.get("maps_played_with_team", 0)
         return min(maps_with_team, self.COHESION_SAT_MAPS) / self.COHESION_SAT_MAPS
 
-    def sample_kills(self, roster: list[str], agents: list[str], total_kills: int,
-                     player_emas: dict, baseline_lookup: dict) -> dict:
+    def sample_kda(self, roster: list[str], agents: list[str], total_kills: int,
+                   total_deaths: int, total_assists: int, player_emas: dict,
+                   baseline_lookup: dict) -> tuple[dict, dict, dict]:
         """
-        Samples individual kills matching total_kills constraint exactly.
-        Prior alpha parameters set from agent role, historical ACS, and cohesion CF.
-
-        CF gates the concentration: low CF (new signing) → wider kill-share variance.
-        Raw skill priors (ACS, duel_diff) are NOT penalised by CF.
+        Samples individual kills, deaths, and assists using a Copula-based 
+        Shared Latent Momentum approach, ensuring K/D/A sum to their totals exactly.
         """
-        alphas = []
+        import scipy.stats as stats
+        
+        # 1. Generate shared team momentum
+        # Draw from standard normal latent space first
+        z_team = np.random.normal(0.0, 1.0)
+        u_team = stats.norm.cdf(z_team)
+        
+        # Map to Gumbel distribution for the right-tail skewed momentum factor
+        team_momentum = stats.gumbel_r.ppf(u_team, loc=1.0, scale=0.3)
+        team_momentum = float(np.clip(team_momentum, 0.15, 8.0))
+        
+        # Correlation coefficient for Gaussian Copula
+        rho = 0.65
+        
+        raw_kills = []
+        raw_assists = []
+        raw_deaths = []
+        
         for idx, player in enumerate(roster):
             agent = agents[idx]
             role = self.agent_roles.get(agent, "Sentinel")
-
-            # Base alpha for role
-            alpha_0 = {"Duelist": 3.8, "Initiator": 2.3, "Controller": 1.6, "Sentinel": 1.2}.get(role, 1.5)
-
-            # Scale by player historical ACS EMA and duel diff
+            
+            # --- KILLS ---
+            alpha_k_0 = {"Duelist": 3.8, "Initiator": 2.3, "Controller": 1.6, "Sentinel": 1.2}.get(role, 1.5)
             feat = player_emas.get(player, baseline_lookup.get(player, {"acs": 200.0, "duel_diff": 0.0}))
             acs = feat.get("acs", 200.0)
             duel_diff = feat.get("duel_diff", 0.0)
-            alpha_scaled = alpha_0 * np.exp(0.004 * (acs - 200.0) + 0.3 * duel_diff)
-
-            # V5: apply cohesion gating (only widens variance, doesn’t affect mean)
+            alpha_k_scaled = alpha_k_0 * np.exp(0.004 * (acs - 200.0) + 0.3 * duel_diff)
+            
             cf = self.get_cohesion_coefficient(player)
             cohesion_gate = self.CF_MIN_SCALE + (1.0 - self.CF_MIN_SCALE) * cf
-            alpha_final = alpha_scaled * cohesion_gate
+            shape_k = max(alpha_k_scaled * cohesion_gate, 0.1)
+            
+            # --- DEATHS ---
+            alpha_d_0 = {"Duelist": 2.8, "Initiator": 2.2, "Controller": 1.9, "Sentinel": 1.6}.get(role, 2.0)
+            alpha_d_scaled = alpha_d_0 * np.exp(-0.2 * duel_diff)
+            shape_d = max(alpha_d_scaled, 0.1)
+            
+            # --- ASSISTS ---
+            alpha_a_0 = {"Initiator": 3.2, "Controller": 2.8, "Sentinel": 1.6, "Duelist": 1.2}.get(role, 2.0)
+            shape_a = max(alpha_a_0, 0.1)
+            
+            # --- Latent variables for Gaussian Copula ---
+            eps_k = np.random.normal(0.0, 1.0)
+            eps_a = np.random.normal(0.0, 1.0)
+            eps_d = np.random.normal(0.0, 1.0)
+            
+            z_k = rho * z_team + np.sqrt(1.0 - rho**2) * eps_k
+            z_a = rho * z_team + np.sqrt(1.0 - rho**2) * eps_a
+            z_d = -rho * z_team + np.sqrt(1.0 - rho**2) * eps_d
+            
+            u_k = float(np.clip(stats.norm.cdf(z_k), 0.001, 0.999))
+            u_a = float(np.clip(stats.norm.cdf(z_a), 0.001, 0.999))
+            u_d = float(np.clip(stats.norm.cdf(z_d), 0.001, 0.999))
+            
+            # Modulate scale parameters: positive correlation with momentum for kills/assists, negative for deaths
+            scale_k = team_momentum
+            scale_a = team_momentum
+            scale_d = 1.0 / team_momentum
+            
+            # Generate raw Gamma values
+            raw_k_val = stats.gamma.ppf(u_k, a=shape_k, scale=scale_k)
+            raw_a_val = stats.gamma.ppf(u_a, a=shape_a, scale=scale_a)
+            raw_d_val = stats.gamma.ppf(u_d, a=shape_d, scale=scale_d)
+            
+            raw_kills.append(max(raw_k_val, 1e-5))
+            raw_assists.append(max(raw_a_val, 1e-5))
+            raw_deaths.append(max(raw_d_val, 1e-5))
+            
+        def distribute_totals(raw_vals, total_target, roster_list):
+            if total_target <= 0:
+                return {p: 0 for p in roster_list}
+            sum_raw = sum(raw_vals)
+            proportions = np.array(raw_vals) / sum_raw
+            
+            floored = np.floor(proportions * total_target).astype(int)
+            remainder = total_target - np.sum(floored)
+            
+            fractional_parts = (proportions * total_target) - floored
+            indices = np.argsort(fractional_parts)[::-1]
+            for i in range(int(remainder)):
+                floored[indices[i]] += 1
+                
+            return {roster_list[i]: int(floored[i]) for i in range(len(roster_list))}
+            
+        kills_dict = distribute_totals(raw_kills, total_kills, roster)
+        deaths_dict = distribute_totals(raw_deaths, total_deaths, roster)
+        assists_dict = distribute_totals(raw_assists, total_assists, roster)
+        
+        return kills_dict, deaths_dict, assists_dict
 
-            alphas.append(max(alpha_final, 0.1))
-
-        # Draw proportions from Dirichlet
-        proportions = np.random.dirichlet(alphas)
-
-        # Enforce sum constraint via integer rounding
-        kills = np.floor(proportions * total_kills).astype(int)
-        remainder = total_kills - np.sum(kills)
-
-        # Distribute remaining kills to largest fractional parts
-        fractional_parts = (proportions * total_kills) - kills
-        indices = np.argsort(fractional_parts)[::-1]
-        for i in range(int(remainder)):
-            kills[indices[i]] += 1
-
-        return {roster[i]: int(kills[i]) for i in range(len(roster))}
+    def sample_kills(self, roster: list[str], agents: list[str], total_kills: int,
+                      player_emas: dict, baseline_lookup: dict) -> dict:
+        """
+        Backward compatible wrapper for legacy calls.
+        """
+        kills, _, _ = self.sample_kda(roster, agents, total_kills, total_kills, total_kills, player_emas, baseline_lookup)
+        return kills
 
 
 # --- V5 Simulation Wrapper ---
@@ -903,60 +961,34 @@ class VCTv5SimulationEngine:
         self.player_emas, self.baseline_lookup, self.team_stats, self.player_global_stats, self.player_agent_stats = get_simulation_historical_stats(self.raw_dir)
         self.agent_assigner.fit_comfort(self.player_agent_stats, self.player_global_stats)
 
-        # V5: pass global player ledger to KillShareDirichlet for cohesion gating
-        self.kill_dirichlet = KillShareDirichlet(
+        # V7.1: pass global player ledger to KDACopulaEngine
+        self.kda_copula = KDACopulaEngine(
             self.agent_assigner.agent_roles,
             player_ledger=self.agent_assigner.player_ledger
         )
+        self.kill_dirichlet = self.kda_copula # For backward compatibility
         
     def sample_deaths(self, roster: list[str], agents: list[str], total_deaths: int) -> dict:
         """
         Samples individual player deaths matching total_deaths constraint exactly.
         Prior alpha parameters set from agent role and historical comfort.
         """
-        alphas = []
-        for idx, player in enumerate(roster):
-            agent = agents[idx]
-            role = self.agent_assigner.agent_roles.get(agent, "Sentinel")
-            alpha_0 = {"Duelist": 2.8, "Initiator": 2.2, "Controller": 1.9, "Sentinel": 1.6}.get(role, 2.0)
-            feat = self.player_emas.get(player, self.baseline_lookup.get(player, {"duel_diff": 0.0}))
-            duel_diff = feat.get("duel_diff", 0.0)
-            alpha_scaled = alpha_0 * np.exp(-0.2 * duel_diff)
-            alphas.append(max(alpha_scaled, 0.1))
-            
-        proportions = np.random.dirichlet(alphas)
-        deaths = np.floor(proportions * total_deaths).astype(int)
-        remainder = total_deaths - np.sum(deaths)
-        
-        fractional_parts = (proportions * total_deaths) - deaths
-        indices = np.argsort(fractional_parts)[::-1]
-        for i in range(int(remainder)):
-            deaths[indices[i]] += 1
-            
-        return {roster[i]: int(deaths[i]) for i in range(len(roster))}
+        _, deaths, _ = self.kda_copula.sample_kda(
+            roster, agents, total_deaths, total_deaths, total_deaths,
+            self.player_emas, self.baseline_lookup
+        )
+        return deaths
 
     def sample_assists(self, roster: list[str], agents: list[str], total_assists: int) -> dict:
         """
         Samples individual player assists matching total_assists constraint exactly.
         Priors favor Initiators and Controllers.
         """
-        alphas = []
-        for idx, player in enumerate(roster):
-            agent = agents[idx]
-            role = self.agent_assigner.agent_roles.get(agent, "Sentinel")
-            alpha_0 = {"Initiator": 3.2, "Controller": 2.8, "Sentinel": 1.6, "Duelist": 1.2}.get(role, 2.0)
-            alphas.append(max(alpha_0, 0.1))
-            
-        proportions = np.random.dirichlet(alphas)
-        assists = np.floor(proportions * total_assists).astype(int)
-        remainder = total_assists - np.sum(assists)
-        
-        fractional_parts = (proportions * total_assists) - assists
-        indices = np.argsort(fractional_parts)[::-1]
-        for i in range(int(remainder)):
-            assists[indices[i]] += 1
-            
-        return {roster[i]: int(assists[i]) for i in range(len(roster))}
+        _, _, assists = self.kda_copula.sample_kda(
+            roster, agents, total_assists, total_assists, total_assists,
+            self.player_emas, self.baseline_lookup
+        )
+        return assists
 
     def calculate_acs(self, player: str, kills: int, assists: int, rounds: int) -> int:
         """
@@ -1091,15 +1123,15 @@ class VCTv5SimulationEngine:
                 
                 comp_a, comp_b = map_compositions[map_name]
                 
-                # Sample statistics matching constraints
-                kills_a = self.kill_dirichlet.sample_kills(roster_a, comp_a, total_kills_a, self.player_emas, self.baseline_lookup)
-                kills_b = self.kill_dirichlet.sample_kills(roster_b, comp_b, total_kills_b, self.player_emas, self.baseline_lookup)
-                
-                deaths_a = self.sample_deaths(roster_a, comp_a, total_deaths_a)
-                deaths_b = self.sample_deaths(roster_b, comp_b, total_deaths_b)
-                
-                assists_a = self.sample_assists(roster_a, comp_a, total_assists_a)
-                assists_b = self.sample_assists(roster_b, comp_b, total_assists_b)
+                # Sample statistics matching constraints using Copula engine
+                kills_a, deaths_a, assists_a = self.kda_copula.sample_kda(
+                    roster_a, comp_a, total_kills_a, total_deaths_a, total_assists_a,
+                    self.player_emas, self.baseline_lookup
+                )
+                kills_b, deaths_b, assists_b = self.kda_copula.sample_kda(
+                    roster_b, comp_b, total_kills_b, total_deaths_b, total_assists_b,
+                    self.player_emas, self.baseline_lookup
+                )
                 
                 rounds_played = score_a + score_b
                 

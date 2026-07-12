@@ -191,15 +191,79 @@ def load_raw_matches() -> list[dict]:
     for f in files:
         with open(f, "r", encoding="utf-8") as file:
             content = json.load(file)
-            segment = content["data"]["segments"][0]
-            # Parse datetime
-            segment["timestamp"] = parse_match_date(segment["date"])
-            # Extract patch if present
-            patch_match = re.search(r'Patch\s+([0-9.]+)', segment["date"])
-            segment["patch"] = patch_match.group(1).strip() if patch_match else None
-            # Extract team names
-            segment["team_a"] = segment["teams"][0]["name"]
-            segment["team_b"] = segment["teams"][1]["name"]
+            
+            raw_segments = content.get("data", {}).get("segments", [])
+            if not raw_segments:
+                continue
+                
+            if "team1" in raw_segments[0]:
+                # New schema: list of map segments
+                m_id = os.path.basename(f).replace("match_", "").replace(".json", "")
+                team_a = raw_segments[0]["team1"]
+                team_b = raw_segments[0]["team2"]
+                
+                maps = []
+                for raw_map in raw_segments:
+                    rounds = raw_map.get("round_history", [])
+                    score = {
+                        "team1": sum(1 for r in rounds if r.get("winner") == team_a),
+                        "team2": sum(1 for r in rounds if r.get("winner") == team_b)
+                    }
+                    
+                    players = {"team1": [], "team2": []}
+                    for p in raw_map.get("players", []):
+                        if p.get("team") == team_a:
+                            players["team1"].append(p)
+                        else:
+                            players["team2"].append(p)
+                            
+                    map_name_raw = raw_map.get("map", "Unknown")
+                    map_name = re.split(r'\s+(?:PICK|DECIDER|BAN)\b', map_name_raw)[0].strip()
+                    
+                    maps.append({
+                        "map_name": map_name,
+                        "rounds": rounds,
+                        "score": score,
+                        "players": players,
+                        "economy": raw_map.get("economy", []),
+                        "performance": raw_map.get("performance", {})
+                    })
+                    
+                # Determine winner based on map wins
+                map_wins_a = sum(1 for m in maps if m["score"]["team1"] > m["score"]["team2"])
+                map_wins_b = len(maps) - map_wins_a
+                is_winner_a = map_wins_a > map_wins_b
+                
+                date_str = raw_segments[0]["date"]
+                ts = parse_match_date(date_str)
+                
+                patch = raw_segments[0].get("patch")
+                if not patch or patch == "Unknown":
+                    patch_match = re.search(r'Patch\s+([0-9.]+)', date_str)
+                    patch = patch_match.group(1).strip() if patch_match else None
+                    
+                segment = {
+                    "match_id": m_id,
+                    "timestamp": ts,
+                    "patch": patch,
+                    "team_a": team_a,
+                    "team_b": team_b,
+                    "teams": [
+                        {"name": team_a, "is_winner": is_winner_a},
+                        {"name": team_b, "is_winner": not is_winner_a}
+                    ],
+                    "maps": maps,
+                    "map_vetos": "; ".join(raw_segments[0].get("vetoes", []))
+                }
+            else:
+                # Old schema: single match segment with maps nested
+                segment = raw_segments[0]
+                segment["timestamp"] = parse_match_date(segment["date"])
+                patch_match = re.search(r'Patch\s+([0-9.]+)', segment["date"])
+                segment["patch"] = patch_match.group(1).strip() if patch_match else None
+                segment["team_a"] = segment["teams"][0]["name"]
+                segment["team_b"] = segment["teams"][1]["name"]
+                
             matches.append(segment)
             
     matches.sort(key=lambda x: x["timestamp"])
@@ -809,7 +873,7 @@ def build_feature_store():
 
 def compute_player_ema(
     df: pd.DataFrame, 
-    target_col: str = "clipped_kpr", 
+    target_col: str = "kpr", 
     alphas: Tuple[float, ...] = (0.1, 0.4)
 ) -> pd.DataFrame:
     from typing import Tuple

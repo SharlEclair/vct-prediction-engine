@@ -39,11 +39,10 @@ def prepare_phase_1_dataset(num_matches: int = 200) -> Tuple[pd.DataFrame, list,
     telemetry = generate_mock_match_telemetry(num_matches=num_matches, seed=42)
     df = process_match_telemetry(telemetry)
     
-    # Task 1.2: Winsorization on KPR
-    df = apply_winsorization(df, col="kpr", lower_quantile=0.05, upper_quantile=0.95)
+    # Task 1.2: Winsorization on KPR (Removed for Phase 13)
     
     # Task 1.3: EMA construction (slow alpha=0.1, rapid alpha=0.4)
-    df = compute_player_ema(df, target_col="clipped_kpr", alphas=(0.1, 0.4))
+    df = compute_player_ema(df, target_col="kpr", alphas=(0.1, 0.4))
     
     # Task 1.4: ODR matrix generation via Ridge regression
     odr_matrix = generate_odr_matrix(df, target_col="kpr", alpha_ridge=1.0)
@@ -54,7 +53,7 @@ def prepare_phase_1_dataset(num_matches: int = 200) -> Tuple[pd.DataFrame, list,
     target_col = "kills"
     
     feature_cols = [
-        "clipped_kpr",
+        "kpr",
         "ema_kpr_alpha_0.1",
         "ema_kpr_alpha_0.4",
         "opponent_odr"
@@ -200,13 +199,13 @@ def generate_slate_predictions(model: xgb.XGBRegressor, feature_cols: list) -> N
             global_acs_ema = base_acs * (salary / 8.0)
             
         # Construct feature vector based on global career ACS
-        prev_clipped_kpr = global_acs_ema / 300.0
+        prev_kpr = global_acs_ema / 300.0
         prev_ema_kpr_alpha_0_1 = global_acs_ema / 300.0
         prev_ema_kpr_alpha_0_4 = global_acs_ema / 300.0
         prev_opponent_odr = 0.0 # baseline neutral opponent ODR
         
         X_pred = pd.DataFrame([{
-            "prev_clipped_kpr": prev_clipped_kpr,
+            "prev_kpr": prev_kpr,
             "prev_ema_kpr_alpha_0.1": prev_ema_kpr_alpha_0_1,
             "prev_ema_kpr_alpha_0.4": prev_ema_kpr_alpha_0_4,
             "prev_opponent_odr": prev_opponent_odr
@@ -218,9 +217,7 @@ def generate_slate_predictions(model: xgb.XGBRegressor, feature_cols: list) -> N
         pred_kills = float(model.predict(X_pred)[0])
         
         # Translate kills prediction to DFS expected points (physics: ~3.6 * kills - 11.5)
-        # bound to range [15.0, 80.0]
         projected_dfs_points = 3.6 * pred_kills - 11.5
-        projected_dfs_points = max(15.0, min(80.0, projected_dfs_points))
         
         # Write both player name and player id as keys to guarantee lookup compatibility
         predictions[name] = round(projected_dfs_points, 2)
