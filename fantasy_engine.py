@@ -402,22 +402,36 @@ def optimize_roster(
     # 1. Filter out players below the survival win rate threshold, unless in current roster
     curr_names_set = set()
     if transfer_constraint is not None:
-        curr_names_set = set(p["player_name"].lower().strip() for p in transfer_constraint["current_roster"])
+        for p in transfer_constraint["current_roster"]:
+            name_val = p.get("player_name") or p.get("name")
+            if name_val:
+                curr_names_set.add(name_val.lower().strip())
 
     filtered_players = []
     for p in vfl_players:
-        pname = p.get("player_name", "")
+        p_norm = dict(p)
+        pname = p_norm.get("player_name") or p_norm.get("name") or ""
+        p_norm["player_name"] = pname
+        p_norm["name"] = pname
+        if "price" not in p_norm:
+            p_norm["price"] = p_norm.get("salary") or p_norm.get("cost") or 8.0
+            
+        team_val = p_norm.get("vlr_team_id") or p_norm.get("team_name") or p_norm.get("team")
+        p_norm["vlr_team_id"] = team_val
+        p_norm["team_name"] = team_val
+        p_norm["team"] = team_val
+        
         is_in_curr = pname.lower().strip() in curr_names_set
         
-        tid = p.get("vlr_team_id")
-        wr = team_win_rates.get(tid, 0.50) if tid is not None else 0.50
+        tid = p_norm.get("vlr_team_id")
+        wr = team_win_rates.get(tid, 0.50) if isinstance(tid, int) else 0.50
         if wr >= survival_threshold or is_in_curr:
             # Enrich player data with stats database lookup
-            stats = player_stats.get(pname, {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
-            p["computed_ppg"] = stats.get("ppg", p.get("ppg", 10.0))
-            p["computed_sigma"] = stats.get("sigma", 3.0)
-            p["floor"] = p["computed_ppg"] - 1.0 * p["computed_sigma"]
-            filtered_players.append(p)
+            stats = player_stats.get(pname, {"ppg": p_norm.get("ppg", 10.0), "sigma": 3.0})
+            p_norm["computed_ppg"] = stats.get("ppg", p_norm.get("ppg", 10.0))
+            p_norm["computed_sigma"] = stats.get("sigma", 3.0)
+            p_norm["floor"] = p_norm["computed_ppg"] - 1.0 * p_norm["computed_sigma"]
+            filtered_players.append(p_norm)
             
     n = len(filtered_players)
     if n == 0:
@@ -627,11 +641,15 @@ def optimize_roster(
             
         # 9. Transfer constraints (for suggestion component)
         if transfer_constraint is not None:
-            curr_names = set(p["player_name"] for p in transfer_constraint["current_roster"])
+            curr_names = set()
+            for p in transfer_constraint["current_roster"]:
+                name_val = p.get("player_name") or p.get("name")
+                if name_val:
+                    curr_names.add(name_val.lower().strip())
             max_tr = transfer_constraint["max_transfers"]
             exact_tr = transfer_constraint.get("exact", False)
             # Number of selected players NOT in current roster
-            non_curr_indicator = np.array([1.0 if p["player_name"] not in curr_names else 0.0 for p in filtered_players])
+            non_curr_indicator = np.array([1.0 if p["player_name"].lower().strip() not in curr_names else 0.0 for p in filtered_players])
             row = np.zeros(num_vars)
             row[:n] = non_curr_indicator
             row[n:2*n] = non_curr_indicator

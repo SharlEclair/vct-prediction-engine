@@ -1858,10 +1858,31 @@ with tab_optimizer:
             key="user_multiselect_roster"
         )
         
-        # Validation checks for select count
+        # Validation checks for select count and VFL constraints
         num_selected = len(selected_roster)
         if num_selected != 6:
             st.warning(f"⚠️ Please select exactly 6 players to evaluate transfers. (Currently selected: {num_selected})")
+        else:
+            from collections import Counter
+            teams_counter = Counter()
+            roles_set = set()
+            for name in selected_roster:
+                p_info = slate_lookup.get(name)
+                if p_info:
+                    teams_counter[p_info.get("team")] += 1
+                    roles_set.add(p_info.get("role"))
+                    
+            team_violations = [team for team, count in teams_counter.items() if count > 2]
+            
+            required_roles = {"Duelist", "Initiator", "Controller", "Sentinel"}
+            missing_roles = required_roles - roles_set
+            
+            if team_violations:
+                st.error(f"⚠️ **VFL Rule Violation:** Max 2 players per team. Violated by: {', '.join(team_violations)}")
+            elif missing_roles:
+                st.error(f"⚠️ **VFL Rule Violation:** Roster must contain at least 1 player from each core role. Missing: {', '.join(missing_roles)}")
+            else:
+                st.success("✅ **Legal Roster:** This lineup strictly satisfies all VFL team and positional rules.")
             
         # Floating Bank & Cost calculations
         roster_cost = sum(slate_lookup[name]["salary"] for name in selected_roster if name in slate_lookup)
@@ -1982,7 +2003,12 @@ with tab_optimizer:
                 if not pids_out and not pids_in and not igl_swap:
                     st.success("🎉 Roster is already 100% mathematically optimal! No transfers needed.")
                 else:
+                    st.info("ℹ️ **Strict VFL Rules Enforced:** All trade suggestions strictly respect the VFL limit of **max 3 transfers per week** and the **2-player team cap** per roster.")
                     st.markdown("**Suggested Swaps (Mathematical Set Difference):**")
+                    
+                    from collections import Counter
+                    opt_roles = [p["role"] for p in opt_lineup]
+                    opt_role_counts = Counter(opt_roles)
                     
                     # Display OUT cards
                     for pid in pids_out:
@@ -2005,11 +2031,13 @@ with tab_optimizer:
                     for pid in pids_in:
                         p_in = opt_lookup[pid]
                         igl_tag = " 👑 IGL" if p_in["is_igl"] else ""
+                        is_wildcard = opt_role_counts.get(p_in["role"], 0) > 1
+                        wildcard_badge = ' <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(167, 139, 250, 0.15); color: #a78bfa; margin-left: 6px;">✨ Wildcard Swap</span>' if is_wildcard else ""
                         reason = "Drafted into optimal lineup to maximize GPP ceiling under salary constraint."
                         st.markdown(clean_html(f"""
                             <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05); border-radius: 6px;">
                                 <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
-                                <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{p_in['name']}{igl_tag}</span>
+                                <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{p_in['name']}{igl_tag}{wildcard_badge}</span>
                                 <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p_in['salary']} VP · Role: {p_in['role']}</span>
                                 <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
                             </div>
