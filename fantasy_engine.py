@@ -360,9 +360,17 @@ def compute_all_players_historical_stats(raw_dir: str = RAW_DIR) -> dict[str, di
     stats = {}
     for p_name, scores in player_scores.items():
         if scores:
+            scores_arr = np.array(scores)
+            var_90 = float(np.percentile(scores_arr, 90))
+            cvar_90 = float(np.mean(scores_arr[scores_arr >= var_90]))
+            var_10 = float(np.percentile(scores_arr, 10))
+            cvar_10 = float(np.mean(scores_arr[scores_arr <= var_10]))
+            
             stats[p_name] = {
                 "ppg": float(np.mean(scores)),
                 "sigma": float(np.std(scores)) if len(scores) > 1 else 3.0,
+                "cvar_90": cvar_90,
+                "cvar_10": cvar_10,
                 "matches_played": len(scores)
             }
     return stats
@@ -427,10 +435,14 @@ def optimize_roster(
         wr = team_win_rates.get(tid, 0.50) if isinstance(tid, int) else 0.50
         if wr >= survival_threshold or is_in_curr:
             # Enrich player data with stats database lookup
-            stats = player_stats.get(pname, {"ppg": p_norm.get("ppg", 10.0), "sigma": 3.0})
+            stats = player_stats.get(pname, {})
             p_norm["computed_ppg"] = stats.get("ppg", p_norm.get("ppg", 10.0))
             p_norm["computed_sigma"] = stats.get("sigma", 3.0)
-            p_norm["floor"] = p_norm["computed_ppg"] - 1.0 * p_norm["computed_sigma"]
+            
+            # Use continuous CVaR 90 (expected ceiling) and CVaR 10 (expected worst-case floor)
+            p_norm["cvar_90"] = stats.get("cvar_90", p_norm["computed_ppg"] + 1.5 * p_norm["computed_sigma"])
+            p_norm["cvar_10"] = stats.get("cvar_10", p_norm["computed_ppg"] - 1.5 * p_norm["computed_sigma"])
+            p_norm["floor"] = p_norm["cvar_10"]
             filtered_players.append(p_norm)
             
     n = len(filtered_players)
@@ -495,8 +507,8 @@ def optimize_roster(
         igl_floor = filtered_players[k]["floor"]
         
         # Objective coefficient vector (we minimize, so we negate points)
-        # points = ppg for normal selections. Player k points are doubled.
-        pts = np.array([p["computed_ppg"] for p in filtered_players], dtype=float)
+        # points = cvar_90 for normal GPP ceiling selections. Player k points are doubled.
+        pts = np.array([p["cvar_90"] for p in filtered_players], dtype=float)
         
         c = np.zeros(num_vars)
         c[:n] = -pts          # x_nat coefficients

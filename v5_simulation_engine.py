@@ -266,9 +266,18 @@ class MapVetoBandit:
         plays = self.team_plays[team].get(map_name, 0)
         wins  = self.team_wins[team].get(map_name, 0)
 
-        # Resolve propensity from the correct temporal window
+        # Resolve propensity and sample size from the correct temporal window
+        wid = self.registry.get_window_id(target_date) if target_date is not None else None
+        if wid is not None and wid in self.window_plays:
+            n = self.window_plays[wid].get(map_name, {}).get("plays", 0)
+        else:
+            n = self.team_plays[team].get(map_name, 0)
+            
+        n = max(1, n)
+        beta = 0.5
+        b_n = n ** (-beta)
+
         if target_date is not None:
-            wid = self.registry.get_window_id(target_date)
             propensity = self.window_propensity.get(wid, {}).get(map_name, 0.1)
         else:
             propensity = self.map_frequency.get(map_name, 0.1)
@@ -276,9 +285,9 @@ class MapVetoBandit:
         empirical_win_rate = wins / plays if plays > 0 else 0.5
         baseline_mu = (wins + 1.0) / (plays + 2.0) if plays > 0 else 0.5
         
-        epsilon = 1e-5
-        raw_dr = baseline_mu + (empirical_win_rate - baseline_mu) / (propensity + epsilon)
-        return float(np.clip(raw_dr * 0.8 + 0.1, 0.1, 0.9))
+        # Trim propensity denominator to prevent variance explosion on weak overlap
+        raw_dr = baseline_mu + (empirical_win_rate - baseline_mu) / max(propensity, b_n)
+        return float(np.clip(raw_dr, 0.01, 0.99))
 
     def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3",
                      stochastic: bool = False,
@@ -531,6 +540,62 @@ class MapVetoBandit:
         }
 
 
+class FactorizationMachineSynergy:
+    def __init__(self, agent_roles: dict):
+        self.agent_roles = agent_roles
+        self.agents = sorted(list(agent_roles.keys()))
+        self.agent_to_idx = {agent: i for i, agent in enumerate(self.agents)}
+        
+        n = len(self.agents)
+        self.w0 = 0.0
+        
+        # Initialize linear weights based on roles to represent base importance
+        self.w = np.zeros(n)
+        for agent, role in agent_roles.items():
+            idx = self.agent_to_idx[agent]
+            if role == 'Controller':
+                self.w[idx] = 0.15
+            elif role == 'Sentinel':
+                self.w[idx] = 0.10
+            elif role == 'Initiator':
+                self.w[idx] = 0.08
+            else: # Duelist
+                self.w[idx] = 0.02
+                
+        # Initialize latent vectors (k=2) to encode synergies/penalties
+        self.k = 2
+        self.V = np.zeros((n, self.k))
+        for agent, role in agent_roles.items():
+            idx = self.agent_to_idx[agent]
+            if role == 'Duelist':
+                self.V[idx] = [0.4, 0.1]
+            elif role == 'Initiator':
+                self.V[idx] = [0.3, 0.2]
+            elif role == 'Controller':
+                self.V[idx] = [0.2, 0.4]
+            elif role == 'Sentinel':
+                self.V[idx] = [0.1, 0.3]
+                
+    def compute_synergy_multiplier(self, drafted_agents: list[str]) -> float:
+        # Convert drafted agents to boolean vector x
+        x = np.zeros(len(self.agents))
+        for agent in drafted_agents:
+            if agent in self.agent_to_idx:
+                x[self.agent_to_idx[agent]] = 1.0
+                
+        # Compute FM value: w0 + sum(w_i * x_i) + sum_d( (sum V_id * x_i)^2 - sum V_id^2 * x_i^2 ) / 2
+        linear_sum = np.sum(self.w * x)
+        
+        interaction_sum = 0.0
+        for d in range(self.k):
+            sum_vx = np.sum(self.V[:, d] * x)
+            sum_vx_sq = np.sum((self.V[:, d] ** 2) * (x ** 2))
+            interaction_sum += 0.5 * (sum_vx ** 2 - sum_vx_sq)
+            
+        fm_score = self.w0 + linear_sum + interaction_sum
+        return float(np.clip(1.0 + fm_score, 0.70, 1.30))
+
+
 class SynergisticDraftEngine:
     """
     Sub-Model 2: Synergistic Combinatorial Draft Engine.
@@ -549,6 +614,7 @@ class SynergisticDraftEngine:
         self.player_ledger: dict = {}    # V5: global player entity ledger
 
         self.load_configurations()
+        self.fm_synergy = FactorizationMachineSynergy(self.agent_roles)
 
     def load_configurations(self):
         roles_path = os.path.join(self.raw_dir, "agent_roles.json")
@@ -700,21 +766,8 @@ class SynergisticDraftEngine:
         def search(player_idx, current_agents, current_utility):
             nonlocal best_composition, best_utility
             if player_idx == n_players:
-                # Calculate composition synergy modifiers
-                roles = [self.agent_roles.get(a, 'Sentinel') for a in current_agents]
-                has_duelist = 'Duelist' in roles
-                has_initiator = 'Initiator' in roles
-                has_controller = 'Controller' in roles
-                has_sentinel = 'Sentinel' in roles
-
-                synergy_mult = 1.0
-                if has_duelist and has_initiator:
-                    synergy_mult *= 1.10
-                if not has_controller:
-                    synergy_mult *= 0.85
-                if not has_sentinel:
-                    synergy_mult *= 0.85
-
+                # Calculate dynamic synergy multiplier using Factorization Machine (FM)
+                synergy_mult = self.fm_synergy.compute_synergy_multiplier(current_agents)
                 final_val = current_utility * synergy_mult
                 if final_val > best_utility:
                     best_utility = final_val
@@ -830,8 +883,8 @@ class StatefulEconomySimulator:
             acs_diff = self.acs_a - self.acs_b
             eco_diff = loadout_a - loadout_b
             z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
-            prob_win_a = 1.0 / (1.0 + np.exp(-z))
-            prob_win_a = float(np.clip(prob_win_a, 0.20, 0.80))
+            # Cauchit link: heavy-tailed inverse link function using arctan
+            prob_win_a = float((1.0 / np.pi) * np.arctan(z) + 0.5)
             
             # Sample round winner
             if np.random.rand() < prob_win_a:

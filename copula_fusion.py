@@ -204,13 +204,23 @@ def validate_and_extract_metrics(
         floor_p15 = float(np.percentile(series, 15))
         ceiling_p85 = float(np.percentile(series, 85))
         
+        # Calculate CVaR 90 (expected value in top 10% GPP scenarios)
+        var_90 = float(np.percentile(series, 90))
+        cvar_90 = float(np.mean(series[series >= var_90]))
+        
+        # Calculate CVaR 10 (expected value in bottom 10% cash scenarios)
+        var_10 = float(np.percentile(series, 10))
+        cvar_10 = float(np.mean(series[series <= var_10]))
+        
         projections[col] = {
             "EV": round(ev, 2),
             "Floor_p15": round(floor_p15, 2),
-            "Ceiling_p85": round(ceiling_p85, 2)
+            "Ceiling_p85": round(ceiling_p85, 2),
+            "cvar_90": round(cvar_90, 2),
+            "cvar_10": round(cvar_10, 2)
         }
         
-    logger.info("Successfully extracted EV, Floor (p15), and Ceiling (p85) metrics for all 10 players.")
+    logger.info("Successfully extracted EV, Floor (p15), Ceiling (p85), and CVaR metrics for all players.")
     return projections
 
 

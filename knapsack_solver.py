@@ -83,10 +83,12 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
     metadata = load_slate_payload()
     df_meta = pd.DataFrame(metadata)
     
-    # Attach Phase 3 metrics (EV, Floor_p15, Ceiling_p85) to metadata
+    # Attach Phase 3 metrics (EV, Floor_p15, Ceiling_p85, CVaR 90, CVaR 10) to metadata
     df_meta["EV"] = df_meta["player_id"].map(lambda pid: projections[pid]["EV"])
     df_meta["Floor_p15"] = df_meta["player_id"].map(lambda pid: projections[pid]["Floor_p15"])
     df_meta["Ceiling_p85"] = df_meta["player_id"].map(lambda pid: projections[pid]["Ceiling_p85"])
+    df_meta["cvar_90"] = df_meta["player_id"].map(lambda pid: projections[pid]["cvar_90"])
+    df_meta["cvar_10"] = df_meta["player_id"].map(lambda pid: projections[pid]["cvar_10"])
     
     logger.info("Task 5.3 Complete: Ingested %d players dynamically from current_slate.json.", len(df_meta))
     return df_meta, df_fused
@@ -139,13 +141,13 @@ def solve_vfl_knapsack(
     x = pulp.LpVariable.dicts("draft", players, cat=pulp.LpBinary)
     y = pulp.LpVariable.dicts("igl", players, cat=pulp.LpBinary)
     
-    ceilings = dict(zip(df_meta["player_id"], df_meta["Ceiling_p85"]))
+    cvar_targets = dict(zip(df_meta["player_id"], df_meta["cvar_90"]))
     salaries = dict(zip(df_meta["player_id"], df_meta["salary"]))
     roles = dict(zip(df_meta["player_id"], df_meta["role"]))
     teams = dict(zip(df_meta["player_id"], df_meta["team"]))
     
-    # Objective Function: Maximize Ceiling + IGL Multiplier bonus
-    prob += pulp.lpSum([ceilings[p] * x[p] + (igl_multiplier - 1.0) * ceilings[p] * y[p] for p in players]), "Total_GPP_Ceiling"
+    # Objective Function: Maximize Total Roster CVaR at the 90th percentile + IGL Multiplier bonus
+    prob += pulp.lpSum([cvar_targets[p] * x[p] + (igl_multiplier - 1.0) * cvar_targets[p] * y[p] for p in players]), "Total_GPP_CVaR_90"
     
     # Roster & Salary Constraints
     # 1. Lineup size constraint

@@ -423,25 +423,10 @@ def build_feature_store():
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
     # Initialize trackers
-    # KPR prior: mu_0 = 0.75, var_prior = 0.04 (sigma_0 = 0.20)
-    # var_obs = 0.0225 (sigma_obs = 0.15)
-    # var_time = 0.0025 (tau^2 = 0.0025)
-    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, var_time=0.0025)
-    
-    # ACS prior: mu_0 = 200.0, var_prior = 2500.0 (sigma_0 = 50.0)
-    # var_obs = 1600.0 (sigma_obs = 40.0)
-    # var_time = 100.0 (tau^2 = 100.0)
-    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, var_time=100.0)
-    
-    # KAST prior: mu_0 = 0.70, var_prior = 0.01 (sigma_0 = 0.10)
-    # var_obs = 0.01 (sigma_obs = 0.10)
-    # var_time = 0.0005 (tau^2 = 0.0005)
-    tracker_kast = BayesianSkillTracker(mu_prior=0.70, var_prior=0.01, var_obs=0.01, var_time=0.0005)
-    
-    # Duel Diff prior: mu_0 = 0.0, var_prior = 0.01 (sigma_0 = 0.10)
-    # var_obs = 0.01 (sigma_obs = 0.10)
-    # var_time = 0.0005 (tau^2 = 0.0005)
-    tracker_duel = BayesianSkillTracker(mu_prior=0.0, var_prior=0.01, var_obs=0.01, var_time=0.0005)
+    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, tau_base_var=0.0025 / 30.0, lambda_val=0.001)
+    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, tau_base_var=100.0 / 30.0, lambda_val=40.0)
+    tracker_kast = BayesianSkillTracker(mu_prior=0.70, var_prior=0.01, var_obs=0.01, tau_base_var=0.0005 / 30.0, lambda_val=0.0002)
+    tracker_duel = BayesianSkillTracker(mu_prior=0.0, var_prior=0.01, var_obs=0.01, tau_base_var=0.0005 / 30.0, lambda_val=0.0002)
     
     player_features_lookup = {}
     
@@ -476,6 +461,14 @@ def build_feature_store():
             }
             
         # 2. Update state with match results
+        dt_datetime = m.get('timestamp')
+        patch_str = None
+        for map_data in m.get('maps', []):
+            p_patch = map_data.get('patch')
+            if p_patch:
+                patch_str = p_patch
+                break
+
         match_perf = df_player_perf[df_player_perf["match_id"] == match_id]
         for _, row in match_perf.iterrows():
             p_name = row["player"]
@@ -484,10 +477,10 @@ def build_feature_store():
             y_kast = float(row.get("kast", 0.70))
             y_duel = float(row.get("duel_diff", 0.0))
             
-            tracker_kpr.update(p_name, y_kpr)
-            tracker_acs.update(p_name, y_acs)
-            tracker_kast.update(p_name, y_kast)
-            tracker_duel.update(p_name, y_duel)
+            tracker_kpr.update(p_name, y_kpr, dt_datetime, patch_str)
+            tracker_acs.update(p_name, y_acs, dt_datetime, patch_str)
+            tracker_kast.update(p_name, y_kast, dt_datetime, patch_str)
+            tracker_duel.update(p_name, y_duel, dt_datetime, patch_str)
             
     # Save the latest post-match states of the trackers to the Bayesian player ledger
     bayesian_ledger = {}
@@ -908,12 +901,15 @@ def build_feature_store():
 
 
 class BayesianSkillTracker:
-    def __init__(self, mu_prior: float, var_prior: float, var_obs: float, var_time: float):
+    def __init__(self, mu_prior: float, var_prior: float, var_obs: float, tau_base_var: float, lambda_val: float):
         self.mu_prior = mu_prior
         self.var_prior = var_prior
         self.var_obs = var_obs
-        self.var_time = var_time
+        self.tau_base_var = tau_base_var # Variance drift rate per day
+        self.lambda_val = lambda_val     # Patch transition variance scalar
         self.player_states = {}
+        self.player_last_time = {}
+        self.player_last_patch = {}
 
     def get_state(self, player_id: str) -> Tuple[float, float]:
         """Returns (mu, std_dev) for the player."""
@@ -922,8 +918,8 @@ class BayesianSkillTracker:
         mu, var = self.player_states[player_id]
         return float(mu), float(np.sqrt(var))
 
-    def update(self, player_id: str, y: float):
-        """Observation update followed by temporal transition update."""
+    def update(self, player_id: str, y: float, dt_datetime=None, patch_str: str = None):
+        """Observation update followed by continuous-time and patch-aware temporal transition update."""
         if player_id not in self.player_states:
             self.player_states[player_id] = (self.mu_prior, self.var_prior)
             
@@ -934,10 +930,25 @@ class BayesianSkillTracker:
         mu_new = (mu_old * self.var_obs + y * var_old) / denom
         var_new = (var_old * self.var_obs) / denom
         
-        # 2. Time Transition Update
-        var_next = var_new + self.var_time
+        # 2. Continuous-time & Patch-aware Time Transition Update
+        delta_t_days = 0.0
+        if player_id in self.player_last_time and dt_datetime is not None:
+            delta_time = dt_datetime - self.player_last_time[player_id]
+            delta_t_days = max(0.0, delta_time.total_seconds() / 86400.0)
+            
+        patch_severity = 0.0
+        if player_id in self.player_last_patch and patch_str is not None:
+            last_p = self.player_last_patch[player_id]
+            if last_p and patch_str and last_p != patch_str:
+                patch_severity = 1.0
+                
+        var_next = var_new + (self.tau_base_var * delta_t_days) + (self.lambda_val * patch_severity)
         
         self.player_states[player_id] = (mu_new, var_next)
+        if dt_datetime is not None:
+            self.player_last_time[player_id] = dt_datetime
+        if patch_str:
+            self.player_last_patch[player_id] = patch_str
 
 
 def compute_bayesian_features(df: pd.DataFrame) -> pd.DataFrame:
@@ -948,16 +959,9 @@ def compute_bayesian_features(df: pd.DataFrame) -> pd.DataFrame:
         df = df.sort_values(by=["player_id", "match_timestamp"])
     df.reset_index(drop=True, inplace=True)
     
-    # Initialize trackers
-    # KPR prior: mu_0 = 0.75, var_prior = 0.04 (sigma_0 = 0.20)
-    # var_obs = 0.0225 (sigma_obs = 0.15)
-    # var_time = 0.0025 (tau^2 = 0.0025)
-    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, var_time=0.0025)
-    
-    # ACS prior: mu_0 = 200.0, var_prior = 2500.0 (sigma_0 = 50.0)
-    # var_obs = 1600.0 (sigma_obs = 40.0)
-    # var_time = 100.0 (tau^2 = 100.0)
-    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, var_time=100.0)
+    # Initialize trackers with daily variance drift rates and patch severity scalars
+    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, tau_base_var=0.0025 / 30.0, lambda_val=0.001)
+    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, tau_base_var=100.0 / 30.0, lambda_val=40.0)
     
     kpr_mus, kpr_sigmas = [], []
     acs_mus, acs_sigmas = [], []
@@ -968,8 +972,24 @@ def compute_bayesian_features(df: pd.DataFrame) -> pd.DataFrame:
         y_kpr = float(row.get("kpr", 0.75))
         y_acs = float(row.get("acs", 200.0))
         
-        tracker_kpr.update(p_id, y_kpr)
-        tracker_acs.update(p_id, y_acs)
+        # Parse match timestamp
+        ts = row.get("match_timestamp")
+        if isinstance(ts, str):
+            try:
+                dt_datetime = datetime.fromisoformat(ts)
+            except ValueError:
+                dt_datetime = datetime.now()
+        elif hasattr(ts, "to_pydatetime"):
+            dt_datetime = ts.to_pydatetime()
+        elif isinstance(ts, datetime):
+            dt_datetime = ts
+        else:
+            dt_datetime = datetime.now()
+            
+        patch_str = str(row.get("patch_version", ""))
+        
+        tracker_kpr.update(p_id, y_kpr, dt_datetime, patch_str)
+        tracker_acs.update(p_id, y_acs, dt_datetime, patch_str)
         
         kpr_mu, kpr_sigma = tracker_kpr.get_state(p_id)
         acs_mu, acs_sigma = tracker_acs.get_state(p_id)
