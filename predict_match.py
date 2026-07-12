@@ -252,8 +252,18 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
             for ps in player_stats_baseline:
                 p_name = ps["player"]
                 acs_b = float(ps.get("average_combat_score", 200.0))
-                kast_str = ps.get("kill_assists_survived_traded", "70%")
-                kast_b = float(kast_str.replace("%", "")) / 100.0 if "%" in kast_str else 0.70
+                kast_val = ps.get("kill_assists_survived_traded")
+                if isinstance(kast_val, str) and "%" in kast_val:
+                    kast_b = float(kast_val.replace("%", "")) / 100.0
+                elif kast_val is not None and kast_val != "":
+                    try:
+                        kast_b = float(kast_val)
+                        if kast_b > 1.0:
+                            kast_b = kast_b / 100.0
+                    except (ValueError, TypeError):
+                        kast_b = 0.70
+                else:
+                    kast_b = 0.70
                 fk_per_r = float(ps.get("first_kills_per_round", 0.0))
                 fd_per_r = float(ps.get("first_deaths_per_round", 0.0))
                 baseline_lookup[p_name] = {"acs": acs_b, "kast": kast_b, "duel_diff": fk_per_r - fd_per_r}
@@ -282,11 +292,40 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
                 for p in map_data['players'].get(team_key, []):
                     p_name = p['name']
                     agent = p.get('agent', '')
-                    acs_val = float(p['acs']) if (p.get('acs') and str(p['acs']).isdigit()) else 0.0
-                    kast_str = p.get('kast', '')
-                    kast_val = float(kast_str.replace('%', '')) / 100.0 if (kast_str and '%' in kast_str) else 0.70
-                    fk_val = float(p['fk']) if (p.get('fk') and str(p['fk']).isdigit()) else 0.0
-                    fd_val = float(p['fd']) if (p.get('fd') and str(p['fd']).isdigit()) else 0.0
+                    # ACS
+                    acs_val = p.get('acs')
+                    try:
+                        acs_val = float(acs_val) if acs_val is not None and acs_val != "" else 0.0
+                    except (ValueError, TypeError):
+                        acs_val = 0.0
+                        
+                    # KAST
+                    kast_val = p.get('kast')
+                    if isinstance(kast_val, str) and '%' in kast_val:
+                        kast_val = float(kast_val.replace('%', '')) / 100.0
+                    elif kast_val is not None and kast_val != "":
+                        try:
+                            kast_val = float(kast_val)
+                            if kast_val > 1.0:
+                                kast_val = kast_val / 100.0
+                        except (ValueError, TypeError):
+                            kast_val = 0.70
+                    else:
+                        kast_val = 0.70
+                        
+                    # FK
+                    fk_val = p.get('fk')
+                    try:
+                        fk_val = float(fk_val) if fk_val is not None and fk_val != "" else 0.0
+                    except (ValueError, TypeError):
+                        fk_val = 0.0
+                        
+                    # FD
+                    fd_val = p.get('fd')
+                    try:
+                        fd_val = float(fd_val) if fd_val is not None and fd_val != "" else 0.0
+                    except (ValueError, TypeError):
+                        fd_val = 0.0
                     
                     if p_name not in player_map_stats:
                         player_map_stats[p_name] = []
