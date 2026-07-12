@@ -138,9 +138,17 @@ def run_iman_conover_fusion(
     Z = np.linalg.solve(L_S, S.T).T
     
     # Step 3: Compute Cholesky factor of target matrix and induce correlation
-    # Add minor jitter to diagonal if necessary for numerical stability
-    jitter = 1e-8 * np.eye(k)
-    L_C = np.linalg.cholesky(C_target + jitter)
+    try:
+        L_C = np.linalg.cholesky(C_target + 1e-8 * np.eye(k))
+    except np.linalg.LinAlgError:
+        logger.warning("Target correlation matrix is not positive definite. Projecting to nearest positive definite matrix...")
+        eigenvalues, eigenvectors = np.linalg.eigh(C_target)
+        eigenvalues = np.maximum(eigenvalues, 1e-4)
+        C_target_fixed = eigenvectors @ np.diag(eigenvalues) @ eigenvectors.T
+        d = np.sqrt(np.diag(C_target_fixed))
+        C_target_fixed = C_target_fixed / np.outer(d, d)
+        L_C = np.linalg.cholesky(C_target_fixed + 1e-8 * np.eye(k))
+        
     Y = Z @ L_C.T
     
     # Step 4: Rank Reordering (Iman-Conover final step)
