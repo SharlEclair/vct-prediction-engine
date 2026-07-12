@@ -254,11 +254,11 @@ class MapVetoBandit:
     def predict_map_win_rate_dr(self, team: str, opponent: str, map_name: str,
                                  target_date: datetime | None = None) -> float:
         """
-        Estimates win rate on a map using Doubly Robust (DR) estimation.
+        Estimates win rate on a map using a bias-corrected trimmed Doubly Robust (DR) estimator.
 
-        Propensity is sourced from the window matching target_date so that
-        retired maps never inflate the denominator for active maps.
-        If target_date is None, uses the current active window propensity.
+        When propensity falls below the trimming threshold b_n = n^{-0.5}, a multivariate
+        Ridge regression on the untrimmed sample space estimates the true conditional residual
+        mean at the boundary, fully restoring double robustness without arbitrary scaling.
         """
         if team not in self.team_plays:
             return 0.5
@@ -272,7 +272,7 @@ class MapVetoBandit:
             n = self.window_plays[wid].get(map_name, {}).get("plays", 0)
         else:
             n = self.team_plays[team].get(map_name, 0)
-            
+
         n = max(1, n)
         beta = 0.5
         b_n = n ** (-beta)
@@ -284,10 +284,46 @@ class MapVetoBandit:
 
         empirical_win_rate = wins / plays if plays > 0 else 0.5
         baseline_mu = (wins + 1.0) / (plays + 2.0) if plays > 0 else 0.5
-        
-        # Trim propensity denominator to prevent variance explosion on weak overlap
-        raw_dr = baseline_mu + (empirical_win_rate - baseline_mu) / max(propensity, b_n)
-        return float(np.clip(raw_dr, 0.01, 0.99))
+
+        # Core trimmed DR estimator
+        safe_denom = max(propensity, b_n)
+        raw_dr = baseline_mu + (empirical_win_rate - baseline_mu) / safe_denom
+
+        # Non-parametric multivariate Ridge boundary bias correction.
+        # When propensity is trimmed (< b_n), fit Ridge on all untrimmed maps to
+        # reconstruct the conditional residual mean at the boundary.
+        bias_correction = 0.0
+        if propensity < b_n and team in self.team_plays:
+            try:
+                from sklearn.linear_model import Ridge
+                # Build feature matrix: [plays_i, wins_i, propensity_i] for all other maps
+                all_maps = [m for m in self.team_plays[team] if m != map_name]
+                X_trim, residuals = [], []
+                for m in all_maps:
+                    m_plays = self.team_plays[team].get(m, 0)
+                    m_wins = self.team_wins[team].get(m, 0)
+                    if m_plays == 0:
+                        continue
+                    m_prop = self.map_frequency.get(m, 0.1)
+                    m_wr = m_wins / m_plays
+                    m_mu = (m_wins + 1.0) / (m_plays + 2.0)
+                    m_residual = m_wr - m_mu
+                    X_trim.append([m_plays, m_wins, m_prop])
+                    residuals.append(m_residual)
+
+                if len(X_trim) >= 3:
+                    ridge = Ridge(alpha=1.0, fit_intercept=True)
+                    ridge.fit(X_trim, residuals)
+                    # Extrapolate conditional residual mean to trimming boundary b_n
+                    X_boundary = [[plays, wins, b_n]]
+                    residual_at_boundary = ridge.predict(X_boundary)[0]
+                    # B_n(X) = E[Y - mu | X, propensity=b_n] * (1/propensity - 1/b_n)
+                    bias_correction = residual_at_boundary * (1.0 / propensity - 1.0 / b_n)
+            except Exception:
+                pass  # Silently fall back to uncorrected estimate
+
+        corrected_dr = raw_dr + bias_correction
+        return float(np.clip(corrected_dr, 0.01, 0.99))
 
     def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3",
                      stochastic: bool = False,
@@ -883,8 +919,17 @@ class StatefulEconomySimulator:
             acs_diff = self.acs_a - self.acs_b
             eco_diff = loadout_a - loadout_b
             z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
-            # Cauchit link: heavy-tailed inverse link function using arctan
-            prob_win_a = float((1.0 / np.pi) * np.arctan(z) + 0.5)
+
+            # Generalized Extreme Value (GEV) link function with Softplus domain guard.
+            # Shape xi=0.20 encodes asymmetric tail (Frechet): defense advantage more
+            # decisive than equal-economy upset, capturing Valorant economy asymmetry.
+            # Softplus guard: Z_safe = (1/xi)*log(1 + exp(xi*Z + C)) - 1/xi + eps
+            # guarantees (1 + xi*Z_safe) > 0 strictly, preventing NaN from complex exponents.
+            xi = 0.20
+            C = 1.5
+            eps = 1e-6
+            z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * z + C, -500, 500))) - (1.0 / xi) + eps
+            prob_win_a = float(1.0 - np.exp(-((1.0 + xi * z_safe) ** (-1.0 / xi))))
             
             # Sample round winner
             if np.random.rand() < prob_win_a:

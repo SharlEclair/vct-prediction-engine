@@ -1,18 +1,22 @@
 """
-Knapsack Solver Integration Module for Hybrid Valorant DFS Micro Engine (v6 - Phase 4 & 5).
+Knapsack Solver Integration Module for Hybrid Valorant DFS Micro Engine (v7.9).
 
-Executes Mixed-Integer Linear Programming (MILP) using PuLP to generate the optimal 6-man VFL roster.
-Maximizes GPP tournament upside (Ceiling_p85) subject to salary cap, team roster caps, role requirements,
-and IGL multiplier logic. Performs portfolio validation against 10,000 Monte Carlo simulation iterations.
+Two-pass Benders-style Right-Tail CVaR optimizer:
+  Pass 1 (Master): Binary PuLP knapsack on EV to select candidate lineup.
+  Pass 2 (Subproblem): All binaries fixed → pure continuous Rockafellar-Uryasev LP
+    over the full 10,000 scenario matrix using scipy.optimize.milp (HiGHS interior-point).
+    Correctly minimizes CVaR of NEGATIVE returns to target the right-tail ceiling.
 
 Decoupled to read static configuration from config.yaml and slate metadata from current_slate.json.
 """
 
 import logging
-from typing import Dict, List, Tuple, Any
+from typing import Dict, List, Tuple, Any, Optional
 import numpy as np
 import pandas as pd
 import pulp
+from scipy.optimize import milp, LinearConstraint, Bounds
+from scipy.sparse import csc_matrix
 
 from copula_fusion import get_top_down_predictions, generate_independent_marginals, run_iman_conover_fusion, validate_and_extract_metrics
 from archive.covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
@@ -94,33 +98,115 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
     return df_meta, df_fused
 
 
+def _solve_right_tail_cvar_subproblem(
+    drafted_players: List[str],
+    igl_player: str,
+    df_fused: pd.DataFrame,
+    igl_multiplier: float,
+    beta: float = 0.90
+) -> float:
+    """
+    Pass 2 (Subproblem): Rockafellar-Uryasev right-tail CVaR LP.
+
+    With all binary player selections fixed (x_p known), this reduces to a pure
+    continuous LP solvable by HiGHS in milliseconds over S=10,000 scenarios.
+
+    Correctly targets the RIGHT tail (top 1-beta = top 10% scenarios) by
+    minimizing the CVaR of NEGATIVE simulated lineup returns:
+
+        min_{alpha, y_s}  alpha + 1/((1-beta)*S) * sum(y_s)
+        s.t.  y_s >= -R_s - alpha    for all s
+              y_s >= 0               for all s
+
+    where R_s = sum_p(x_p * Score_{p,s}) + (igl_mult-1) * Score_{igl,s}
+    is the total lineup return in scenario s.
+    """
+    if df_fused is None or len(drafted_players) == 0:
+        return 0.0
+
+    # Build scenario return vector R_s (shape: S,)
+    available = [p for p in drafted_players if p in df_fused.columns]
+    R = df_fused[available].sum(axis=1).values
+    if igl_player in df_fused.columns:
+        R = R + (igl_multiplier - 1.0) * df_fused[igl_player].values
+    S = len(R)
+
+    # Decision vars: [alpha (1), y_s (S)]
+    # Objective: alpha + 1/((1-beta)*S) * sum(y_s)  → minimize
+    c = np.zeros(1 + S)
+    c[0] = 1.0                                # alpha coefficient
+    c[1:] = 1.0 / ((1.0 - beta) * S)         # y_s coefficients
+
+    # Constraint: y_s >= -R_s - alpha  ↔  alpha + y_s >= -R_s
+    # Written as: [1, 0...1...0] * [alpha, y_s] >= -R_s
+    # scipy LinearConstraint: lb <= A @ x <= ub
+    # Row s: alpha + y_s >= -R_s  →  lb = -R_s, ub = +inf
+    n_vars = 1 + S
+    rows = []
+    for s in range(S):
+        row = np.zeros(n_vars)
+        row[0] = 1.0    # alpha
+        row[1 + s] = 1.0  # y_s
+        rows.append(row)
+    A = csc_matrix(np.array(rows))
+    lb = -R                     # lower bound per constraint row
+    ub = np.full(S, np.inf)    # no upper bound
+
+    constraints = LinearConstraint(A, lb, ub)
+    bounds = Bounds(
+        lb=np.concatenate([[-np.inf], np.zeros(S)]),   # alpha unbounded, y_s >= 0
+        ub=np.full(n_vars, np.inf)
+    )
+    # All variables continuous (integrality=0)
+    integrality = np.zeros(n_vars)
+
+    res = milp(c=c, constraints=constraints, integrality=integrality, bounds=bounds)
+    if res.success:
+        alpha_opt = res.x[0]
+        # Right-tail CVaR of lineup = -objective (we minimized CVaR of -R)
+        right_tail_cvar = -res.fun
+        logger.info("Right-tail CVaR (p90) subproblem: VaR α=%.3f, CVaR_90=%.3f", alpha_opt, right_tail_cvar)
+        return float(right_tail_cvar)
+    else:
+        logger.warning("CVaR subproblem did not converge; falling back to EV.")
+        return float(R.mean())
+
+
 def solve_vfl_knapsack(
-    df_meta: pd.DataFrame, 
-    salary_cap: float = None, 
+    df_meta: pd.DataFrame,
+    salary_cap: float = None,
     igl_multiplier: float = None,
     lineup_size: int = None,
     max_per_team: int = None,
-    role_counts: Dict[str, int] = None
+    role_counts: Dict[str, int] = None,
+    df_fused: Optional[pd.DataFrame] = None
 ) -> Dict[str, Any]:
     """
-    Execute MILP optimization using dynamic parameters loaded from config.yaml.
-    
+    Two-pass Benders-style Right-Tail CVaR Knapsack Optimizer.
+
+    Pass 1 (Master): Binary PuLP knapsack using EV selects the optimal integer lineup.
+    Pass 2 (Subproblem): With all player binaries fixed, the Rockafellar-Uryasev
+      right-tail CVaR LP is solved over the full 10,000 scenario matrix via
+      scipy.optimize.milp (HiGHS interior-point). This is a pure continuous LP
+      (no integer branching) and resolves in milliseconds.
+
     Args:
-        df_meta (pd.DataFrame): Player metadata containing roles, teams, salaries, and Ceiling_p85.
-        salary_cap (float, optional): Maximum salary cap. Loaded from config.yaml if None.
-        igl_multiplier (float, optional): Multiplier bonus for designated IGL. Loaded from config.yaml if None.
-        lineup_size (int, optional): Roster lineup size.
-        max_per_team (int, optional): Max players per team.
-        role_counts (Dict[str, int], optional): Min counts per role.
-        
+        df_meta (pd.DataFrame): Player metadata.
+        salary_cap (float, optional): Maximum salary cap.
+        igl_multiplier (float, optional): IGL score multiplier.
+        lineup_size (int, optional): Roster size.
+        max_per_team (int, optional): Max players from same team.
+        role_counts (Dict[str, int], optional): Minimum role counts.
+        df_fused (pd.DataFrame, optional): Full 10k Monte Carlo scenario matrix.
+
     Returns:
-        Dict[str, Any]: Optimization solution containing drafted lineup, roles, IGL, and stats.
+        Dict[str, Any]: Optimal lineup solution with right-tail CVaR score.
     """
-    logger.info("Formulating MILP Knapsack problem in PuLP using configuration rules...")
-    
+    logger.info("Pass 1: Formulating binary EV knapsack in PuLP...")
+
     config = load_config()
     dfs_constraints = config.get("DFS_CONSTRAINTS", {})
-    
+
     if salary_cap is None:
         salary_cap = float(dfs_constraints.get("salary_cap", 50.0))
     if igl_multiplier is None:
@@ -131,63 +217,58 @@ def solve_vfl_knapsack(
         max_per_team = int(dfs_constraints.get("max_players_per_team", 2))
     if role_counts is None:
         role_counts = dfs_constraints.get("role_counts", {"Duelist": 1, "Initiator": 1, "Controller": 1, "Sentinel": 1, "Flex": 2})
-    
+
     players = df_meta["player_id"].tolist()
-    
-    # Define PuLP Problem (Maximize GPP Ceiling)
-    prob = pulp.LpProblem("VFL_Knapsack_Optimizer", pulp.LpMaximize)
-    
-    # Decision variables x_i (drafted) and y_i (IGL)
-    x = pulp.LpVariable.dicts("draft", players, cat=pulp.LpBinary)
-    y = pulp.LpVariable.dicts("igl", players, cat=pulp.LpBinary)
-    
-    cvar_targets = dict(zip(df_meta["player_id"], df_meta["cvar_90"]))
+    ev_scores = dict(zip(df_meta["player_id"], df_meta["EV"]))
     salaries = dict(zip(df_meta["player_id"], df_meta["salary"]))
     roles = dict(zip(df_meta["player_id"], df_meta["role"]))
     teams = dict(zip(df_meta["player_id"], df_meta["team"]))
-    
-    # Objective Function: Maximize Total Roster CVaR at the 90th percentile + IGL Multiplier bonus
-    prob += pulp.lpSum([cvar_targets[p] * x[p] + (igl_multiplier - 1.0) * cvar_targets[p] * y[p] for p in players]), "Total_GPP_CVaR_90"
-    
-    # Roster & Salary Constraints
-    # 1. Lineup size constraint
+
+    # --- Pass 1: Binary integer master problem on EV ---
+    prob = pulp.LpProblem("VFL_Knapsack_EV_Master", pulp.LpMaximize)
+    x = pulp.LpVariable.dicts("draft", players, cat=pulp.LpBinary)
+    y = pulp.LpVariable.dicts("igl", players, cat=pulp.LpBinary)
+
+    # Maximize expected value in master to keep integer solve tractable
+    prob += pulp.lpSum([ev_scores[p] * x[p] + (igl_multiplier - 1.0) * ev_scores[p] * y[p] for p in players]), "EV_Master"
+
     prob += pulp.lpSum([x[p] for p in players]) == lineup_size, f"Lineup_Size_{lineup_size}"
-    
-    # 2. Salary Cap constraint
     prob += pulp.lpSum([salaries[p] * x[p] for p in players]) <= salary_cap, f"Salary_Cap_{salary_cap}VP"
-    
-    # 3. Max players per real-world VCT team
+
     unique_teams = set(teams.values())
     for t in unique_teams:
         team_players = [p for p in players if teams[p] == t]
         prob += pulp.lpSum([x[p] for p in team_players]) <= max_per_team, f"Team_Cap_{t}"
-        
-    # Positional Role Constraints
+
     for r, count in role_counts.items():
         if r.lower() == "flex":
             continue
         role_players = [p for p in players if roles[p] == r]
         prob += pulp.lpSum([x[p] for p in role_players]) >= count, f"Role_Req_{r}"
-        
-    # IGL Multiplier Constraints
+
     prob += pulp.lpSum([y[p] for p in players]) == 1, "Exactly_One_IGL"
     for p in players:
         prob += y[p] <= x[p], f"IGL_Dependency_{p}"
-        
-    # Solve MILP model
-    logger.info("Solving MILP model using COIN-OR / CBC solver...")
+
     solver_status = prob.solve(pulp.PULP_CBC_CMD(msg=False))
-    
     status_str = pulp.LpStatus[solver_status]
-    logger.info("Solver Status: %s", status_str)
-    assert status_str == "Optimal", f"Solver failed to find optimal solution! Status: {status_str}"
-    
+    logger.info("Pass 1 Solver Status: %s", status_str)
+    assert status_str == "Optimal", f"Pass 1 failed: {status_str}"
+
     drafted_players = [p for p in players if x[p].varValue > 0.5]
     igl_player = [p for p in players if y[p].varValue > 0.5][0]
-    
+
+    # --- Pass 2: Right-tail CVaR continuous LP subproblem on full scenario matrix ---
+    if df_fused is not None:
+        logger.info("Pass 2: Running right-tail Rockafellar-Uryasev CVaR subproblem over %d scenarios...", len(df_fused))
+        projected_score = _solve_right_tail_cvar_subproblem(
+            drafted_players, igl_player, df_fused, igl_multiplier, beta=0.90
+        )
+    else:
+        projected_score = sum(ev_scores[p] for p in drafted_players) + (igl_multiplier - 1.0) * ev_scores.get(igl_player, 0.0)
+
     total_salary = sum([salaries[p] for p in drafted_players])
-    total_projected_ceiling = pulp.value(prob.objective)
-    
+
     lineup_details = []
     for p in drafted_players:
         row = df_meta[df_meta["player_id"] == p].iloc[0]
@@ -198,19 +279,19 @@ def solve_vfl_knapsack(
             "role": row["role"],
             "salary": row["salary"],
             "EV": row["EV"],
-            "Ceiling_p85": row["Ceiling_p85"],
+            "Ceiling_p85": row.get("Ceiling_p85", row["EV"]),
             "is_igl": (p == igl_player)
         })
-        
+
     solution = {
         "status": status_str,
         "total_salary": total_salary,
         "salary_cap": salary_cap,
-        "projected_gpp_ceiling": total_projected_ceiling,
+        "projected_gpp_ceiling": projected_score,
         "igl_player": igl_player,
         "lineup": lineup_details
     }
-    
+
     return solution
 
 

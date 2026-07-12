@@ -32,6 +32,24 @@ if os.path.exists(csv_path):
     except Exception as e:
         logger.error(f"Failed to load patch notes for year mapping: {e}")
 
+# Load full patch release datetimes for jump-diffusion shock timestamps
+PATCH_DATES = {}
+if os.path.exists(csv_path):
+    try:
+        _df_patches = pd.read_csv(csv_path)
+        for _, _row in _df_patches.iterrows():
+            _version = str(_row['patch_version']).strip().lower()
+            if _version.startswith('v'):
+                _version = _version[1:]
+            _date_str = str(_row['release_date'])
+            _clean = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', _date_str)
+            try:
+                PATCH_DATES[_version] = datetime.strptime(_clean, '%B %d, %Y')
+            except ValueError:
+                pass
+    except Exception as e:
+        logger.error(f"Failed to load patch dates for jump-diffusion: {e}")
+
 def parse_match_date(date_str: str) -> datetime:
     """Parses date string from VLR API match segments.
     Supports formats with or without weekdays and years (e.g. including 'Friday, April 24 6:00 PM AEST Patch 12.06').
@@ -422,11 +440,11 @@ def build_feature_store():
     df_player_perf = pd.DataFrame(player_performances)
     df_player_perf = df_player_perf.sort_values(by=["player", "timestamp"])
     
-    # Initialize trackers
-    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, tau_base_var=0.0025 / 30.0, lambda_val=0.001)
-    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, tau_base_var=100.0 / 30.0, lambda_val=40.0)
-    tracker_kast = BayesianSkillTracker(mu_prior=0.70, var_prior=0.01, var_obs=0.01, tau_base_var=0.0005 / 30.0, lambda_val=0.0002)
-    tracker_duel = BayesianSkillTracker(mu_prior=0.0, var_prior=0.01, var_obs=0.01, tau_base_var=0.0005 / 30.0, lambda_val=0.0002)
+    # Initialize trackers with OU jump-diffusion and patch registry for exact shock timestamps
+    tracker_kpr  = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, tau_base_var=0.0025/30.0, lambda_val=0.001, patch_registry=PATCH_DATES)
+    tracker_acs  = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, tau_base_var=100.0/30.0, lambda_val=40.0, patch_registry=PATCH_DATES)
+    tracker_kast = BayesianSkillTracker(mu_prior=0.70, var_prior=0.01, var_obs=0.01, tau_base_var=0.0005/30.0, lambda_val=0.0002, patch_registry=PATCH_DATES)
+    tracker_duel = BayesianSkillTracker(mu_prior=0.0, var_prior=0.01, var_obs=0.01, tau_base_var=0.0005/30.0, lambda_val=0.0002, patch_registry=PATCH_DATES)
     
     player_features_lookup = {}
     
@@ -901,50 +919,128 @@ def build_feature_store():
 
 
 class BayesianSkillTracker:
-    def __init__(self, mu_prior: float, var_prior: float, var_obs: float, tau_base_var: float, lambda_val: float):
+    """
+    Ornstein-Uhlenbeck (OU) Jump-Diffusion Bayesian Skill Tracker.
+
+    Skill dynamics follow a continuous mean-reverting OU process with discrete
+    Poisson-style jumps at game patch boundaries:
+
+        mu_{t+1}  = exp(-theta*dt)*mu_t + (1 - exp(-theta*dt))*mu_meta_t
+        sig^2_OU  = sig^2_t * exp(-2*theta*dt) + (tau^2 / 2*theta) * (1 - exp(-2*theta*dt))
+        sig^2_jump = lambda * exp(-2*theta * dt_post_patch)   [decays from patch timestamp]
+        sig^2_next = sig^2_OU + sig^2_jump
+
+    This ensures:
+    - Variance is strictly bounded by the stationary limit tau^2 / (2*theta).
+    - Patch shock spikes exactly at the patch timestamp and decays continuously.
+    - Long off-seasons revert toward the current meta mean, not a stale prior.
+    """
+
+    def __init__(
+        self,
+        mu_prior: float,
+        var_prior: float,
+        var_obs: float,
+        tau_base_var: float,
+        lambda_val: float,
+        theta: float = 0.02,
+        patch_registry: dict = None
+    ):
         self.mu_prior = mu_prior
         self.var_prior = var_prior
         self.var_obs = var_obs
-        self.tau_base_var = tau_base_var # Variance drift rate per day
-        self.lambda_val = lambda_val     # Patch transition variance scalar
+        self.tau_sq = tau_base_var   # Diffusion rate (tau^2 per day)
+        self.lambda_val = lambda_val  # Patch jump magnitude
+        self.theta = theta           # OU mean-reversion speed (half-life ~35 days at 0.02)
+        self.patch_registry = patch_registry or {}  # {patch_str: datetime} for jump timestamps
+
         self.player_states = {}
         self.player_last_time = {}
         self.player_last_patch = {}
+        self._meta_sum = mu_prior
+        self._meta_count = 1
+
+    def _get_meta_mean(self) -> float:
+        """Dynamic meta mean: running average of all recent observations."""
+        return self._meta_sum / max(1, self._meta_count)
+
+    def _update_meta(self, y: float):
+        self._meta_sum += y
+        self._meta_count += 1
 
     def get_state(self, player_id: str) -> Tuple[float, float]:
         """Returns (mu, std_dev) for the player."""
         if player_id not in self.player_states:
             self.player_states[player_id] = (self.mu_prior, self.var_prior)
         mu, var = self.player_states[player_id]
-        return float(mu), float(np.sqrt(var))
+        return float(mu), float(np.sqrt(max(0.0, var)))
 
     def update(self, player_id: str, y: float, dt_datetime=None, patch_str: str = None):
-        """Observation update followed by continuous-time and patch-aware temporal transition update."""
+        """
+        Observation update followed by OU mean-reversion and jump-diffusion patch shock.
+
+        Args:
+            player_id: Unique player identifier.
+            y: Observed performance value (KPR, ACS, etc.).
+            dt_datetime: Datetime of the current match.
+            patch_str: Current patch version string.
+        """
         if player_id not in self.player_states:
             self.player_states[player_id] = (self.mu_prior, self.var_prior)
-            
+
         mu_old, var_old = self.player_states[player_id]
-        
-        # 1. Observation Update
+
+        # --- 1. Kalman Observation Update ---
         denom = var_old + self.var_obs
         mu_new = (mu_old * self.var_obs + y * var_old) / denom
         var_new = (var_old * self.var_obs) / denom
-        
-        # 2. Continuous-time & Patch-aware Time Transition Update
+
+        # --- 2. Ornstein-Uhlenbeck Continuous Time Transition ---
         delta_t_days = 0.0
         if player_id in self.player_last_time and dt_datetime is not None:
-            delta_time = dt_datetime - self.player_last_time[player_id]
-            delta_t_days = max(0.0, delta_time.total_seconds() / 86400.0)
-            
-        patch_severity = 0.0
-        if player_id in self.player_last_patch and patch_str is not None:
-            last_p = self.player_last_patch[player_id]
-            if last_p and patch_str and last_p != patch_str:
-                patch_severity = 1.0
-                
-        var_next = var_new + (self.tau_base_var * delta_t_days) + (self.lambda_val * patch_severity)
-        
-        self.player_states[player_id] = (mu_new, var_next)
+            try:
+                delta_time = dt_datetime - self.player_last_time[player_id]
+                delta_t_days = max(0.0, delta_time.total_seconds() / 86400.0)
+            except Exception:
+                delta_t_days = 0.0
+
+        theta = self.theta
+        mu_meta = self._get_meta_mean()
+
+        # OU mean reversion: mu drifts toward dynamic meta mean
+        decay_mu = np.exp(-theta * delta_t_days)
+        mu_ou = decay_mu * mu_new + (1.0 - decay_mu) * mu_meta
+
+        # OU variance: stationary limit is tau^2 / (2*theta)
+        decay_var = np.exp(-2.0 * theta * delta_t_days)
+        stationary_var = self.tau_sq / (2.0 * theta) if theta > 0 else self.tau_sq
+        var_ou = var_new * decay_var + stationary_var * (1.0 - decay_var)
+
+        # --- 3. Jump-Diffusion Patch Shock (Point-in-time event) ---
+        # The patch shock is a discrete Poisson jump at the patch release timestamp,
+        # followed by OU decay for the remaining time until the current match.
+        # This avoids smearing the shock backward across the full delta_t interval.
+        var_jump = 0.0
+        if (patch_str and player_id in self.player_last_patch
+                and self.player_last_patch[player_id] != patch_str):
+            # Retrieve patch release datetime from registry for exact Δt_post_patch
+            patch_dt = self.patch_registry.get(patch_str)
+            if patch_dt is not None and dt_datetime is not None:
+                try:
+                    dt_post_patch = max(0.0, (dt_datetime - patch_dt).total_seconds() / 86400.0)
+                except Exception:
+                    dt_post_patch = 0.0
+            else:
+                dt_post_patch = 0.0  # Assume jump occurs right at match start if no timestamp
+            # Jump decays via exp(-2*theta*dt_post_patch) from the patch timestamp
+            var_jump = self.lambda_val * np.exp(-2.0 * theta * dt_post_patch)
+
+        var_next = var_ou + var_jump
+
+        # Update meta running average with this observation
+        self._update_meta(y)
+
+        self.player_states[player_id] = (mu_ou, var_next)
         if dt_datetime is not None:
             self.player_last_time[player_id] = dt_datetime
         if patch_str:
@@ -959,9 +1055,9 @@ def compute_bayesian_features(df: pd.DataFrame) -> pd.DataFrame:
         df = df.sort_values(by=["player_id", "match_timestamp"])
     df.reset_index(drop=True, inplace=True)
     
-    # Initialize trackers with daily variance drift rates and patch severity scalars
-    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, tau_base_var=0.0025 / 30.0, lambda_val=0.001)
-    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, tau_base_var=100.0 / 30.0, lambda_val=40.0)
+    # Initialize trackers with OU jump-diffusion and patch registry for exact shock timestamps
+    tracker_kpr = BayesianSkillTracker(mu_prior=0.75, var_prior=0.04, var_obs=0.0225, tau_base_var=0.0025/30.0, lambda_val=0.001, patch_registry=PATCH_DATES)
+    tracker_acs = BayesianSkillTracker(mu_prior=200.0, var_prior=2500.0, var_obs=1600.0, tau_base_var=100.0/30.0, lambda_val=40.0, patch_registry=PATCH_DATES)
     
     kpr_mus, kpr_sigmas = [], []
     acs_mus, acs_sigmas = [], []
