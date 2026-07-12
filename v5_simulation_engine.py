@@ -284,96 +284,198 @@ class MapVetoBandit:
     def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3",
                      stochastic: bool = False,
                      target_date: datetime | None = None,
-                     ub_advantage: bool | str = False) -> dict:
+                     ub_advantage: bool | str = False,
+                     veto_priority: str = "team_a") -> dict:
         """
-        Simulates veto picks/bans using IPS map win rate preferences.
-
-        V5 upgrade: Arms A(t) are dynamically resolved from TemporalMapRegistry
-        for target_date so retired maps are never available for selection.
-        If Bo5 and upper bracket advantage holds, pops opponent's 2 strongest maps from pool.
+        Simulates veto picks/bans using official strict VCT sequences.
+        Supports target_date, ub_advantage, and tactical seat selection for the priority team.
         """
         if target_date is None:
             target_date = datetime.now()
+            
+        # Determine who acts as Team A and Team B in the veto sequence.
+        # "team_a" priority means team_a chooses. "team_b" means team_b chooses.
+        # "random" means 50/50 skirmish.
+        acting_team_a = team_a
+        acting_team_b = team_b
+        
+        if veto_priority == "team_b" or (ub_advantage and str(ub_advantage).lower() == team_b.lower()):
+            priority_team = team_b
+            other_team = team_a
+            has_priority = True
+        elif veto_priority == "random":
+            import random
+            if random.random() < 0.5:
+                priority_team = team_a
+                other_team = team_b
+            else:
+                priority_team = team_b
+                other_team = team_a
+            has_priority = True
+        else:
+            priority_team = team_a
+            other_team = team_b
+            has_priority = (veto_priority == "team_a" or ub_advantage is True or str(ub_advantage).lower() == team_a.lower())
+
+        if has_priority:
+            # Tactical seat choice: compare expected map win rate if priority_team is Team A vs Team B.
+            # Case 1: priority_team acts as Team A, other_team acts as Team B
+            res_a = self._simulate_strict_veto_sequence(priority_team, other_team, series_type, stochastic, target_date, ub_advantage)
+            avg_wr_a = np.mean([self.predict_map_win_rate_ips(priority_team, other_team, m, target_date) for m in res_a["maps"]])
+            
+            # Case 2: other_team acts as Team A, priority_team acts as Team B
+            res_b = self._simulate_strict_veto_sequence(other_team, priority_team, series_type, stochastic, target_date, ub_advantage)
+            avg_wr_b = np.mean([self.predict_map_win_rate_ips(priority_team, other_team, m, target_date) for m in res_b["maps"]])
+            
+            if avg_wr_a >= avg_wr_b:
+                acting_team_a = priority_team
+                acting_team_b = other_team
+                veto_res = res_a
+            else:
+                acting_team_a = other_team
+                acting_team_b = priority_team
+                veto_res = res_b
+        else:
+            veto_res = self._simulate_strict_veto_sequence(acting_team_a, acting_team_b, series_type, stochastic, target_date, ub_advantage)
+
+        # Map side choice to starting_side_a ("DEF" or "ATK" for team_a)
+        # veto_res["side_choices"] has the team name choosing the starting side on each map.
+        starting_sides_a = []
+        for idx, m_name in enumerate(veto_res["maps"]):
+            chooser = veto_res["side_choices"][idx]
+            bias_info = MAP_SIDE_BIAS.get(m_name, {"type": "NEUTRAL", "bias": 0.0})
+            preferred_side = bias_info["type"]
+            if preferred_side == "NEUTRAL":
+                preferred_side = "DEF"
+                
+            if chooser.lower().strip() == team_a.lower().strip():
+                # Team A chooses side, so Team A starts on their preferred side
+                starting_sides_a.append(preferred_side)
+            else:
+                # Team B chooses side, so Team B starts on their preferred side, Team A gets opposite
+                starting_sides_a.append("ATK" if preferred_side == "DEF" else "DEF")
+
+        return {
+            "maps": veto_res["maps"],
+            "veto_weights": veto_res["veto_weights"],
+            "veto_str": f"Seat Selection: {acting_team_a} acts as Team A, {acting_team_b} acts as Team B; Veto: " + veto_res["veto_str"],
+            "starting_sides_a": starting_sides_a
+        }
+
+    def _simulate_strict_veto_sequence(self, team_a: str, team_b: str, series_type: str,
+                                       stochastic: bool, target_date: datetime, ub_advantage: bool | str = False) -> dict:
         _, active_pool = self.registry.resolve_pool(target_date)
         available_maps = list(active_pool)
+        
+        scores_a = {m: self.predict_map_win_rate_ips(team_a, team_b, m, target_date) for m in available_maps}
+        scores_b = {m: self.predict_map_win_rate_ips(team_b, team_a, m, target_date) for m in available_maps}
+        
+        if stochastic:
+            scores_a = {m: val + np.random.normal(0, 0.05) for m, val in scores_a.items()}
+            scores_b = {m: val + np.random.normal(0, 0.05) for m, val in scores_b.items()}
+            
         banned_maps = []
         picked_maps = []
+        side_choices = []
         veto_weights = {}
         veto_steps = []
         
-        # Scores represent expected map win rates for Team A and Team B
-        scores_a = {m: self.predict_map_win_rate_ips(team_a, team_b, m, target_date) for m in available_maps}
-        scores_b = {m: self.predict_map_win_rate_ips(team_b, team_a, m, target_date) for m in available_maps}
-
-        if stochastic:
-            # Inject small random noise representing tactical variability
-            scores_a = {m: val + np.random.normal(0, 0.05) for m, val in scores_a.items()}
-            scores_b = {m: val + np.random.normal(0, 0.05) for m, val in scores_b.items()}
-        
-        if series_type == "Bo5":
-            if ub_advantage:
-                ub_holder = team_a if (ub_advantage is True or str(ub_advantage).lower() == team_a.lower()) else team_b
-                target_opp_scores = scores_b if ub_holder == team_a else scores_a
-                strongest_opp_maps = sorted(available_maps, key=lambda m: target_opp_scores[m], reverse=True)[:2]
-                for m_pop in strongest_opp_maps:
-                    available_maps.remove(m_pop)
-                    banned_maps.append(m_pop)
-                    veto_steps.append(f"{ub_holder} UB ban {m_pop}")
-
-            # Ban 1: Team A bans worst map
-            if available_maps:
-                m_ban_a = min(available_maps, key=lambda m: scores_a[m])
-                available_maps.remove(m_ban_a)
-                banned_maps.append(m_ban_a)
-                veto_steps.append(f"{team_a} ban {m_ban_a}")
+        if series_type == "Bo1":
+            # BO1 Veto: A Ban 1 -> B Ban 1 -> A Ban 2 -> B Ban 2 -> A Ban 3 -> B Picks Map 1 -> A Picks Side
+            # Ban 1: Team A
+            m_ban_a1 = min(available_maps, key=lambda m: scores_a[m])
+            available_maps.remove(m_ban_a1)
+            banned_maps.append(m_ban_a1)
+            veto_steps.append(f"{team_a} ban {m_ban_a1}")
             
-            # Ban 2: Team B bans worst map
-            if available_maps:
-                m_ban_b = min(available_maps, key=lambda m: scores_b[m])
-                available_maps.remove(m_ban_b)
-                banned_maps.append(m_ban_b)
-                veto_steps.append(f"{team_b} ban {m_ban_b}")
+            # Ban 2: Team B
+            m_ban_b1 = min(available_maps, key=lambda m: scores_b[m])
+            available_maps.remove(m_ban_b1)
+            banned_maps.append(m_ban_b1)
+            veto_steps.append(f"{team_b} ban {m_ban_b1}")
             
-            # Pick 1: Team A picks best map
-            if available_maps:
-                m_pick_a1 = max(available_maps, key=lambda m: scores_a[m])
-                available_maps.remove(m_pick_a1)
-                picked_maps.append(m_pick_a1)
-                veto_weights[m_pick_a1] = 1
-                veto_steps.append(f"{team_a} pick {m_pick_a1}")
+            # Ban 3: Team A
+            m_ban_a2 = min(available_maps, key=lambda m: scores_a[m])
+            available_maps.remove(m_ban_a2)
+            banned_maps.append(m_ban_a2)
+            veto_steps.append(f"{team_a} ban {m_ban_a2}")
             
-            # Pick 2: Team B picks best map
-            if available_maps:
-                m_pick_b1 = max(available_maps, key=lambda m: scores_b[m])
-                available_maps.remove(m_pick_b1)
-                picked_maps.append(m_pick_b1)
-                veto_weights[m_pick_b1] = -1
-                veto_steps.append(f"{team_b} pick {m_pick_b1}")
+            # Ban 4: Team B
+            m_ban_b2 = min(available_maps, key=lambda m: scores_b[m])
+            available_maps.remove(m_ban_b2)
+            banned_maps.append(m_ban_b2)
+            veto_steps.append(f"{team_b} ban {m_ban_b2}")
             
-            # Pick 3: Team A picks second best
-            if available_maps:
-                m_pick_a2 = max(available_maps, key=lambda m: scores_a[m])
-                available_maps.remove(m_pick_a2)
-                picked_maps.append(m_pick_a2)
-                veto_weights[m_pick_a2] = 1
-                veto_steps.append(f"{team_a} pick {m_pick_a2}")
+            # Ban 5: Team A
+            m_ban_a3 = min(available_maps, key=lambda m: scores_a[m])
+            available_maps.remove(m_ban_a3)
+            banned_maps.append(m_ban_a3)
+            veto_steps.append(f"{team_a} ban {m_ban_a3}")
             
-            # Pick 4: Team B picks second best
-            if available_maps:
-                m_pick_b2 = max(available_maps, key=lambda m: scores_b[m])
-                available_maps.remove(m_pick_b2)
-                picked_maps.append(m_pick_b2)
-                veto_weights[m_pick_b2] = -1
-                veto_steps.append(f"{team_b} pick {m_pick_b2}")
+            # Pick 1: Team B
+            m_pick_b = max(available_maps, key=lambda m: scores_b[m])
+            available_maps.remove(m_pick_b)
+            picked_maps.append(m_pick_b)
+            veto_weights[m_pick_b] = -1
+            side_choices.append(team_a) # Team A chooses side
+            veto_steps.append(f"{team_b} pick {m_pick_b}")
             
-            # Decider: remains
+        elif series_type == "Bo5":
+            # BO5 Veto: A Ban 1 -> B Ban 1 -> A Picks Map 1 -> B Picks Map 2 -> A Picks Map 3 -> B Picks Map 4 -> Map 5 Remains
+            # Ban 1: Team A
+            m_ban_a = min(available_maps, key=lambda m: scores_a[m])
+            available_maps.remove(m_ban_a)
+            banned_maps.append(m_ban_a)
+            veto_steps.append(f"{team_a} ban {m_ban_a}")
+            
+            # Ban 2: Team B
+            m_ban_b = min(available_maps, key=lambda m: scores_b[m])
+            available_maps.remove(m_ban_b)
+            banned_maps.append(m_ban_b)
+            veto_steps.append(f"{team_b} ban {m_ban_b}")
+            
+            # Pick 1: Team A
+            m_pick_a1 = max(available_maps, key=lambda m: scores_a[m])
+            available_maps.remove(m_pick_a1)
+            picked_maps.append(m_pick_a1)
+            veto_weights[m_pick_a1] = 1
+            side_choices.append(team_b) # Team B chooses side
+            veto_steps.append(f"{team_a} pick {m_pick_a1}")
+            
+            # Pick 2: Team B
+            m_pick_b1 = max(available_maps, key=lambda m: scores_b[m])
+            available_maps.remove(m_pick_b1)
+            picked_maps.append(m_pick_b1)
+            veto_weights[m_pick_b1] = -1
+            side_choices.append(team_a) # Team A chooses side
+            veto_steps.append(f"{team_b} pick {m_pick_b1}")
+            
+            # Pick 3: Team A
+            m_pick_a2 = max(available_maps, key=lambda m: scores_a[m])
+            available_maps.remove(m_pick_a2)
+            picked_maps.append(m_pick_a2)
+            veto_weights[m_pick_a2] = 1
+            side_choices.append(team_b) # Team B chooses side
+            veto_steps.append(f"{team_a} pick {m_pick_a2}")
+            
+            # Pick 4: Team B
+            m_pick_b2 = max(available_maps, key=lambda m: scores_b[m])
+            available_maps.remove(m_pick_b2)
+            picked_maps.append(m_pick_b2)
+            veto_weights[m_pick_b2] = -1
+            side_choices.append(team_a) # Team A chooses side
+            veto_steps.append(f"{team_b} pick {m_pick_b2}")
+            
+            # Decider: Map 5 remains
             if available_maps:
-                decider = available_maps[0]
-                veto_weights[decider] = 0
-                picked_maps.append(decider)
-                veto_steps.append(f"{decider} remains")
-        else:
-            # Bo3 veto
+                m_decider = available_maps[0]
+                picked_maps.append(m_decider)
+                veto_weights[m_decider] = 0
+                side_choices.append(team_b) # Team B chooses side
+                veto_steps.append(f"{m_decider} remains")
+                
+        else: # Default: Bo3
+            # BO3 Veto: A Ban 1 -> B Ban 1 -> A Picks Map 1 -> B Picks Map 2 -> A Ban 2 -> B Ban 2 -> Map 3 Remains
             # Ban 1: Team A
             m_ban_a1 = min(available_maps, key=lambda m: scores_a[m])
             available_maps.remove(m_ban_a1)
@@ -391,6 +493,7 @@ class MapVetoBandit:
             available_maps.remove(m_pick_a)
             picked_maps.append(m_pick_a)
             veto_weights[m_pick_a] = 1
+            side_choices.append(team_b) # Team B chooses side
             veto_steps.append(f"{team_a} pick {m_pick_a}")
             
             # Pick 2: Team B
@@ -398,6 +501,7 @@ class MapVetoBandit:
             available_maps.remove(m_pick_b)
             picked_maps.append(m_pick_b)
             veto_weights[m_pick_b] = -1
+            side_choices.append(team_a) # Team A chooses side
             veto_steps.append(f"{team_b} pick {m_pick_b}")
             
             # Ban 3: Team A
@@ -412,17 +516,19 @@ class MapVetoBandit:
             banned_maps.append(m_ban_b2)
             veto_steps.append(f"{team_b} ban {m_ban_b2}")
             
-            # Decider
+            # Decider: Map 3 remains
             if available_maps:
-                decider = available_maps[0]
-                veto_weights[decider] = 0
-                picked_maps.append(decider)
-                veto_steps.append(f"{decider} remains")
+                m_decider = available_maps[0]
+                picked_maps.append(m_decider)
+                veto_weights[m_decider] = 0
+                side_choices.append(team_a) # Team A chooses side
+                veto_steps.append(f"{m_decider} remains")
                 
         return {
             "maps": picked_maps,
             "veto_weights": veto_weights,
-            "veto_str": "; ".join(veto_steps)
+            "veto_str": "; ".join(veto_steps),
+            "side_choices": side_choices
         }
 
 
@@ -622,7 +728,7 @@ class SideConditionedMarkovSimulator:
       - Current Side (DEF vs ATK)
       - Round Number (Round 13 side-swap & 12-12 Overtime logic)
     """
-    def __init__(self, team_a_stats: dict | float = 200.0, team_b_stats: dict | float = 200.0, map_name: str = "Ascent"):
+    def __init__(self, team_a_stats: dict | float = 200.0, team_b_stats: dict | float = 200.0, map_name: str = "Ascent", starting_side_a: str = "DEF"):
         if isinstance(team_a_stats, (int, float)):
             self.acs_a = float(team_a_stats)
         else:
@@ -634,6 +740,7 @@ class SideConditionedMarkovSimulator:
             self.acs_b = float(team_b_stats.get("acs", 200.0))
             
         self.map_name = map_name
+        self.starting_side_a = starting_side_a
         
     def get_side_advantage_a(self, current_side_a: str) -> float:
         """Computes side advantage multiplier for Team A based on current side and map bias."""
@@ -658,8 +765,8 @@ class SideConditionedMarkovSimulator:
         loss_streak_a = 0
         loss_streak_b = 0
         
-        # Initial side assignment (Team A starts DEF, Team B starts ATK)
-        current_side_a = "DEF"
+        # Initial side assignment
+        current_side_a = self.starting_side_a
         round_number = 1
         
         while True:
@@ -862,10 +969,10 @@ class VCTv5SimulationEngine:
         estimated_acs = 170.0 * kpr + 45.0 * apr + base_acs * 0.35 + np.random.normal(0, 12.0)
         return int(max(estimated_acs, 30.0))
 
-    def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000, override_maps: list[str] = None, target_date: datetime | None = None, ub_advantage: bool | str = False) -> dict:
+    def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000, override_maps: list[str] = None, target_date: datetime | None = None, ub_advantage: bool | str = False, veto_priority: str = "team_a") -> dict:
         """
         Runs Monte Carlo pipeline (10,000 iterations) with Side-Conditioned Markov Simulator
-        and Hungarian Agent Assignment to generate player EV fantasy projections. Supports target_date and ub_advantage.
+        and Hungarian Agent Assignment to generate player EV fantasy projections. Supports target_date, ub_advantage, and veto_priority.
         """
         logger.info(f"V5 Engine: Starting {num_iterations} Monte Carlo iterations for {team_a} vs {team_b}...")
         if target_date is None:
@@ -887,19 +994,20 @@ class VCTv5SimulationEngine:
             veto_res = {
                 "maps": override_maps,
                 "veto_weights": {m: 0 for m in override_maps},
-                "veto_str": "Manual Override: " + ", ".join(override_maps)
+                "veto_str": "Manual Override: " + ", ".join(override_maps),
+                "starting_sides_a": ["DEF"] * len(override_maps)
             }
             veto_confidences = [(f"Force Play {m}", 1.0) for m in override_maps]
         else:
             # Deterministic base veto prediction
-            veto_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=False, target_date=target_date, ub_advantage=ub_advantage)
+            veto_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=False, target_date=target_date, ub_advantage=ub_advantage, veto_priority=veto_priority)
             series_maps = veto_res["maps"]
             
             # Stochastic veto simulations to calculate veto confidences
             veto_step_counts = defaultdict(lambda: defaultdict(int))
             num_veto_sims = 1000
             for _ in range(num_veto_sims):
-                v_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=True, target_date=target_date, ub_advantage=ub_advantage)
+                v_res = self.veto_bandit.predict_veto(team_a, team_b, series_type, stochastic=True, target_date=target_date, ub_advantage=ub_advantage, veto_priority=veto_priority)
                 steps = v_res["veto_str"].split("; ")
                 for step_idx, step in enumerate(steps):
                     veto_step_counts[step_idx][step] += 1
@@ -959,8 +1067,9 @@ class VCTv5SimulationEngine:
                 
             # Simulate each map
             for map_idx, map_name in enumerate(series_maps):
+                starting_side_a = veto_res.get("starting_sides_a", ["DEF"] * len(series_maps))[map_idx]
                 # Run Side-Conditioned Markov round simulation
-                markov_sim = SideConditionedMarkovSimulator(acs_team_a, acs_team_b, map_name)
+                markov_sim = SideConditionedMarkovSimulator(acs_team_a, acs_team_b, map_name, starting_side_a=starting_side_a)
                 score_a, score_b = markov_sim.simulate_rounds()
                 series_map_scores.append((score_a, score_b))
                 
@@ -1413,7 +1522,41 @@ def get_simulation_historical_stats(raw_dir: str):
             
     return player_emas, baseline_lookup, {}, player_global_stats, player_agent_stats
 
+def is_strict_simulation_team_match(target: str, candidate: str) -> bool:
+    target = target.lower().strip()
+    candidate = candidate.lower().strip()
+    if target == candidate:
+        return True
+    suffixes = ["academy", "gc", "game changers", "black", "blue"]
+    target_has_suffix = any(s in target for s in suffixes)
+    candidate_has_suffix = any(s in candidate for s in suffixes)
+    if target_has_suffix != candidate_has_suffix:
+        return False
+    if target in candidate or candidate in target:
+        return True
+    def get_initials(name: str) -> str:
+        return "".join(word[0] for word in name.split() if word)
+    t_init = get_initials(target)
+    c_init = get_initials(candidate)
+    if t_init == candidate or c_init == target:
+        return True
+    return False
+
 def get_simulation_roster(team_name: str, raw_dir: str) -> list[str]:
+    # 1. Check for manual roster override
+    try:
+        processed_dir = os.path.join(os.path.dirname(raw_dir), "processed")
+        override_path = os.path.join(processed_dir, "roster_overrides.json")
+        if os.path.exists(override_path):
+            with open(override_path, "r", encoding="utf-8") as f:
+                overrides = json.load(f)
+                for k, v in overrides.items():
+                    if k.lower().strip() == team_name.lower().strip():
+                        logger.info(f"V5 Engine: Using manual roster override for {team_name}: {v}")
+                        return v
+    except Exception as e:
+        logger.warning(f"V5 Engine: Failed to load overrides: {e}")
+
     files = glob.glob(os.path.join(raw_dir, "match_*.json"))
     matches_with_team = []
     for f in files:
@@ -1421,13 +1564,16 @@ def get_simulation_roster(team_name: str, raw_dir: str) -> list[str]:
             with open(f, "r", encoding="utf-8") as file:
                 content = json.load(file)
                 seg = content["data"]["segments"][0]
-                ta = seg["teams"][0]["name"].lower().strip()
-                tb = seg["teams"][1]["name"].lower().strip()
-                target = team_name.lower().strip()
+                ta = seg["teams"][0]["name"]
+                tb = seg["teams"][1]["name"]
                 
-                if target in ta or ta in target or target in tb or tb in target:
+                # Use strict team match
+                is_ta_match = is_strict_simulation_team_match(team_name, ta)
+                is_tb_match = is_strict_simulation_team_match(team_name, tb)
+                
+                if is_ta_match or is_tb_match:
                     ts = parse_simulation_match_date(seg["date"])
-                    matches_with_team.append((ts, seg))
+                    matches_with_team.append((ts, seg, ta, tb))
         except Exception:
             pass
             
@@ -1435,16 +1581,20 @@ def get_simulation_roster(team_name: str, raw_dir: str) -> list[str]:
         return []
         
     matches_with_team.sort(key=lambda x: x[0], reverse=True)
-    latest_seg = matches_with_team[0][1]
+    latest_entry = matches_with_team[0]
+    latest_seg = latest_entry[1]
+    ta_name = latest_entry[2]
     
-    ta_name = latest_seg["teams"][0]["name"].lower().strip()
-    target = team_name.lower().strip()
-    team_key = 'team1' if (target in ta_name or ta_name in target) else 'team2'
+    # Determine team_key strictly
+    team_key = 'team1' if is_strict_simulation_team_match(team_name, ta_name) else 'team2'
     
     roster = set()
     for map_data in latest_seg.get('maps', []):
         for p in map_data.get('players', {}).get(team_key, []):
-            roster.add(p['name'])
+            p_name = p['name']
+            if "inactive" in p_name.lower():
+                continue
+            roster.add(p_name)
             
     return list(roster)
 

@@ -148,141 +148,175 @@ class VCTMapVetoPredictor:
             }
         return scores
 
-    def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3") -> dict:
-        """Simulates the pick/ban process for team_a and team_b."""
+    def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3", veto_priority: str = "team_a") -> dict:
+        """Simulates the pick/ban process for team_a and team_b using strict VCT sequences."""
         scores_a = self.get_map_scores(team_a)
         scores_b = self.get_map_scores(team_b)
         
-        # Sort maps by overall occurrences or use active map pool
-        # Standard active map pool contains Ascent, Bind, Breeze, Icebox, Lotus, Split, Sunset, Fracture, Haven, Pearl
-        # We will filter self.map_pool to standard map pool to avoid stale/custom maps if possible
-        # Or we can just use all maps in our map pool
         current_pool = list(self.map_pool)
-        
-        # We want to simulate the veto sequence.
-        # Track active maps, bans, picks, decider
+        if not current_pool:
+            current_pool = ["Ascent", "Bind", "Haven", "Icebox", "Lotus", "Sunset", "Abyss"]
+            
         available_maps = list(current_pool)
         banned_maps = []
         picked_maps = []
         veto_weights = {}
         veto_steps = []
         
-        # Step-by-step veto simulation
-        if series_type == "Bo5":
-            # Bo5 Veto:
-            # 1. Team A bans
-            # 2. Team B bans
-            # 3. Team A picks (Map 1) -> weight = 1
-            # 4. Team B picks (Map 2) -> weight = -1
-            # 5. Team A picks (Map 3) -> weight = 1
-            # 6. Team B picks (Map 4) -> weight = -1
-            # 7. Remaining map is Decider (Map 5) -> weight = 0
-            
+        # Priority mapping: default is team_a, but we support team_b or random skirmish choice.
+        acting_team_a = team_a
+        acting_team_b = team_b
+        
+        if veto_priority == "team_b":
+            acting_team_a = team_b
+            acting_team_b = team_a
+        elif veto_priority == "random":
+            import random
+            if random.random() < 0.5:
+                acting_team_a = team_b
+                acting_team_b = team_a
+
+        # Re-initialize scores based on who is acting Team A and Team B
+        scores_act_a = self.get_map_scores(acting_team_a)
+        scores_act_b = self.get_map_scores(acting_team_b)
+        
+        if series_type == "Bo1":
+            # BO1 Veto: A Ban 1 -> B Ban 1 -> A Ban 2 -> B Ban 2 -> A Ban 3 -> B Picks Map 1 -> A Picks Side
             # Ban 1: Team A
-            map_to_ban_a = max(available_maps, key=lambda m: scores_a.get(m, {}).get("ban_pref", 0))
-            available_maps.remove(map_to_ban_a)
-            banned_maps.append(map_to_ban_a)
-            veto_steps.append(f"{team_a} ban {map_to_ban_a}")
+            m_ban_a1 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_a1)
+            banned_maps.append(m_ban_a1)
+            veto_steps.append(f"{acting_team_a} ban {m_ban_a1}")
             
             # Ban 2: Team B
-            map_to_ban_b = max(available_maps, key=lambda m: scores_b.get(m, {}).get("ban_pref", 0))
-            available_maps.remove(map_to_ban_b)
-            banned_maps.append(map_to_ban_b)
-            veto_steps.append(f"{team_b} ban {map_to_ban_b}")
-            
-            # Pick 1: Team A
-            map_to_pick_a1 = max(available_maps, key=lambda m: scores_a.get(m, {}).get("pick_pref", 0))
-            available_maps.remove(map_to_pick_a1)
-            picked_maps.append(map_to_pick_a1)
-            veto_weights[map_to_pick_a1] = 1
-            veto_steps.append(f"{team_a} pick {map_to_pick_a1}")
-            
-            # Pick 2: Team B
-            map_to_pick_b1 = max(available_maps, key=lambda m: scores_b.get(m, {}).get("pick_pref", 0))
-            available_maps.remove(map_to_pick_b1)
-            picked_maps.append(map_to_pick_b1)
-            veto_weights[map_to_pick_b1] = -1
-            veto_steps.append(f"{team_b} pick {map_to_pick_b1}")
-            
-            # Pick 3: Team A
-            map_to_pick_a2 = max(available_maps, key=lambda m: scores_a.get(m, {}).get("pick_pref", 0))
-            available_maps.remove(map_to_pick_a2)
-            picked_maps.append(map_to_pick_a2)
-            veto_weights[map_to_pick_a2] = 1
-            veto_steps.append(f"{team_a} pick {map_to_pick_a2}")
-            
-            # Pick 4: Team B
-            map_to_pick_b2 = max(available_maps, key=lambda m: scores_b.get(m, {}).get("pick_pref", 0))
-            available_maps.remove(map_to_pick_b2)
-            picked_maps.append(map_to_pick_b2)
-            veto_weights[map_to_pick_b2] = -1
-            veto_steps.append(f"{team_b} pick {map_to_pick_b2}")
-            
-            # Decider: 1 or more maps remaining. We pick the one both teams have played/prefer most or left as decider
-            if len(available_maps) > 0:
-                # Select the remaining map with highest play count or decider affinity
-                # As a heuristic, pick the map with highest total play count in dataset
-                decider_map = max(available_maps, key=lambda m: (scores_a.get(m, {}).get("plays", 0) + scores_b.get(m, {}).get("plays", 0)))
-                veto_weights[decider_map] = 0
-                picked_maps.append(decider_map)
-                veto_steps.append(f"{decider_map} remains")
-            
-        else:
-            # Bo3 Veto:
-            # 1. Team A bans
-            # 2. Team B bans
-            # 3. Team A picks (Map 1) -> weight = 1
-            # 4. Team B picks (Map 2) -> weight = -1
-            # 5. Team A bans
-            # 6. Team B bans
-            # 7. Remaining map is Decider (Map 3) -> weight = 0
-            
-            # Ban 1: Team A
-            map_to_ban_a1 = max(available_maps, key=lambda m: scores_a.get(m, {}).get("ban_pref", 0))
-            available_maps.remove(map_to_ban_a1)
-            banned_maps.append(map_to_ban_a1)
-            veto_steps.append(f"{team_a} ban {map_to_ban_a1}")
-            
-            # Ban 2: Team B
-            map_to_ban_b1 = max(available_maps, key=lambda m: scores_b.get(m, {}).get("ban_pref", 0))
-            available_maps.remove(map_to_ban_b1)
-            banned_maps.append(map_to_ban_b1)
-            veto_steps.append(f"{team_b} ban {map_to_ban_b1}")
-            
-            # Pick 1: Team A
-            map_to_pick_a = max(available_maps, key=lambda m: scores_a.get(m, {}).get("pick_pref", 0))
-            available_maps.remove(map_to_pick_a)
-            picked_maps.append(map_to_pick_a)
-            veto_weights[map_to_pick_a] = 1
-            veto_steps.append(f"{team_a} pick {map_to_pick_a}")
-            
-            # Pick 2: Team B
-            map_to_pick_b = max(available_maps, key=lambda m: scores_b.get(m, {}).get("pick_pref", 0))
-            available_maps.remove(map_to_pick_b)
-            picked_maps.append(map_to_pick_b)
-            veto_weights[map_to_pick_b] = -1
-            veto_steps.append(f"{team_b} pick {map_to_pick_b}")
+            m_ban_b1 = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_b1)
+            banned_maps.append(m_ban_b1)
+            veto_steps.append(f"{acting_team_b} ban {m_ban_b1}")
             
             # Ban 3: Team A
-            map_to_ban_a2 = max(available_maps, key=lambda m: scores_a.get(m, {}).get("ban_pref", 0))
-            available_maps.remove(map_to_ban_a2)
-            banned_maps.append(map_to_ban_a2)
-            veto_steps.append(f"{team_a} ban {map_to_ban_a2}")
+            m_ban_a2 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_a2)
+            banned_maps.append(m_ban_a2)
+            veto_steps.append(f"{acting_team_a} ban {m_ban_a2}")
             
             # Ban 4: Team B
-            map_to_ban_b2 = max(available_maps, key=lambda m: scores_b.get(m, {}).get("ban_pref", 0))
-            available_maps.remove(map_to_ban_b2)
-            banned_maps.append(map_to_ban_b2)
-            veto_steps.append(f"{team_b} ban {map_to_ban_b2}")
+            m_ban_b2 = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_b2)
+            banned_maps.append(m_ban_b2)
+            veto_steps.append(f"{acting_team_b} ban {m_ban_b2}")
             
-            # Decider
-            if len(available_maps) > 0:
-                decider_map = max(available_maps, key=lambda m: (scores_a.get(m, {}).get("plays", 0) + scores_b.get(m, {}).get("plays", 0)))
-                veto_weights[decider_map] = 0
-                picked_maps.append(decider_map)
-                veto_steps.append(f"{decider_map} remains")
+            # Ban 5: Team A
+            m_ban_a3 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_a3)
+            banned_maps.append(m_ban_a3)
+            veto_steps.append(f"{acting_team_a} ban {m_ban_a3}")
+            
+            # Pick 1: Team B
+            if available_maps:
+                m_pick_b = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("pick_pref", 0))
+                available_maps.remove(m_pick_b)
+                picked_maps.append(m_pick_b)
+                veto_weights[m_pick_b] = -1
+                veto_steps.append(f"{acting_team_b} pick {m_pick_b}")
+            
+        elif series_type == "Bo5":
+            # BO5 Veto: A Ban 1 -> B Ban 1 -> A Picks Map 1 -> B Picks Map 2 -> A Picks Map 3 -> B Picks Map 4 -> Map 5 Remains
+            # Ban 1: Team A
+            m_ban_a = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_a)
+            banned_maps.append(m_ban_a)
+            veto_steps.append(f"{acting_team_a} ban {m_ban_a}")
+            
+            # Ban 2: Team B
+            m_ban_b = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_b)
+            banned_maps.append(m_ban_b)
+            veto_steps.append(f"{acting_team_b} ban {m_ban_b}")
+            
+            # Pick 1: Team A
+            m_pick_a1 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("pick_pref", 0))
+            available_maps.remove(m_pick_a1)
+            picked_maps.append(m_pick_a1)
+            veto_weights[m_pick_a1] = 1
+            veto_steps.append(f"{acting_team_a} pick {m_pick_a1}")
+            
+            # Pick 2: Team B
+            m_pick_b1 = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("pick_pref", 0))
+            available_maps.remove(m_pick_b1)
+            picked_maps.append(m_pick_b1)
+            veto_weights[m_pick_b1] = -1
+            veto_steps.append(f"{acting_team_b} pick {m_pick_b1}")
+            
+            # Pick 3: Team A
+            m_pick_a2 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("pick_pref", 0))
+            available_maps.remove(m_pick_a2)
+            picked_maps.append(m_pick_a2)
+            veto_weights[m_pick_a2] = 1
+            veto_steps.append(f"{acting_team_a} pick {m_pick_a2}")
+            
+            # Pick 4: Team B
+            m_pick_b2 = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("pick_pref", 0))
+            available_maps.remove(m_pick_b2)
+            picked_maps.append(m_pick_b2)
+            veto_weights[m_pick_b2] = -1
+            veto_steps.append(f"{acting_team_b} pick {m_pick_b2}")
+            
+            # Decider: Map 5 remains
+            if available_maps:
+                m_decider = available_maps[0]
+                veto_weights[m_decider] = 0
+                picked_maps.append(m_decider)
+                veto_steps.append(f"{m_decider} remains")
+            
+        else: # Bo3
+            # BO3 Veto: A Ban 1 -> B Ban 1 -> A Picks Map 1 -> B Picks Map 2 -> A Ban 2 -> B Ban 2 -> Map 3 Remains
+            # Ban 1: Team A
+            m_ban_a1 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_a1)
+            banned_maps.append(m_ban_a1)
+            veto_steps.append(f"{acting_team_a} ban {m_ban_a1}")
+            
+            # Ban 2: Team B
+            m_ban_b1 = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_b1)
+            banned_maps.append(m_ban_b1)
+            veto_steps.append(f"{acting_team_b} ban {m_ban_b1}")
+            
+            # Pick 1: Team A
+            m_pick_a = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("pick_pref", 0))
+            available_maps.remove(m_pick_a)
+            picked_maps.append(m_pick_a)
+            veto_weights[m_pick_a] = 1
+            veto_steps.append(f"{acting_team_a} pick {m_pick_a}")
+            
+            # Pick 2: Team B
+            m_pick_b = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("pick_pref", 0))
+            available_maps.remove(m_pick_b)
+            picked_maps.append(m_pick_b)
+            veto_weights[m_pick_b] = -1
+            veto_steps.append(f"{acting_team_b} pick {m_pick_b}")
+            
+            # Ban 3: Team A
+            m_ban_a2 = max(available_maps, key=lambda m: scores_act_a.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_a2)
+            banned_maps.append(m_ban_a2)
+            veto_steps.append(f"{acting_team_a} ban {m_ban_a2}")
+            
+            # Ban 4: Team B
+            m_ban_b2 = max(available_maps, key=lambda m: scores_act_b.get(m, {}).get("ban_pref", 0))
+            available_maps.remove(m_ban_b2)
+            banned_maps.append(m_ban_b2)
+            veto_steps.append(f"{acting_team_b} ban {m_ban_b2}")
+            
+            # Decider: Map 3 remains
+            if available_maps:
+                m_decider = available_maps[0]
+                veto_weights[m_decider] = 0
+                picked_maps.append(m_decider)
+                veto_steps.append(f"{m_decider} remains")
                 
-        veto_str = "; ".join(veto_steps)
+        veto_str = f"Seat Selection: {acting_team_a} acts as Team A, {acting_team_b} acts as Team B; Veto: " + "; ".join(veto_steps)
         return {
             "maps": picked_maps,
             "veto_weights": veto_weights,

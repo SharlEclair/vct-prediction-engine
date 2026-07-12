@@ -2921,5 +2921,217 @@
         }
     },
     "12.10": {},
-    "12.11": {}
+    "12.11": {},
+    "13.00": {
+        "Gekko": {
+            "score": 0.05,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.05,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Fade": {
+            "score": 0.0375,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Breach": {
+            "score": 0.0375,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Deadlock": {
+            "score": 0.0375,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "KAY/O": {
+            "score": 0.0375,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Skye": {
+            "score": 0.0375,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Cypher": {
+            "score": 0.0462,
+            "features": [
+                {
+                    "feature": "ability.cast_time",
+                    "impact": 0.0462,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Sova": {
+            "score": 0.0375,
+            "features": [
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Killjoy": {
+            "score": 0.1529,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.rate",
+                    "impact": 0.0375,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Harbor": {
+            "score": 0.0248,
+            "features": [
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Viper": {
+            "score": 0.1185,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Veto": {
+            "score": 0.174,
+            "features": [
+                {
+                    "feature": "ability.size",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.075,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.cooldown",
+                    "impact": 0.06,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Sage": {
+            "score": 0.1,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.1,
+                    "reason": "buff"
+                }
+            ]
+        },
+        "Omen": {
+            "score": 0.025,
+            "features": [
+                {
+                    "feature": "general.shrouded_step",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                }
+            ]
+        }
+    }
 }

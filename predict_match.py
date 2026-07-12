@@ -82,42 +82,43 @@ def parse_match_date(date_str: str) -> datetime:
     return datetime.strptime(normalized_date_str, "%B %d, %Y %I:%M %p")
 
 # --- Scraper Veto & Economy Helpers ---
-def match_team(token_team: str, team_a: str, team_b: str) -> int:
-    token_team = token_team.lower().strip()
-    ta = team_a.lower().strip()
-    tb = team_b.lower().strip()
+def is_strict_team_match(target: str, candidate: str) -> bool:
+    target = target.lower().strip()
+    candidate = candidate.lower().strip()
     
-    if token_team in ta or ta in token_team:
-        return 1
-    if token_team in tb or tb in token_team:
-        return -1
+    if target == candidate:
+        return True
         
-    if len(token_team) >= 3:
-        prefix = token_team[:3]
-        if ta.startswith(prefix):
-            return 1
-        if tb.startswith(prefix):
-            return -1
-            
+    suffixes = ["academy", "gc", "game changers", "black", "blue"]
+    target_has_suffix = any(s in target for s in suffixes)
+    candidate_has_suffix = any(s in candidate for s in suffixes)
+    
+    if target_has_suffix != candidate_has_suffix:
+        return False
+        
+    if target in candidate or candidate in target:
+        return True
+        
     def get_initials(name: str) -> str:
         return "".join(word[0] for word in name.split() if word)
         
-    ta_init = get_initials(ta)
-    tb_init = get_initials(tb)
-    if token_team == ta_init:
-        return 1
-    if token_team == tb_init:
-        return -1
+    t_init = get_initials(target)
+    c_init = get_initials(candidate)
+    if t_init == candidate or c_init == target:
+        return True
         
-    if "prx" in token_team and "paper rex" in ta:
-        return 1
-    if "prx" in token_team and "paper rex" in tb:
-        return -1
-    if "lev" in token_team and "leviatán" in ta:
-        return 1
-    if "lev" in token_team and "leviatán" in tb:
-        return -1
+    if "prx" in target and "paper rex" in candidate:
+        return True
+    if "lev" in target and "leviatán" in candidate:
+        return True
         
+    return False
+
+def match_team(token_team: str, team_a: str, team_b: str) -> int:
+    if is_strict_team_match(token_team, team_a):
+        return 1
+    if is_strict_team_match(token_team, team_b):
+        return -1
     return 0
 
 def parse_vetos(map_vetos_str: str, team_a_name: str, team_b_name: str) -> dict:
@@ -595,7 +596,21 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
     return player_emas, baseline_lookup, team_stats, player_global_stats, player_agent_stats
 
 def get_latest_roster(team_name: str, raw_dir: str, exclude_match_ids: list = None) -> list[str]:
-    """Finds the most recent roster for this team from historical matches."""
+    """Finds the most recent roster for this team from historical matches or overrides."""
+    # 1. Check for UI override first
+    try:
+        override_path = os.path.join(os.path.dirname(raw_dir), "processed", "roster_overrides.json")
+        if os.path.exists(override_path):
+            with open(override_path, "r", encoding="utf-8") as f:
+                overrides = json.load(f)
+                # Case-insensitive team name match
+                for k, v in overrides.items():
+                    if k.lower().strip() == team_name.lower().strip():
+                        logger.info(f"Using manual roster override for team {team_name}: {v}")
+                        return v
+    except Exception as e:
+        logger.warning(f"Failed to check roster overrides: {e}")
+
     if exclude_match_ids is None:
         exclude_match_ids = []
     exclude_set = set(str(mid) for mid in exclude_match_ids)
@@ -637,7 +652,10 @@ def get_latest_roster(team_name: str, raw_dir: str, exclude_match_ids: list = No
     roster = set()
     for map_data in latest_segment.get('maps', []):
         for p in map_data.get('players', {}).get(team_key, []):
-            roster.add(p['name'])
+            p_name = p['name']
+            if "inactive" in p_name.lower():
+                continue
+            roster.add(p_name)
             
     return list(roster)
 

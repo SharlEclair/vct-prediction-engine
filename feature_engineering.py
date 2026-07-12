@@ -75,40 +75,43 @@ def parse_match_date(date_str: str) -> datetime:
     normalized_date_str = f"{month} {day}, {year} {time_str} {ampm}"
     return datetime.strptime(normalized_date_str, "%B %d, %Y %I:%M %p")
 
-def match_team(token_team: str, team_a: str, team_b: str) -> int:
-    """Matches team names from raw strings to Team A (1) or Team B (-1). Returns 0 if unmatched."""
-    token_team = token_team.lower().strip()
-    ta = team_a.lower().strip()
-    tb = team_b.lower().strip()
+def is_strict_team_match(target: str, candidate: str) -> bool:
+    target = target.lower().strip()
+    candidate = candidate.lower().strip()
     
-    if token_team in ta or ta in token_team:
-        return 1
-    if token_team in tb or tb in token_team:
-        return -1
+    if target == candidate:
+        return True
         
-    if len(token_team) >= 3:
-        prefix = token_team[:3]
-        if ta.startswith(prefix):
-            return 1
-        if tb.startswith(prefix):
-            return -1
-            
-    # Check initials e.g. 'PRX' -> 'Paper Rex'
+    suffixes = ["academy", "gc", "game changers", "black", "blue"]
+    target_has_suffix = any(s in target for s in suffixes)
+    candidate_has_suffix = any(s in candidate for s in suffixes)
+    
+    if target_has_suffix != candidate_has_suffix:
+        return False
+        
+    if target in candidate or candidate in target:
+        return True
+        
     def get_initials(name: str) -> str:
         return "".join(word[0] for word in name.split() if word)
         
-    ta_init = get_initials(ta)
-    tb_init = get_initials(tb)
-    if token_team == ta_init:
-        return 1
-    if token_team == tb_init:
-        return -1
+    t_init = get_initials(target)
+    c_init = get_initials(candidate)
+    if t_init == candidate or c_init == target:
+        return True
         
-    if "prx" in token_team and "paper rex" in ta:
-        return 1
-    if "prx" in token_team and "paper rex" in tb:
-        return -1
+    if "prx" in target and "paper rex" in candidate:
+        return True
+    if "lev" in target and "leviatán" in candidate:
+        return True
         
+    return False
+
+def match_team(token_team: str, team_a: str, team_b: str) -> int:
+    if is_strict_team_match(token_team, team_a):
+        return 1
+    if is_strict_team_match(token_team, team_b):
+        return -1
     return 0
 
 def parse_vetos(map_vetos_str: str, team_a_name: str, team_b_name: str) -> dict:

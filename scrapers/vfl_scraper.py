@@ -125,10 +125,26 @@ class VFLScraper:
 
                 logger.info(f"Received {len(raw_players)} players from API.")
 
-                players = [
+                mapped_players = [
                     self._map_player(p, event_id=event_id, event_name=event_name)
                     for p in raw_players
                 ]
+
+                # Strict filtering: Exclude Inactive players and Academy/GC/Black/Blue rosters
+                players = []
+                for p in mapped_players:
+                    p_name = p["player_name"].lower()
+                    t_name = p["team_name"].lower()
+                    t_short = p.get("team_short", "").lower()
+
+                    if "inactive" in p_name:
+                        continue
+
+                    suffixes = ["academy", "gc", "game changers", "black", "blue"]
+                    if any(s in t_name for s in suffixes) or any(s in t_short for s in suffixes):
+                        continue
+
+                    players.append(p)
 
                 # Sort by PPG descending so the cache is already ranked
                 players.sort(key=lambda x: x["ppg"], reverse=True)

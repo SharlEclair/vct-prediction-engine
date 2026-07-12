@@ -245,6 +245,13 @@
         "bug_fixes": 35
     },
     {
+        "version": "13.00",
+        "agent_changes": 22,
+        "weapon_changes": 74,
+        "competitive_changes": 0,
+        "bug_fixes": 0
+    },
+    {
         "version": "9.0",
         "agent_changes": 5,
         "weapon_changes": 0,

@@ -500,6 +500,45 @@ with st.sidebar:
     btn_patch_update_only = st.button("🔄 Scrape Latest Patches & Rebuild Meta", use_container_width=True, key="btn_patch_update_only")
     btn_scrape_vlr_incremental = st.button("📥 Scrape Latest VLR Matches (Incremental)", use_container_width=True, key="btn_scrape_vlr_incremental")
     
+    with st.expander("🛠️ Roster Management Override"):
+        st.markdown("##### Define Active Roster for a Team")
+        override_team = st.selectbox("Select Team", all_teams, key="override_team_select")
+        
+        # Load existing overrides
+        overrides_path = "data/processed/roster_overrides.json"
+        existing_overrides = {}
+        if os.path.exists(overrides_path):
+            try:
+                with open(overrides_path, "r", encoding="utf-8") as f:
+                    existing_overrides = json.load(f)
+            except Exception:
+                pass
+                
+        current_players = existing_overrides.get(override_team, [])
+        players_input = st.text_input(
+            "Players (comma-separated)",
+            value=", ".join(current_players),
+            placeholder="e.g. zekken, tex, v1xen, Mazino, Verno, aspas",
+            key="override_team_players_input"
+        )
+        
+        if st.button("Save Roster Override", key="btn_save_roster_override"):
+            parsed_players = [p.strip() for p in players_input.split(",") if p.strip()]
+            if not parsed_players:
+                if override_team in existing_overrides:
+                    del existing_overrides[override_team]
+                st.info(f"Removed roster override for {override_team}")
+            else:
+                if len(parsed_players) < 5:
+                    st.warning("A VCT roster should have at least 5 players.")
+                existing_overrides[override_team] = parsed_players
+                st.success(f"Saved roster override for {override_team}: {parsed_players}")
+                
+            os.makedirs(os.path.dirname(overrides_path), exist_ok=True)
+            with open(overrides_path, "w", encoding="utf-8") as f:
+                json.dump(existing_overrides, f, indent=4)
+            st.rerun()
+    
     st.markdown("---")
     btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", use_container_width=True, key="btn_generate_lineup")
 
@@ -839,7 +878,7 @@ with tab_sim:
     with sim_col2:
         sim_team_b = st.selectbox("Team B", all_teams, index=min(1, len(all_teams)-1), key="sim_team_b")
 
-    sim_col3, sim_col4, sim_col5, sim_col6 = st.columns(4)
+    sim_col3, sim_col4, sim_col5, sim_col6, sim_col_priority = st.columns(5)
     with sim_col3:
         sim_ref_date = st.date_input("Reference Date (for time-decay)", value=datetime(2026, 6, 22), key="sim_ref_date")
     with sim_col4:
@@ -857,6 +896,14 @@ with tab_sim:
         sim_patch_select = st.selectbox("Target Simulation Patch", patch_options, index=min(1, len(patch_options)-1), key="sim_target_patch")
         patch_match = re.search(r'([0-9.]+)', sim_patch_select)
         sim_target_patch_val = patch_match.group(1) if patch_match else "9.02"
+    with sim_col_priority:
+        sim_veto_priority_sel = st.selectbox(
+            "Veto Priority Team",
+            options=["Team A", "Team B", "1v1 Skirmish (50/50)"],
+            index=0,
+            key="sim_veto_priority_select"
+        )
+        sim_veto_priority_val = {"Team A": "team_a", "Team B": "team_b", "1v1 Skirmish (50/50)": "random"}[sim_veto_priority_sel]
 
     # Map Veto Override Panel
     max_maps = 3 if sim_series_type == "Bo3" else 5
@@ -895,7 +942,8 @@ with tab_sim:
                     target_patch=sim_target_patch_val,
                     num_iterations=sim_iterations,
                     override_maps=override_maps if enable_override else None,
-                    target_date=sim_target_datetime
+                    target_date=sim_target_datetime,
+                    veto_priority=sim_veto_priority_val
                 )
 
             win_prob_a = sim_result["win_prob_a"]
