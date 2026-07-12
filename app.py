@@ -492,17 +492,29 @@ with st.sidebar:
         patch_options = ["Patch 9.04", "Patch 9.02", "Patch 8.11 (June 11, 2024)"]
     opt_patch = st.selectbox("Select Target Patch Window", patch_options, key="opt_target_patch")
     
-    st.markdown("#### 3. Available Fantasy Budget")
+    st.markdown("#### 3. VFL Ruleset Mode")
+    opt_ruleset = st.selectbox(
+        "Select Active VFL Ruleset",
+        ["International (Masters/Champions)", "Regional (Stage 1/Stage 2)"],
+        key="opt_ruleset"
+    )
+    
+    is_intl = "International" in opt_ruleset
+    budget_default = 50.0 if is_intl else 100.0
+    budget_min = 35.0 if is_intl else 70.0
+    budget_max = 60.0 if is_intl else 120.0
+    
+    st.markdown("#### 4. Available Fantasy Budget")
     opt_salary_cap = st.slider(
         "Roster Budget Cap (VP)",
-        min_value=35.0,
-        max_value=60.0,
-        value=50.0,
+        min_value=budget_min,
+        max_value=budget_max,
+        value=budget_default,
         step=0.5,
         key="opt_salary_cap"
     )
     
-    st.markdown("#### 4. Simulation Depth")
+    st.markdown("#### 5. Simulation Depth")
     opt_depth = st.select_slider(
         "Monte Carlo Iterations",
         options=[1000, 5000, 10000],
@@ -511,11 +523,11 @@ with st.sidebar:
         key="opt_sim_depth"
     )
     
-    st.markdown("#### 5. Daily Slate Ingestion")
+    st.markdown("#### 6. Daily Slate Ingestion")
     btn_sync_live = st.button("🔄 Sync Live VFL Slate (API)", use_container_width=True, key="btn_sync_live")
     uploaded_file = st.file_uploader("Fallback: Upload DFS Slate (CSV)", type=["csv"], key="uploaded_file_slate")
     
-    st.markdown("#### 6. System Administration")
+    st.markdown("#### 7. System Administration")
     whitelist_input = st.text_input("VLR Event Whitelist (comma-separated)", placeholder="e.g. Esports World Cup 2026", key="vlr_whitelist")
     btn_master_update = st.button("🚀 Master Update: Sync All Data & Retrain", type="primary", use_container_width=True, key="btn_master_update")
     btn_patch_update_only = st.button("🔄 Scrape Latest Patches & Rebuild Meta", use_container_width=True, key="btn_patch_update_only")
@@ -581,8 +593,22 @@ if btn_generate_lineup:
             
             from knapsack_solver import prepare_player_slate, solve_vfl_knapsack, run_portfolio_simulation
             
+            is_intl_rules = "International" in opt_ruleset
+            lineup_sz = 6 if is_intl_rules else 11
+            role_cnts = (
+                {"Duelist": 1, "Initiator": 1, "Controller": 1, "Sentinel": 1, "Flex": 2}
+                if is_intl_rules else
+                {"Duelist": 2, "Initiator": 2, "Controller": 2, "Sentinel": 2, "Flex": 3}
+            )
+            
             df_meta_slate, df_fused_slate = prepare_player_slate(num_iterations=opt_depth)
-            opt_solution = solve_vfl_knapsack(df_meta_slate, salary_cap=opt_salary_cap)
+            opt_solution = solve_vfl_knapsack(
+                df_meta_slate, 
+                salary_cap=opt_salary_cap,
+                lineup_size=lineup_sz,
+                max_per_team=2,
+                role_counts=role_cnts
+            )
             portfolio_results = run_portfolio_simulation(opt_solution, df_fused_slate)
             
             st.session_state["gpp_solution"] = opt_solution
@@ -1836,39 +1862,44 @@ with tab_optimizer:
         saved_names, saved_igl = load_roster_state()
         valid_saved_names = [n for n in saved_names if n in slate_names]
         
+        ruleset_name = st.session_state.get("opt_ruleset", "International (Masters/Champions)")
+        is_intl_rules = "International" in ruleset_name
+        req_size = 6 if is_intl_rules else 11
+        role_min_count = 1 if is_intl_rules else 2
+        
         # Multiselect loaded with the active slate from current_slate.json
         selected_roster = st.multiselect(
-            "Select Your Current 6 Players",
+            f"Select Your Current {req_size} Players",
             options=slate_names,
-            default=valid_saved_names if len(valid_saved_names) > 0 else (slate_names[:6] if len(slate_names) >= 6 else []),
+            default=valid_saved_names if len(valid_saved_names) > 0 else (slate_names[:req_size] if len(slate_names) >= req_size else []),
             key="user_multiselect_roster"
         )
         
         # Validation checks for select count and VFL constraints
         num_selected = len(selected_roster)
-        if num_selected != 6:
-            st.warning(f"⚠️ Please select exactly 6 players to evaluate transfers. (Currently selected: {num_selected})")
+        if num_selected != req_size:
+            st.warning(f"⚠️ Please select exactly {req_size} players to evaluate transfers. (Currently selected: {num_selected})")
         else:
             from collections import Counter
             teams_counter = Counter()
-            roles_set = set()
+            roles_counter = Counter()
             for name in selected_roster:
                 p_info = slate_lookup.get(name)
                 if p_info:
                     teams_counter[p_info.get("team")] += 1
-                    roles_set.add(p_info.get("role"))
+                    roles_counter[p_info.get("role")] += 1
                     
             team_violations = [team for team, count in teams_counter.items() if count > 2]
             
             required_roles = {"Duelist", "Initiator", "Controller", "Sentinel"}
-            missing_roles = required_roles - roles_set
+            missing_roles = [role for role in required_roles if roles_counter[role] < role_min_count]
             
             if team_violations:
                 st.error(f"⚠️ **VFL Rule Violation:** Max 2 players per team. Violated by: {', '.join(team_violations)}")
             elif missing_roles:
-                st.error(f"⚠️ **VFL Rule Violation:** Roster must contain at least 1 player from each core role. Missing: {', '.join(missing_roles)}")
+                st.error(f"⚠️ **VFL Rule Violation:** Roster must contain at least {role_min_count} players from each core role ({', '.join(required_roles)}). Missing or insufficient: {', '.join(missing_roles)}")
             else:
-                st.success("✅ **Legal Roster:** This lineup strictly satisfies all VFL team and positional rules.")
+                st.success(f"✅ **Legal Roster:** This lineup strictly satisfies all VFL team and positional rules ({role_min_count} per core role, max 2 per team).")
             
         # Floating Bank & Cost calculations
         roster_cost = sum(slate_lookup[name]["salary"] for name in selected_roster if name in slate_lookup)
@@ -1956,8 +1987,8 @@ with tab_optimizer:
         btn_calc_trades = st.button("Calculate Optimal Trades", key="btn_calc_trades", type="primary", use_container_width=True)
         
         if btn_calc_trades:
-            if num_selected != 6:
-                st.error("Roster must have exactly 6 players selected to calculate trades.")
+            if num_selected != req_size:
+                st.error(f"Roster must have exactly {req_size} players selected to calculate trades.")
             elif "gpp_solution" not in st.session_state or not st.session_state.get("gpp_generated", False):
                 st.error("Please run 'Generate Optimal GPP Lineup' first to compute the target optimal roster.")
             else:

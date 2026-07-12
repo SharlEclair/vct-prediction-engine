@@ -565,36 +565,39 @@ def optimize_roster(
                     A_eq_rows.append(row)
                     b_eq.append(0.0)
                 
-        # 4. Role natural counts
-        # sum_{i in Duelist} x_i_nat = 1
+        # 4. Role natural counts based on active VFL ruleset
+        min_role_count = 2.0 if roster_size == 11 else 1.0
+        wildcard_count = 3.0 if roster_size == 11 else 2.0
+        
+        # sum_{i in Duelist} x_i_nat = min_role_count
         row = np.zeros(num_vars)
         row[:n] = is_duelist
         A_eq_rows.append(row)
-        b_eq.append(1.0)
+        b_eq.append(min_role_count)
         
-        # sum_{i in Initiator} x_i_nat = 1
+        # sum_{i in Initiator} x_i_nat = min_role_count
         row = np.zeros(num_vars)
         row[:n] = is_initiator
         A_eq_rows.append(row)
-        b_eq.append(1.0)
+        b_eq.append(min_role_count)
         
-        # sum_{i in Controller} x_i_nat = 1
+        # sum_{i in Controller} x_i_nat = min_role_count
         row = np.zeros(num_vars)
         row[:n] = is_controller
         A_eq_rows.append(row)
-        b_eq.append(1.0)
+        b_eq.append(min_role_count)
         
-        # sum_{i in Sentinel} x_i_nat = 1
+        # sum_{i in Sentinel} x_i_nat = min_role_count
         row = np.zeros(num_vars)
         row[:n] = is_sentinel
         A_eq_rows.append(row)
-        b_eq.append(1.0)
+        b_eq.append(min_role_count)
         
-        # sum_i x_i_wild = 2
+        # sum_i x_i_wild = wildcard_count
         row = np.zeros(num_vars)
         row[n:2*n] = 1.0
         A_eq_rows.append(row)
-        b_eq.append(2.0)
+        b_eq.append(wildcard_count)
         
         # 5. Hard Budget Constraint: sum(x_i * cost_i) <= 50
         row = np.zeros(num_vars)
@@ -604,15 +607,15 @@ def optimize_roster(
         b_ub_lower.append(0.0)
         b_ub_upper.append(float(salary_cap))
         
-        # 6. Soft budget cap constraint: u >= sum(x_i * cost_i) - 48
-        # => sum(x_i * cost_i) - u <= 48
+        # 6. Soft budget cap constraint: u >= sum(x_i * cost_i) - (salary_cap - 2)
+        # => sum(x_i * cost_i) - u <= salary_cap - 2
         row = np.zeros(num_vars)
         row[:n] = costs
         row[n:2*n] = costs
         row[2*n] = -1.0
         A_ub_rows.append(row)
         b_ub_lower.append(-np.inf)
-        b_ub_upper.append(48.0)
+        b_ub_upper.append(float(salary_cap - 2.0))
         
         # 7. Team limit constraint: max 2 players from any real VCT team ID
         all_team_ids = set(p["vlr_team_id"] for p in filtered_players if p.get("vlr_team_id") is not None)
@@ -783,17 +786,22 @@ def generate_stage_2_baseline(vfl_players: list[dict]) -> dict:
     )
 
 
-def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remaining_bank_balance: float = 0.0, forced_igl_name: str = None) -> dict:
+def suggest_transfers(
+    current_roster: list[dict], 
+    vfl_players: list[dict], 
+    remaining_bank_balance: float = 0.0, 
+    forced_igl_name: str = None,
+    salary_cap: float = 50.0,
+    roster_size: int = 6
+) -> dict:
     """
     Transfer Advisor component. Enforces VFL ruleset.
-    Hardcodes floating_bank calculation: floating_bank = 50.0 - sum(player_costs).
     Finds up to 3 distinct optimal transfer recommendations.
     """
     current_roster_costs = [p.get("price", p.get("cost", 0)) for p in current_roster]
-    floating_bank = 50.0 - sum(current_roster_costs)
-    salary_cap = 50.0
+    floating_bank = salary_cap - sum(current_roster_costs)
     
-    logger.info(f"Running VFL Transfer Advisor: Floating bank: {floating_bank:.2f} VP | Cap: {salary_cap} VP")
+    logger.info(f"Running VFL Transfer Advisor: Floating bank: {floating_bank:.2f} VP | Cap: {salary_cap} VP | Size: {roster_size}")
     
     recommendations = []
     excluded_rosters = []
@@ -811,6 +819,7 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remai
         res = optimize_roster(
             vfl_players=vfl_players,
             salary_cap=salary_cap,
+            roster_size=roster_size,
             survival_threshold=0.35,
             transfer_constraint=transfer_constraint,
             forced_igl_name=forced_igl_name,
@@ -826,6 +835,7 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remai
             res = optimize_roster(
                 vfl_players=vfl_players,
                 salary_cap=salary_cap,
+                roster_size=roster_size,
                 survival_threshold=0.35,
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
@@ -841,6 +851,7 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remai
             res = optimize_roster(
                 vfl_players=vfl_players,
                 salary_cap=salary_cap,
+                roster_size=roster_size,
                 survival_threshold=0.35,
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
@@ -857,6 +868,7 @@ def suggest_transfers(current_roster: list[dict], vfl_players: list[dict], remai
             res = optimize_roster(
                 vfl_players=vfl_players,
                 salary_cap=salary_cap,
+                roster_size=roster_size,
                 survival_threshold=0.35,
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,

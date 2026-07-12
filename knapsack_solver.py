@@ -95,7 +95,10 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
 def solve_vfl_knapsack(
     df_meta: pd.DataFrame, 
     salary_cap: float = None, 
-    igl_multiplier: float = None
+    igl_multiplier: float = None,
+    lineup_size: int = None,
+    max_per_team: int = None,
+    role_counts: Dict[str, int] = None
 ) -> Dict[str, Any]:
     """
     Execute MILP optimization using dynamic parameters loaded from config.yaml.
@@ -104,6 +107,9 @@ def solve_vfl_knapsack(
         df_meta (pd.DataFrame): Player metadata containing roles, teams, salaries, and Ceiling_p85.
         salary_cap (float, optional): Maximum salary cap. Loaded from config.yaml if None.
         igl_multiplier (float, optional): Multiplier bonus for designated IGL. Loaded from config.yaml if None.
+        lineup_size (int, optional): Roster lineup size.
+        max_per_team (int, optional): Max players per team.
+        role_counts (Dict[str, int], optional): Min counts per role.
         
     Returns:
         Dict[str, Any]: Optimization solution containing drafted lineup, roles, IGL, and stats.
@@ -117,10 +123,12 @@ def solve_vfl_knapsack(
         salary_cap = float(dfs_constraints.get("salary_cap", 50.0))
     if igl_multiplier is None:
         igl_multiplier = float(dfs_constraints.get("igl_multiplier", 2.0))
-        
-    lineup_size = int(dfs_constraints.get("lineup_size", 6))
-    max_per_team = int(dfs_constraints.get("max_players_per_team", 2))
-    role_counts = dfs_constraints.get("role_counts", {"Duelist": 1, "Initiator": 1, "Controller": 1, "Sentinel": 1, "Flex": 2})
+    if lineup_size is None:
+        lineup_size = int(dfs_constraints.get("lineup_size", 6))
+    if max_per_team is None:
+        max_per_team = int(dfs_constraints.get("max_players_per_team", 2))
+    if role_counts is None:
+        role_counts = dfs_constraints.get("role_counts", {"Duelist": 1, "Initiator": 1, "Controller": 1, "Sentinel": 1, "Flex": 2})
     
     players = df_meta["player_id"].tolist()
     
