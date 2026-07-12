@@ -251,10 +251,10 @@ class MapVetoBandit:
         logger.info(f"MapVetoBandit fitted: {len(self.window_plays)} temporal windows, "
                     f"current pool = {self.map_pool}")
 
-    def predict_map_win_rate_ips(self, team: str, opponent: str, map_name: str,
-                                  target_date: datetime | None = None) -> float:
+    def predict_map_win_rate_dr(self, team: str, opponent: str, map_name: str,
+                                 target_date: datetime | None = None) -> float:
         """
-        Estimates win rate on a map using IPS off-policy weighting.
+        Estimates win rate on a map using Doubly Robust (DR) estimation.
 
         Propensity is sourced from the window matching target_date so that
         retired maps never inflate the denominator for active maps.
@@ -273,13 +273,12 @@ class MapVetoBandit:
         else:
             propensity = self.map_frequency.get(map_name, 0.1)
 
-        ips_wins  = wins  / propensity
-        ips_plays = plays / propensity
-
-        if ips_plays > 0:
-            raw_ips = ips_wins / ips_plays
-            return float(np.clip(raw_ips * 0.8 + 0.1, 0.1, 0.9))
-        return 0.5
+        empirical_win_rate = wins / plays if plays > 0 else 0.5
+        baseline_mu = (wins + 1.0) / (plays + 2.0) if plays > 0 else 0.5
+        
+        epsilon = 1e-5
+        raw_dr = baseline_mu + (empirical_win_rate - baseline_mu) / (propensity + epsilon)
+        return float(np.clip(raw_dr * 0.8 + 0.1, 0.1, 0.9))
 
     def predict_veto(self, team_a: str, team_b: str, series_type: str = "Bo3",
                      stochastic: bool = False,
@@ -321,11 +320,11 @@ class MapVetoBandit:
             # Tactical seat choice: compare expected map win rate if priority_team is Team A vs Team B.
             # Case 1: priority_team acts as Team A, other_team acts as Team B
             res_a = self._simulate_strict_veto_sequence(priority_team, other_team, series_type, stochastic, target_date, ub_advantage)
-            avg_wr_a = np.mean([self.predict_map_win_rate_ips(priority_team, other_team, m, target_date) for m in res_a["maps"]])
+            avg_wr_a = np.mean([self.predict_map_win_rate_dr(priority_team, other_team, m, target_date) for m in res_a["maps"]])
             
             # Case 2: other_team acts as Team A, priority_team acts as Team B
             res_b = self._simulate_strict_veto_sequence(other_team, priority_team, series_type, stochastic, target_date, ub_advantage)
-            avg_wr_b = np.mean([self.predict_map_win_rate_ips(priority_team, other_team, m, target_date) for m in res_b["maps"]])
+            avg_wr_b = np.mean([self.predict_map_win_rate_dr(priority_team, other_team, m, target_date) for m in res_b["maps"]])
             
             if avg_wr_a >= avg_wr_b:
                 acting_team_a = priority_team
@@ -367,8 +366,8 @@ class MapVetoBandit:
         _, active_pool = self.registry.resolve_pool(target_date)
         available_maps = list(active_pool)
         
-        scores_a = {m: self.predict_map_win_rate_ips(team_a, team_b, m, target_date) for m in available_maps}
-        scores_b = {m: self.predict_map_win_rate_ips(team_b, team_a, m, target_date) for m in available_maps}
+        scores_a = {m: self.predict_map_win_rate_dr(team_a, team_b, m, target_date) for m in available_maps}
+        scores_b = {m: self.predict_map_win_rate_dr(team_b, team_a, m, target_date) for m in available_maps}
         
         if stochastic:
             scores_a = {m: val + np.random.normal(0, 0.05) for m, val in scores_a.items()}
@@ -532,14 +531,12 @@ class MapVetoBandit:
         }
 
 
-class HungarianAgentAssigner:
+class SynergisticDraftEngine:
     """
-    Sub-Model 2: Hungarian Algorithm linear sum assignment solver for optimal Agent Composition.
-    Maximizes multi-factor utility incorporating Bayesian comfort and historical pick rates.
-
-    V5 upgrade: comfort data is sourced from the Global Player Entity Ledger
-    (global_player_ledger.json) which is team-decoupled and EMA-weighted.
-    Fallback to legacy agent_comfort_matrix is preserved for backward compatibility.
+    Sub-Model 2: Synergistic Combinatorial Draft Engine.
+    Maximizes multi-factor utility (base comfort + historical pick rates) combined with
+    composition-wide synergy modifiers (e.g. Duelist+Initiator bonus, missing role penalties)
+    using a fast, exact search over players' top 5 comfortable agents.
     """
     def __init__(self, raw_dir=RAW_DIR, processed_dir=PROCESSED_DIR):
         self.raw_dir = raw_dir
@@ -576,13 +573,13 @@ class HungarianAgentAssigner:
                 with open(ledger_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 self.player_ledger = data.get("players", {})
-                logger.info(f"HungarianAgentAssigner: loaded ledger with "
+                logger.info(f"SynergisticDraftEngine: loaded ledger with "
                             f"{len(self.player_ledger)} players.")
             except Exception as e:
-                logger.warning(f"HungarianAgentAssigner: ledger load failed ({e}). "
+                logger.warning(f"SynergisticDraftEngine: ledger load failed ({e}). "
                                f"Falling back to legacy comfort matrix.")
         else:
-            logger.warning("HungarianAgentAssigner: global_player_ledger.json not found. "
+            logger.warning("SynergisticDraftEngine: global_player_ledger.json not found. "
                            "Run build_global_player_ledger.py to generate it.")
 
     def fit_comfort(self, player_agent_stats, player_global_stats=None):
@@ -592,7 +589,7 @@ class HungarianAgentAssigner:
 
     def resolve_comfort(self, player: str, map_name: str, agent: str) -> tuple[float, int]:
         """
-        V5: Resolve Bayesian-smoothed ACS comfort from the global player ledger.
+        Resolve Bayesian-smoothed ACS comfort from the global player ledger.
         Returns (bayesian_acs, observation_count).
         Falls back to legacy agent_comfort_matrix if ledger has no data for this player.
         """
@@ -642,23 +639,16 @@ class HungarianAgentAssigner:
     def predict_composition(self, team_name: str, map_name: str, roster: list[str],
                              target_patch: str = "9.02", temperature: float = 25.0) -> list[str]:
         """
-        Simultaneous optimal constrained agent composition selection.
-        Uses scipy.optimize.linear_sum_assignment to globally maximize team utility.
-
-        V5: comfort scores sourced from global player ledger (team-decoupled).
+        Optimal draft selection maximizing utility and synergistic compositions.
         """
-        from scipy.optimize import linear_sum_assignment
-
         agents_pool = list(self.agent_roles.keys())
         if not agents_pool:
             agents_pool = ["Jett", "Raze", "Omen", "Breach", "Killjoy", "Sova", "Cypher", "Sage", "Viper", "Phoenix"]
 
         n_players = min(5, len(roster))
-        n_agents = len(agents_pool)
-
-        # 1. Initialize utility matrix
-        utility_matrix = np.zeros((n_players, n_agents))
-
+        
+        # Precompute individual player agent utility vectors
+        player_choices = []
         for i in range(n_players):
             player = roster[i]
             player_global_acs = self.get_player_global_acs(player)
@@ -678,37 +668,79 @@ class HungarianAgentAssigner:
                     for a in agents_pool
                 )
 
-            for j in range(n_agents):
-                agent = agents_pool[j]
-
-                # 1.1 Bayesian-smoothed comfort ACS (V5 ledger-sourced)
+            agent_utils = []
+            for agent in agents_pool:
                 base_comfort, count = self.resolve_comfort(player, map_name, agent)
-
-                # 1.2 Nerf penalty from patch registry
+                
+                # Nerf penalty
                 nerfs = self.nerf_registry.get(target_patch, {})
                 nerf_penalty = nerfs.get(agent, 0.0)
                 comfort_score = base_comfort - 100.0 * nerf_penalty
                 normalized_comfort = comfort_score / player_global_acs
 
-                # 1.3 Historical pick rate on this map
+                # Historical pick rate
                 historical_pick_rate = count / total_map_matches if total_map_matches > 0 else 0.0
 
-                # 1.4 Multi-Factor Utility (30% Comfort, 70% Pick Rate)
+                # Base multi-factor utility
                 utility = 0.3 * normalized_comfort + 0.7 * historical_pick_rate
-                utility_matrix[i, j] = utility
+                
+                # Explorable noise injection
+                utility += float(np.random.normal(0, 0.05))
+                
+                agent_utils.append((agent, utility))
+                
+            # Keep only the top 5 comfortable agents for search space reduction & performance stability
+            agent_utils.sort(key=lambda x: x[1], reverse=True)
+            player_choices.append(agent_utils[:5])
 
-        # 2. Inject Controlled Stochastic Noise (Monte Carlo exploration)
-        utility_matrix += np.random.normal(0, 0.05, size=utility_matrix.shape)
+        # Combinatorial search over player choice combinations to optimize Synergy Multipliers
+        best_composition = None
+        best_utility = -99999.0
 
-        # 3. Solve the assignment problem to maximize utility (minimize negative utility)
-        row_ind, col_ind = linear_sum_assignment(-utility_matrix)
+        def search(player_idx, current_agents, current_utility):
+            nonlocal best_composition, best_utility
+            if player_idx == n_players:
+                # Calculate composition synergy modifiers
+                roles = [self.agent_roles.get(a, 'Sentinel') for a in current_agents]
+                has_duelist = 'Duelist' in roles
+                has_initiator = 'Initiator' in roles
+                has_controller = 'Controller' in roles
+                has_sentinel = 'Sentinel' in roles
 
-        # Build the final selected agents in the roster order
-        selected_agents = [None] * n_players
-        for r, c in zip(row_ind, col_ind):
-            selected_agents[r] = agents_pool[c]
+                synergy_mult = 1.0
+                if has_duelist and has_initiator:
+                    synergy_mult *= 1.10
+                if not has_controller:
+                    synergy_mult *= 0.85
+                if not has_sentinel:
+                    synergy_mult *= 0.85
 
-        return selected_agents
+                final_val = current_utility * synergy_mult
+                if final_val > best_utility:
+                    best_utility = final_val
+                    best_composition = list(current_agents)
+                return
+
+            for agent, util in player_choices[player_idx]:
+                if agent not in current_agents:
+                    current_agents.append(agent)
+                    search(player_idx + 1, current_agents, current_utility + util)
+                    current_agents.pop()
+
+        search(0, [], 0.0)
+        
+        # Fallback to simple unique assignment if combinatorial search fails
+        if best_composition is None or len(best_composition) < n_players:
+            best_composition = []
+            for choices in player_choices:
+                for agent, _ in choices:
+                    if agent not in best_composition:
+                        best_composition.append(agent)
+                        break
+            while len(best_composition) < n_players:
+                best_composition.append(agents_pool[len(best_composition) % len(agents_pool)])
+
+        return best_composition
 
 
 MAP_SIDE_BIAS = {
@@ -954,7 +986,7 @@ class VCTv5SimulationEngine:
         self.processed_dir = processed_dir
         # V5: MapVetoBandit now receives processed_dir for TemporalMapRegistry
         self.veto_bandit = MapVetoBandit(self.raw_dir, self.processed_dir)
-        self.agent_assigner = HungarianAgentAssigner(self.raw_dir, self.processed_dir)
+        self.agent_assigner = SynergisticDraftEngine(self.raw_dir, self.processed_dir)
         self.agent_transformer = self.agent_assigner  # Alias for backward compatibility
 
         # Load datasets (legacy path: populates player_emas, baseline_lookup)
@@ -1004,7 +1036,7 @@ class VCTv5SimulationEngine:
     def simulate_match(self, team_a: str, team_b: str, series_type: str = "Bo3", target_patch: str = "9.02", num_iterations: int = 10000, override_maps: list[str] = None, target_date: datetime | None = None, ub_advantage: bool | str = False, veto_priority: str = "team_a") -> dict:
         """
         Runs Monte Carlo pipeline (10,000 iterations) with Side-Conditioned Markov Simulator
-        and Hungarian Agent Assignment to generate player EV fantasy projections. Supports target_date, ub_advantage, and veto_priority.
+        and Synergistic Agent Assignment to generate player EV fantasy projections. Supports target_date, ub_advantage, and veto_priority.
         """
         logger.info(f"V5 Engine: Starting {num_iterations} Monte Carlo iterations for {team_a} vs {team_b}...")
         if target_date is None:

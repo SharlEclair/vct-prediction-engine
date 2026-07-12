@@ -19,6 +19,7 @@ class VCTMapVetoPredictor:
         self.total_matches = defaultdict(int)
         self.map_pool = set()
         self.team_names = set()
+        self.global_plays = defaultdict(int)
         
     def match_team(self, token_team: str, team_a: str, team_b: str) -> str:
         """Helper to match a token team name to team_a or team_b."""
@@ -104,6 +105,7 @@ class VCTMapVetoPredictor:
                     self.map_pool.add(map_name)
                     self.plays[team_a][map_name] += 1
                     self.plays[team_b][map_name] += 1
+                    self.global_plays[map_name] += 1
                     
                     score = map_data.get("score", {})
                     t1_score = score.get("team1")
@@ -133,7 +135,17 @@ class VCTMapVetoPredictor:
             
             ban_score = ban_count / total_matches
             pick_score = pick_count / total_matches
-            win_rate = win_count / play_count if play_count > 0 else 0.5
+            
+            total_global_plays = sum(self.global_plays.values())
+            total_maps = len(self.map_pool) if self.map_pool else 7
+            propensity = (self.global_plays.get(m, 0) + 1) / (total_global_plays + total_maps)
+            
+            empirical_win_rate = win_count / play_count if play_count > 0 else 0.5
+            baseline_mu = (win_count + 1.0) / (play_count + 2.0) if play_count > 0 else 0.5
+            
+            epsilon = 1e-5
+            win_rate = baseline_mu + (empirical_win_rate - baseline_mu) / (propensity + epsilon)
+            win_rate = float(max(0.1, min(0.9, win_rate)))
             
             # Prefer maps picked often and won often
             pick_preference = pick_score * 2.0 + win_rate
