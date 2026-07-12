@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
 
-from dag_simulation import MockDAGSimulator
+from .dag_simulation import MockDAGSimulator
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
