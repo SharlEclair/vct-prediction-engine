@@ -183,8 +183,8 @@ class VFLScraper:
         role_int = raw.get("playerRole", 0)
         role     = ROLE_MAP.get(role_int, "Wildcard")
 
-        # Price
-        price = int(raw.get("price", 8))
+        # Price (support decimal values like 8.5 VP)
+        price = float(raw.get("price", 8.0))
 
         # Points
         gw_pts_dict  = raw.get("currentGameweekPoints") or {}
