@@ -637,12 +637,23 @@ class FactorizationMachineSynergy:
             noise = rng.normal(0.0, scale, size=self.k - 4).tolist()
             self.V.append(template + noise)
 
-    def compute_synergy_multiplier(self, drafted_agents: list[str]) -> float:
+    def compute_synergy_multiplier(self, drafted_agents: list[str], map_name: str = "Ascent") -> float:
         # Convert drafted agents to active indices
         indices = [self.agent_to_idx[a] for a in drafted_agents if a in self.agent_to_idx]
 
-        # Linear sum (role-seeded weights)
-        linear_sum = sum(self.w[i] for i in indices)
+        # Map-conditioned linear role weight adjustments.
+        # Fracture requires extra Vision Denial (Controllers), Lotus rewards map-control
+        role_profile = {
+            "Fracture": {"Controller": 0.25, "Sentinel": 0.05, "Initiator": 0.12, "Duelist": 0.02},
+            "Lotus":    {"Controller": 0.20, "Sentinel": 0.10, "Initiator": 0.15, "Duelist": 0.02},
+            "Sunset":   {"Controller": 0.15, "Sentinel": 0.10, "Initiator": 0.10, "Duelist": 0.15},
+        }.get(map_name, {"Controller": 0.15, "Sentinel": 0.10, "Initiator": 0.08, "Duelist": 0.02})
+
+        linear_sum = 0.0
+        for i in indices:
+            agent = self.agents[i]
+            role = self.agent_roles.get(agent, "Sentinel")
+            linear_sum += role_profile.get(role, 0.05)
 
         # FM order-2 interaction sum over all k=16 latent dimensions.
         # For each dimension d: 0.5 * ((sum_i v_id)^2 - sum_i v_id^2)
@@ -658,7 +669,21 @@ class FactorizationMachineSynergy:
             fm_score = 0.30
         elif fm_score < -0.30:
             fm_score = -0.30
-        return float(1.0 + fm_score)
+            
+        # Map-conditioned role-boundary masking targets
+        # Fracture expects double controller, Sunset standard
+        c_ctrl = sum(1 for a in drafted_agents if self.agent_roles.get(a) == 'Controller')
+        c_sent = sum(1 for a in drafted_agents if self.agent_roles.get(a) == 'Sentinel')
+        
+        c_target = {"Fracture": 2.0, "Lotus": 1.5, "Sunset": 1.0}.get(map_name, 1.0)
+        s_max    = {"Fracture": 1.0, "Lotus": 2.0, "Sunset": 2.0}.get(map_name, 2.0)
+        
+        # Smooth continuous boundaries:
+        phi_ctrl = float(np.tanh(2.0 * c_ctrl / c_target))
+        phi_sent = float(1.0 - np.tanh(np.max([0.0, c_sent - s_max]) ** 2))
+        
+        mask = phi_ctrl * phi_sent
+        return float((1.0 + fm_score) * mask)
 
 
 class SynergisticDraftEngine:
@@ -831,21 +856,9 @@ class SynergisticDraftEngine:
         def search(player_idx, current_agents, current_utility):
             nonlocal best_composition, best_utility
             if player_idx == n_players:
-                # Calculate dynamic synergy multiplier using Factorization Machine (FM)
-                synergy_mult = self.fm_synergy.compute_synergy_multiplier(current_agents)
-                
-                # Apply smooth continuous role-boundary masking to enforce valid pro compositions
-                c_ctrl = sum(1 for a in current_agents if self.agent_roles.get(a) == 'Controller')
-                c_sent = sum(1 for a in current_agents if self.agent_roles.get(a) == 'Sentinel')
-                
-                # Continuous masks:
-                # 1. Controllers must be >= 1 (mandatory vision denial)
-                phi_ctrl = float(np.tanh(2.0 * c_ctrl))
-                # 2. Sentinels must be <= 2 (prevent triple-Sentinel defensive overlap)
-                phi_sent = float(1.0 - np.tanh(np.max([0.0, c_sent - 2.0]) ** 2))
-                
-                mask = phi_ctrl * phi_sent
-                final_val = current_utility * synergy_mult * mask
+                # Calculate map-conditioned dynamic synergy multiplier using Factorization Machine (FM)
+                synergy_mult = self.fm_synergy.compute_synergy_multiplier(current_agents, map_name)
+                final_val = current_utility * synergy_mult
                 if final_val > best_utility:
                     best_utility = final_val
                     best_composition = list(current_agents)
@@ -1156,8 +1169,8 @@ class KDACopulaEngine:
         # This prevents the K/D/A allocation from acting as a pure zero-sum game, properly
         # indexing shared trade-frags and team-level space control.
         team_alpha_k_scaled = []
-        for p in roster:
-            p_agent = agents[roster.index(p)]
+        for p_idx, p in enumerate(roster):
+            p_agent = agents[p_idx]
             p_role = self.agent_roles.get(p_agent, "Sentinel")
             ak0 = {"Duelist": 2.4, "Initiator": 2.0, "Controller": 1.8, "Sentinel": 1.7}.get(p_role, 1.8)
             feat = player_emas.get(p, baseline_lookup.get(p, {"acs": 200.0, "duel_diff": 0.0}))
