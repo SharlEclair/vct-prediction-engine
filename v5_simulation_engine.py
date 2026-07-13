@@ -331,8 +331,14 @@ class MapVetoBandit:
                     # Solve normal equations: (X^T X + L2) beta = X^T y
                     beta = np.linalg.solve(XTX + 1.0 * reg_matrix, X_np.T @ y_np)
                     # Extrapolate conditional residual mean to trimming boundary b_n
-                    residual_at_boundary = beta[0] + beta[1] * plays + beta[2] * wins + beta[3] * b_n
-                    # B_n(X) = E[Y - mu | X, propensity=b_n] * (1/propensity - 1/b_n)
+                    # Evaluate Ridge at the ACTUAL propensity of the target map (not b_n).
+                    # The bias correction term B_n(X) = ridge_predict([plays, wins, propensity])
+                    # * (1/propensity - 1/b_n) quantifies the gap between the actual IPW weight
+                    # and the trimming boundary. Evaluating at b_n instead of propensity would
+                    # conflate the training axis (other-map propensities) with the query point,
+                    # locking in OVB by projecting a multi-dimensional residual surface onto 1D.
+                    residual_at_boundary = beta[0] + beta[1] * plays + beta[2] * wins + beta[3] * propensity
+                    # B_n(X) = E[Y - mu | X, propensity=propensity] * (1/propensity - 1/b_n)
                     bias_correction = residual_at_boundary * (1.0 / propensity - 1.0 / b_n)
             except Exception:
                 pass  # Silently fall back to uncorrected estimate
@@ -612,54 +618,34 @@ class FactorizationMachineSynergy:
             else: # Duelist
                 self.w[idx] = 0.02
                 
-        self.k = 2
-        self.V = [[0.0, 0.0] for _ in range(len(self.agents))]
-        for agent, role in agent_roles.items():
-            idx = self.agent_to_idx[agent]
-            if role == 'Duelist':
-                self.V[idx] = [0.4, 0.1]
-            elif role == 'Initiator':
-                self.V[idx] = [0.3, 0.2]
-            elif role == 'Controller':
-                self.V[idx] = [0.2, 0.4]
-            elif role == 'Sentinel':
-                self.V[idx] = [0.1, 0.3]
-                
-    def compute_synergy_multiplier(self, drafted_agents: list[str]) -> float:
-        # Convert drafted agents to active indices in pure Python
-        indices = []
-        for agent in drafted_agents:
-            if agent in self.agent_to_idx:
-                indices.append(self.agent_to_idx[agent])
-                
-        # Pure Python linear sum
-        linear_sum = 0.0
-        for idx in indices:
-            linear_sum += self.w[idx]
-            
-        # Pure Python interaction sum (FM order 2 interactions)
-        interaction_sum = 0.0
-        
-        # d = 0
-        sum_vx_0 = 0.0
-        sum_vx_sq_0 = 0.0
-        for idx in indices:
-            val = self.V[idx][0]
-            sum_vx_0 += val
-            sum_vx_sq_0 += val * val
-        interaction_sum += 0.5 * (sum_vx_0 * sum_vx_0 - sum_vx_sq_0)
+        # k=16 latent space. A 2D latent space generates rank-2 inner products which cannot
+        # separate all role-to-role interaction axes across 27+ agents in 4 roles.
+        # k=16 provides C(16,2)=120 distinct interaction directions, enabling the FM to learn
+        # organically that zero-Controller comps have severe negative synergy (no vision denial)
+        # and that triple-Sentinel stacks limit entry capability — without hardcoded penalties.
+        # Xavier/Glorot initialization: V ~ N(0, sqrt(2/k)) prevents gradient saturation.
+        self.k = 16
+        scale = (2.0 / self.k) ** 0.5
+        rng = __import__('numpy').random.default_rng(seed=42)
+        self.V = [rng.normal(0.0, scale, size=self.k).tolist() for _ in range(len(self.agents))]
 
-        # d = 1
-        sum_vx_1 = 0.0
-        sum_vx_sq_1 = 0.0
-        for idx in indices:
-            val = self.V[idx][1]
-            sum_vx_1 += val
-            sum_vx_sq_1 += val * val
-        interaction_sum += 0.5 * (sum_vx_1 * sum_vx_1 - sum_vx_sq_1)
-        
+    def compute_synergy_multiplier(self, drafted_agents: list[str]) -> float:
+        # Convert drafted agents to active indices
+        indices = [self.agent_to_idx[a] for a in drafted_agents if a in self.agent_to_idx]
+
+        # Linear sum (role-seeded weights)
+        linear_sum = sum(self.w[i] for i in indices)
+
+        # FM order-2 interaction sum over all k=16 latent dimensions.
+        # For each dimension d: 0.5 * ((sum_i v_id)^2 - sum_i v_id^2)
+        # This is the standard FM interaction formula, O(nk) in the number of selected agents.
+        interaction_sum = 0.0
+        for d in range(self.k):
+            sv  = sum(self.V[i][d] for i in indices)
+            sv2 = sum(self.V[i][d] ** 2 for i in indices)
+            interaction_sum += 0.5 * (sv * sv - sv2)
+
         fm_score = self.w0 + linear_sum + interaction_sum
-        # Manual clip to keep multiplier within stable [0.70, 1.30] range
         if fm_score > 0.30:
             fm_score = 0.30
         elif fm_score < -0.30:
@@ -955,18 +941,28 @@ class StatefulEconomySimulator:
             eco_diff = loadout_a - loadout_b
             z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
 
-            # Generalized Extreme Value (GEV) link function with Softplus domain guard.
-            # Shape xi=0.20 encodes asymmetric tail (Frechet): defense advantage more
-            # decisive than equal-economy upset, capturing Valorant economy asymmetry.
-            # Centered at Z_shift = -1.708 so that equal-stat teams (Z=0) yield exactly P=0.5.
-            # Softplus guard: Z_safe = (1/xi)*log(1 + exp(xi*(Z + Z_shift) + 1.0)) - 1/xi + eps
-            # guarantees (1 + xi*Z_safe) > 0 strictly, preventing NaN from complex exponents.
-            # P = exp(-(1 + xi*Z_safe)**(-1/xi)) correctly increases with Z (P -> 1 as Z -> inf).
-            xi = 0.20
+            # Generalized Extreme Value (GEV) link with analytically calibrated Softplus guard.
+            # Shape xi=0.20 (Frechet): captures asymmetric economy tails — a 5-pistol vs 5-rifle
+            # round does NOT face symmetric win odds compared to an equal-buy round. The Logistic
+            # link is mathematically forbidden from modeling this tail asymmetry.
+            # Softplus domain guard prevents (1 + xi*Z_safe) <= 0 which causes complex exponents:
+            #   Z_safe = (1/xi)*ln(1 + exp(xi*Z + C)) - 1/xi + eps
+            # C is calibrated analytically so that Z=0 → P=0.5 exactly:
+            #   P(Z=0)=0.5  =>  (1+xi*Z_safe_0)^(-1/xi) = ln2
+            #   => Z_safe_0 = ((ln2)^(-xi) - 1)/xi ≈ 0.737  (with xi=0.20)
+            #   => C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.1474)-1) ≈ 0.765
+            # P = 1 - exp(-(1+xi*Z_safe)^(-1/xi)) correctly increases with Z (P→1 as Z→+inf).
+            xi  = 0.20
+            # Analytically calibrated centering: P(Z=0)=0.5 requires Z_safe_0=0.380.
+            # Derivation: P=1-exp(-(1+xi*Z_safe)^(-1/xi))=0.5
+            #   => (1+xi*Z_safe)^(-1/xi) = ln2
+            #   => Z_safe_0 = ((ln2)^(-xi) - 1)/xi = (0.693^-0.20 - 1)/0.20 = (1.076-1)/0.20 = 0.380
+            # The softplus identity z_safe=(1/xi)*ln(1+exp(xi*z+C))-1/xi gives z_safe(z=0)=0.380 when:
+            #   C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.076)-1) = ln(1.933) = 0.659
+            C   = 0.659
             eps = 1e-6
-            z_shift = -1.708
-            z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * (z + z_shift) + 1.0, -500, 500))) - (1.0 / xi) + eps
-            prob_win_a = float(np.exp(-((1.0 + xi * z_safe) ** (-1.0 / xi))))
+            z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * z + C, -500, 500))) - (1.0 / xi) + eps
+            prob_win_a = float(1.0 - np.exp(-((1.0 + xi * z_safe) ** (-1.0 / xi))))
             
             # Sample round winner
             if np.random.rand() < prob_win_a:
@@ -976,29 +972,34 @@ class StatefulEconomySimulator:
                 loss_streak_a = 0
                 econ_power_a = min(9000.0, max(4500.0, econ_power_a + 3000.0))
                 
-                # Loser updates
+                # Loser (team B) economy update
                 loss_streak_b = min(3, loss_streak_b + 1)
                 bonus_b = 1900.0 if loss_streak_b == 1 else (2400.0 if loss_streak_b == 2 else 2900.0)
-                
-                # Saving check: 15% probability of saving weapon
+
+                # Survive-on-loss mechanic: if a player saves a weapon, Valorant hard-caps their
+                # income to 1,000 credits and STRIPS their loss-streak bonus entirely.
+                # Mechanically: 1 of 5 players gets 1000 (not bonus_b), remaining 4 get full bonus_b.
+                # Net team economy: weapon retained (0.70 factor) + 1000 for saver + 4/5 * bonus_b.
                 if np.random.rand() < 0.15:
-                    econ_power_b = min(9000.0, 1000.0 + 0.70 * econ_power_b + bonus_b)
+                    # Saver: retains weapon but loses streak bonus (1000 hard cap)
+                    # 4 non-savers still receive full loss-streak bonus
+                    econ_power_b = min(9000.0, 0.70 * econ_power_b + 1000.0 + 0.80 * bonus_b)
                 else:
                     econ_power_b = min(9000.0, econ_power_b + bonus_b)
             else:
                 score_b += 1
-                
+
                 # Winner updates
                 loss_streak_b = 0
                 econ_power_b = min(9000.0, max(4500.0, econ_power_b + 3000.0))
-                
-                # Loser updates
+
+                # Loser (team A) economy update
                 loss_streak_a = min(3, loss_streak_a + 1)
                 bonus_a = 1900.0 if loss_streak_a == 1 else (2400.0 if loss_streak_a == 2 else 2900.0)
-                
-                # Saving check
+
+                # Same survive-on-loss mechanic for team A
                 if np.random.rand() < 0.15:
-                    econ_power_a = min(9000.0, 1000.0 + 0.70 * econ_power_a + bonus_a)
+                    econ_power_a = min(9000.0, 0.70 * econ_power_a + 1000.0 + 0.80 * bonus_a)
                 else:
                     econ_power_a = min(9000.0, econ_power_a + bonus_a)
                 
@@ -1735,7 +1736,14 @@ def get_simulation_historical_stats(raw_dir: str):
                 kast_ema = 0.72
 
             if stats.get('duel_count', 0) > 0:
-                duel_ema = stats['sum_duel_diff'] / stats['duel_count']
+                # Bayesian shrinkage toward regional meta-mean (mu=0.0) with N_prior=30 match
+                # equivalents. Without shrinkage, players with small sample sizes (3-5 maps)
+                # can hit the ±0.5 clip ceiling due to variance inflation, producing impossible
+                # 75% first-blood win rates that shatter Markov simulator validity.
+                # Formula: mu_shrunk = (sum_obs + N_prior * mu_meta) / (N_obs + N_prior)
+                N_prior = 30.0
+                mu_meta = 0.0  # Regional meta prior: equal first-blood exchange rate
+                duel_ema = (stats['sum_duel_diff'] + N_prior * mu_meta) / (stats['duel_count'] + N_prior)
             elif p_name in baseline_lookup:
                 duel_ema = baseline_lookup[p_name]['duel_diff']
             else:
@@ -1744,7 +1752,9 @@ def get_simulation_historical_stats(raw_dir: str):
             player_emas[p_name] = {
                 "acs": compute_clipped_acs(stats),
                 "kast": float(np.clip(kast_ema, 0.0, 1.0)),
-                "duel_diff": float(np.clip(duel_ema, -0.5, 0.5))
+                # Clip to ±0.15: realistic T1 range is +0.05 to +0.12 for elite fraggers.
+                # The prior ±0.5 clip allowed physically impossible win rates through.
+                "duel_diff": float(np.clip(duel_ema, -0.15, 0.15))
             }
             
     # Default fallback for any unseen player

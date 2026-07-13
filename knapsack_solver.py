@@ -141,14 +141,15 @@ def _solve_right_tail_cvar_subproblem(
     # Written as: [1, 0...1...0] * [alpha, y_s] >= -R_s
     # scipy LinearConstraint: lb <= A @ x <= ub
     # Row s: alpha + y_s >= -R_s  →  lb = -R_s, ub = +inf
-    n_vars = 1 + S
-    rows = []
-    for s in range(S):
-        row = np.zeros(n_vars)
-        row[0] = 1.0    # alpha
-        row[1 + s] = 1.0  # y_s
-        rows.append(row)
-    A = csc_matrix(np.array(rows))
+    # Build constraint matrix directly in sparse COO format.
+    # Each row s has exactly 2 non-zeros: A[s,0]=1 (alpha) and A[s,1+s]=1 (y_s).
+    # The dense Python loop previously materialized a full (S, 1+S) NumPy array before
+    # calling csc_matrix — allocating ~800MB for S=10,000. Building COO triplets directly
+    # costs O(S) time and O(S) memory (~160KB for S=10,000).
+    row_idx = np.concatenate([np.arange(S, dtype=np.int32), np.arange(S, dtype=np.int32)])
+    col_idx = np.concatenate([np.zeros(S, dtype=np.int32), np.arange(1, S + 1, dtype=np.int32)])
+    data    = np.ones(2 * S, dtype=np.float64)
+    A = csc_matrix((data, (row_idx, col_idx)), shape=(S, 1 + S))
     lb = -R                     # lower bound per constraint row
     ub = np.full(S, np.inf)    # no upper bound
 
