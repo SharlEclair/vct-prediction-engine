@@ -958,15 +958,14 @@ class StatefulEconomySimulator:
             # Generalized Extreme Value (GEV) link function with Softplus domain guard.
             # Shape xi=0.20 encodes asymmetric tail (Frechet): defense advantage more
             # decisive than equal-economy upset, capturing Valorant economy asymmetry.
-            # Centered at Z_shift = 0.378 so that equal-stat teams (Z=0) yield exactly P=0.5.
-            # Softplus guard: Z_safe = (1/xi)*log(1 + exp(xi*(Z + Z_shift) + C)) - 1/xi + eps
+            # Centered at Z_shift = -1.708 so that equal-stat teams (Z=0) yield exactly P=0.5.
+            # Softplus guard: Z_safe = (1/xi)*log(1 + exp(xi*(Z + Z_shift) + 1.0)) - 1/xi + eps
             # guarantees (1 + xi*Z_safe) > 0 strictly, preventing NaN from complex exponents.
             # P = exp(-(1 + xi*Z_safe)**(-1/xi)) correctly increases with Z (P -> 1 as Z -> inf).
             xi = 0.20
-            C = 1.5
             eps = 1e-6
-            z_shift = 0.378
-            z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * (z + z_shift) + C, -500, 500))) - (1.0 / xi) + eps
+            z_shift = -1.708
+            z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * (z + z_shift) + 1.0, -500, 500))) - (1.0 / xi) + eps
             prob_win_a = float(np.exp(-((1.0 + xi * z_safe) ** (-1.0 / xi))))
             
             # Sample round winner
