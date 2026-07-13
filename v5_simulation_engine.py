@@ -618,16 +618,24 @@ class FactorizationMachineSynergy:
             else: # Duelist
                 self.w[idx] = 0.02
                 
-        # k=16 latent space. A 2D latent space generates rank-2 inner products which cannot
-        # separate all role-to-role interaction axes across 27+ agents in 4 roles.
-        # k=16 provides C(16,2)=120 distinct interaction directions, enabling the FM to learn
-        # organically that zero-Controller comps have severe negative synergy (no vision denial)
-        # and that triple-Sentinel stacks limit entry capability — without hardcoded penalties.
+        # k=16 latent space. Seed first 4 dimensions with role templates to establish
+        # baseline cross-role synergies and limits, padding the rest with Xavier noise.
         # Xavier/Glorot initialization: V ~ N(0, sqrt(2/k)) prevents gradient saturation.
         self.k = 16
         scale = (2.0 / self.k) ** 0.5
         rng = __import__('numpy').random.default_rng(seed=42)
-        self.V = [rng.normal(0.0, scale, size=self.k).tolist() for _ in range(len(self.agents))]
+        role_templates = {
+            "Controller": [0.30, 0.15, 0.10, 0.05],
+            "Sentinel":   [0.10, -0.25, 0.12, 0.05],
+            "Initiator":  [0.20, 0.12, 0.30, 0.15],
+            "Duelist":    [0.15, 0.05, -0.15, 0.25]
+        }
+        self.V = []
+        for agent in self.agents:
+            role = self.agent_roles.get(agent, "Sentinel")
+            template = role_templates.get(role, [0.0]*4)
+            noise = rng.normal(0.0, scale, size=self.k - 4).tolist()
+            self.V.append(template + noise)
 
     def compute_synergy_multiplier(self, drafted_agents: list[str]) -> float:
         # Convert drafted agents to active indices
@@ -825,7 +833,19 @@ class SynergisticDraftEngine:
             if player_idx == n_players:
                 # Calculate dynamic synergy multiplier using Factorization Machine (FM)
                 synergy_mult = self.fm_synergy.compute_synergy_multiplier(current_agents)
-                final_val = current_utility * synergy_mult
+                
+                # Apply smooth continuous role-boundary masking to enforce valid pro compositions
+                c_ctrl = sum(1 for a in current_agents if self.agent_roles.get(a) == 'Controller')
+                c_sent = sum(1 for a in current_agents if self.agent_roles.get(a) == 'Sentinel')
+                
+                # Continuous masks:
+                # 1. Controllers must be >= 1 (mandatory vision denial)
+                phi_ctrl = float(np.tanh(2.0 * c_ctrl))
+                # 2. Sentinels must be <= 2 (prevent triple-Sentinel defensive overlap)
+                phi_sent = float(1.0 - np.tanh(np.max([0.0, c_sent - 2.0]) ** 2))
+                
+                mask = phi_ctrl * phi_sent
+                final_val = current_utility * synergy_mult * mask
                 if final_val > best_utility:
                     best_utility = final_val
                     best_composition = list(current_agents)
@@ -867,7 +887,10 @@ class StatefulEconomySimulator:
     Tracks scoring, team-level loss-streaks, dynamic credit injections (loss bonuses),
     halftime/OT resets, and weapon saving survival penalties.
     """
-    def __init__(self, team_a_stats: dict | float = 200.0, team_b_stats: dict | float = 200.0, map_name: str = "Ascent", starting_side_a: str = "DEF"):
+    def __init__(self, team_a_stats: dict | float = 200.0, team_b_stats: dict | float = 200.0, 
+                 map_name: str = "Ascent", starting_side_a: str = "DEF",
+                 map_wr_a: float = 0.5, map_wr_b: float = 0.5,
+                 syn_a: float = 1.0, syn_b: float = 1.0):
         if isinstance(team_a_stats, (int, float)):
             self.acs_a = float(team_a_stats)
         else:
@@ -880,6 +903,10 @@ class StatefulEconomySimulator:
             
         self.map_name = map_name
         self.starting_side_a = starting_side_a
+        self.map_wr_a = map_wr_a
+        self.map_wr_b = map_wr_b
+        self.syn_a = syn_a
+        self.syn_b = syn_b
         
     def get_side_advantage_a(self, current_side_a: str) -> float:
         """Computes side advantage multiplier for Team A based on current side and map bias."""
@@ -983,26 +1010,31 @@ class StatefulEconomySimulator:
             team_loadout_a = loadout_a * 5.0
             team_loadout_b = loadout_b * 5.0
             
-            # Compute log-odds Z based on true combat strength difference
+            # Compute map-specific skill log-odds logit difference and composition synergy difference
+            eps_logit = 1e-5
+            logit_a = float(np.log(max(self.map_wr_a, eps_logit) / max(1.0 - self.map_wr_a, eps_logit)))
+            logit_b = float(np.log(max(self.map_wr_b, eps_logit) / max(1.0 - self.map_wr_b, eps_logit)))
+            map_skill_diff = logit_a - logit_b
+            syn_diff = self.syn_a - self.syn_b
+            
+            # Compute log-odds Z based on true combat strength difference, skill delta, and synergy delta
             acs_diff = self.acs_a - self.acs_b
             eco_diff = team_loadout_a - team_loadout_b
-            z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
+            # beta_map = 0.08 matches historical map advantage scaling.
+            # beta_syn = 1.0 allows composition drafting quality to directly impact round performance.
+            z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a + 0.08 * map_skill_diff + 1.0 * syn_diff
 
             # Generalized Extreme Value (GEV) link with analytically calibrated Softplus guard.
-            # Shape xi=0.20 (Frechet): captures asymmetric economy tails — a 5-pistol vs 5-rifle
-            # round does NOT face symmetric win odds compared to an equal-buy round. The Logistic
-            # link is mathematically forbidden from modeling this tail asymmetry.
-            # Softplus domain guard prevents (1 + xi*Z_safe) <= 0 which causes complex exponents:
-            #   Z_safe = (1/xi)*ln(1 + exp(xi*Z + C)) - 1/xi + eps
+            # Shape xi=0.08 (Frechet): captures asymmetric economy tails while preventing mode-mean detachment.
             # C is calibrated analytically so that Z=0 → P=0.5 exactly:
-            #   P(Z=0)=0.5  =>  (1+xi*Z_safe_0)^(-1/xi) = ln2
-            #   => Z_safe_0 = ((ln2)^(-xi) - 1)/xi = (0.693^-0.20 - 1)/0.20 = 0.380
-            #   => C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.076)-1) = ln(1.933) = 0.659
-            xi  = 0.20
-            C   = 0.659
+            #   Z_safe_0 = ((ln2)^(-xi) - 1)/xi = (0.693^-0.08 - 1)/0.08 = 0.370
+            #   C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.0296)-1) = ln(1.800) = 0.588
+            xi  = 0.08
+            C   = 0.588
             eps = 1e-6
             z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * z + C, -500, 500))) - (1.0 / xi) + eps
-            prob_win_a = float(1.0 - np.exp(-((1.0 + xi * z_safe) ** (-1.0 / xi))))
+            # Correct monotonic win probability: P = exp(-(1 + xi*z_safe)^(-1/xi))
+            prob_win_a = float(np.exp(-((1.0 + xi * z_safe) ** (-1.0 / xi))))
             
             # Sample round winner
             if np.random.rand() < prob_win_a:
@@ -1120,12 +1152,27 @@ class KDACopulaEngine:
         raw_assists = []
         raw_deaths = []
         
+        # Precompute team average shape_k base to model cooperative trade-fragging dynamics.
+        # This prevents the K/D/A allocation from acting as a pure zero-sum game, properly
+        # indexing shared trade-frags and team-level space control.
+        team_alpha_k_scaled = []
+        for p in roster:
+            p_agent = agents[roster.index(p)]
+            p_role = self.agent_roles.get(p_agent, "Sentinel")
+            ak0 = {"Duelist": 2.4, "Initiator": 2.0, "Controller": 1.8, "Sentinel": 1.7}.get(p_role, 1.8)
+            feat = player_emas.get(p, baseline_lookup.get(p, {"acs": 200.0, "duel_diff": 0.0}))
+            acs = feat.get("acs", 200.0)
+            dd = feat.get("duel_diff", 0.0)
+            team_alpha_k_scaled.append(ak0 * np.exp(0.004 * (acs - 200.0) + 0.3 * dd))
+        team_avg_shape_k = float(np.mean(team_alpha_k_scaled))
+        
         for idx, player in enumerate(roster):
             agent = agents[idx]
             role = self.agent_roles.get(agent, "Sentinel")
             
             # --- KILLS ---
-            alpha_k_0 = {"Duelist": 3.8, "Initiator": 2.3, "Controller": 1.6, "Sentinel": 1.2}.get(role, 1.5)
+            # Compressed baselines to match pro VCT kill ratios (ratio of Duelist to Sentinel KPR is ~1.2-1.3, not 3.0+)
+            alpha_k_0 = {"Duelist": 2.4, "Initiator": 2.0, "Controller": 1.8, "Sentinel": 1.7}.get(role, 1.8)
             feat = player_emas.get(player, baseline_lookup.get(player, {"acs": 200.0, "duel_diff": 0.0}))
             acs = feat.get("acs", 200.0)
             duel_diff = feat.get("duel_diff", 0.0)
@@ -1133,15 +1180,19 @@ class KDACopulaEngine:
             
             cf = self.get_cohesion_coefficient(player)
             cohesion_gate = self.CF_MIN_SCALE + (1.0 - self.CF_MIN_SCALE) * cf
-            shape_k = max(alpha_k_scaled * cohesion_gate, 0.1)
+            
+            # Blend individual shape with the team average shape to model trade-fragging dynamics
+            shape_k_ind = alpha_k_scaled * cohesion_gate
+            shape_k_team = team_avg_shape_k * cohesion_gate
+            shape_k = max(0.6 * shape_k_ind + 0.4 * shape_k_team, 0.1)
             
             # --- DEATHS ---
-            alpha_d_0 = {"Duelist": 2.8, "Initiator": 2.2, "Controller": 1.9, "Sentinel": 1.6}.get(role, 2.0)
+            alpha_d_0 = {"Duelist": 2.2, "Initiator": 2.0, "Controller": 1.9, "Sentinel": 1.8}.get(role, 1.9)
             alpha_d_scaled = alpha_d_0 * np.exp(-0.2 * duel_diff)
             shape_d = max(alpha_d_scaled, 0.1)
             
             # --- ASSISTS ---
-            alpha_a_0 = {"Initiator": 3.2, "Controller": 2.8, "Sentinel": 1.6, "Duelist": 1.2}.get(role, 2.0)
+            alpha_a_0 = {"Initiator": 2.2, "Controller": 2.0, "Sentinel": 1.4, "Duelist": 1.1}.get(role, 1.6)
             shape_a = max(alpha_a_0, 0.1)
             
             # --- Latent variables for Gaussian Copula ---
@@ -1351,8 +1402,21 @@ class VCTv5SimulationEngine:
             # Simulate each map
             for map_idx, map_name in enumerate(series_maps):
                 starting_side_a = veto_res.get("starting_sides_a", ["DEF"] * len(series_maps))[map_idx]
+                
+                # Fetch map-specific DR win rates and synergy multipliers to bridge draft and round sims
+                map_wr_a = self.veto_bandit.predict_map_win_rate_dr(team_a, team_b, map_name, target_date)
+                map_wr_b = self.veto_bandit.predict_map_win_rate_dr(team_b, team_a, map_name, target_date)
+                
+                comp_a, comp_b = map_compositions[map_name]
+                syn_a = self.agent_assigner.fm_synergy.compute_synergy_multiplier(comp_a)
+                syn_b = self.agent_assigner.fm_synergy.compute_synergy_multiplier(comp_b)
+                
                 # Run Stateful Economy round simulation
-                markov_sim = StatefulEconomySimulator(acs_team_a, acs_team_b, map_name, starting_side_a=starting_side_a)
+                markov_sim = StatefulEconomySimulator(
+                    acs_team_a, acs_team_b, map_name, starting_side_a=starting_side_a,
+                    map_wr_a=map_wr_a, map_wr_b=map_wr_b,
+                    syn_a=syn_a, syn_b=syn_b
+                )
                 score_a, score_b = markov_sim.simulate_rounds()
                 series_map_scores.append((score_a, score_b))
                 
