@@ -895,16 +895,20 @@ class StatefulEconomySimulator:
     def simulate_rounds(self, rate_a: float = None, rate_b: float = None) -> tuple[int, int]:
         """
         Runs discrete-time round simulation from Round 1 up to terminal state (13 wins or OT).
-        Tracks scores, loss streaks, and stateful credit balances.
+        Decoupled bank vs loadout state:
+          - bank_a, bank_b: average player cash balance (capped at 9,000 credits).
+          - loadout_a, loadout_b: average player active combat loadout value (capped at 4,500 credits).
         """
         score_a = 0
         score_b = 0
         loss_streak_a = 0
         loss_streak_b = 0
         
-        # Initial pistol round economy
-        econ_power_a = 800.0
-        econ_power_b = 800.0
+        # Initial pistol round state (800 starting cash, no weapons)
+        bank_a = 800.0
+        bank_b = 800.0
+        loadout_a = 0.0
+        loadout_b = 0.0
         
         # Initial side assignment
         current_side_a = self.starting_side_a
@@ -914,9 +918,11 @@ class StatefulEconomySimulator:
             # Check Round 13 Side Swap
             if round_number == 13:
                 current_side_a = "ATK" if current_side_a == "DEF" else "DEF"
-                # Halftime Reset: reset economy and streaks
-                econ_power_a = 800.0
-                econ_power_b = 800.0
+                # Halftime Reset: reset bank, loadout and loss streaks
+                bank_a = 800.0
+                bank_b = 800.0
+                loadout_a = 0.0
+                loadout_b = 0.0
                 loss_streak_a = 0
                 loss_streak_b = 0
                 
@@ -925,20 +931,61 @@ class StatefulEconomySimulator:
             if is_ot:
                 side_adv_a = 0.0
                 # Overtime Reset: standard OT buy credits
-                econ_power_a = 5000.0
-                econ_power_b = 5000.0
+                bank_a = 5000.0
+                bank_b = 5000.0
+                loadout_a = 0.0
+                loadout_b = 0.0
                 loss_streak_a = 0
                 loss_streak_b = 0
             else:
                 side_adv_a = self.get_side_advantage_a(current_side_a)
-                
-            # Scale team economy to drive loadout delta
-            loadout_a = econ_power_a * 4.0
-            loadout_b = econ_power_b * 4.0
+
+            # --- Purchase Phase ---
+            # Team A purchase logic
+            if bank_a + loadout_a >= 4500.0:
+                # Full buy (4,500 credits worth of weapon, heavy armor, and utility)
+                spent_a = max(0.0, 4500.0 - loadout_a)
+                loadout_a = 4500.0
+                bank_a = max(0.0, bank_a - spent_a)
+            else:
+                # Cannot afford full buy
+                # Check if it is a strategic save round (eco):
+                # More likely to save if bank is low (below 3,000) and it's not the end of half/match.
+                is_save_a = (bank_a < 3000.0) and (not is_ot) and (round_number != 12) and (round_number != 24)
+                if is_save_a:
+                    # Save round: buy a light loadout of 1,500 credits
+                    spent_a = max(0.0, 1500.0 - loadout_a)
+                    loadout_a = max(loadout_a, 1500.0)
+                    bank_a = max(0.0, bank_a - spent_a)
+                else:
+                    # Force buy: spend all bank up to max loadout
+                    spent_a = bank_a
+                    loadout_a = min(4500.0, loadout_a + spent_a)
+                    bank_a = 0.0
+
+            # Team B purchase logic
+            if bank_b + loadout_b >= 4500.0:
+                spent_b = max(0.0, 4500.0 - loadout_b)
+                loadout_b = 4500.0
+                bank_b = max(0.0, bank_b - spent_b)
+            else:
+                is_save_b = (bank_b < 3000.0) and (not is_ot) and (round_number != 12) and (round_number != 24)
+                if is_save_b:
+                    spent_b = max(0.0, 1500.0 - loadout_b)
+                    loadout_b = max(loadout_b, 1500.0)
+                    bank_b = max(0.0, bank_b - spent_b)
+                else:
+                    spent_b = bank_b
+                    loadout_b = min(4500.0, loadout_b + spent_b)
+                    bank_b = 0.0
             
-            # Compute log-odds Z based on true economy difference
+            # Scale combat loadout delta to team-level bounds (5 players total)
+            team_loadout_a = loadout_a * 5.0
+            team_loadout_b = loadout_b * 5.0
+            
+            # Compute log-odds Z based on true combat strength difference
             acs_diff = self.acs_a - self.acs_b
-            eco_diff = loadout_a - loadout_b
+            eco_diff = team_loadout_a - team_loadout_b
             z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
 
             # Generalized Extreme Value (GEV) link with analytically calibrated Softplus guard.
@@ -949,16 +996,9 @@ class StatefulEconomySimulator:
             #   Z_safe = (1/xi)*ln(1 + exp(xi*Z + C)) - 1/xi + eps
             # C is calibrated analytically so that Z=0 → P=0.5 exactly:
             #   P(Z=0)=0.5  =>  (1+xi*Z_safe_0)^(-1/xi) = ln2
-            #   => Z_safe_0 = ((ln2)^(-xi) - 1)/xi ≈ 0.737  (with xi=0.20)
-            #   => C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.1474)-1) ≈ 0.765
-            # P = 1 - exp(-(1+xi*Z_safe)^(-1/xi)) correctly increases with Z (P→1 as Z→+inf).
+            #   => Z_safe_0 = ((ln2)^(-xi) - 1)/xi = (0.693^-0.20 - 1)/0.20 = 0.380
+            #   => C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.076)-1) = ln(1.933) = 0.659
             xi  = 0.20
-            # Analytically calibrated centering: P(Z=0)=0.5 requires Z_safe_0=0.380.
-            # Derivation: P=1-exp(-(1+xi*Z_safe)^(-1/xi))=0.5
-            #   => (1+xi*Z_safe)^(-1/xi) = ln2
-            #   => Z_safe_0 = ((ln2)^(-xi) - 1)/xi = (0.693^-0.20 - 1)/0.20 = (1.076-1)/0.20 = 0.380
-            # The softplus identity z_safe=(1/xi)*ln(1+exp(xi*z+C))-1/xi gives z_safe(z=0)=0.380 when:
-            #   C = ln(exp(1 + xi*Z_safe_0) - 1) = ln(exp(1.076)-1) = ln(1.933) = 0.659
             C   = 0.659
             eps = 1e-6
             z_safe = (1.0 / xi) * np.log1p(np.exp(np.clip(xi * z + C, -500, 500))) - (1.0 / xi) + eps
@@ -968,40 +1008,56 @@ class StatefulEconomySimulator:
             if np.random.rand() < prob_win_a:
                 score_a += 1
                 
-                # Winner updates
+                # Winner updates (Team A):
+                # Save gear: average 3.25 players survive, keeping 65% of team gear value
+                loadout_a = 0.65 * loadout_a
+                # Win bonus: no floor, capped bank
+                bank_a = min(9000.0, bank_a + 3000.0)
                 loss_streak_a = 0
-                econ_power_a = min(9000.0, max(4500.0, econ_power_a + 3000.0))
                 
-                # Loser (team B) economy update
+                # Loser updates (Team B):
                 loss_streak_b = min(3, loss_streak_b + 1)
                 bonus_b = 1900.0 if loss_streak_b == 1 else (2400.0 if loss_streak_b == 2 else 2900.0)
-
-                # Survive-on-loss mechanic: if a player saves a weapon, Valorant hard-caps their
-                # income to 1,000 credits and STRIPS their loss-streak bonus entirely.
-                # Mechanically: 1 of 5 players gets 1000 (not bonus_b), remaining 4 get full bonus_b.
-                # Net team economy: weapon retained (0.70 factor) + 1000 for saver + 4/5 * bonus_b.
-                if np.random.rand() < 0.15:
-                    # Saver: retains weapon but loses streak bonus (1000 hard cap)
-                    # 4 non-savers still receive full loss-streak bonus
-                    econ_power_b = min(9000.0, 0.70 * econ_power_b + 1000.0 + 0.80 * bonus_b)
+                
+                # Conditional save probability based on loadout disadvantage
+                if is_ot or round_number == 12 or round_number == 24:
+                    save_prob_b = 0.0
                 else:
-                    econ_power_b = min(9000.0, econ_power_b + bonus_b)
+                    save_prob_b = float(np.clip(0.05 + 0.30 * (team_loadout_a - team_loadout_b) / 22500.0, 0.0, 0.40))
+                
+                if np.random.rand() < save_prob_b:
+                    # Save event: 1 player survives and saves gear (20% of team loadout value)
+                    # Saver salary is hard-capped at 1,000 credits (no loss bonus).
+                    # Remaining 4 dead players get the full loss bonus.
+                    loadout_b = 0.20 * loadout_b
+                    bank_b = min(9000.0, bank_b + 1000.0/5.0 + 0.80 * bonus_b)
+                else:
+                    # Complete wipeout
+                    loadout_b = 0.0
+                    bank_b = min(9000.0, bank_b + bonus_b)
             else:
                 score_b += 1
-
-                # Winner updates
+                
+                # Winner updates (Team B):
+                loadout_b = 0.65 * loadout_b
+                bank_b = min(9000.0, bank_b + 3000.0)
                 loss_streak_b = 0
-                econ_power_b = min(9000.0, max(4500.0, econ_power_b + 3000.0))
-
-                # Loser (team A) economy update
+                
+                # Loser updates (Team A):
                 loss_streak_a = min(3, loss_streak_a + 1)
                 bonus_a = 1900.0 if loss_streak_a == 1 else (2400.0 if loss_streak_a == 2 else 2900.0)
-
-                # Same survive-on-loss mechanic for team A
-                if np.random.rand() < 0.15:
-                    econ_power_a = min(9000.0, 0.70 * econ_power_a + 1000.0 + 0.80 * bonus_a)
+                
+                if is_ot or round_number == 12 or round_number == 24:
+                    save_prob_a = 0.0
                 else:
-                    econ_power_a = min(9000.0, econ_power_a + bonus_a)
+                    save_prob_a = float(np.clip(0.05 + 0.30 * (team_loadout_b - team_loadout_a) / 22500.0, 0.0, 0.40))
+                
+                if np.random.rand() < save_prob_a:
+                    loadout_a = 0.20 * loadout_a
+                    bank_a = min(9000.0, bank_a + 1000.0/5.0 + 0.80 * bonus_a)
+                else:
+                    loadout_a = 0.0
+                    bank_a = min(9000.0, bank_a + bonus_a)
                 
             round_number += 1
             
