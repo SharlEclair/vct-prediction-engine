@@ -1023,21 +1023,12 @@ class StatefulEconomySimulator:
             team_loadout_a = loadout_a * 5.0
             team_loadout_b = loadout_b * 5.0
             
-            # Compute map-specific skill log-odds logit difference and composition synergy difference
-            eps_logit = 1e-5
-            logit_a = float(np.log(max(self.map_wr_a, eps_logit) / max(1.0 - self.map_wr_a, eps_logit)))
-            logit_b = float(np.log(max(self.map_wr_b, eps_logit) / max(1.0 - self.map_wr_b, eps_logit)))
-            map_skill_diff = logit_a - logit_b
-            syn_diff = self.syn_a - self.syn_b
-            
-            # Compute log-odds Z based on true combat strength difference, skill delta, and synergy delta
+            # Compute log-odds Z based ONLY on micro-level states: dynamic combat strength, economy, and side biases
             acs_diff = self.acs_a - self.acs_b
             eco_diff = team_loadout_a - team_loadout_b
-            # beta_map = 0.08 matches historical map advantage scaling.
-            # beta_syn = 1.0 allows composition drafting quality to directly impact round performance.
-            z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a + 0.08 * map_skill_diff + 1.0 * syn_diff
+            z = 0.003 * acs_diff + 0.00004 * eco_diff + 2.0 * side_adv_a
 
-            # Generalized Extreme Value (GEV) link with analytically calibrated Softplus guard.
+            # Generalized Extreme Value (GEV) link with analytically calibrated Softplus domain guard.
             # Shape xi=0.08 (Frechet): captures asymmetric economy tails while preventing mode-mean detachment.
             # C is calibrated analytically so that Z=0 → P=0.5 exactly:
             #   Z_safe_0 = ((ln2)^(-xi) - 1)/xi = (0.693^-0.08 - 1)/0.08 = 0.370
