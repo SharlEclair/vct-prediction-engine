@@ -387,7 +387,8 @@ def optimize_roster(
     player_stats: dict[str, dict] = None,
     transfer_constraint: dict = None,  # Contains 'current_roster' and 'max_transfers'
     forced_igl_name: str = None,
-    excluded_rosters: list[list[str]] = None
+    excluded_rosters: list[list[str]] = None,
+    active_team_pool: set = None
 ) -> dict:
     """
     Solves VFL roster selection as a Mixed-Integer Linear Program (MILP).
@@ -434,15 +435,26 @@ def optimize_roster(
         tid = p_norm.get("vlr_team_id")
         wr = team_win_rates.get(tid, 0.50) if isinstance(tid, int) else 0.50
         if wr >= survival_threshold or is_in_curr:
-            # Enrich player data with stats database lookup
-            stats = player_stats.get(pname, {})
-            p_norm["computed_ppg"] = stats.get("ppg", p_norm.get("ppg", 10.0))
-            p_norm["computed_sigma"] = stats.get("sigma", 3.0)
-            
-            # Use continuous CVaR 90 (expected ceiling) and CVaR 10 (expected worst-case floor)
-            p_norm["cvar_90"] = stats.get("cvar_90", p_norm["computed_ppg"] + 1.5 * p_norm["computed_sigma"])
-            p_norm["cvar_10"] = stats.get("cvar_10", p_norm["computed_ppg"] - 1.5 * p_norm["computed_sigma"])
-            p_norm["floor"] = p_norm["cvar_10"]
+            # Check if team is inactive in upcoming team pool
+            p_team = p_norm.get("team") or p_norm.get("team_name")
+            if active_team_pool is not None and p_team not in active_team_pool:
+                p_norm["computed_ppg"] = 0.0
+                p_norm["computed_sigma"] = 0.0
+                p_norm["cvar_90"] = 0.0
+                p_norm["cvar_10"] = 0.0
+                p_norm["floor"] = 0.0
+            else:
+                stats = player_stats.get(pname, {})
+                if "EV" in p_norm:
+                    p_norm["computed_ppg"] = float(p_norm["EV"])
+                else:
+                    p_norm["computed_ppg"] = stats.get("ppg", p_norm.get("ppg", 10.0))
+                p_norm["computed_sigma"] = stats.get("sigma", 3.0)
+                
+                # Use continuous CVaR 90 (expected ceiling) and CVaR 10 (expected worst-case floor)
+                p_norm["cvar_90"] = stats.get("cvar_90", p_norm["computed_ppg"] + 1.5 * p_norm["computed_sigma"])
+                p_norm["cvar_10"] = stats.get("cvar_10", p_norm["computed_ppg"] - 1.5 * p_norm["computed_sigma"])
+                p_norm["floor"] = p_norm["cvar_10"]
             filtered_players.append(p_norm)
             
     n = len(filtered_players)
@@ -747,7 +759,9 @@ def optimize_roster(
         is_wild = selected_as_wildcard[idx]
         optimal_roster.append({
             "player_name": p["player_name"],
-            "vlr_team_id": p["vlr_team_id"],
+            "name": p["player_name"],
+            "team": p.get("team") or p.get("team_name") or p.get("vlr_team_id"),
+            "vlr_team_id": p.get("vlr_team_id"),
             "role": p["role"],
             "price": p["price"],
             "ppg": p["computed_ppg"],
@@ -804,7 +818,8 @@ def suggest_transfers(
     remaining_bank_balance: float = 0.0, 
     forced_igl_name: str = None,
     salary_cap: float = 50.0,
-    roster_size: int = 6
+    roster_size: int = 6,
+    active_team_pool: set = None
 ) -> dict:
     """
     Transfer Advisor component. Enforces VFL ruleset.
@@ -835,7 +850,8 @@ def suggest_transfers(
             survival_threshold=0.35,
             transfer_constraint=transfer_constraint,
             forced_igl_name=forced_igl_name,
-            excluded_rosters=excluded_rosters
+            excluded_rosters=excluded_rosters,
+            active_team_pool=active_team_pool
         )
         if res["solver_status"] == "optimal":
             result = res
@@ -851,7 +867,8 @@ def suggest_transfers(
                 survival_threshold=0.35,
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
-                excluded_rosters=excluded_rosters
+                excluded_rosters=excluded_rosters,
+                active_team_pool=active_team_pool
             )
             if res["solver_status"] == "optimal":
                 result = res
@@ -867,7 +884,8 @@ def suggest_transfers(
                 survival_threshold=0.35,
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
-                excluded_rosters=excluded_rosters
+                excluded_rosters=excluded_rosters,
+                active_team_pool=active_team_pool
             )
             if res["solver_status"] == "optimal":
                 result = res
@@ -884,7 +902,8 @@ def suggest_transfers(
                 survival_threshold=0.35,
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
-                excluded_rosters=excluded_rosters
+                excluded_rosters=excluded_rosters,
+                active_team_pool=active_team_pool
             )
             if res["solver_status"] == "optimal":
                 result = res
@@ -892,23 +911,23 @@ def suggest_transfers(
         if result is not None and result["solver_status"] == "optimal":
             new_roster = result["optimal_roster"]
             
-            curr_names = set(p["player_name"] for p in current_roster)
-            new_names = set(p["player_name"] for p in new_roster)
+            curr_names = set(p.get("player_name") or p.get("name") for p in current_roster)
+            new_names = set(p.get("player_name") or p.get("name") for p in new_roster)
             
-            transfers_out = [p for p in current_roster if p["player_name"] not in new_names]
-            transfers_in = [p for p in new_roster if p["player_name"] not in curr_names]
+            transfers_out = [p for p in current_roster if (p.get("player_name") or p.get("name")) not in new_names]
+            transfers_in = [p for p in new_roster if (p.get("player_name") or p.get("name")) not in curr_names]
             
             incoming_cost = sum(p.get("price", p.get("cost", 0)) for p in transfers_in)
             outgoing_cost = sum(p.get("price", p.get("cost", 0)) for p in transfers_out)
             
             # Strict liquidity condition check
             if incoming_cost > outgoing_cost + floating_bank:
-                roster_names = [p["player_name"] for p in new_roster]
+                roster_names = [p.get("player_name") or p.get("name") for p in new_roster]
                 excluded_rosters.append(roster_names)
                 continue
 
             # Exclude this roster combination from subsequent option searches
-            roster_names = [p["player_name"] for p in new_roster]
+            roster_names = [p.get("player_name") or p.get("name") for p in new_roster]
             excluded_rosters.append(roster_names)
             
             # Calculate projected gain (difference in points)
@@ -916,8 +935,11 @@ def suggest_transfers(
             player_stats = compute_all_players_historical_stats(RAW_DIR)
             
             for p in current_roster:
-                stats = player_stats.get(p["player_name"], {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
+                p_name = p.get("player_name") or p.get("name")
+                stats = player_stats.get(p_name, {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
                 p_enriched = p.copy()
+                p_enriched["player_name"] = p_name
+                p_enriched["name"] = p_name
                 p_enriched["ppg"] = stats.get("ppg", p.get("ppg", 10.0))
                 p_enriched["sigma"] = stats.get("sigma", 3.0)
                 p_enriched["floor"] = p_enriched["ppg"] - 1.0 * p_enriched["sigma"]
@@ -938,9 +960,13 @@ def suggest_transfers(
             
             current_points = 0.0
             for idx, p in enumerate(current_roster_enriched):
-                pts = p["ppg"]
-                if idx == igl_index:  # Active IGL is doubled
-                    pts *= 2.0
+                p_team = p.get("team") or p.get("team_name")
+                if active_team_pool is not None and p_team not in active_team_pool:
+                    pts = 0.0
+                else:
+                    pts = p.get("EV", p.get("ppg", 10.0))
+                    if idx == igl_index:  # Active IGL is doubled
+                        pts *= 2.0
                 current_points += pts
                 
             projected_gain = result["projected_points"] - current_points

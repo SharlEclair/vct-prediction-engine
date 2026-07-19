@@ -13,17 +13,18 @@ import pandas as pd
 from scipy.stats import norm
 
 from archive.covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
-from utils.utils import load_slate_payload
+from utils.utils import load_slate_payload, filter_slate_by_teams
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
-def get_top_down_predictions() -> Dict[str, float]:
+def get_top_down_predictions(allowed_teams: Any = None) -> Dict[str, float]:
     """
     Retrieve Phase 1 XGBoost expected value predictions (mu_TD) dynamically for players in active slate.
     Loads predictions from xgb_predictions.json and raises ValueError if missing.
+    Optionally filters by allowed_teams.
     
     Returns:
         Dict[str, float]: Player ID to predicted mean DFS points.
@@ -46,6 +47,9 @@ def get_top_down_predictions() -> Dict[str, float]:
         
     with open(slate_path, "r", encoding="utf-8") as f:
         slate = json.load(f)
+
+    if allowed_teams:
+        slate = filter_slate_by_teams(slate, allowed_teams)
         
     predictions = {}
     for item in slate:
@@ -63,6 +67,7 @@ def get_top_down_predictions() -> Dict[str, float]:
             raise ValueError(f"XGBoost expected value prediction is missing for player {name} (ID: {pid}) in predictions file.")
             
         predictions[pid] = float(ev)
+
         
     logger.info("Dynamically loaded Top-Down XGBoost predictions (mu_TD) for %d players from %s.", len(predictions), pred_path)
     return predictions

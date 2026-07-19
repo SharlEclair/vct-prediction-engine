@@ -20,19 +20,21 @@ from scipy.sparse import csc_matrix
 
 from copula_fusion import get_top_down_predictions, generate_independent_marginals, run_iman_conover_fusion, validate_and_extract_metrics
 from archive.covariance_profiler import extract_simulation_matrix, compute_spearman_covariance
-from utils.utils import load_config, load_slate_payload
+from utils.utils import load_config, load_slate_payload, filter_slate_by_teams
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
-def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def prepare_player_slate(num_iterations: int = 10000, allowed_teams: Optional[Any] = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Ingest Phase 3 fused projections and matrix, and construct slate metadata dynamically from current_slate.json.
+    Optionally filters by allowed_teams.
     
     Args:
         num_iterations (int): Monte Carlo simulation depth.
+        allowed_teams (Optional[Any]): Optional set/list of allowed team names.
         
     Returns:
         Tuple[pd.DataFrame, pd.DataFrame]: (Player Metadata DF, Fused Simulation Matrix DF)
@@ -40,7 +42,7 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
     logger.info("Ingesting Phase 3 fused copula outputs and dynamic slate JSON payload...")
     
     # Run Phase 1 -> Phase 2 -> Phase 3 pipeline
-    predictions_td = get_top_down_predictions()
+    predictions_td = get_top_down_predictions(allowed_teams=allowed_teams)
     df_sim_matrix = extract_simulation_matrix(num_iterations=num_iterations, seed=42)
     
     from pathlib import Path
@@ -57,6 +59,9 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
         import json
         with open(slate_path, "r", encoding="utf-8") as f:
             slate_data = json.load(f)
+        if allowed_teams:
+            slate_data = filter_slate_by_teams(slate_data, allowed_teams)
+            
         id_to_team = {item["player_id"]: item["team"] for item in slate_data}
         id_to_team.update({item["name"]: item["team"] for item in slate_data})
         
@@ -85,6 +90,9 @@ def prepare_player_slate(num_iterations: int = 10000) -> Tuple[pd.DataFrame, pd.
     
     # Load dynamic slate payload (current_slate.json)
     metadata = load_slate_payload()
+    if allowed_teams:
+        metadata = filter_slate_by_teams(metadata, allowed_teams)
+        
     df_meta = pd.DataFrame(metadata)
     
     # Attach Phase 3 metrics (EV, Floor_p15, Ceiling_p85, CVaR 90, CVaR 10) to metadata

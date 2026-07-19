@@ -17,6 +17,7 @@ import fantasy_engine
 import predict_match
 from scrapers import vfl_scraper
 import v5_simulation_engine
+import utils.utils
 
 importlib.reload(veto_predictor)
 importlib.reload(generative_pipeline)
@@ -24,6 +25,7 @@ importlib.reload(fantasy_engine)
 importlib.reload(predict_match)
 importlib.reload(vfl_scraper)
 importlib.reload(v5_simulation_engine)
+importlib.reload(utils.utils)
 
 from veto_predictor import VCTMapVetoPredictor
 from generative_pipeline import MapScoreRegressor, AgentCompositionGenerator
@@ -499,6 +501,44 @@ with st.sidebar:
         key="opt_ruleset"
     )
     
+    st.markdown("#### 3.5. Active Team Pool Filter")
+    from utils.utils import load_slate_payload, get_region_for_team
+    try:
+        sb_slate = load_slate_payload()
+        sb_all_teams = sorted(list(set(p["team"] for p in sb_slate if p.get("team"))))
+    except Exception:
+        sb_slate = []
+        sb_all_teams = []
+        
+    sb_regions_in_slate = set(get_region_for_team(t) for t in sb_all_teams)
+    std_order = ["Americas", "EMEA", "Pacific", "China", "Other"]
+    sb_regions = [r for r in std_order if r in sb_regions_in_slate]
+    
+    st.caption("Select active regions playing this week:")
+    cols = st.columns(2)
+    sel_regions = []
+    for i, region in enumerate(sb_regions):
+        with cols[i % 2]:
+            checked = st.checkbox(region, value=True, key=f"sb_chk_region_{region}")
+            if checked:
+                sel_regions.append(region)
+    
+    matching_teams = [t for t in sb_all_teams if get_region_for_team(t) in sel_regions]
+    sel_teams = st.multiselect(
+        "Active Teams Playing This Week",
+        options=matching_teams,
+        default=matching_teams,
+        key="sb_opt_active_teams",
+        help="Select specific teams to consider for optimization and transfer suggestions."
+    )
+    
+    st.session_state["active_team_pool"] = set(sel_teams)
+    
+    if len(sel_teams) < 4:
+        st.warning("⚠️ Fewer than 4 teams selected. Optimizer may become infeasible due to role constraints.")
+    else:
+        st.caption(f"✓ {len(sel_teams)} of {len(sb_all_teams)} teams active")
+    
     is_intl = "International" in opt_ruleset
     budget_default = 50.0 if is_intl else 100.0
     budget_min = 35.0 if is_intl else 70.0
@@ -524,14 +564,14 @@ with st.sidebar:
     )
     
     st.markdown("#### 6. Daily Slate Ingestion")
-    btn_sync_live = st.button("🔄 Sync Live VFL Slate (API)", use_container_width=True, key="btn_sync_live")
+    btn_sync_live = st.button("🔄 Sync Live VFL Slate (API)", width="stretch", key="btn_sync_live")
     uploaded_file = st.file_uploader("Fallback: Upload DFS Slate (CSV)", type=["csv"], key="uploaded_file_slate")
     
     st.markdown("#### 7. System Administration")
     whitelist_input = st.text_input("VLR Event Whitelist (comma-separated)", placeholder="e.g. Esports World Cup 2026", key="vlr_whitelist")
-    btn_master_update = st.button("🚀 Master Update: Sync All Data & Retrain", type="primary", use_container_width=True, key="btn_master_update")
-    btn_patch_update_only = st.button("🔄 Scrape Latest Patches & Rebuild Meta", use_container_width=True, key="btn_patch_update_only")
-    btn_scrape_vlr_incremental = st.button("📥 Scrape Latest VLR Matches (Incremental)", use_container_width=True, key="btn_scrape_vlr_incremental")
+    btn_master_update = st.button("🚀 Master Update: Sync All Data & Retrain", type="primary", width="stretch", key="btn_master_update")
+    btn_patch_update_only = st.button("🔄 Scrape Latest Patches & Rebuild Meta", width="stretch", key="btn_patch_update_only")
+    btn_scrape_vlr_incremental = st.button("📥 Scrape Latest VLR Matches (Incremental)", width="stretch", key="btn_scrape_vlr_incremental")
     
     with st.expander("🛠️ Roster Management Override"):
         st.markdown("##### Define Active Roster for a Team")
@@ -573,7 +613,7 @@ with st.sidebar:
             st.rerun()
     
     st.markdown("---")
-    btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", use_container_width=True, key="btn_generate_lineup")
+    btn_generate_lineup = st.button("Generate Optimal GPP Lineup", type="primary", width="stretch", key="btn_generate_lineup")
 
 # Trigger button execution logic
 if btn_generate_lineup:
@@ -601,7 +641,8 @@ if btn_generate_lineup:
                 {"Duelist": 2, "Initiator": 2, "Controller": 2, "Sentinel": 2, "Flex": 3}
             )
             
-            df_meta_slate, df_fused_slate = prepare_player_slate(num_iterations=opt_depth)
+            active_pool = st.session_state.get("active_team_pool", None)
+            df_meta_slate, df_fused_slate = prepare_player_slate(num_iterations=opt_depth, allowed_teams=active_pool)
             opt_solution = solve_vfl_knapsack(
                 df_meta_slate, 
                 salary_cap=opt_salary_cap,
@@ -1381,7 +1422,7 @@ with tab_match:
     current_run_hash = f"{selected_match_id}_{ma_series_type}_{veto_override}_{predicted_veto.get('maps') if predicted_veto else None}"
     
     st.markdown("---")
-    btn_run_match_sim = st.button("🚀 Run Match Simulation Analysis", key="btn_run_match_sim", type="primary", use_container_width=True)
+    btn_run_match_sim = st.button("🚀 Run Match Simulation Analysis", key="btn_run_match_sim", type="primary", width="stretch")
     
     if btn_run_match_sim:
         v5_engine = get_v5_simulation_engine()
@@ -1849,7 +1890,7 @@ with tab_optimizer:
         st.markdown("<p style='color: #94a3b8; font-size: 0.85rem; margin-top: -10px;'>Select your current fantasy roster to evaluate trades and analyze GPP points gain.</p>", unsafe_allow_html=True)
         
         # 1. Load slate names and data
-        from utils.utils import load_slate_payload
+        from utils.utils import load_slate_payload, get_region_for_team
         try:
             slate_data = load_slate_payload()
             slate_names = sorted([p["name"] for p in slate_data])
@@ -1944,7 +1985,7 @@ with tab_optimizer:
         # State Persistence buttons using standard file I/O
         p_col1, p_col2 = st.columns(2)
         with p_col1:
-            if st.button("💾 Save Roster State", key="btn_save_roster_state", use_container_width=True):
+            if st.button("💾 Save Roster State", key="btn_save_roster_state", width="stretch"):
                 if num_selected == 6:
                     save_roster_state(selected_roster, selected_igl)
                     st.toast("Roster state successfully saved!", icon="💾")
@@ -1952,7 +1993,7 @@ with tab_optimizer:
                     st.warning("Roster must have exactly 6 players to save.")
         with p_col2:
             roster_exists = os.path.exists(ROSTER_STATE_PATH)
-            if st.button("📂 Load Roster State", key="btn_load_roster_state", disabled=not roster_exists, use_container_width=True):
+            if st.button("📂 Load Roster State", key="btn_load_roster_state", disabled=not roster_exists, width="stretch"):
                 loaded_players, loaded_igl = load_roster_state()
                 st.session_state["saved_roster_names"] = loaded_players
                 st.session_state["saved_igl_name"] = loaded_igl
@@ -1986,84 +2027,141 @@ with tab_optimizer:
         # Trades Engine Section
         st.markdown("---")
         st.markdown("#### 🚀 Trade Recommendations Engine")
-        btn_calc_trades = st.button("Calculate Optimal Trades", key="btn_calc_trades", type="primary", use_container_width=True)
+        
+        st.markdown("##### 🌍 Team Pool for Transfer Suggestions")
+        ta_all_teams = sorted(list(set(p["team"] for p in slate_data if p.get("team"))))
+        ta_regions_in_slate = set(get_region_for_team(t) for t in ta_all_teams)
+        std_order = ["Americas", "EMEA", "Pacific", "China", "Other"]
+        ta_regions = [r for r in std_order if r in ta_regions_in_slate]
+
+        ta_cols = st.columns(2)
+        ta_sel_regions = []
+        for i, region in enumerate(ta_regions):
+            with ta_cols[i % 2]:
+                checked = st.checkbox(region, value=True, key=f"ta_chk_region_{region}")
+                if checked:
+                    ta_sel_regions.append(region)
+
+        ta_matching_teams = [t for t in ta_all_teams if get_region_for_team(t) in ta_sel_regions]
+        ta_sel_teams = st.multiselect(
+            "Teams to Consider for Transfers",
+            options=ta_matching_teams,
+            default=ta_matching_teams,
+            key="ta_opt_active_teams",
+            help="Only players from these teams will be suggested as incoming transfers."
+        )
+        active_team_pool = set(ta_sel_teams)
+
+        if len(active_team_pool) < 2:
+            st.warning("⚠️ Select at least 2 teams to generate meaningful transfer suggestions.")
+        else:
+            st.caption(f"✓ {len(active_team_pool)} teams in transfer pool")
+        
+        btn_calc_trades = st.button("Calculate Optimal Trades", key="btn_calc_trades", type="primary", width="stretch")
         
         if btn_calc_trades:
             if num_selected != req_size:
                 st.error(f"Roster must have exactly {req_size} players selected to calculate trades.")
-            elif "gpp_solution" not in st.session_state or not st.session_state.get("gpp_generated", False):
-                st.error("Please run 'Generate Optimal GPP Lineup' first to compute the target optimal roster.")
             else:
-                sol = st.session_state["gpp_solution"]
-                opt_lineup = sol["lineup"]
-                opt_pids = {p["player_id"] for p in opt_lineup}
-                opt_lookup = {p["player_id"]: p for p in opt_lineup}
-                
-                # Get user selected player IDs
-                user_pids = set()
-                user_lookup = {}
-                for name in selected_roster:
-                    if name in slate_lookup:
-                        p_dict = slate_lookup[name]
-                        user_pids.add(p_dict["player_id"])
-                        user_lookup[p_dict["player_id"]] = p_dict
-                        
-                # Compute difference: OUT = user - opt; IN = opt - user
-                pids_out = user_pids - opt_pids
-                pids_in = opt_pids - user_pids
-                
-                # Check IGL swap:
-                igl_swap = False
-                opt_igl_pid = sol["igl_player"]
-                opt_igl_name = next((p["name"] for p in opt_lineup if p["is_igl"]), "")
-                if selected_igl != opt_igl_name:
-                    igl_swap = True
-                
-                if not pids_out and not pids_in and not igl_swap:
-                    st.success("🎉 Roster is already 100% mathematically optimal! No transfers needed.")
-                else:
-                    st.info("ℹ️ **Strict VFL Rules Enforced:** All trade suggestions strictly respect the VFL limit of **max 3 transfers per week** and the **2-player team cap** per roster.")
-                    st.markdown("**Suggested Swaps (Mathematical Set Difference):**")
+                with st.spinner("Calculating optimal transfers..."):
+                    current_roster_dicts = [slate_lookup[name] for name in selected_roster if name in slate_lookup]
+                    for p in current_roster_dicts:
+                        if p["name"] == selected_igl:
+                            p["is_igl"] = True
+                        else:
+                            p["is_igl"] = False
+                            
+                    filtered_slate = [p for p in slate_data if p["team"] in active_team_pool or p["name"] in selected_roster]
                     
-                    from collections import Counter
-                    opt_roles = [p["role"] for p in opt_lineup]
-                    opt_role_counts = Counter(opt_roles)
+                    if "gpp_meta_df" in st.session_state:
+                        df_m = st.session_state["gpp_meta_df"]
+                        for p in filtered_slate:
+                            if p["team"] in active_team_pool:
+                                pid = p.get("player_id")
+                                pname = p.get("name") or p.get("player_name")
+                                if pid is not None and "player_id" in df_m.columns:
+                                    p_rows = df_m[df_m["player_id"] == pid]
+                                elif pname and "name" in df_m.columns:
+                                    p_rows = df_m[df_m["name"] == pname]
+                                else:
+                                    p_rows = df_m.iloc[0:0]  # empty
+                                if not p_rows.empty and "EV" in p_rows.columns:
+                                    p["EV"] = float(p_rows.iloc[0]["EV"])
+                                else:
+                                    p["EV"] = 0.0
+                            else:
+                                p["EV"] = 0.0
+                                
+                    trade_res = suggest_transfers(
+                        current_roster=current_roster_dicts,
+                        vfl_players=filtered_slate,
+                        salary_cap=opt_salary_cap,
+                        roster_size=req_size,
+                        forced_igl_name=None,  # allow engine to pick optimal IGL
+                        active_team_pool=active_team_pool
+                    )
                     
-                    # Display OUT cards
-                    for pid in pids_out:
-                        p_out = user_lookup[pid]
-                        primary_agent = p_out.get("primary_agent")
-                        penalty = radar_penalties.get(primary_agent, 0.0) if primary_agent else 0.0
-                        reason = "Transfer out to optimize salary cap and match target GPP ceiling."
-                        if penalty > 0.05:
-                            reason = f"Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
-                        st.markdown(clean_html(f"""
-                            <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05); border-radius: 6px;">
-                                <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
-                                <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{p_out['name']}</span>
-                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p_out['salary']} VP · Role: {p_out['role']}</span>
-                                <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
-                            </div>
-                        """), unsafe_allow_html=True)
+                    if not trade_res or trade_res.get("solver_status") != "optimal" or not trade_res.get("recommendations"):
+                        st.success("🎉 Roster is already optimal or no better valid transfers found in the selected pool.")
+                    else:
+                        best_trade = trade_res["recommendations"][0]
                         
-                    # Display IN cards
-                    for pid in pids_in:
-                        p_in = opt_lookup[pid]
-                        igl_tag = " 👑 IGL" if p_in["is_igl"] else ""
-                        is_wildcard = opt_role_counts.get(p_in["role"], 0) > 1
-                        wildcard_badge = ' <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(167, 139, 250, 0.15); color: #a78bfa; margin-left: 6px;">✨ Wildcard Swap</span>' if is_wildcard else ""
-                        reason = "Drafted into optimal lineup to maximize GPP ceiling under salary constraint."
-                        st.markdown(clean_html(f"""
-                            <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05); border-radius: 6px;">
-                                <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
-                                <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{p_in['name']}{igl_tag}{wildcard_badge}</span>
-                                <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {p_in['salary']} VP · Role: {p_in['role']}</span>
-                                <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
-                            </div>
-                        """), unsafe_allow_html=True)
+                        transfers_out = best_trade.get("transfers_out", [])
+                        transfers_in = best_trade.get("transfers_in", [])
                         
-                    if igl_swap and opt_igl_name:
-                        st.info(f"👑 Note: Swap designated In-Game Leader (IGL) from **{selected_igl}** to **{opt_igl_name}** (2x bonus).")
+                        opt_lineup = best_trade.get("new_roster", [])
+                        opt_igl_name = next(((p.get("name") or p.get("player_name", "")) for p in opt_lineup if p.get("is_igl")), "")
+                        igl_swap = selected_igl != opt_igl_name
+                        
+                        if not transfers_out and not transfers_in and not igl_swap:
+                            st.success("🎉 Roster is already optimal! No transfers needed.")
+                        else:
+                            st.info("ℹ️ **Strict VFL Rules Enforced:** All trade suggestions strictly respect the VFL limit of **max 3 transfers per week** and the **2-player team cap** per roster.")
+                            st.markdown(f"**Suggested Swaps (Projected Gain: +{best_trade['projected_gain']:.2f} pts):**")
+                            
+                            from collections import Counter
+                            opt_roles = [p.get("role", "Unknown") for p in opt_lineup]
+                            opt_role_counts = Counter(opt_roles)
+                            
+                            # Display OUT cards
+                            for p_out in transfers_out:
+                                primary_agent = p_out.get("primary_agent")
+                                penalty = radar_penalties.get(primary_agent, 0.0) if primary_agent else 0.0
+                                reason = "Transfer out to optimize salary cap and match target GPP ceiling."
+                                if penalty > 0.05:
+                                    reason = f"Player's primary agent ({primary_agent}) suffered a {penalty:.2f} Ghost/Meta Nerf."
+                                pname = p_out.get("name") or p_out.get("player_name") or "Unknown Player"
+                                pcost = p_out.get("salary", p_out.get("cost", p_out.get("price", 0)))
+                                prole = p_out.get("role", "Unknown")
+                                st.markdown(clean_html(f"""
+                                    <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05); border-radius: 6px;">
+                                        <span style="color: #ef4444; font-weight: 700;">OUT ⬇</span>
+                                        <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{pname}</span>
+                                        <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {pcost} VP · Role: {prole}</span>
+                                        <div style="font-size: 0.8rem; color: #ef4444; margin-top: 4px; font-style: italic;">{reason}</div>
+                                    </div>
+                                """), unsafe_allow_html=True)
+                                
+                            # Display IN cards
+                            for p_in in transfers_in:
+                                igl_tag = " 👑 IGL" if p_in.get("is_igl") else ""
+                                prole = p_in.get("role", "Unknown")
+                                is_wildcard = opt_role_counts.get(prole, 0) > 1
+                                wildcard_badge = ' <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 12px; background: rgba(167, 139, 250, 0.15); color: #a78bfa; margin-left: 6px;">✨ Wildcard Swap</span>' if is_wildcard else ""
+                                reason = "Drafted into optimal lineup to maximize GPP ceiling under salary constraint."
+                                pname = p_in.get("name") or p_in.get("player_name") or "Unknown Player"
+                                pcost = p_in.get("salary", p_in.get("cost", p_in.get("price", 0)))
+                                st.markdown(clean_html(f"""
+                                    <div style="padding: 10px 14px; margin-bottom: 8px; border-left: 4px solid #4ade80; background: rgba(74, 222, 128, 0.05); border-radius: 6px;">
+                                        <span style="color: #4ade80; font-weight: 700;">IN ⬆</span>
+                                        <span style="margin-left: 12px; font-weight: 600; color: #f8fafc;">{pname}{igl_tag}{wildcard_badge}</span>
+                                        <span style="color: #94a3b8; font-size: 0.8rem;"> · Cost: {pcost} VP · Role: {prole}</span>
+                                        <div style="font-size: 0.8rem; color: #4ade80; margin-top: 4px; font-style: italic;">{reason}</div>
+                                    </div>
+                                """), unsafe_allow_html=True)
+                                
+                            if igl_swap and opt_igl_name:
+                                st.info(f"👑 Note: Swap designated In-Game Leader (IGL) from **{selected_igl}** to **{opt_igl_name}** (2x bonus).")
 
 # ============================================================
 # TAB 4: VFL PLAYERS DATABASE
@@ -2073,7 +2171,7 @@ with tab_vfl:
     
     col_db1, col_db2 = st.columns([3, 1])
     with col_db2:
-        if st.button("🔄 Update VFL Database", key="btn_update_vfl_db", use_container_width=True):
+        if st.button("🔄 Update VFL Database", key="btn_update_vfl_db", width="stretch"):
             with st.spinner("Executing scraper and rebuilding JSON registry..."):
                 vfl_players_data_refreshed = vfl_scraper_inst.scrape_player_stats()
             st.success(f"Rebuilt VFL Database Cache with {len(vfl_players_data_refreshed)} players!")

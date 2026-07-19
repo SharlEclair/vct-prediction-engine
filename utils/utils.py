@@ -73,3 +73,42 @@ def load_slate_payload(slate_path: str = "data/processed/current_slate.json") ->
     except Exception as e:
         logger.error("Failed to parse slate payload file %s: %s", slate_p, e)
         raise e
+
+
+# Centrally managed Team-to-Region mapping
+REGION_MAP = {
+    "Americas": ["100 Thieves", "Cloud9", "Evil Geniuses", "FURIA", "KRÜ Esports", "LEVIATÁN", "LOUD", "MIBR", "NRG", "Sentinels", "G2 Esports"],
+    "EMEA": ["BBL Esports", "FNATIC", "FUT Esports", "GIANTX", "Karmine Corp", "Natus Vincere", "Team Heretics", "Team Liquid", "Team Vitality", "Gentle Mates"],
+    "Pacific": ["DetonatioN FocusMe", "DRX", "Gen.G", "Global Esports", "Paper Rex", "Rex Regum Qeon", "T1", "Team Secret", "ZETA DIVISION", "Talon Esports", "Bleed Esports"],
+    "China": ["All Gamers", "Bilibili Gaming", "EDward Gaming", "FunPlus Phoenix", "JD Gaming", "Nova Esports", "Trace Esports", "Titan Esports Club", "TyLoo", "Dragon Ranger Gaming", "Wolves Esports"]
+}
+
+def get_region_for_team(team_name: str) -> str:
+    """
+    Returns the region (Americas, EMEA, Pacific, China, or Other) for a given team name.
+    """
+    if not team_name:
+        return "Other"
+    
+    # Normalize team name for comparison (handle encoding discrepancies)
+    norm_name = team_name.lower().strip()
+    
+    for region, teams in REGION_MAP.items():
+        for t in teams:
+            t_norm = t.lower().strip()
+            if t_norm == norm_name or t_norm in norm_name or norm_name in t_norm:
+                return region
+    return "Other"
+
+
+def filter_slate_by_teams(slate: List[Dict[str, Any]], allowed_teams: set) -> List[Dict[str, Any]]:
+    """
+    Filters a player slate list to only include players whose team is in allowed_teams.
+    Comparison is case-insensitive and stripped.
+    """
+    if not allowed_teams:
+        return slate
+    allowed_norm = {str(t).lower().strip() for t in allowed_teams}
+    return [p for p in slate if str(p.get("team", "")).lower().strip() in allowed_norm]
+
+
