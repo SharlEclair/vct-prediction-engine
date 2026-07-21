@@ -104,11 +104,23 @@ def get_region_for_team(team_name: str) -> str:
 def filter_slate_by_teams(slate: List[Dict[str, Any]], allowed_teams: set) -> List[Dict[str, Any]]:
     """
     Filters a player slate list to only include players whose team is in allowed_teams.
-    Comparison is case-insensitive and stripped.
+    Comparison is case-insensitive, stripped, and supports shortName/substring matching.
     """
     if not allowed_teams:
         return slate
-    allowed_norm = {str(t).lower().strip() for t in allowed_teams}
-    return [p for p in slate if str(p.get("team", "")).lower().strip() in allowed_norm]
+    allowed_norm = {str(t).lower().strip() for t in allowed_teams if t}
+    
+    def matches_team(team_str: str) -> bool:
+        if not team_str:
+            return False
+        t_norm = str(team_str).lower().strip()
+        if t_norm in allowed_norm:
+            return True
+        for a in allowed_norm:
+            if a == t_norm or a in t_norm or t_norm in a:
+                return True
+        return False
+
+    return [p for p in slate if matches_team(p.get("team", ""))]
 
 

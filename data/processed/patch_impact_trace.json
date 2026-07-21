@@ -3133,5 +3133,782 @@
                 }
             ]
         }
+    },
+    "13.01": {
+        "Gekko": {
+            "score": 0.0381,
+            "features": [
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Fade": {
+            "score": 0.0134,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.003,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Breach": {
+            "score": 0.0133,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.003,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Deadlock": {
+            "score": 0.038,
+            "features": [
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Tejo": {
+            "score": 0.0134,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Raze": {
+            "score": 0.012,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0027,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0045,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0049,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Chamber": {
+            "score": 0.0165,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0037,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0061,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0067,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Skye": {
+            "score": 0.0854,
+            "features": [
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Cypher": {
+            "score": 0.1081,
+            "features": [
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0051,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Sova": {
+            "score": 0.0134,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Miks": {
+            "score": 0.0619,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.003,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0049,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0053,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Killjoy": {
+            "score": 0.0137,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0051,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Harbor": {
+            "score": 0.0134,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Vyse": {
+            "score": 0.0136,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0051,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Viper": {
+            "score": 0.0382,
+            "features": [
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0051,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Phoenix": {
+            "score": 0.0141,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0032,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0052,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0057,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Veto": {
+            "score": 0.0387,
+            "features": [
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0032,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0053,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0057,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Astra": {
+            "score": 0.0622,
+            "features": [
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Brimstone": {
+            "score": 0.0135,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Iso": {
+            "score": 0.1164,
+            "features": [
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.05,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "combat.damage",
+                    "impact": 0.03,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0026,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0043,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0047,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Clove": {
+            "score": 0.0626,
+            "features": [
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "ability.charges",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0032,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0052,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0056,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Neon": {
+            "score": 0.0772,
+            "features": [
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0333,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0333,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0028,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0046,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Yoru": {
+            "score": 0.1416,
+            "features": [
+                {
+                    "feature": "general.fakeout",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "ability.duration",
+                    "impact": 0.06,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "movement.movement_speed",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0033,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.006,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Waylay": {
+            "score": 0.0147,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0033,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0059,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Sage": {
+            "score": 0.0623,
+            "features": [
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.025,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.025,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0051,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Reyna": {
+            "score": 0.039,
+            "features": [
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0033,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0054,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0059,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Omen": {
+            "score": 0.0135,
+            "features": [
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0031,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.005,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0055,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        },
+        "Jett": {
+            "score": 0.1038,
+            "features": [
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.0125,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.nerf_bugfix",
+                    "impact": 0.0125,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0333,
+                    "reason": "nerf"
+                },
+                {
+                    "feature": "general.buff_bugfix",
+                    "impact": 0.0333,
+                    "reason": "buff"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0037,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0061,
+                    "reason": "ghost_nerf"
+                },
+                {
+                    "feature": "weapon.dependency",
+                    "impact": 0.0067,
+                    "reason": "ghost_nerf"
+                }
+            ]
+        }
     }
 }

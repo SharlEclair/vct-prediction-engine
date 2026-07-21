@@ -1,0 +1,785 @@
+{
+  "gameweek": 1,
+  "event_id": 10,
+  "matches": [
+    {
+      "id": "113049",
+      "team1": {
+        "id": "17",
+        "name": "Gen.G",
+        "shortName": "GEN",
+        "imagePath": "/static/team/17.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "5448",
+        "name": "ZETA DIVISION",
+        "shortName": "ZETA",
+        "imagePath": "/static/team/5448.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698884/gen-g-vs-zeta-division-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784188800",
+      "isComplete": true
+    },
+    {
+      "id": "113050",
+      "team1": {
+        "id": "11229",
+        "name": "VARREL",
+        "shortName": "VL",
+        "imagePath": "/static/team/11229.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "6199",
+        "name": "Team Secret",
+        "shortName": "TS",
+        "imagePath": "/static/team/6199.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698885/team-secret-vs-varrel-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784196000",
+      "isComplete": true
+    },
+    {
+      "id": "113051",
+      "team1": {
+        "id": "11060",
+        "name": "Nongshim RedForce",
+        "shortName": "NS",
+        "imagePath": "/static/team/11060.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "4050",
+        "name": "FULL SENSE",
+        "shortName": "FS",
+        "imagePath": "/static/team/4050.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698886/full-sense-vs-nongshim-redforce-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784275200",
+      "isComplete": true
+    },
+    {
+      "id": "113052",
+      "team1": {
+        "id": "278",
+        "name": "DetonatioN FocusMe",
+        "shortName": "DFM",
+        "imagePath": "/static/team/278.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "8185",
+        "name": "DRX",
+        "shortName": "DRX",
+        "imagePath": "/static/team/8185.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698887/kiwoom-drx-vs-detonation-focusme-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784282400",
+      "isComplete": true
+    },
+    {
+      "id": "113053",
+      "team1": {
+        "id": "878",
+        "name": "Rex Regum Qeon",
+        "shortName": "RRQ",
+        "imagePath": "/static/team/878.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "918",
+        "name": "Global Esports",
+        "shortName": "GE",
+        "imagePath": "/static/team/918.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698888/rex-regum-qeon-vs-global-esports-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784361600",
+      "isComplete": true
+    },
+    {
+      "id": "113054",
+      "team1": {
+        "id": "14",
+        "name": "T1",
+        "shortName": "T1",
+        "imagePath": "/static/team/14.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "624",
+        "name": "Paper Rex",
+        "shortName": "PRX",
+        "imagePath": "/static/team/624.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698889/paper-rex-vs-t1-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784368800",
+      "isComplete": true
+    },
+    {
+      "id": "113055",
+      "team1": {
+        "id": "11060",
+        "name": "Nongshim RedForce",
+        "shortName": "NS",
+        "imagePath": "/static/team/11060.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "17",
+        "name": "Gen.G",
+        "shortName": "GEN",
+        "imagePath": "/static/team/17.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698890/nongshim-redforce-vs-gen-g-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784448000",
+      "isComplete": true
+    },
+    {
+      "id": "113056",
+      "team1": {
+        "id": "6199",
+        "name": "Team Secret",
+        "shortName": "TS",
+        "imagePath": "/static/team/6199.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "8185",
+        "name": "DRX",
+        "shortName": "DRX",
+        "imagePath": "/static/team/8185.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/698891/kiwoom-drx-vs-team-secret-vct-2026-pacific-stage-2-w1",
+      "scheduledMatchTime": "1784455200",
+      "isComplete": true
+    },
+    {
+      "id": "113808",
+      "team1": {
+        "id": "2359",
+        "name": "LEVIAT\u00c1N",
+        "shortName": "LEV",
+        "imagePath": "/static/team/2359.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "2406",
+        "name": "FURIA",
+        "shortName": "FUR",
+        "imagePath": "/static/team/2406.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/706349/leviat-n-vs-furia-vct-2026-americas-stage-2-w1",
+      "scheduledMatchTime": "1784235600",
+      "isComplete": true
+    },
+    {
+      "id": "113809",
+      "team1": {
+        "id": "188",
+        "name": "Cloud9",
+        "shortName": "C9",
+        "imagePath": "/static/team/188.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "2",
+        "name": "Sentinels",
+        "shortName": "SEN",
+        "imagePath": "/static/team/2.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/706350/sentinels-vs-cloud9-vct-2026-americas-stage-2-w1",
+      "scheduledMatchTime": "1784246400",
+      "isComplete": true
+    },
+    {
+      "id": "113810",
+      "team1": {
+        "id": "427",
+        "name": "ENVY",
+        "shortName": "NV",
+        "imagePath": "/static/team/427.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "5248",
+        "name": "Evil Geniuses",
+        "shortName": "EG",
+        "imagePath": "/static/team/5248.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/706351/envy-vs-evil-geniuses-vct-2026-americas-stage-2-w1",
+      "scheduledMatchTime": "1784322000",
+      "isComplete": true
+    },
+    {
+      "id": "113812",
+      "team1": {
+        "id": "11058",
+        "name": "G2 Esports",
+        "shortName": "G2",
+        "imagePath": "/static/team/11058.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "120",
+        "name": "100 Thieves",
+        "shortName": "100T",
+        "imagePath": "/static/team/120.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/706353/g2-esports-vs-100-thieves-vct-2026-americas-stage-2-w1",
+      "scheduledMatchTime": "1784408400",
+      "isComplete": true
+    },
+    {
+      "id": "113813",
+      "team1": {
+        "id": "1034",
+        "name": "NRG",
+        "shortName": "NRG",
+        "imagePath": "/static/team/1034.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "7386",
+        "name": "MIBR",
+        "shortName": "MIBR",
+        "imagePath": "/static/team/7386.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/706354/nrg-vs-mibr-vct-2026-americas-stage-2-w1",
+      "scheduledMatchTime": "1784419200",
+      "isComplete": true
+    },
+    {
+      "id": "114313",
+      "team1": {
+        "id": "474",
+        "name": "Team Liquid",
+        "shortName": "TL",
+        "imagePath": "/static/team/474.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "6392",
+        "name": "Eternal Fire",
+        "shortName": "EF",
+        "imagePath": "/static/team/6392.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712804/team-liquid-vs-eternal-fire-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784138400",
+      "isComplete": true
+    },
+    {
+      "id": "114314",
+      "team1": {
+        "id": "14419",
+        "name": "GIANTX",
+        "shortName": "GX",
+        "imagePath": "/static/team/14419.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "2593",
+        "name": "FNATIC",
+        "shortName": "FNC",
+        "imagePath": "/static/team/2593.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712805/fnatic-vs-giantx-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784214000",
+      "isComplete": true
+    },
+    {
+      "id": "114316",
+      "team1": {
+        "id": "6392",
+        "name": "Eternal Fire",
+        "shortName": "EF",
+        "imagePath": "/static/team/6392.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "8877",
+        "name": "Karmine Corp",
+        "shortName": "KC",
+        "imagePath": "/static/team/8877.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712807/karmine-corp-vs-eternal-fire-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784300400",
+      "isComplete": true
+    },
+    {
+      "id": "114317",
+      "team1": {
+        "id": "2059",
+        "name": "Team Vitality",
+        "shortName": "VIT",
+        "imagePath": "/static/team/2059.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "4915",
+        "name": "Natus Vincere",
+        "shortName": "NAVI",
+        "imagePath": "/static/team/4915.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712808/team-vitality-vs-natus-vincere-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784311200",
+      "isComplete": true
+    },
+    {
+      "id": "114318",
+      "team1": {
+        "id": "1184",
+        "name": "FUT Esports",
+        "shortName": "FUT",
+        "imagePath": "/static/team/1184.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "12694",
+        "name": "Gentle Mates",
+        "shortName": "M8",
+        "imagePath": "/static/team/12694.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712809/gentle-mates-vs-fut-esports-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784386800",
+      "isComplete": true
+    },
+    {
+      "id": "114319",
+      "team1": {
+        "id": "1001",
+        "name": "Team Heretics",
+        "shortName": "TH",
+        "imagePath": "/static/team/1001.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "474",
+        "name": "Team Liquid",
+        "shortName": "TL",
+        "imagePath": "/static/team/474.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712810/team-heretics-vs-team-liquid-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784397600",
+      "isComplete": true
+    },
+    {
+      "id": "114320",
+      "team1": {
+        "id": "14419",
+        "name": "GIANTX",
+        "shortName": "GX",
+        "imagePath": "/static/team/14419.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "8877",
+        "name": "Karmine Corp",
+        "shortName": "KC",
+        "imagePath": "/static/team/8877.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712811/giantx-vs-karmine-corp-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784473200",
+      "isComplete": true
+    },
+    {
+      "id": "114321",
+      "team1": {
+        "id": "2059",
+        "name": "Team Vitality",
+        "shortName": "VIT",
+        "imagePath": "/static/team/2059.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "397",
+        "name": "BBL Esports",
+        "shortName": "BBL",
+        "imagePath": "/static/team/397.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712812/team-vitality-vs-bbl-esports-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784484000",
+      "isComplete": true
+    },
+    {
+      "id": "114312",
+      "team1": {
+        "id": "1184",
+        "name": "FUT Esports",
+        "shortName": "FUT",
+        "imagePath": "/static/team/1184.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "4915",
+        "name": "Natus Vincere",
+        "shortName": "NAVI",
+        "imagePath": "/static/team/4915.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712803/fut-esports-vs-natus-vincere-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784127600",
+      "isComplete": true
+    },
+    {
+      "id": "114315",
+      "team1": {
+        "id": "12694",
+        "name": "Gentle Mates",
+        "shortName": "M8",
+        "imagePath": "/static/team/12694.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "3478",
+        "name": "PCIFIC Esports",
+        "shortName": "PCF",
+        "imagePath": "/static/team/3478.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/712806/pcific-esports-vs-gentle-mates-vct-2026-emea-stage-2-w1",
+      "scheduledMatchTime": "1784224800",
+      "isComplete": true
+    },
+    {
+      "id": "113811",
+      "team1": {
+        "id": "2355",
+        "name": "KR\u00dc Esports",
+        "shortName": "KR\u00dc",
+        "imagePath": "/static/team/2355.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "team2": {
+        "id": "6961",
+        "name": "LOUD",
+        "shortName": "LOUD",
+        "imagePath": "/static/team/6961.png",
+        "nextOpponentId": null,
+        "nextOpponent": null
+      },
+      "matchLink": "https://www.vlr.gg/706352/kr-esports-vs-loud-vct-2026-americas-stage-2-w1",
+      "scheduledMatchTime": "1784332800",
+      "isComplete": true
+    }
+  ],
+  "active_teams": [
+    "100 Thieves",
+    "100T",
+    "BBL",
+    "BBL Esports",
+    "C9",
+    "Cloud9",
+    "DFM",
+    "DRX",
+    "DetonatioN FocusMe",
+    "EF",
+    "EG",
+    "ENVY",
+    "Eternal Fire",
+    "Evil Geniuses",
+    "FNATIC",
+    "FNC",
+    "FS",
+    "FULL SENSE",
+    "FUR",
+    "FURIA",
+    "FUT",
+    "FUT Esports",
+    "G2",
+    "G2 Esports",
+    "GE",
+    "GEN",
+    "GIANTX",
+    "GX",
+    "Gen.G",
+    "Gentle Mates",
+    "Global Esports",
+    "KC",
+    "KR\u00dc",
+    "KR\u00dc Esports",
+    "Karmine Corp",
+    "LEV",
+    "LEVIAT\u00c1N",
+    "LOUD",
+    "M8",
+    "MIBR",
+    "NAVI",
+    "NRG",
+    "NS",
+    "NV",
+    "Natus Vincere",
+    "Nongshim RedForce",
+    "PCF",
+    "PCIFIC Esports",
+    "PRX",
+    "Paper Rex",
+    "RRQ",
+    "Rex Regum Qeon",
+    "SEN",
+    "Sentinels",
+    "T1",
+    "TH",
+    "TL",
+    "TS",
+    "Team Heretics",
+    "Team Liquid",
+    "Team Secret",
+    "Team Vitality",
+    "VARREL",
+    "VIT",
+    "VL",
+    "ZETA",
+    "ZETA DIVISION"
+  ],
+  "teams_info": [
+    {
+      "id": "17",
+      "name": "Gen.G",
+      "shortName": "GEN"
+    },
+    {
+      "id": "5448",
+      "name": "ZETA DIVISION",
+      "shortName": "ZETA"
+    },
+    {
+      "id": "11229",
+      "name": "VARREL",
+      "shortName": "VL"
+    },
+    {
+      "id": "6199",
+      "name": "Team Secret",
+      "shortName": "TS"
+    },
+    {
+      "id": "11060",
+      "name": "Nongshim RedForce",
+      "shortName": "NS"
+    },
+    {
+      "id": "4050",
+      "name": "FULL SENSE",
+      "shortName": "FS"
+    },
+    {
+      "id": "278",
+      "name": "DetonatioN FocusMe",
+      "shortName": "DFM"
+    },
+    {
+      "id": "8185",
+      "name": "DRX",
+      "shortName": "DRX"
+    },
+    {
+      "id": "878",
+      "name": "Rex Regum Qeon",
+      "shortName": "RRQ"
+    },
+    {
+      "id": "918",
+      "name": "Global Esports",
+      "shortName": "GE"
+    },
+    {
+      "id": "14",
+      "name": "T1",
+      "shortName": "T1"
+    },
+    {
+      "id": "624",
+      "name": "Paper Rex",
+      "shortName": "PRX"
+    },
+    {
+      "id": "2359",
+      "name": "LEVIAT\u00c1N",
+      "shortName": "LEV"
+    },
+    {
+      "id": "2406",
+      "name": "FURIA",
+      "shortName": "FUR"
+    },
+    {
+      "id": "188",
+      "name": "Cloud9",
+      "shortName": "C9"
+    },
+    {
+      "id": "2",
+      "name": "Sentinels",
+      "shortName": "SEN"
+    },
+    {
+      "id": "427",
+      "name": "ENVY",
+      "shortName": "NV"
+    },
+    {
+      "id": "5248",
+      "name": "Evil Geniuses",
+      "shortName": "EG"
+    },
+    {
+      "id": "11058",
+      "name": "G2 Esports",
+      "shortName": "G2"
+    },
+    {
+      "id": "120",
+      "name": "100 Thieves",
+      "shortName": "100T"
+    },
+    {
+      "id": "1034",
+      "name": "NRG",
+      "shortName": "NRG"
+    },
+    {
+      "id": "7386",
+      "name": "MIBR",
+      "shortName": "MIBR"
+    },
+    {
+      "id": "474",
+      "name": "Team Liquid",
+      "shortName": "TL"
+    },
+    {
+      "id": "6392",
+      "name": "Eternal Fire",
+      "shortName": "EF"
+    },
+    {
+      "id": "14419",
+      "name": "GIANTX",
+      "shortName": "GX"
+    },
+    {
+      "id": "2593",
+      "name": "FNATIC",
+      "shortName": "FNC"
+    },
+    {
+      "id": "8877",
+      "name": "Karmine Corp",
+      "shortName": "KC"
+    },
+    {
+      "id": "2059",
+      "name": "Team Vitality",
+      "shortName": "VIT"
+    },
+    {
+      "id": "4915",
+      "name": "Natus Vincere",
+      "shortName": "NAVI"
+    },
+    {
+      "id": "1184",
+      "name": "FUT Esports",
+      "shortName": "FUT"
+    },
+    {
+      "id": "12694",
+      "name": "Gentle Mates",
+      "shortName": "M8"
+    },
+    {
+      "id": "1001",
+      "name": "Team Heretics",
+      "shortName": "TH"
+    },
+    {
+      "id": "397",
+      "name": "BBL Esports",
+      "shortName": "BBL"
+    },
+    {
+      "id": "3478",
+      "name": "PCIFIC Esports",
+      "shortName": "PCF"
+    },
+    {
+      "id": "2355",
+      "name": "KR\u00dc Esports",
+      "shortName": "KR\u00dc"
+    },
+    {
+      "id": "6961",
+      "name": "LOUD",
+      "shortName": "LOUD"
+    }
+  ]
+}

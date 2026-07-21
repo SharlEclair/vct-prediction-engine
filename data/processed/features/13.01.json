@@ -1,0 +1,424 @@
+{
+    "Agent Updates": {
+        "Iso": [
+            {
+                "agent": "Iso",
+                "ability": "Double Tap",
+                "category": "movement",
+                "feature_name": "movement_speed",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null
+            },
+            {
+                "agent": "Iso",
+                "ability": "Double Tap",
+                "category": "combat",
+                "feature_name": "damage",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Yoru": [
+            {
+                "agent": "Yoru",
+                "ability": "Fakeout",
+                "category": "general",
+                "feature_name": "fakeout",
+                "type": "buff",
+                "weight": 0.0,
+                "values": null
+            },
+            {
+                "agent": "Yoru",
+                "ability": "Gatecrash",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "buff",
+                "weight": 0.0,
+                "values": {
+                    "old": 15.0,
+                    "new": 20.0
+                }
+            },
+            {
+                "agent": "Yoru",
+                "ability": "Dimensional Drift",
+                "category": "movement",
+                "feature_name": "movement_speed",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Astra": [
+            {
+                "agent": "Astra",
+                "ability": "General",
+                "category": "ability",
+                "feature_name": "duration",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Clove": [
+            {
+                "agent": "Clove",
+                "ability": "Ruse",
+                "category": "ability",
+                "feature_name": "charges",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Cypher": [
+            {
+                "agent": "Cypher",
+                "ability": "Cyber Cage",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Cypher",
+                "ability": "Cyber Cage",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Cypher",
+                "ability": "Cyber Cage",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Cypher",
+                "ability": "Spycam",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Deadlock": [
+            {
+                "agent": "Deadlock",
+                "ability": "GravNet",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Gekko": [
+            {
+                "agent": "Gekko",
+                "ability": "Thrash",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Jett": [
+            {
+                "agent": "Jett",
+                "ability": "Cloudburst",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Jett",
+                "ability": "Tailwind",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "KAYO": [
+            {
+                "agent": "KAYO",
+                "ability": "FLASH/drive",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "KAYO",
+                "ability": "FLASH/drive",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Miks": [
+            {
+                "agent": "Miks",
+                "ability": "Waveform",
+                "category": "ability",
+                "feature_name": "charges",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Neon": [
+            {
+                "agent": "Neon",
+                "ability": "High Gear",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Reyna": [
+            {
+                "agent": "Reyna",
+                "ability": "Dismiss",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Sage": [
+            {
+                "agent": "Sage",
+                "ability": "Resurrection",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Skye": [
+            {
+                "agent": "Skye",
+                "ability": "Trailblazer",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Skye",
+                "ability": "Guiding Light",
+                "category": "ability",
+                "feature_name": "charges",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Viper": [
+            {
+                "agent": "Viper",
+                "ability": "Viper's Pit",
+                "category": "general",
+                "feature_name": "buff_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Veto": [
+            {
+                "agent": "Veto",
+                "ability": "Evolution",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Abyss": [
+            {
+                "agent": "Abyss",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Split": [
+            {
+                "agent": "Split",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Split",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Summit": [
+            {
+                "agent": "Summit",
+                "ability": "General",
+                "category": "general",
+                "feature_name": "nerf_bugfix",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "agent": "Summit",
+                "ability": "Refract",
+                "category": "movement",
+                "feature_name": "movement_speed",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ]
+    },
+    "Weapon Updates": {
+        "Outlaw": [
+            {
+                "weapon": "Outlaw",
+                "category": "general",
+                "feature_name": "recovery",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.1,
+                    "new": 0.15
+                }
+            },
+            {
+                "weapon": "Outlaw",
+                "category": "general",
+                "feature_name": "alt_fire_max_spread",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.0,
+                    "new": 2.25
+                }
+            },
+            {
+                "weapon": "Outlaw",
+                "category": "general",
+                "feature_name": "recoil",
+                "type": "nerf",
+                "weight": 0.8,
+                "values": {
+                    "old": 0.0,
+                    "new": 4.0
+                }
+            }
+        ],
+        "Competitive": [
+            {
+                "weapon": "Competitive",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Competitive",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "Competitive",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "V26 Range Lore Elements": [
+            {
+                "weapon": "V26 Range Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 Range Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            },
+            {
+                "weapon": "V26 Range Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "Summit Lore Elements": [
+            {
+                "weapon": "Summit Lore Elements",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ],
+        "General": [
+            {
+                "weapon": "General",
+                "category": "general",
+                "feature_name": "general",
+                "type": "adjustment",
+                "weight": 0.2,
+                "values": null
+            }
+        ]
+    }
+}

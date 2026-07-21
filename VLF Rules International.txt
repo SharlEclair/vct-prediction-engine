@@ -1,0 +1,90 @@
+VLF Rules:
+
+Selecting Your Initial Squad
+Squad Size To join the game, select a Valorant Fantasy Team of 6 players consisting of:
+1 Initiator
+1 Duelist
+1 Controller
+1 Sentinel
+2 Wildcards (can be any role)
+Budget The total value of your initial squad must not exceed 50 VP. Players Per Team You can select up to 2 players from a single VCT team.
+
+Managing your squad
+Choose your starting roster From your 6-player team, all 6 players will form your starting roster each Gameweek. You will also select an IGL who will score double points for that week.
+
+Transfers
+After selecting your team, you can buy and sell players in the transfer market. Unlimited transfers can be made at no cost until your first deadline. After your first deadline, you will receive 3 free transfers each Gameweek.
+
+Deadlines
+All changes to your team (starting players, transfers, IGL changes) must be made by the Gameweek deadline in order to take effect for that set of matches. Deadlines will be at the end of each gameweek.
+
+Scoring
+General:
+Players will only score their highest 2 scores in each Gameweek. For example if a player played 3 games and scored 10,8,5 then they would receive 18 points and not 23.
+Kills:
+-3 for 0 kills in a map
+-1 for 1–4 kills in a map
++1 for 10 kills in a map, with an extra +1 for every additional 5 kills (i.e., 15 kills = +2, 20 kills = +3, etc.)
+Multi-Kills in a Round:
++1 for a 4K in a round
++3 for a 5K+ in a round
++5 for a 6k in a round
++10 for a 7k in a round
+Map Wins:
++1 for any map win
++2 bonus for winning a best-of-3 in 2 maps (2-0 win)
++5 bonus for a 13-0 map win
+-5 penalty for a 0-13 map loss
++2 for winning a map by 10+ rounds
++1 for winning a map by 5–9 rounds
+-1 for losing a map by 10+ rounds
+Series Wins:
++2 bonus points for a 2-0 series win
++4 bonus points for a 3-0 series win
++1 bonus point for a 3-1 series win
+Bonus Points (based on player rating):
++3 for the highest average VLR rating across the match
++2 for the second highest
++1 for the third highest
++1 for achieving a 1.5+ average VLR rating
++2 for achieving a 1.75+ average VLR rating
++3 for achieving a 2.0+ average VLR rating
+
+VFL FAQ:
+When do gameweeks start and end?
+Gameweeks are defined by different stages of the event. You can see fixture page for better details (https://www.valorantfantasyleague.net/fixtures) (note: it hasn't been updated now, it will be updated soon. It currently has information about Valorant Masters London 2026)
+
+Why are players priced as they are?
+Individual players are to be priced accordingly from a couple of factors, such as their likelihood to get kills, their role, how good their team is likely to be, and to try and find balance across all regions and roles.
+
+Can I change my team during a gameweek?
+No, team changes are locked once a gameweek begins. You can only make changes during the gap between gameweeks.
+
+What happens if a player gets benched/subbed?
+If a VCT Team operates with a 6 man roster, there will not be automatic subbing. Automatic substitutions will happen in the case of injury or non permanent stand-ins.
+
+Do I have to use my entire budget?
+No. You can spend anything under the 50 VP limit and in fact can then use the extra funds for later transfers of players.
+
+What are wildcards
+Wildcards are slots where you can select any player, regardless of their role.
+
+What does the IGL do
+The IGL can be any of your players. The player with the IGL tag will receive double points (both positive and negative). You can change your IGL every gameweek.
+
+Do transfers stack if i don't use them?
+no
+
+Tips:
+Tips for Success
+Have fun. That’s what the game is about, so pick players you like and have fun with it.
+For Gameweek 1 only pick players who play in the Swiss Stage!
+Have players you want to keep most in non-wildcard slots as the wildcard players will be easier to swap out.
+Get a couple premium players that you can have as your IGL.
+Fixtures matter as much as players - always look for games where you feel good about a certain team winning.
+Map points are more easily predicted than kill or bonus points.
+Take a look at KPR and VLR rating stats to inform your player choices.
+Try to avoid having players who play against each other - only one team can win!
+You don’t have to spend the entire budget - in fact it could give you funds to play with later when you have more info about which teams and players are performing well.
+You need at least 3 players to make it through each stage to have a full team in the next stage.
+

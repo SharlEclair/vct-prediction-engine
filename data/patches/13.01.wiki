@@ -1,0 +1,117 @@
+{{PatchNav|previous=13.00|next=13.02}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 13.01.jpg
+|date    = July 14th, 2026
+|act     = [[Season 2026: Act 4]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Weapons]]
+*[[Game Modes]]
+|bundle  = <!--{{collection|}}-->
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-13-01/ Patch Notes]
+}}
+
+The following is a list of patch v13.01's changes and updates to ''VALORANT''.
+
+Full context and other dev notes about the updates may be found in the [[Patch Notes/13.01/Archive|official notes]].
+
+==Agent Updates==
+==={{ai|Iso}}===
+*{{abi text|Double Tap}}
+**{{ui|Buff}} Weapon reequip speed increased Fast >>> Instant
+**{{ui|Bugfix Nerf}} Bugfix: Incorrectly preventing [[fall damage]]
+==={{ai|Yoru}}===
+*{{abi text|Fakeout}}
+**{{ui|Buff}} Mirror image equipped weapon changed from Yoru's strongest weapon >>> Yoru's last equipped weapon
+*{{abi text|Gatecrash}}
+**{{ui|Buff}} Tether duration increased 15s >>> 20s
+*{{abi text|Dimensional Drift}}
+**{{ui|Bugfix Nerf}} Bugfix: Gaining movement speed when interacting with [[flex]]
+==={{ai|Astra}}===
+*General
+**{{ui|Bugfix}} Bugfix: Ability cooldown timer remaining visible after ability already used
+==={{ai|Clove}}===
+*{{abi text|Ruse}}
+**{{ui|Bugfix Nerf}} Bugfix: Gaining an extra charge during the Buy Phase by purchasing and reselling charges
+==={{ai|Cypher}}===
+*{{abi text|Cyber Cage}}
+**{{ui|Bugfix Nerf}} Bugfix: Incorrectly blocking line-of-sight interactions above the cage's VFX
+**{{ui|Bugfix}} Bugfix: Trajectory indicator not appearing when throwing to locations outside of Cypher's line of sight
+**{{ui|Bugfix Buff}} Bugfix: Failing to play an audio cue when enemies entered through the lower portion of the cage
+*{{abi text|Spycam}}
+**{{ui|Bugfix}} Bugfix: VO not playing correctly during specific actions
+==={{ai|Deadlock}}===
+*{{abi text|GravNet}}
+**{{ui|Bugfix}} Bugfix: 3P VFX disappearing after a player disconnected and reconnected to the match
+==={{ai|Gekko}}===
+*{{abi text|Thrash}}
+**{{ui|Bugfix Buff}} Bugfix: Nearsight VFX persisting after Thrash destroyed by an enemy
+==={{ai|Jett}}===
+*{{abi text|Cloudburst}}
+**{{ui|Bugfix Nerf}} Bugfix: Able to be activated during {{abi text|Updraft}} and {{abi text|Tailwind}} animations when multiple abilities were bound to the same key
+*{{abi text|Tailwind}}
+**{{ui|Bugfix Buff}} Bugfix: Unable to pick up the [[Spike]] or [[weapons]] during Tailwind
+==={{ai|KAYO}}===
+*{{abi text|FLASH/drive}}
+**{{ui|Bugfix}} Bugfix: Missing VFX
+**{{ui|Bugfix Nerf}} Bugfix: Equip animation skip
+==={{ai|Miks}}===
+*{{abi text|Waveform}}
+**{{ui|Bugfix Nerf}} Bugfix: Gaining an extra charge during the Buy Phase by purchasing and reselling charges
+==={{ai|Neon}}===
+*{{abi text|High Gear}}
+**{{ui|Bugfix Buff}} Bugfix: Unable to pick up the [[Spike]] if sliding over it
+==={{ai|Reyna}}===
+*{{abi text|Dismiss}}
+**{{ui|Bugfix Buff}} Bugfix: Occasionally unable to equip [[weapons]]
+==={{ai|Sage}}===
+*{{abi text|Resurrection}}
+**{{ui|Bugfix Nerf}} Bugfix: Allies revived within {{abi text|Poison Cloud}} or {{abi text|Viper's Pit}} not being Nearsighted
+==={{ai|Skye}}===
+*{{abi text|Trailblazer}}
+**{{ui|Bugfix Buff}} Bugfix: Nearsight VFX persisting after tiger destroyed by an enemy
+*{{abi text|Guiding Light}}
+**{{ui|Bugfix Nerf}} Bugfix: Gaining an extra charge during the Buy Phase by purchasing and reselling charges
+==={{ai|Viper}}===
+*{{abi text|Viper's Pit}}
+**{{ui|Bugfix Buff}} Bugfix: Players using [[Possession|possessive]] abilities briefly seeing through the pit
+==={{ai|Veto}}===
+*{{abi text|Evolution}}
+**{{ui|Bugfix}} Bugfix: VO filter persisting on certain lines for the remainder of the match
+
+==Map Updates==
+===[[Abyss]]===
+*{{ui|Bugfix Nerf}} Bugfix: [[Reyna]]'s Leer applying Nearsight in unintended locations near A Main
+===[[Split]]===
+*{{ui|Bugfix Nerf}} Bugfix: [[Killjoy]]'s [[Alarmbot]] interacting with players through certain wooden covers
+*{{ui|Bugfix}} Bugfix: Wall-based abilities being cut off when used in the middle of B Garage
+===[[Summit]]===
+*{{ui|Bugfix Nerf}} Bugfix: [[Iso]] surviving droppable wall crushes
+*{{ui|Bugfix Nerf}} Bugfix: [[Waylay]] reaching unintended locations with {{abi text|Refract}} and {{abi text|Lightspeed}}
+
+==Weapon Updates==
+==={{wi|Outlaw}} [[Outlaw]]===
+*{{ui|Nerf}} Recovery increased 0.1s >>> 0.15s after first shot
+*{{ui|Nerf}} Alt fire max spread increased 0 >>> 2.25 after first shot
+*{{ui|Nerf}} Recoil increased 0 >>> 4 after first shot
+
+==Modes Updates==
+===[[Competitive]]===
+*Rank Manipulation Penalties
+**New tools to better detect rank manipulation
+**Penalties include account suspensions, rank reversions, and ranked reward reversions.
+
+==Lore Updates==
+===[[Range/Lore/V26|V26 Range Lore Elements]]===
+*New {{ai|Iso}} email in Brimstone's office
+*New {{ai|Sage}} voicemail in Brimstone's office
+*New [[Legion]] audio log featuring {{Omega|Sova|icon=true}} and {{Omega|Yoru|icon=true}} in Cypher's office
+
+===[[Summit/Lore|Summit Lore Elements]]===
+*New messages between two students at the academy.
+
+==Other Updates==
+===General===
+*{{ui|Bugfix}} Fixed a cosmetic issue where Packets Received/Sent Rate graphs showed incorrect values when the game is running at extremely high framerates
+
+[[Category:Patch Notes]]

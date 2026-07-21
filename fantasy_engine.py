@@ -579,17 +579,7 @@ def optimize_roster(
             A_eq_rows.append(row)
             b_eq.append(1.0)
         
-        # 3. IGL floor constraint: any player i with floor > igl_floor cannot be selected (bypassed if forced manually)
-        if not is_forced_igl_run:
-            for i in range(n):
-                if filtered_players[i]["floor"] > igl_floor:
-                    row = np.zeros(num_vars)
-                    row[i] = 1.0
-                    row[n + i] = 1.0
-                    A_eq_rows.append(row)
-                    b_eq.append(0.0)
-                
-        # 4. Role natural counts based on active VFL ruleset
+        # 3. Role natural counts based on active VFL ruleset
         min_role_count = 2.0 if roster_size == 11 else 1.0
         wildcard_count = 3.0 if roster_size == 11 else 2.0
         
@@ -668,13 +658,36 @@ def optimize_roster(
             
         # 9. Transfer constraints (for suggestion component)
         if transfer_constraint is not None:
+            curr_roster = transfer_constraint["current_roster"]
             curr_names = set()
-            for p in transfer_constraint["current_roster"]:
+            curr_core_names_by_role = {"Duelist": set(), "Initiator": set(), "Controller": set(), "Sentinel": set()}
+            curr_wildcard_names = set()
+            
+            min_role_c = 2 if roster_size == 11 else 1
+            role_assigned_counts = {"Duelist": 0, "Initiator": 0, "Controller": 0, "Sentinel": 0}
+            
+            for p in curr_roster:
                 name_val = p.get("player_name") or p.get("name")
                 if name_val:
-                    curr_names.add(name_val.lower().strip())
+                    p_name = name_val.lower().strip()
+                    curr_names.add(p_name)
+                    p_slot = p.get("roster_slot")
+                    p_role = p.get("role")
+                    
+                    if p_slot in curr_core_names_by_role:
+                        curr_core_names_by_role[p_slot].add(p_name)
+                    elif p_slot == "Wildcard":
+                        curr_wildcard_names.add(p_name)
+                    else:
+                        if p_role in curr_core_names_by_role and role_assigned_counts[p_role] < min_role_c:
+                            curr_core_names_by_role[p_role].add(p_name)
+                            role_assigned_counts[p_role] += 1
+                        else:
+                            curr_wildcard_names.add(p_name)
+
             max_tr = transfer_constraint["max_transfers"]
             exact_tr = transfer_constraint.get("exact", False)
+            
             # Number of selected players NOT in current roster
             non_curr_indicator = np.array([1.0 if p["player_name"].lower().strip() not in curr_names else 0.0 for p in filtered_players])
             row = np.zeros(num_vars)
@@ -687,6 +700,25 @@ def optimize_roster(
                 A_ub_rows.append(row)
                 b_ub_lower.append(0.0)
                 b_ub_upper.append(float(max_tr))
+
+            # Role-for-role slot consistency constraints for current roster members
+            for i, p in enumerate(filtered_players):
+                p_name = p["player_name"].lower().strip()
+                p_role = p["role"]
+                
+                # If player is in a current core role slot, prevent them from taking a wildcard slot
+                if p_name in curr_core_names_by_role.get(p_role, set()):
+                    row = np.zeros(num_vars)
+                    row[n + i] = 1.0  # x_i_wild
+                    A_eq_rows.append(row)
+                    b_eq.append(0.0)
+                    
+                # If player is in a current wildcard slot, prevent them from taking a natural core role slot
+                elif p_name in curr_wildcard_names:
+                    row = np.zeros(num_vars)
+                    row[i] = 1.0  # x_i_nat
+                    A_eq_rows.append(row)
+                    b_eq.append(0.0)
             
         # 10. Roster exclusion constraints (to find alternative suggestions)
         if excluded_rosters is not None:

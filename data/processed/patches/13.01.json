@@ -1,0 +1,278 @@
+{
+    "version": "13.01",
+    "date": "July 14th, 2026",
+    "agent_changes": [
+        {
+            "agent": "Iso",
+            "ability": "Double Tap",
+            "change_type": "Buff",
+            "description": "Weapon reequip speed increased Fast >>> Instant"
+        },
+        {
+            "agent": "Iso",
+            "ability": "Double Tap",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Incorrectly preventing fall damage"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Fakeout",
+            "change_type": "Buff",
+            "description": "Mirror image equipped weapon changed from Yoru's strongest weapon >>> Yoru's last equipped weapon"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Gatecrash",
+            "change_type": "Buff",
+            "description": "Tether duration increased 15s >>> 20s"
+        },
+        {
+            "agent": "Yoru",
+            "ability": "Dimensional Drift",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Gaining movement speed when interacting with flex"
+        },
+        {
+            "agent": "Astra",
+            "ability": "General",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Ability cooldown timer remaining visible after ability already used"
+        },
+        {
+            "agent": "Clove",
+            "ability": "Ruse",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Gaining an extra charge during the Buy Phase by purchasing and reselling charges"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Cyber Cage",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Incorrectly blocking line-of-sight interactions above the cage's VFX"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Cyber Cage",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Trajectory indicator not appearing when throwing to locations outside of Cypher's line of sight"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Cyber Cage",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Failing to play an audio cue when enemies entered through the lower portion of the cage"
+        },
+        {
+            "agent": "Cypher",
+            "ability": "Spycam",
+            "change_type": "Bugfix",
+            "description": "Bugfix: VO not playing correctly during specific actions"
+        },
+        {
+            "agent": "Deadlock",
+            "ability": "GravNet",
+            "change_type": "Bugfix",
+            "description": "Bugfix: 3P VFX disappearing after a player disconnected and reconnected to the match"
+        },
+        {
+            "agent": "Gekko",
+            "ability": "Thrash",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Nearsight VFX persisting after Thrash destroyed by an enemy"
+        },
+        {
+            "agent": "Jett",
+            "ability": "Cloudburst",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Able to be activated during Updraft and Tailwind animations when multiple abilities were bound to the same key"
+        },
+        {
+            "agent": "Jett",
+            "ability": "Tailwind",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Unable to pick up the Spike or weapons during Tailwind"
+        },
+        {
+            "agent": "KAYO",
+            "ability": "FLASH/drive",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Missing VFX"
+        },
+        {
+            "agent": "KAYO",
+            "ability": "FLASH/drive",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Equip animation skip"
+        },
+        {
+            "agent": "Miks",
+            "ability": "Waveform",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Gaining an extra charge during the Buy Phase by purchasing and reselling charges"
+        },
+        {
+            "agent": "Neon",
+            "ability": "High Gear",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Unable to pick up the Spike if sliding over it"
+        },
+        {
+            "agent": "Reyna",
+            "ability": "Dismiss",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Occasionally unable to equip weapons"
+        },
+        {
+            "agent": "Sage",
+            "ability": "Resurrection",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Allies revived within Poison Cloud or Viper's Pit not being Nearsighted"
+        },
+        {
+            "agent": "Skye",
+            "ability": "Trailblazer",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Nearsight VFX persisting after tiger destroyed by an enemy"
+        },
+        {
+            "agent": "Skye",
+            "ability": "Guiding Light",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Gaining an extra charge during the Buy Phase by purchasing and reselling charges"
+        },
+        {
+            "agent": "Viper",
+            "ability": "Viper's Pit",
+            "change_type": "Bugfix",
+            "description": "Buff Bugfix: Players using possessive abilities briefly seeing through the pit"
+        },
+        {
+            "agent": "Veto",
+            "ability": "Evolution",
+            "change_type": "Bugfix",
+            "description": "Bugfix: VO filter persisting on certain lines for the remainder of the match"
+        },
+        {
+            "agent": "Abyss",
+            "ability": "General",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Reyna's Leer applying Nearsight in unintended locations near A Main"
+        },
+        {
+            "agent": "Split",
+            "ability": "General",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Killjoy's Alarmbot interacting with players through certain wooden covers"
+        },
+        {
+            "agent": "Split",
+            "ability": "General",
+            "change_type": "Bugfix",
+            "description": "Bugfix: Wall-based abilities being cut off when used in the middle of B Garage"
+        },
+        {
+            "agent": "Summit",
+            "ability": "General",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Iso surviving droppable wall crushes"
+        },
+        {
+            "agent": "Summit",
+            "ability": "Refract",
+            "change_type": "Bugfix",
+            "description": "Nerf Bugfix: Waylay reaching unintended locations with Refract and Lightspeed"
+        }
+    ],
+    "weapon_changes": [
+        {
+            "weapon": "Outlaw",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Nerf",
+            "description": "Recovery increased 0.1s >>> 0.15s after first shot"
+        },
+        {
+            "weapon": "Outlaw",
+            "stat": "Alt fire max spread",
+            "old_value": 0.0,
+            "new_value": 2.25,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Outlaw",
+            "stat": "Recoil",
+            "old_value": 0.0,
+            "new_value": 4.0,
+            "change_type": "Nerf"
+        },
+        {
+            "weapon": "Competitive",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Rank Manipulation Penalties"
+        },
+        {
+            "weapon": "Competitive",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New tools to better detect rank manipulation"
+        },
+        {
+            "weapon": "Competitive",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Penalties include account suspensions, rank reversions, and ranked reward reversions."
+        },
+        {
+            "weapon": "V26 Range Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New Iso email in Brimstone's office"
+        },
+        {
+            "weapon": "V26 Range Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New Sage voicemail in Brimstone's office"
+        },
+        {
+            "weapon": "V26 Range Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New Legion audio log featuring Sova|icon=true and Yoru|icon=true in Cypher's office"
+        },
+        {
+            "weapon": "Summit Lore Elements",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "New messages between two students at the academy."
+        },
+        {
+            "weapon": "General",
+            "stat": "General",
+            "old_value": null,
+            "new_value": null,
+            "change_type": "Adjustment",
+            "description": "Bugfix Fixed a cosmetic issue where Packets Received/Sent Rate graphs showed incorrect values when the game is running at extremely high framerates"
+        }
+    ],
+    "competitive_changes": [],
+    "performance_changes": [],
+    "bug_fixes": [],
+    "player_behavior_changes": []
+}

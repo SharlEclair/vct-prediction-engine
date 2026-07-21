@@ -72,70 +72,43 @@ class VFLScraper:
 
     # ── Public API ─────────────────────────────────────────────────────────────
 
-    def get_players(self, force_refresh: bool = False) -> list[dict]:
-        """Return player list — from cache unless force_refresh or no cache."""
-        if not force_refresh and os.path.exists(self.cache_path):
-            return self.load_from_cache()
-        return self.scrape_player_stats()
+    def get_current_event(self, force_refresh: bool = False) -> dict:
+        """
+        Fetches current event metadata, schedule, players, budget, and VLR mappings strictly via /api/event/currentevent.
+        Endpoint: GET https://api.valorantfantasyleague.net/api/event/currentevent
+        Caches payload locally to data/processed/vfl_currentevent.json.
+        """
+        cache_file = os.path.join(self.cache_dir, "vfl_currentevent.json")
+        if not force_refresh and os.path.exists(cache_file):
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    logger.info(f"Loading current event state from cache: {cache_file}")
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to read current event cache: {e}. Refetching...")
 
-    def scrape_player_stats(self) -> list[dict]:
-        """
-        Two-step API workflow:
-          A) Resolve current event id.
-          B) Fetch all players for that event.
-        Falls back to seed data on any network/parse error.
-        """
+        logger.info(f"Fetching live current event state from {CURRENT_EVENT_URL}")
         try:
             with requests.Session(impersonate="chrome") as client:
-                # ── Step A: current event ──────────────────────────────────
-                sleep_time = 3.0 + random.uniform(0.5, 2.5)
-                logger.info(f"Sleeping for {sleep_time:.2f}s before fetching current event...")
-                time.sleep(sleep_time)
-                logger.info(f"Resolving current event from {CURRENT_EVENT_URL}")
-                r_event = client.get(CURRENT_EVENT_URL, headers=DEFAULT_HEADERS, timeout=20.0)
-                if r_event.status_code != 200:
-                    raise Exception(f"HTTP Status {r_event.status_code}")
-
-                event_data  = r_event.json()
-                event_id    = event_data.get("id")
-                event_name  = event_data.get("name", "Unknown Event")
-
-                if not event_id:
-                    raise ValueError("Could not resolve event_id from currentevent response.")
-                logger.info(f"Active event: [{event_id}] {event_name}")
-
-                # ── Step B: all players ────────────────────────────────────
-                sleep_time2 = 3.0 + random.uniform(0.5, 2.5)
-                logger.info(f"Sleeping for {sleep_time2:.2f}s before fetching all players...")
-                time.sleep(sleep_time2)
-                logger.info(f"Fetching player roster from {ALL_PLAYERS_URL}?eventId={event_id}")
-                r_players = client.get(
-                    ALL_PLAYERS_URL,
-                    params={"eventId": event_id},
-                    headers=DEFAULT_HEADERS,
-                    timeout=20.0
-                )
-                if r_players.status_code != 200:
-                    raise Exception(f"HTTP Status {r_players.status_code}")
-
-                raw_players: list[dict] = r_players.json()
-
-                if not isinstance(raw_players, list):
-                    raise ValueError(f"Unexpected response shape: {type(raw_players)}")
-
-                logger.info(f"Received {len(raw_players)} players from API.")
-
-                mapped_players = [
-                    self._map_player(p, event_id=event_id, event_name=event_name)
-                    for p in raw_players
-                ]
-
-                # Strict filtering: Exclude Inactive players and Academy/GC/Black/Blue rosters
-                players = []
-                for p in mapped_players:
-                    p_name = p["player_name"].lower()
-                    t_name = p["team_name"].lower()
-                    t_short = p.get("team_short", "").lower()
+                resp = client.get(CURRENT_EVENT_URL, headers=DEFAULT_HEADERS, timeout=20.0)
+                if resp.status_code != 200:
+                    raise Exception(f"HTTP Status {resp.status_code}: {resp.text}")
+                
+                raw_data = resp.json()
+                event_id = raw_data.get("id", 10)
+                event_name = raw_data.get("name", "Current Event")
+                
+                # Extract VLR Regions & Event IDs
+                vlr_regions = [r.get("vlrRegion") for r in raw_data.get("matchRegions", []) if r.get("vlrRegion")]
+                vlr_events = [str(v.get("vlrEventId")) for v in raw_data.get("vlrEvents", []) if v.get("vlrEventId")]
+                
+                # Map players from eventPlayers
+                parsed_players = []
+                for p in raw_data.get("eventPlayers", []):
+                    p_mapped = self._map_player(p, event_id=event_id, event_name=event_name)
+                    p_name = p_mapped["player_name"].lower()
+                    t_name = p_mapped["team_name"].lower()
+                    t_short = p_mapped.get("team_short", "").lower()
 
                     if "inactive" in p_name:
                         continue
@@ -144,18 +117,175 @@ class VFLScraper:
                     if any(s in t_name for s in suffixes) or any(s in t_short for s in suffixes):
                         continue
 
-                    players.append(p)
+                    parsed_players.append(p_mapped)
 
-                # Sort by PPG descending so the cache is already ranked
-                players.sort(key=lambda x: x["ppg"], reverse=True)
+                parsed_players.sort(key=lambda x: x["ppg"], reverse=True)
+                self.save_to_cache(parsed_players)
 
-                self.save_to_cache(players)
-                logger.info(f"Saved {len(players)} players → {self.cache_path}")
-                return players
+                # Extract gameweek schedule & active teams
+                event_matches = raw_data.get("eventMatches", [])
+                gameweek_teams = {}
+                for m in event_matches:
+                    gw = m.get("gameweek")
+                    if gw is None:
+                        continue
+                    gw = int(gw)
+                    if gw not in gameweek_teams:
+                        gameweek_teams[gw] = set()
+                    for t_key in ["matchTeams"]:
+                        m_teams = m.get(t_key) or []
+                        for mt in m_teams:
+                            team_obj = mt.get("team") or {}
+                            t_name = team_obj.get("name")
+                            t_short = team_obj.get("shortName")
+                            if t_name:
+                                gameweek_teams[gw].add(t_name)
+                            if t_short:
+                                gameweek_teams[gw].add(t_short)
 
-        except Exception as exc:
-            logger.error(f"API scrape failed: {exc}. Using seed fallback.")
-            return self._generate_seed_data()
+                # Format gameweek_teams as list
+                gw_teams_clean = {str(k): sorted(list(v)) for k, v in gameweek_teams.items()}
+
+                result = {
+                    "event_id": event_id,
+                    "event_name": event_name,
+                    "current_gameweek": raw_data.get("currentGameweek", 1),
+                    "budget": raw_data.get("budget", 100),
+                    "vlr_regions": vlr_regions,
+                    "vlr_events": vlr_events,
+                    "players": parsed_players,
+                    "gameweek_teams": gw_teams_clean,
+                    "event_matches": event_matches,
+                    "raw_data": raw_data
+                }
+                
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(result, f, indent=2)
+                    
+                logger.info(f"Saved current event cache ({len(parsed_players)} players) → {cache_file}")
+                return result
+        except Exception as e:
+            logger.error(f"Failed to fetch live current event: {e}")
+            return {
+                "event_id": 10,
+                "event_name": "VCT Event",
+                "current_gameweek": 2,
+                "budget": 100,
+                "vlr_regions": [],
+                "vlr_events": [],
+                "players": [],
+                "gameweek_teams": {},
+                "event_matches": [],
+                "raw_data": {}
+            }
+
+    def get_schedule(self, gameweek: int = 2, event_id: int = 10, force_refresh: bool = False) -> dict:
+        """
+        Fetches match schedule for a specific gameweek and eventId via local currentevent cache fallback or API.
+        """
+        # First check local currentevent cache
+        cache_event_file = os.path.join(self.cache_dir, "vfl_currentevent.json")
+        if not force_refresh and os.path.exists(cache_event_file):
+            try:
+                with open(cache_event_file, "r", encoding="utf-8") as f:
+                    evt = json.load(f)
+                    gw_teams_dict = evt.get("gameweek_teams", {})
+                    active_teams = gw_teams_dict.get(str(gameweek), [])
+                    if active_teams:
+                        matches = [m for m in evt.get("event_matches", []) if m.get("gameweek") == gameweek]
+                        return {
+                            "gameweek": gameweek,
+                            "event_id": event_id,
+                            "matches": matches,
+                            "active_teams": active_teams,
+                            "teams_info": []
+                        }
+            except Exception as e:
+                logger.warning(f"Could not load schedule from currentevent cache: {e}")
+
+        cache_file = os.path.join(self.cache_dir, f"schedule_gw{gameweek}_ev{event_id}.json")
+        if not force_refresh and os.path.exists(cache_file):
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    logger.info(f"Loading Gameweek {gameweek} schedule from cache: {cache_file}")
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to read schedule cache: {e}. Refetching...")
+
+        url = f"{VFL_API_BASE}/matches/schedule?gameweek={gameweek}&eventId={event_id}"
+        logger.info(f"Fetching Gameweek {gameweek} schedule from {url}")
+        
+        try:
+            with requests.Session(impersonate="chrome") as client:
+                sleep_time = 1.0 + random.uniform(0.2, 0.8)
+                time.sleep(sleep_time)
+                resp = client.get(url, headers=DEFAULT_HEADERS, timeout=20.0)
+                if resp.status_code != 200:
+                    raise Exception(f"HTTP Status {resp.status_code}: {resp.text}")
+                
+                raw_data = resp.json()
+                matches = raw_data if isinstance(raw_data, list) else raw_data.get("matches", [])
+                
+                active_teams_set = set()
+                teams_info = []
+                seen_team_ids = set()
+                
+                for match in matches:
+                    for t_key in ["team1", "team2"]:
+                        team = match.get(t_key)
+                        if team and isinstance(team, dict):
+                            t_name = team.get("name")
+                            t_short = team.get("shortName")
+                            t_id = team.get("id")
+                            
+                            if t_name:
+                                active_teams_set.add(t_name)
+                            if t_short:
+                                active_teams_set.add(t_short)
+                                
+                            if t_id and t_id not in seen_team_ids:
+                                seen_team_ids.add(t_id)
+                                teams_info.append({
+                                    "id": t_id,
+                                    "name": t_name,
+                                    "shortName": t_short
+                                })
+                
+                result = {
+                    "gameweek": gameweek,
+                    "event_id": event_id,
+                    "matches": matches,
+                    "active_teams": sorted(list(active_teams_set)),
+                    "teams_info": teams_info
+                }
+                
+                # Save to cache
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(result, f, indent=2)
+                    
+                return result
+        except Exception as e:
+            logger.error(f"Failed to fetch Gameweek {gameweek} schedule: {e}")
+            return {
+                "gameweek": gameweek,
+                "event_id": event_id,
+                "matches": [],
+                "active_teams": [],
+                "teams_info": []
+            }
+
+    def get_players(self, force_refresh: bool = False) -> list[dict]:
+        """Return player list — from cache unless force_refresh or no cache."""
+        if not force_refresh and os.path.exists(self.cache_path):
+            return self.load_from_cache()
+        return self.scrape_player_stats()
+
+    def scrape_player_stats(self) -> list[dict]:
+        """
+        Fetches currentevent and extracts players array.
+        """
+        evt = self.get_current_event(force_refresh=True)
+        return evt.get("players", [])
 
     # ── Internal Helpers ───────────────────────────────────────────────────────
 
