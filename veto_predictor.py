@@ -64,57 +64,79 @@ class VCTMapVetoPredictor:
                 if "data" not in content or "segments" not in content["data"] or not content["data"]["segments"]:
                     continue
                 segment = content["data"]["segments"][0]
-                team_a = segment["teams"][0]["name"]
-                team_b = segment["teams"][1]["name"]
+                if "teams" in segment and isinstance(segment["teams"], list) and len(segment["teams"]) >= 2:
+                    team_a = segment["teams"][0]["name"]
+                    team_b = segment["teams"][1]["name"]
+                else:
+                    team_a = segment.get("team1", "")
+                    team_b = segment.get("team2", "")
+
+                if not team_a or not team_b:
+                    continue
+
                 self.team_names.add(team_a)
                 self.team_names.add(team_b)
                 self.total_matches[team_a] += 1
                 self.total_matches[team_b] += 1
                 
                 # 1. Parse Map Vetoes
+                tokens = []
                 map_vetos_str = segment.get("map_vetos", "")
                 if map_vetos_str:
-                    tokens = [t.strip() for t in map_vetos_str.split(";") if t.strip()]
-                    for token in tokens:
-                        # Parse Bans
-                        if "ban" in token:
-                            parts = token.split("ban")
-                            if len(parts) == 2:
-                                team_part, map_part = parts
-                                matched_team = self.match_team(team_part, team_a, team_b)
-                                if matched_team:
-                                    map_name = map_part.strip()
-                                    self.bans[matched_team][map_name] += 1
-                                    self.map_pool.add(map_name)
-                        # Parse Picks
-                        elif "pick" in token:
-                            parts = token.split("pick")
-                            if len(parts) == 2:
-                                team_part, map_part = parts
-                                matched_team = self.match_team(team_part, team_a, team_b)
-                                if matched_team:
-                                    map_name = map_part.strip()
-                                    self.picks[matched_team][map_name] += 1
-                                    self.map_pool.add(map_name)
+                    tokens.extend([t.strip() for t in map_vetos_str.split(";") if t.strip()])
+                if "vetoes" in segment and isinstance(segment["vetoes"], list):
+                    tokens.extend([str(v).strip() for v in segment["vetoes"] if v])
+
+                for token in tokens:
+                    # Parse Bans
+                    if "ban" in token:
+                        parts = token.split("ban")
+                        if len(parts) == 2:
+                            team_part, map_part = parts
+                            matched_team = self.match_team(team_part, team_a, team_b)
+                            if matched_team:
+                                map_name = map_part.strip()
+                                self.bans[matched_team][map_name] += 1
+                                self.map_pool.add(map_name)
+                    # Parse Picks
+                    elif "pick" in token:
+                        parts = token.split("pick")
+                        if len(parts) == 2:
+                            team_part, map_part = parts
+                            matched_team = self.match_team(team_part, team_a, team_b)
+                            if matched_team:
+                                map_name = map_part.strip()
+                                self.picks[matched_team][map_name] += 1
+                                self.map_pool.add(map_name)
                 
                 # 2. Parse Played Maps and Wins
-                for m_idx, map_data in enumerate(segment.get("maps", [])):
-                    map_name = map_data.get("map_name")
-                    if not map_name or map_name.lower() == "all maps" or map_name.lower() == "none":
+                maps_list = segment.get("maps", [])
+                if not maps_list and "data" in content and "segments" in content["data"]:
+                    maps_list = content["data"]["segments"]
+
+                for map_data in maps_list:
+                    map_name = map_data.get("map_name") or map_data.get("map")
+                    if not map_name or str(map_name).lower() in ["all maps", "none"]:
                         continue
                     self.map_pool.add(map_name)
                     self.plays[team_a][map_name] += 1
                     self.plays[team_b][map_name] += 1
                     self.global_plays[map_name] += 1
                     
-                    score = map_data.get("score", {})
-                    t1_score = score.get("team1")
-                    t2_score = score.get("team2")
-                    if t1_score is not None and t2_score is not None:
-                        if t1_score > t2_score:
-                            self.wins[team_a][map_name] += 1
-                        elif t2_score > t1_score:
-                            self.wins[team_b][map_name] += 1
+                    winner = map_data.get("winner")
+                    if winner == team_a:
+                        self.wins[team_a][map_name] += 1
+                    elif winner == team_b:
+                        self.wins[team_b][map_name] += 1
+                    else:
+                        score = map_data.get("score", {})
+                        t1_score = score.get("team1")
+                        t2_score = score.get("team2")
+                        if t1_score is not None and t2_score is not None:
+                            if t1_score > t2_score:
+                                self.wins[team_a][map_name] += 1
+                            elif t2_score > t1_score:
+                                self.wins[team_b][map_name] += 1
                             
             except Exception as e:
                 logger.warning(f"Error parsing match veto file {f}: {e}")

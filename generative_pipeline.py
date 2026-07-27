@@ -204,8 +204,16 @@ class AgentCompositionGenerator:
                 if "data" not in content or "segments" not in content["data"] or not content["data"]["segments"]:
                     continue
                 segment = content["data"]["segments"][0]
-                team_a = segment["teams"][0]["name"]
-                team_b = segment["teams"][1]["name"]
+                if "teams" in segment and isinstance(segment["teams"], list) and len(segment["teams"]) >= 2:
+                    team_a = segment["teams"][0]["name"]
+                    team_b = segment["teams"][1]["name"]
+                else:
+                    team_a = segment.get("team1", "")
+                    team_b = segment.get("team2", "")
+
+                if not team_a or not team_b:
+                    continue
+
                 date_str = segment.get("date", "")
                 from feature_engineering import parse_match_date
                 try:
@@ -217,34 +225,58 @@ class AgentCompositionGenerator:
                 roster_a = set()
                 roster_b = set()
                 
-                for map_data in segment.get("maps", []):
-                    map_name = map_data.get("map_name")
-                    if not map_name or map_name.lower() == "all maps":
+                maps_list = segment.get("maps", [])
+                if not maps_list and "data" in content and "segments" in content["data"]:
+                    maps_list = content["data"]["segments"]
+
+                for map_data in maps_list:
+                    map_name = map_data.get("map_name") or map_data.get("map")
+                    if not map_name or str(map_name).lower() in ["all maps", "none"]:
                         continue
                     
-                    # Players team 1 (Team A)
-                    for p in map_data.get("players", {}).get("team1", []):
-                        p_name = p["name"]
-                        agent = p.get("agent")
-                        acs = float(p.get("acs", 0.0) or 0.0)
-                        roster_a.add(p_name)
-                        if agent:
-                            self.player_map_agent_plays[p_name][map_name][agent] += 1
-                            self.player_map_agent_acs[p_name][map_name][agent] += acs
-                            self.player_agent_plays[p_name][agent] += 1
-                            self.player_agent_acs[p_name][agent] += acs
-                            
-                    # Players team 2 (Team B)
-                    for p in map_data.get("players", {}).get("team2", []):
-                        p_name = p["name"]
-                        agent = p.get("agent")
-                        acs = float(p.get("acs", 0.0) or 0.0)
-                        roster_b.add(p_name)
-                        if agent:
-                            self.player_map_agent_plays[p_name][map_name][agent] += 1
-                            self.player_map_agent_acs[p_name][map_name][agent] += acs
-                            self.player_agent_plays[p_name][agent] += 1
-                            self.player_agent_acs[p_name][agent] += acs
+                    raw_players = map_data.get("players", [])
+                    if isinstance(raw_players, dict):
+                        # Players team 1 (Team A)
+                        for p in raw_players.get("team1", []):
+                            p_name = p.get("name")
+                            agent = p.get("agent")
+                            acs = float(p.get("acs", 0.0) or 0.0)
+                            if p_name:
+                                roster_a.add(p_name)
+                                if agent:
+                                    self.player_map_agent_plays[p_name][map_name][agent] += 1
+                                    self.player_map_agent_acs[p_name][map_name][agent] += acs
+                                    self.player_agent_plays[p_name][agent] += 1
+                                    self.player_agent_acs[p_name][agent] += acs
+                                    
+                        # Players team 2 (Team B)
+                        for p in raw_players.get("team2", []):
+                            p_name = p.get("name")
+                            agent = p.get("agent")
+                            acs = float(p.get("acs", 0.0) or 0.0)
+                            if p_name:
+                                roster_b.add(p_name)
+                                if agent:
+                                    self.player_map_agent_plays[p_name][map_name][agent] += 1
+                                    self.player_map_agent_acs[p_name][map_name][agent] += acs
+                                    self.player_agent_plays[p_name][agent] += 1
+                                    self.player_agent_acs[p_name][agent] += acs
+                    elif isinstance(raw_players, list):
+                        for p in raw_players:
+                            p_name = p.get("name")
+                            p_team = p.get("team", team_a)
+                            agent = p.get("agent")
+                            acs = float(p.get("acs", 0.0) or 0.0)
+                            if p_name:
+                                if p_team == team_a:
+                                    roster_a.add(p_name)
+                                else:
+                                    roster_b.add(p_name)
+                                if agent:
+                                    self.player_map_agent_plays[p_name][map_name][agent] += 1
+                                    self.player_map_agent_acs[p_name][map_name][agent] += acs
+                                    self.player_agent_plays[p_name][agent] += 1
+                                    self.player_agent_acs[p_name][agent] += acs
                             
                 # Update team recent rosters based on match timestamp
                 if roster_a and len(roster_a) >= 5:

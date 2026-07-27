@@ -8,3 +8,5 @@ catboost_info/
 .gemini/
 scratch/
 *.log
+.env
+

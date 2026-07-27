@@ -212,15 +212,26 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
         try:
             with open(f, "r", encoding="utf-8") as file:
                 content = json.load(file)
+                if "data" not in content or "segments" not in content["data"] or not content["data"]["segments"]:
+                    continue
                 segment = content["data"]["segments"][0]
-                if str(segment.get("match_id")) in exclude_set:
+                m_id = segment.get("match_id") or segment.get("id")
+                if not m_id:
+                    m_id = os.path.basename(f).replace("match_", "").replace(".json", "")
+                segment["match_id"] = str(m_id)
+
+                if str(segment["match_id"]) in exclude_set:
                     continue
                 segment["timestamp"] = parse_match_date(segment["date"])
                 # Extract patch if present
                 patch_match = re.search(r'Patch\s+([0-9.]+)', segment["date"])
                 segment["patch"] = patch_match.group(1).strip() if patch_match else None
-                segment["team_a"] = segment["teams"][0]["name"]
-                segment["team_b"] = segment["teams"][1]["name"]
+                if "teams" in segment and isinstance(segment["teams"], list) and len(segment["teams"]) >= 2:
+                    segment["team_a"] = segment["teams"][0]["name"]
+                    segment["team_b"] = segment["teams"][1]["name"]
+                else:
+                    segment["team_a"] = segment.get("team1", "Team 1")
+                    segment["team_b"] = segment.get("team2", "Team 2")
                 matches.append(segment)
         except Exception as e:
             logger.error(f"Error loading {f}: {e}")
@@ -274,82 +285,98 @@ def get_historical_stats(raw_dir: str, exclude_match_ids: list = None, reference
 
     player_performances = []
     for m in matches:
-        match_id = m['match_id']
+        match_id = m.get('match_id') or m.get('id', 'unknown')
         ts = m['timestamp']
-        team_a_name = m['team_a']
-        team_b_name = m['team_b']
+        team_a_name = m.get('team_a', 'Team A')
+        team_b_name = m.get('team_b', 'Team B')
         
         player_map_stats = {}
-        for map_data in m['maps']:
-            rounds_count = len(map_data['rounds'])
+        maps_list = m.get('maps', [])
+        if not maps_list:
+            maps_list = [m]
+
+        for map_data in maps_list:
+            rounds_list = map_data.get('rounds') or map_data.get('round_history') or []
+            rounds_count = len(rounds_list)
             if rounds_count == 0:
                 score = map_data.get('score', {})
-                rounds_count = int(score.get('team1', 0)) + int(score.get('team2', 0))
+                if isinstance(score, dict):
+                    rounds_count = int(score.get('team1', 0) or 0) + int(score.get('team2', 0) or 0)
                 if rounds_count == 0:
                     rounds_count = 24
                     
-            for team_key in ['team1', 'team2']:
-                for p in map_data['players'].get(team_key, []):
-                    p_name = p['name']
-                    agent = p.get('agent', '')
-                    # ACS
-                    acs_val = p.get('acs')
-                    try:
-                        acs_val = float(acs_val) if acs_val is not None and acs_val != "" else 0.0
-                    except (ValueError, TypeError):
-                        acs_val = 0.0
-                        
-                    # KAST
-                    kast_val = p.get('kast')
-                    if isinstance(kast_val, str) and '%' in kast_val:
-                        kast_val = float(kast_val.replace('%', '')) / 100.0
-                    elif kast_val is not None and kast_val != "":
-                        try:
-                            kast_val = float(kast_val)
-                            if kast_val > 1.0:
-                                kast_val = kast_val / 100.0
-                        except (ValueError, TypeError):
-                            kast_val = 0.70
-                    else:
-                        kast_val = 0.70
-                        
-                    # FK
-                    fk_val = p.get('fk')
-                    try:
-                        fk_val = float(fk_val) if fk_val is not None and fk_val != "" else 0.0
-                    except (ValueError, TypeError):
-                        fk_val = 0.0
-                        
-                    # FD
-                    fd_val = p.get('fd')
-                    try:
-                        fd_val = float(fd_val) if fd_val is not None and fd_val != "" else 0.0
-                    except (ValueError, TypeError):
-                        fd_val = 0.0
-                    
-                    if p_name not in player_map_stats:
-                        player_map_stats[p_name] = []
-                    player_map_stats[p_name].append({
-                        'acs': acs_val,
-                        'kast': kast_val,
-                        'fk': fk_val,
-                        'fd': fd_val,
-                        'rounds': rounds_count,
-                        'agent': p.get('agent', '')
-                    })
+            raw_players = map_data.get('players', {})
+            players_list = []
+            if isinstance(raw_players, dict):
+                for team_key in ['team1', 'team2']:
+                    for p in raw_players.get(team_key, []):
+                        players_list.append(p)
+            elif isinstance(raw_players, list):
+                players_list = raw_players
 
-                    # Update player agent & global stats for comfort picks
-                    if acs_val > 0:
-                        if p_name not in player_global_stats:
-                            player_global_stats[p_name] = {'sum_acs': 0, 'count': 0}
-                        player_global_stats[p_name]['sum_acs'] += acs_val
-                        player_global_stats[p_name]['count'] += 1
-                        
-                        if agent:
-                            if (p_name, agent) not in player_agent_stats:
-                                player_agent_stats[(p_name, agent)] = {'sum_acs': 0, 'count': 0}
-                            player_agent_stats[(p_name, agent)]['sum_acs'] += acs_val
-                            player_agent_stats[(p_name, agent)]['count'] += 1
+            for p in players_list:
+                p_name = p.get('name')
+                if not p_name:
+                    continue
+                agent = p.get('agent', '')
+                # ACS
+                acs_val = p.get('acs')
+                try:
+                    acs_val = float(acs_val) if acs_val is not None and acs_val != "" else 0.0
+                except (ValueError, TypeError):
+                    acs_val = 0.0
+                    
+                # KAST
+                kast_val = p.get('kast')
+                if isinstance(kast_val, str) and '%' in kast_val:
+                    kast_val = float(kast_val.replace('%', '')) / 100.0
+                elif kast_val is not None and kast_val != "":
+                    try:
+                        kast_val = float(kast_val)
+                        if kast_val > 1.0:
+                            kast_val = kast_val / 100.0
+                    except (ValueError, TypeError):
+                        kast_val = 0.70
+                else:
+                    kast_val = 0.70
+                    
+                # FK
+                fk_val = p.get('fk')
+                try:
+                    fk_val = float(fk_val) if fk_val is not None and fk_val != "" else 0.0
+                except (ValueError, TypeError):
+                    fk_val = 0.0
+                    
+                # FD
+                fd_val = p.get('fd')
+                try:
+                    fd_val = float(fd_val) if fd_val is not None and fd_val != "" else 0.0
+                except (ValueError, TypeError):
+                    fd_val = 0.0
+                    
+                if p_name not in player_map_stats:
+                    player_map_stats[p_name] = []
+                player_map_stats[p_name].append({
+                    'acs': acs_val,
+                    'kast': kast_val,
+                    'fk': fk_val,
+                    'fd': fd_val,
+                    'rounds': rounds_count,
+                    'agent': p.get('agent', '')
+                })
+
+                # Update player agent & global stats for comfort picks
+                if acs_val > 0:
+                    if p_name not in player_global_stats:
+                        player_global_stats[p_name] = {'sum_acs': 0, 'count': 0}
+                    player_global_stats[p_name]['sum_acs'] += acs_val
+                    player_global_stats[p_name]['count'] += 1
+                    
+                    if agent:
+                        if (p_name, agent) not in player_agent_stats:
+                            player_agent_stats[(p_name, agent)] = {'sum_acs': 0, 'count': 0}
+                        player_agent_stats[(p_name, agent)]['sum_acs'] += acs_val
+                        player_agent_stats[(p_name, agent)]['count'] += 1
                     
         for p_name, stats_list in player_map_stats.items():
             avg_acs = sum(s['acs'] for s in stats_list) / len(stats_list)
@@ -670,8 +697,12 @@ def get_latest_roster(team_name: str, raw_dir: str, exclude_match_ids: list = No
                 segment = content["data"]["segments"][0]
                 if str(segment.get("match_id")) in exclude_set:
                     continue
-                ta = segment["teams"][0]["name"]
-                tb = segment["teams"][1]["name"]
+                if "teams" in segment and isinstance(segment["teams"], list) and len(segment["teams"]) >= 2:
+                    ta = segment["teams"][0]["name"]
+                    tb = segment["teams"][1]["name"]
+                else:
+                    ta = segment.get("team1", "")
+                    tb = segment.get("team2", "")
                 ts = parse_match_date(segment["date"])
                 weight = match_team(team_name, ta, tb)
                 if weight != 0:
@@ -957,8 +988,12 @@ def predict_grand_final():
         
     segment = match_data["data"]["segments"][0]
     segment["timestamp"] = parse_match_date(segment["date"])
-    team_a_name = segment["teams"][0]["name"]
-    team_b_name = segment["teams"][1]["name"]
+    if "teams" in segment and isinstance(segment["teams"], list) and len(segment["teams"]) >= 2:
+        team_a_name = segment["teams"][0]["name"]
+        team_b_name = segment["teams"][1]["name"]
+    else:
+        team_a_name = segment.get("team1", "Team 1")
+        team_b_name = segment.get("team2", "Team 2")
     
     logger.info(f"Target Grand Final Match: {team_a_name} vs {team_b_name} (ID: {TARGET_MATCH_ID})")
     

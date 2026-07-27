@@ -57,7 +57,7 @@ def main(whitelist: str = None):
         run_step(["scrapers/patch_ingestor.py"], "Fetch & Parse Wikitext for New Patches")
         
         # Step 6: Analyze Patches and Compute Concept Drift
-        run_step(["patch_analyzer.py"], "Calculate Concept Drift & Update Nerf Registry")
+        run_step(["v8_patch_analyzer.py"], "Calculate Concept Drift & Update Nerf Registry")
         
         # Step 7: Build Features
         run_step(["feature_engineering.py"], "Build Feature Matrix Store")

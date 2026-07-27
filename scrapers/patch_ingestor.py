@@ -9,7 +9,7 @@ import argparse
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from patch_parser import PatchParser
+from v8_patch_parser import V8PatchParser
 
 def get_mock_patch_text(version: str) -> str:
     mock_data = {
@@ -185,7 +185,7 @@ def ingest_latest_patches(limit=5, version_list=None):
         patch_versions = get_patch_versions(limit=limit)
         
     aggregated_data = {}
-    parser = PatchParser()
+    parser = V8PatchParser()
     version_dates = load_version_dates()
     
     # Ensure directories exist
@@ -219,9 +219,14 @@ def ingest_latest_patches(limit=5, version_list=None):
                 logger.error(f"Failed to fetch patch notes for {version}: {e}")
                 raise PatchFetchError(f"Unable to retrieve patch notes for version {version} (cache missing and remote fetch failed: {e})")
         
-        # 3. Parse wikitext using production parser
+        # 3. Parse wikitext using V8 schema-driven production parser
         csv_date = version_dates.get(version, "")
-        parsed_json = parser.parse_patch(version, csv_date, raw_text)
+        payload = parser.parse_wikitext(raw_text)
+        parsed_json = {
+            "version": version,
+            "patch_date": csv_date,
+            "changes": [item.model_dump() for item in payload.changes]
+        }
         
         # 4. Save structured JSON to data/processed/patches/
         processed_path = os.path.join(PROCESSED_PATCHES_DIR, f"{version}.json")

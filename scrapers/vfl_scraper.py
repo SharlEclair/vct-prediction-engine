@@ -193,10 +193,19 @@ class VFLScraper:
                     active_teams = gw_teams_dict.get(str(gameweek), [])
                     if active_teams:
                         matches = [m for m in evt.get("event_matches", []) if m.get("gameweek") == gameweek]
+                        matchup_pairs = []
+                        for m in matches:
+                            m_teams = m.get("matchTeams") or []
+                            if len(m_teams) >= 2:
+                                t1 = (m_teams[0].get("team") or {}).get("name")
+                                t2 = (m_teams[1].get("team") or {}).get("name")
+                                if t1 and t2:
+                                    matchup_pairs.append((t1, t2))
                         return {
                             "gameweek": gameweek,
                             "event_id": event_id,
                             "matches": matches,
+                            "matchup_pairs": matchup_pairs,
                             "active_teams": active_teams,
                             "teams_info": []
                         }
@@ -229,8 +238,16 @@ class VFLScraper:
                 active_teams_set = set()
                 teams_info = []
                 seen_team_ids = set()
+                matchup_pairs = []
                 
                 for match in matches:
+                    t1_obj = match.get("team1") or {}
+                    t2_obj = match.get("team2") or {}
+                    t1_name = t1_obj.get("name") if isinstance(t1_obj, dict) else None
+                    t2_name = t2_obj.get("name") if isinstance(t2_obj, dict) else None
+                    if t1_name and t2_name:
+                        matchup_pairs.append((t1_name, t2_name))
+
                     for t_key in ["team1", "team2"]:
                         team = match.get(t_key)
                         if team and isinstance(team, dict):
@@ -255,6 +272,7 @@ class VFLScraper:
                     "gameweek": gameweek,
                     "event_id": event_id,
                     "matches": matches,
+                    "matchup_pairs": matchup_pairs,
                     "active_teams": sorted(list(active_teams_set)),
                     "teams_info": teams_info
                 }

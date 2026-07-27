@@ -197,98 +197,177 @@ class VCTFantasyEngine:
         return 0
 
     def score_match_json(self, match_filepath: str) -> list[dict]:
-        """Loads a raw match JSON and computes fantasy leaderboard scores for all players."""
+        """Loads a raw match JSON and computes fantasy leaderboard scores for all players. Supports both legacy nested schema and flat segment schema."""
         with open(match_filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
             
         if "data" not in data or "segments" not in data["data"] or not data["data"]["segments"]:
             return []
             
-        segment = data["data"]["segments"][0]
-        team_a_name = segment["teams"][0]["name"]
-        team_b_name = segment["teams"][1]["name"]
+        first_seg = data["data"]["segments"][0]
         
-        try:
-            score_a = int(segment["teams"][0]["score"] or 0)
-            score_b = int(segment["teams"][1]["score"] or 0)
-        except ValueError:
+        # Check if legacy nested schema (has "teams" list inside first segment)
+        if "teams" in first_seg and isinstance(first_seg["teams"], list) and len(first_seg["teams"]) >= 2:
+            team_a_name = first_seg["teams"][0]["name"]
+            team_b_name = first_seg["teams"][1]["name"]
+            
+            try:
+                score_a = int(first_seg["teams"][0]["score"] or 0)
+                score_b = int(first_seg["teams"][1]["score"] or 0)
+            except ValueError:
+                score_a, score_b = 0, 0
+                
+            players_data = defaultdict(lambda: {"team": "", "opponent": "", "map_scores": {}, "ratings": [], "kills": []})
+            
+            for map_data in first_seg.get("maps", []):
+                map_name = map_data.get("map_name")
+                if not map_name or map_name.lower() in ["all maps", "none"]:
+                    continue
+                    
+                m_score = map_data.get("score", {})
+                m_score_t1 = m_score.get("team1", 0)
+                m_score_t2 = m_score.get("team2", 0)
+                
+                delta_pts_team1 = self.calculate_round_margin_points(m_score_t1, m_score_t2)
+                delta_pts_team2 = self.calculate_round_margin_points(m_score_t2, m_score_t1)
+                
+                perf = map_data.get("performance", {})
+                adv_stats = perf.get("advanced_stats", [])
+                
+                adv_lookup = {}
+                for row in adv_stats:
+                    p_label = row.get("player", "")
+                    adv_lookup[p_label.lower().strip()] = row
+                    
+                for p in map_data.get("players", {}).get("team1", []):
+                    p_name = p["name"]
+                    players_data[p_name]["team"] = team_a_name
+                    players_data[p_name]["opponent"] = team_b_name
+                    
+                    kills = int(p.get("kills") or 0)
+                    players_data[p_name]["kills"].append(kills)
+                    rating = float(p.get("rating") or 0.0)
+                    players_data[p_name]["ratings"].append(rating)
+                    
+                    kills_pts = self.calculate_kills_points(kills)
+                    
+                    k4, k5, k6, k7 = 0, 0, 0, 0
+                    matched_row = None
+                    for key_label, row in adv_lookup.items():
+                        if p_name.lower().strip() in key_label:
+                            matched_row = row
+                            break
+                            
+                    if matched_row:
+                        k4 = int(matched_row.get("4") or 0)
+                        k5 = int(matched_row.get("10") or 0)
+                        
+                    multikill_pts = self.calculate_multikill_points(k4, k5, k6, k7)
+                    
+                    map_score = kills_pts + multikill_pts + delta_pts_team1
+                    players_data[p_name]["map_scores"][map_name] = map_score
+                    
+                for p in map_data.get("players", {}).get("team2", []):
+                    p_name = p["name"]
+                    players_data[p_name]["team"] = team_b_name
+                    players_data[p_name]["opponent"] = team_a_name
+                    
+                    kills = int(p.get("kills") or 0)
+                    players_data[p_name]["kills"].append(kills)
+                    rating = float(p.get("rating") or 0.0)
+                    players_data[p_name]["ratings"].append(rating)
+                    
+                    kills_pts = self.calculate_kills_points(kills)
+                    
+                    k4, k5, k6, k7 = 0, 0, 0, 0
+                    matched_row = None
+                    for key_label, row in adv_lookup.items():
+                        if p_name.lower().strip() in key_label:
+                            matched_row = row
+                            break
+                            
+                    if matched_row:
+                        k4 = int(matched_row.get("4") or 0)
+                        k5 = int(matched_row.get("10") or 0)
+                        
+                    multikill_pts = self.calculate_multikill_points(k4, k5, k6, k7)
+                    
+                    map_score = kills_pts + multikill_pts + delta_pts_team2
+                    players_data[p_name]["map_scores"][map_name] = map_score
+
+        else:
+            # Current flat schema: each segment in data["data"]["segments"] represents one map
+            segments = data["data"]["segments"]
+            team_a_name = first_seg.get("team1", "Team 1")
+            team_b_name = first_seg.get("team2", "Team 2")
+            
+            # Count maps won per team
             score_a, score_b = 0, 0
-            
-        players_data = defaultdict(lambda: {"team": "", "map_scores": {}, "ratings": [], "kills": []})
-        
-        for map_data in segment.get("maps", []):
-            map_name = map_data.get("map_name")
-            if not map_name or map_name.lower() in ["all maps", "none"]:
-                continue
-                
-            m_score = map_data.get("score", {})
-            m_score_t1 = m_score.get("team1", 0)
-            m_score_t2 = m_score.get("team2", 0)
-            
-            delta_pts_team1 = self.calculate_round_margin_points(m_score_t1, m_score_t2)
-            delta_pts_team2 = self.calculate_round_margin_points(m_score_t2, m_score_t1)
-            
-            perf = map_data.get("performance", {})
-            adv_stats = perf.get("advanced_stats", [])
-            
-            adv_lookup = {}
-            for row in adv_stats:
-                p_label = row.get("player", "")
-                adv_lookup[p_label.lower().strip()] = row
-                
-            for p in map_data.get("players", {}).get("team1", []):
-                p_name = p["name"]
-                players_data[p_name]["team"] = team_a_name
-                
-                kills = int(p.get("kills") or 0)
-                players_data[p_name]["kills"].append(kills)
-                rating = float(p.get("rating") or 0.0)
-                players_data[p_name]["ratings"].append(rating)
-                
-                kills_pts = self.calculate_kills_points(kills)
-                
-                k4, k5, k6, k7 = 0, 0, 0, 0
-                matched_row = None
-                for key_label, row in adv_lookup.items():
-                    if p_name.lower().strip() in key_label:
-                        matched_row = row
-                        break
-                        
-                if matched_row:
-                    k4 = int(matched_row.get("4") or 0)
-                    k5 = int(matched_row.get("10") or 0)
+            for seg in segments:
+                winner = seg.get("winner")
+                if winner == team_a_name:
+                    score_a += 1
+                elif winner == team_b_name:
+                    score_b += 1
                     
-                multikill_pts = self.calculate_multikill_points(k4, k5, k6, k7)
-                
-                map_score = kills_pts + multikill_pts + delta_pts_team1
-                players_data[p_name]["map_scores"][map_name] = map_score
-                
-            for p in map_data.get("players", {}).get("team2", []):
-                p_name = p["name"]
-                players_data[p_name]["team"] = team_b_name
-                
-                kills = int(p.get("kills") or 0)
-                players_data[p_name]["kills"].append(kills)
-                rating = float(p.get("rating") or 0.0)
-                players_data[p_name]["ratings"].append(rating)
-                
-                kills_pts = self.calculate_kills_points(kills)
-                
-                k4, k5, k6, k7 = 0, 0, 0, 0
-                matched_row = None
-                for key_label, row in adv_lookup.items():
-                    if p_name.lower().strip() in key_label:
-                        matched_row = row
-                        break
-                        
-                if matched_row:
-                    k4 = int(matched_row.get("4") or 0)
-                    k5 = int(matched_row.get("10") or 0)
+            players_data = defaultdict(lambda: {"team": "", "opponent": "", "map_scores": {}, "ratings": [], "kills": []})
+            
+            for map_idx, seg in enumerate(segments):
+                map_name = seg.get("map", f"Map {map_idx + 1}")
+                if not map_name or map_name.lower() in ["all maps", "none"]:
+                    continue
                     
-                multikill_pts = self.calculate_multikill_points(k4, k5, k6, k7)
+                t1 = seg.get("team1", team_a_name)
+                t2 = seg.get("team2", team_b_name)
                 
-                map_score = kills_pts + multikill_pts + delta_pts_team2
-                players_data[p_name]["map_scores"][map_name] = map_score
+                # Count round scores
+                round_hist = seg.get("round_history", [])
+                rounds_t1 = sum(1 for r in round_hist if r.get("winner") == t1)
+                rounds_t2 = sum(1 for r in round_hist if r.get("winner") == t2)
+                
+                delta_pts_t1 = self.calculate_round_margin_points(rounds_t1, rounds_t2)
+                delta_pts_t2 = self.calculate_round_margin_points(rounds_t2, rounds_t1)
+                
+                adv_stats = seg.get("performance", {}).get("advanced_stats", [])
+                adv_lookup = {}
+                for row in adv_stats:
+                    p_label = row.get("player", "")
+                    adv_lookup[p_label.lower().strip()] = row
+                    
+                raw_players = seg.get("players", [])
+                for p in raw_players:
+                    p_name = p.get("name")
+                    if not p_name:
+                        continue
+                    p_team = p.get("team", t1)
+                    opp_team = t2 if p_team == t1 else t1
+                    
+                    players_data[p_name]["team"] = p_team
+                    players_data[p_name]["opponent"] = opp_team
+                    
+                    kills = int(p.get("kills") or 0)
+                    players_data[p_name]["kills"].append(kills)
+                    rating = float(p.get("rating") or 0.0)
+                    players_data[p_name]["ratings"].append(rating)
+                    
+                    kills_pts = self.calculate_kills_points(kills)
+                    
+                    k4, k5 = 0, 0
+                    matched_row = None
+                    for key_label, row in adv_lookup.items():
+                        if p_name.lower().strip() in key_label:
+                            matched_row = row
+                            break
+                            
+                    if matched_row:
+                        k4 = int(matched_row.get("4") or 0)
+                        k5 = int(matched_row.get("10") or 0)
+                        
+                    multikill_pts = self.calculate_multikill_points(k4, k5, 0, 0)
+                    delta_pts = delta_pts_t1 if p_team == t1 else delta_pts_t2
+                    
+                    map_score = kills_pts + multikill_pts + delta_pts
+                    players_data[p_name]["map_scores"][map_name] = map_score
                 
         leaderboard = []
         all_players_ratings = []
@@ -328,6 +407,7 @@ class VCTFantasyEngine:
             leaderboard.append({
                 "player": name,
                 "team": p_data["team"],
+                "opponent_team": p_data.get("opponent", ""),
                 "avg_rating": round(avg_rating, 2),
                 "map_scores": p_data["map_scores"],
                 "map_score_agg": map_score_agg,
@@ -375,6 +455,127 @@ def compute_all_players_historical_stats(raw_dir: str = RAW_DIR) -> dict[str, di
             }
     return stats
 
+
+def compute_all_players_opponent_stats(raw_dir: str = RAW_DIR) -> dict[str, dict[str, dict]]:
+    """
+    Computes per-opponent historical performance for each player across database matches.
+    Returns: Dict[player_name, Dict[opponent_team_name, {ppg, sigma, cvar_90, cvar_10, n_maps}]]
+    """
+    logger.info("Computing opponent-conditioned player statistics...")
+    engine = VCTFantasyEngine()
+    files = glob.glob(os.path.join(raw_dir, "match_*.json"))
+    
+    # Key: (player_name, opponent_team_name) -> list of scores
+    h2h_scores = defaultdict(list)
+    
+    for f in files:
+        try:
+            leaderboard = engine.score_match_json(f)
+            for entry in leaderboard:
+                p_name = entry["player"]
+                opp_team = entry.get("opponent_team")
+                score = entry.get("total_score")
+                if p_name and opp_team and score is not None:
+                    h2h_scores[(p_name, opp_team)].append(score)
+        except Exception:
+            pass
+            
+    opponent_stats = defaultdict(dict)
+    for (p_name, opp_team), scores in h2h_scores.items():
+        if scores:
+            scores_arr = np.array(scores)
+            var_90 = float(np.percentile(scores_arr, 90))
+            cvar_90 = float(np.mean(scores_arr[scores_arr >= var_90]))
+            var_10 = float(np.percentile(scores_arr, 10))
+            cvar_10 = float(np.mean(scores_arr[scores_arr <= var_10]))
+            
+            opponent_stats[p_name][opp_team] = {
+                "ppg": float(np.mean(scores)),
+                "sigma": float(np.std(scores)) if len(scores) > 1 else 3.0,
+                "cvar_90": cvar_90,
+                "cvar_10": cvar_10,
+                "n_maps": len(scores)
+            }
+            
+    return dict(opponent_stats)
+
+
+def blend_ev(global_stats: dict, h2h_stats: dict, opponent: str, player_name: str) -> dict:
+    """
+    Blends a player's opponent-conditioned H2H stats with their global average stats.
+    Minimum threshold: 3 maps against the opponent to activate H2H weighting.
+    Weighting formula: ramps from 30% at 3 maps to max 70% at 10+ maps.
+    """
+    g_player = global_stats.get(player_name, {}) if global_stats else {}
+    global_ppg = float(g_player.get("ppg", 10.0))
+    global_sigma = float(g_player.get("sigma", 3.0))
+    
+    if not h2h_stats or player_name not in h2h_stats:
+        return {
+            "ppg": global_ppg,
+            "sigma": global_sigma,
+            "h2h_used": False,
+            "n_maps": 0,
+            "global_ppg": global_ppg,
+            "opponent": opponent
+        }
+        
+    p_h2h = h2h_stats[player_name]
+    
+    # Matching opponent team name (exact or case-insensitive)
+    matched_opp = None
+    if opponent in p_h2h:
+        matched_opp = opponent
+    else:
+        opp_clean = opponent.lower().strip()
+        for k in p_h2h.keys():
+            if k.lower().strip() == opp_clean:
+                matched_opp = k
+                break
+                
+    if not matched_opp:
+        return {
+            "ppg": global_ppg,
+            "sigma": global_sigma,
+            "h2h_used": False,
+            "n_maps": 0,
+            "global_ppg": global_ppg,
+            "opponent": opponent
+        }
+        
+    opp_data = p_h2h[matched_opp]
+    n_maps = int(opp_data.get("n_maps", 0))
+    
+    if n_maps < 3:
+        return {
+            "ppg": global_ppg,
+            "sigma": global_sigma,
+            "h2h_used": False,
+            "n_maps": n_maps,
+            "global_ppg": global_ppg,
+            "opponent": opponent
+        }
+        
+    h2h_ppg = float(opp_data.get("ppg", global_ppg))
+    h2h_sigma = float(opp_data.get("sigma", global_sigma))
+    
+    # Blend: min 0.3 at n=3, max 0.7 at n=10+
+    weight_h2h = min(n_maps / 10.0, 0.7)
+    weight_global = 1.0 - weight_h2h
+    
+    blended_ppg = weight_h2h * h2h_ppg + weight_global * global_ppg
+    blended_sigma = weight_h2h * h2h_sigma + weight_global * global_sigma
+    
+    return {
+        "ppg": round(blended_ppg, 2),
+        "sigma": round(blended_sigma, 2),
+        "h2h_used": True,
+        "n_maps": n_maps,
+        "h2h_ppg": round(h2h_ppg, 2),
+        "global_ppg": round(global_ppg, 2),
+        "opponent": opponent
+    }
+
 # --- MILP Roster Optimizer ---
 def optimize_roster(
     vfl_players: list[dict],
@@ -388,7 +589,9 @@ def optimize_roster(
     transfer_constraint: dict = None,  # Contains 'current_roster' and 'max_transfers'
     forced_igl_name: str = None,
     excluded_rosters: list[list[str]] = None,
-    active_team_pool: set = None
+    active_team_pool: set = None,
+    matchup_pairs: list[tuple[str, str]] = None,
+    h2h_stats: dict = None
 ) -> dict:
     """
     Solves VFL roster selection as a Mixed-Integer Linear Program (MILP).
@@ -400,6 +603,7 @@ def optimize_roster(
       - Head-to-head match penalty.
       - Survival threshold filtering.
     Dynamically identifies IGL (highest floor = PPG - 1.0 * sigma) and attaches 2x multiplier.
+    Supports Phase 21 Opponent-Conditioned H2H Blended EV.
     """
     if upcoming_matchups is None:
         upcoming_matchups = get_upcoming_matchups(RAW_DIR)
@@ -436,8 +640,29 @@ def optimize_roster(
         wr = team_win_rates.get(tid, 0.50) if isinstance(tid, int) else 0.50
         if wr >= survival_threshold or is_in_curr:
             # Check if team is inactive in upcoming team pool
-            p_team = p_norm.get("team") or p_norm.get("team_name")
-            if active_team_pool is not None and p_team not in active_team_pool:
+            p_team_name = str(p_norm.get("team_name") or p_norm.get("team") or "").strip()
+            if p_team_name.isdigit() and p_norm.get("team_name"):
+                p_team_name = str(p_norm.get("team_name")).strip()
+            p_team_short = str(p_norm.get("team_short") or "").strip()
+            p_vlr_id = str(p_norm.get("vlr_team_id") or "")
+
+            is_active = True
+            if active_team_pool is not None and len(active_team_pool) > 0:
+                is_active = False
+                for at in active_team_pool:
+                    at_clean = str(at).lower().strip()
+                    if not at_clean:
+                        continue
+                    if (p_team_name and (p_team_name.lower() in at_clean or at_clean in p_team_name.lower())) or \
+                       (p_team_short and p_team_short.lower() == at_clean) or \
+                       (p_vlr_id and p_vlr_id == str(at)):
+                        is_active = True
+                        break
+
+            # Preserve caller's precomputed points if provided (e.g. historical actuals in gw_actual_pool)
+            has_precomputed = ("computed_ppg" in p or "ppg" in p) and not h2h_stats
+
+            if not is_active and not has_precomputed:
                 p_norm["computed_ppg"] = 0.0
                 p_norm["computed_sigma"] = 0.0
                 p_norm["cvar_90"] = 0.0
@@ -445,11 +670,44 @@ def optimize_roster(
                 p_norm["floor"] = 0.0
             else:
                 stats = player_stats.get(pname, {})
-                if "EV" in p_norm:
-                    p_norm["computed_ppg"] = float(p_norm["EV"])
+                if has_precomputed:
+                    pre_pts = float(p_norm.get("computed_ppg") if p_norm.get("computed_ppg") is not None else p_norm.get("ppg", 0.0))
+                    p_norm["computed_ppg"] = pre_pts
+                    p_norm["global_ppg"] = pre_pts
+                    p_norm["computed_sigma"] = 0.0
+                    p_norm["h2h_used"] = False
+                    p_norm["opponent"] = None
                 else:
-                    p_norm["computed_ppg"] = stats.get("ppg", p_norm.get("ppg", 10.0))
-                p_norm["computed_sigma"] = stats.get("sigma", 3.0)
+                    global_ppg = float(p_norm.get("computed_ppg") or p_norm.get("EV") or p_norm.get("ppg") or stats.get("ppg", 10.0))
+                    global_sigma = float(stats.get("sigma", 3.0))
+                    
+                    # Resolve opponent from matchup_pairs
+                    opponent = None
+                    if matchup_pairs:
+                        for (t_a, t_b) in matchup_pairs:
+                            t_a_c = str(t_a).lower().strip()
+                            t_b_c = str(t_b).lower().strip()
+                            p_t_c = p_team_name.lower().strip()
+                            if p_t_c and (p_t_c in t_a_c or t_a_c in p_t_c):
+                                opponent = t_b
+                                break
+                            elif p_t_c and (p_t_c in t_b_c or t_b_c in p_t_c):
+                                opponent = t_a
+                                break
+                                
+                    if opponent and h2h_stats:
+                        blended = blend_ev(player_stats, h2h_stats, opponent, pname)
+                        p_norm["computed_ppg"] = blended["ppg"]
+                        p_norm["computed_sigma"] = blended["sigma"]
+                        p_norm["h2h_used"] = blended["h2h_used"]
+                        p_norm["opponent"] = opponent
+                        p_norm["global_ppg"] = blended.get("global_ppg", global_ppg)
+                    else:
+                        p_norm["computed_ppg"] = global_ppg
+                        p_norm["computed_sigma"] = global_sigma
+                        p_norm["h2h_used"] = False
+                        p_norm["opponent"] = opponent
+                        p_norm["global_ppg"] = global_ppg
                 
                 # Use continuous CVaR 90 (expected ceiling) and CVaR 10 (expected worst-case floor)
                 p_norm["cvar_90"] = stats.get("cvar_90", p_norm["computed_ppg"] + 1.5 * p_norm["computed_sigma"])
@@ -465,14 +723,30 @@ def optimize_roster(
     h2h_pairs = []
     for i in range(n):
         for j in range(i + 1, n):
+            team_a = str(filtered_players[i].get("team") or filtered_players[i].get("team_name") or "").lower().strip()
+            team_b = str(filtered_players[j].get("team") or filtered_players[j].get("team_name") or "").lower().strip()
             tid_a = filtered_players[i].get("vlr_team_id")
             tid_b = filtered_players[j].get("vlr_team_id")
-            if tid_a is not None and tid_b is not None:
-                # Check if they face each other in upcoming week
+            
+            is_opponents = False
+            # Check string matchup_pairs (from live schedule API / bracket predictor)
+            if matchup_pairs and team_a and team_b and team_a != team_b:
+                for (m1, m2) in matchup_pairs:
+                    m1_clean = str(m1).lower().strip()
+                    m2_clean = str(m2).lower().strip()
+                    if (team_a in m1_clean and team_b in m2_clean) or (team_a in m2_clean and team_b in m1_clean) or (m1_clean in team_a and m2_clean in team_b) or (m2_clean in team_a and m1_clean in team_b):
+                        is_opponents = True
+                        break
+                        
+            # Check integer upcoming_matchups if not matched
+            if not is_opponents and tid_a is not None and tid_b is not None and upcoming_matchups:
                 for match in upcoming_matchups:
                     if (tid_a == match[0] and tid_b == match[1]) or (tid_a == match[1] and tid_b == match[0]):
-                        h2h_pairs.append((i, j))
+                        is_opponents = True
                         break
+                        
+            if is_opponents:
+                h2h_pairs.append((i, j))
                         
     m = len(h2h_pairs)
     
@@ -519,8 +793,8 @@ def optimize_roster(
         igl_floor = filtered_players[k]["floor"]
         
         # Objective coefficient vector (we minimize, so we negate points)
-        # points = cvar_90 for normal GPP ceiling selections. Player k points are doubled.
-        pts = np.array([p["cvar_90"] for p in filtered_players], dtype=float)
+        # points = computed_ppg (Expected VFL Points given weekly matchups). Player k points are doubled (IGL).
+        pts = np.array([p.get("computed_ppg", p.get("EV", p.get("ppg", 10.0))) for p in filtered_players], dtype=float)
         
         c = np.zeros(num_vars)
         c[:n] = -pts          # x_nat coefficients
@@ -789,19 +1063,22 @@ def optimize_roster(
     for idx in selected_indices:
         p = filtered_players[idx]
         is_wild = selected_as_wildcard[idx]
-        optimal_roster.append({
+        p_dict = dict(p)
+        p_dict.update({
             "player_name": p["player_name"],
             "name": p["player_name"],
             "team": p.get("team") or p.get("team_name") or p.get("vlr_team_id"),
             "vlr_team_id": p.get("vlr_team_id"),
             "role": p["role"],
             "price": p["price"],
-            "ppg": p["computed_ppg"],
-            "sigma": p["computed_sigma"],
-            "floor": p["floor"],
+            "ppg": p.get("computed_ppg", p.get("ppg", 0.0)),
+            "computed_ppg": p.get("computed_ppg", p.get("ppg", 0.0)),
+            "sigma": p.get("computed_sigma", 3.0),
+            "floor": p.get("floor", 0.0),
             "is_wildcard": is_wild,
             "is_igl": (idx == best_igl_idx)
         })
+        optimal_roster.append(p_dict)
         
     total_cost = sum(p["price"] for p in optimal_roster)
     
@@ -851,11 +1128,14 @@ def suggest_transfers(
     forced_igl_name: str = None,
     salary_cap: float = 50.0,
     roster_size: int = 6,
-    active_team_pool: set = None
+    active_team_pool: set = None,
+    matchup_pairs: list[tuple[str, str]] = None,
+    h2h_stats: dict = None
 ) -> dict:
     """
     Transfer Advisor component. Enforces VFL ruleset.
     Finds up to 3 distinct optimal transfer recommendations.
+    Supports Phase 21 Opponent-Conditioned H2H Blended EV.
     """
     current_roster_costs = [p.get("price", p.get("cost", 0)) for p in current_roster]
     floating_bank = salary_cap - sum(current_roster_costs)
@@ -883,7 +1163,9 @@ def suggest_transfers(
             transfer_constraint=transfer_constraint,
             forced_igl_name=forced_igl_name,
             excluded_rosters=excluded_rosters,
-            active_team_pool=active_team_pool
+            active_team_pool=active_team_pool,
+            matchup_pairs=matchup_pairs,
+            h2h_stats=h2h_stats
         )
         if res["solver_status"] == "optimal":
             result = res
@@ -900,7 +1182,9 @@ def suggest_transfers(
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
                 excluded_rosters=excluded_rosters,
-                active_team_pool=active_team_pool
+                active_team_pool=active_team_pool,
+                matchup_pairs=matchup_pairs,
+                h2h_stats=h2h_stats
             )
             if res["solver_status"] == "optimal":
                 result = res
@@ -917,7 +1201,9 @@ def suggest_transfers(
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
                 excluded_rosters=excluded_rosters,
-                active_team_pool=active_team_pool
+                active_team_pool=active_team_pool,
+                matchup_pairs=matchup_pairs,
+                h2h_stats=h2h_stats
             )
             if res["solver_status"] == "optimal":
                 result = res
@@ -935,7 +1221,9 @@ def suggest_transfers(
                 transfer_constraint=transfer_constraint,
                 forced_igl_name=forced_igl_name,
                 excluded_rosters=excluded_rosters,
-                active_team_pool=active_team_pool
+                active_team_pool=active_team_pool,
+                matchup_pairs=matchup_pairs,
+                h2h_stats=h2h_stats
             )
             if res["solver_status"] == "optimal":
                 result = res
@@ -968,12 +1256,31 @@ def suggest_transfers(
             
             for p in current_roster:
                 p_name = p.get("player_name") or p.get("name")
+                p_team = p.get("team") or p.get("team_name")
                 stats = player_stats.get(p_name, {"ppg": p.get("ppg", 10.0), "sigma": 3.0})
                 p_enriched = p.copy()
                 p_enriched["player_name"] = p_name
                 p_enriched["name"] = p_name
-                p_enriched["ppg"] = stats.get("ppg", p.get("ppg", 10.0))
-                p_enriched["sigma"] = stats.get("sigma", 3.0)
+                
+                # Check for opponent in matchup_pairs
+                opponent = None
+                if matchup_pairs:
+                    for (t_a, t_b) in matchup_pairs:
+                        if p_team and t_a and p_team.lower().strip() in t_a.lower().strip():
+                            opponent = t_b
+                            break
+                        elif p_team and t_b and p_team.lower().strip() in t_b.lower().strip():
+                            opponent = t_a
+                            break
+                            
+                if opponent and h2h_stats:
+                    blended = blend_ev(player_stats, h2h_stats, opponent, p_name)
+                    p_enriched["ppg"] = blended["ppg"]
+                    p_enriched["sigma"] = blended["sigma"]
+                else:
+                    p_enriched["ppg"] = stats.get("ppg", p.get("ppg", 10.0))
+                    p_enriched["sigma"] = stats.get("sigma", 3.0)
+                    
                 p_enriched["floor"] = p_enriched["ppg"] - 1.0 * p_enriched["sigma"]
                 current_roster_enriched.append(p_enriched)
                 
@@ -996,7 +1303,7 @@ def suggest_transfers(
                 if active_team_pool is not None and p_team not in active_team_pool:
                     pts = 0.0
                 else:
-                    pts = p.get("EV", p.get("ppg", 10.0))
+                    pts = p.get("ppg", p.get("EV", 10.0))
                     if idx == igl_index:  # Active IGL is doubled
                         pts *= 2.0
                 current_points += pts
@@ -1009,6 +1316,7 @@ def suggest_transfers(
                 "projected_gain": round(max(projected_gain, 0.0), 2),
                 "new_roster": new_roster,
                 "new_total_cost": result["total_cost"],
+                "old_projected_points": round(current_points, 2),
                 "new_projected_points": result["projected_points"]
             })
         else:

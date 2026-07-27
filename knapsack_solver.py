@@ -27,14 +27,23 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 logger = logging.getLogger(__name__)
 
 
-def prepare_player_slate(num_iterations: int = 10000, allowed_teams: Optional[Any] = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def prepare_player_slate(
+    num_iterations: int = 10000, 
+    allowed_teams: Optional[Any] = None,
+    matchup_pairs: Optional[List[Tuple[str, str]]] = None,
+    h2h_stats: Optional[Dict] = None,
+    player_global_stats: Optional[Dict] = None
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Ingest Phase 3 fused projections and matrix, and construct slate metadata dynamically from current_slate.json.
-    Optionally filters by allowed_teams.
+    Optionally filters by allowed_teams and conditions player EV on opponent-conditioned H2H stats when matchup_pairs and h2h_stats are provided.
     
     Args:
         num_iterations (int): Monte Carlo simulation depth.
         allowed_teams (Optional[Any]): Optional set/list of allowed team names.
+        matchup_pairs (Optional[List[Tuple[str, str]]]): List of (team_a, team_b) tuples for upcoming matches.
+        h2h_stats (Optional[Dict]): Head-to-Head opponent statistics lookup dictionary.
+        player_global_stats (Optional[Dict]): Global player performance statistics lookup.
         
     Returns:
         Tuple[pd.DataFrame, pd.DataFrame]: (Player Metadata DF, Fused Simulation Matrix DF)
@@ -43,6 +52,45 @@ def prepare_player_slate(num_iterations: int = 10000, allowed_teams: Optional[An
     
     # Run Phase 1 -> Phase 2 -> Phase 3 pipeline
     predictions_td = get_top_down_predictions(allowed_teams=allowed_teams)
+    
+    h2h_used_map = {}
+    opponent_map = {}
+    
+    if matchup_pairs and h2h_stats:
+        from fantasy_engine import blend_ev
+        metadata_pre = load_slate_payload()
+        if allowed_teams:
+            metadata_pre = filter_slate_by_teams(metadata_pre, allowed_teams)
+            
+        for item in metadata_pre:
+            pid = item["player_id"]
+            p_name = item["name"]
+            p_team = item.get("team", "")
+            
+            # Resolve opponent from matchup_pairs
+            opponent = None
+            for (t_a, t_b) in matchup_pairs:
+                if p_team and t_a and p_team.lower().strip() in t_a.lower().strip():
+                    opponent = t_b
+                    break
+                elif p_team and t_b and p_team.lower().strip() in t_b.lower().strip():
+                    opponent = t_a
+                    break
+                    
+            if opponent:
+                opponent_map[pid] = opponent
+                base_ev = predictions_td.get(pid) or predictions_td.get(p_name, 10.0)
+                g_stats = (player_global_stats or {}).get(p_name, {"ppg": base_ev, "sigma": base_ev / 4.0})
+                if "ppg" not in g_stats:
+                    g_stats["ppg"] = base_ev
+                    
+                blended = blend_ev(player_global_stats or {p_name: g_stats}, h2h_stats, opponent, p_name)
+                if blended.get("h2h_used"):
+                    predictions_td[pid] = blended["ppg"]
+                    h2h_used_map[pid] = True
+                    logger.info("GPP Optimizer: Applied H2H blend for %s vs %s (EV: %.2f -> %.2f, %d maps, sigma: %.2f)",
+                                p_name, opponent, base_ev, blended["ppg"], blended.get("n_maps", 0), blended.get("sigma", 3.0))
+
     df_sim_matrix = extract_simulation_matrix(num_iterations=num_iterations, seed=42)
     
     from pathlib import Path
@@ -101,6 +149,8 @@ def prepare_player_slate(num_iterations: int = 10000, allowed_teams: Optional[An
     df_meta["Ceiling_p85"] = df_meta["player_id"].map(lambda pid: projections[pid]["Ceiling_p85"])
     df_meta["cvar_90"] = df_meta["player_id"].map(lambda pid: projections[pid]["cvar_90"])
     df_meta["cvar_10"] = df_meta["player_id"].map(lambda pid: projections[pid]["cvar_10"])
+    df_meta["h2h_used"] = df_meta["player_id"].map(lambda pid: h2h_used_map.get(pid, False))
+    df_meta["opponent"] = df_meta["player_id"].map(lambda pid: opponent_map.get(pid, None))
     
     logger.info("Task 5.3 Complete: Ingested %d players dynamically from current_slate.json.", len(df_meta))
     return df_meta, df_fused
