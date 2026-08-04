@@ -109,9 +109,40 @@ def test_infobox_date_extraction():
     assert date_str == "2024-07-16"
 
 
+def test_kayo_canonicalization():
+    """Verifies that any variation of Kayo ('Kayo', 'kayo', 'KAYO', 'Kay/o') is forcibly normalized to 'KAY/O'."""
+    item1 = PatchChangeItem.model_validate({
+        "agent": "Kayo",
+        "ability": "FRAG/ment",
+        "stat_modified": "Damage",
+        "is_mechanical_removal": False
+    })
+    assert item1.agent == "KAY/O"
+
+    item2 = PatchChangeItem.model_validate({
+        "agent": "kayo",
+        "ability": "FLASH/drive",
+        "stat_modified": "Duration",
+        "is_mechanical_removal": False
+    })
+    assert item2.agent == "KAY/O"
+
+    wikitext = """
+    == Agent Updates ==
+    === Kayo ===
+    * FRAG/ment
+    ** Damage decreased from 50 >>> 40.
+    """
+    parser = V8PatchParser(force_offline_mock=True)
+    payload = parser.parse_wikitext(wikitext, version="8.11")
+    assert len(payload.changes) == 1
+    assert payload.changes[0].agent == "KAY/O"
+
+
 if __name__ == "__main__":
     test_pydantic_schema_validation_valid()
     test_pydantic_schema_validation_missing_critical_field()
     test_bug_fix_paradigm_classification()
     test_infobox_date_extraction()
+    test_kayo_canonicalization()
     print("ALL UNIT TESTS PASSED SUCCESSFULLY!")

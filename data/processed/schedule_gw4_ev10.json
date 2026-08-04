@@ -311,6 +311,64 @@
       "isComplete": false
     }
   ],
+  "matchup_pairs": [
+    [
+      "DetonatioN FocusMe",
+      "Team Secret"
+    ],
+    [
+      "Gen.G",
+      "FULL SENSE"
+    ],
+    [
+      "T1",
+      "DRX"
+    ],
+    [
+      "ZETA DIVISION",
+      "Global Esports"
+    ],
+    [
+      "VARREL",
+      "Paper Rex"
+    ],
+    [
+      "Nongshim RedForce",
+      "Rex Regum Qeon"
+    ],
+    [
+      "FURIA",
+      "Evil Geniuses"
+    ],
+    [
+      "NRG",
+      "ENVY"
+    ],
+    [
+      "100 Thieves",
+      "Cloud9"
+    ],
+    [
+      "G2 Esports",
+      "LOUD"
+    ],
+    [
+      "Sentinels",
+      "KR\u00dc Esports"
+    ],
+    [
+      "LEVIAT\u00c1N",
+      "MIBR"
+    ],
+    [
+      "NRG",
+      "Evil Geniuses"
+    ],
+    [
+      "100 Thieves",
+      "LOUD"
+    ]
+  ],
   "active_teams": [
     "100 Thieves",
     "100T",
@@ -477,5 +535,13 @@
       "name": "MIBR",
       "shortName": "MIBR"
     }
-  ]
+  ],
+  "date_info": {
+    "start_date": "2026-08-06",
+    "end_date": "2026-08-10",
+    "start_time_iso": "2026-08-06T21:00:00+00:00",
+    "end_time_iso": "2026-08-10T00:00:00+00:00",
+    "mid_date_iso": "2026-08-08",
+    "date_label": "Aug 06, 2026 \u2013 Aug 10, 2026"
+  }
 }

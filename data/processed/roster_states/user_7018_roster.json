@@ -1,0 +1,480 @@
+{
+  "id": 17162,
+  "eventId": 10,
+  "name": "all hail my preds model",
+  "players": [
+    {
+      "id": 4799444,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": true,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1127,
+      "eventPlayer": {
+        "id": 1127,
+        "eventId": 10,
+        "playerId": "9196",
+        "playerRole": 0,
+        "price": 12.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 27,
+          "mapPoints": 10,
+          "bonusPoints": 5,
+          "totalPoints": 42
+        },
+        "teamId": "17",
+        "player": {
+          "id": "9196",
+          "name": "t3xture",
+          "imagePath": "/static/player/9196.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "17",
+          "name": "Gen.G",
+          "shortName": "GEN",
+          "imagePath": "/static/team/17.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799445,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1137,
+      "eventPlayer": {
+        "id": 1137,
+        "eventId": 10,
+        "playerId": "7416",
+        "playerRole": 3,
+        "price": 5.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 8,
+          "mapPoints": 6,
+          "bonusPoints": 0,
+          "totalPoints": 14
+        },
+        "teamId": "6199",
+        "player": {
+          "id": "7416",
+          "name": "skye",
+          "imagePath": "/static/player/7416.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "6199",
+          "name": "Team Secret",
+          "shortName": "TS",
+          "imagePath": "/static/team/6199.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799446,
+      "isStarter": true,
+      "isWildcard": true,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1246,
+      "eventPlayer": {
+        "id": 1246,
+        "eventId": 10,
+        "playerId": "48925",
+        "playerRole": 0,
+        "price": 9,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 13,
+          "mapPoints": 8,
+          "bonusPoints": 4,
+          "totalPoints": 25
+        },
+        "teamId": "17",
+        "player": {
+          "id": "48925",
+          "name": "Raxcal",
+          "imagePath": "/static/player/48925.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "17",
+          "name": "Gen.G",
+          "shortName": "GEN",
+          "imagePath": "/static/team/17.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799447,
+      "isStarter": true,
+      "isWildcard": true,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1102,
+      "eventPlayer": {
+        "id": 1102,
+        "eventId": 10,
+        "playerId": "41224",
+        "playerRole": 0,
+        "price": 8.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 24,
+          "mapPoints": 8,
+          "bonusPoints": 1,
+          "totalPoints": 33
+        },
+        "teamId": "6961",
+        "player": {
+          "id": "41224",
+          "name": "tkzin",
+          "imagePath": "/static/player/41224.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "6961",
+          "name": "LOUD",
+          "shortName": "LOUD",
+          "imagePath": "/static/team/6961.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799448,
+      "isStarter": true,
+      "isWildcard": true,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1135,
+      "eventPlayer": {
+        "id": 1135,
+        "eventId": 10,
+        "playerId": "46135",
+        "playerRole": 0,
+        "price": 9,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 17,
+          "mapPoints": 1,
+          "bonusPoints": 3,
+          "totalPoints": 21
+        },
+        "teamId": "6199",
+        "player": {
+          "id": "46135",
+          "name": "Zeus",
+          "imagePath": "/static/player/46135.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "6199",
+          "name": "Team Secret",
+          "shortName": "TS",
+          "imagePath": "/static/team/6199.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799449,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1244,
+      "eventPlayer": {
+        "id": 1244,
+        "eventId": 10,
+        "playerId": "10053",
+        "playerRole": 3,
+        "price": 8,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 16,
+          "mapPoints": 2,
+          "bonusPoints": 2,
+          "totalPoints": 20
+        },
+        "teamId": "188",
+        "player": {
+          "id": "10053",
+          "name": "FireBallOps",
+          "imagePath": "/static/player/10053.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "188",
+          "name": "Cloud9",
+          "shortName": "C9",
+          "imagePath": "/static/team/188.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799450,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1085,
+      "eventPlayer": {
+        "id": 1085,
+        "eventId": 10,
+        "playerId": "41798",
+        "playerRole": 2,
+        "price": 6.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 17,
+          "mapPoints": 3,
+          "bonusPoints": 2,
+          "totalPoints": 22
+        },
+        "teamId": "427",
+        "player": {
+          "id": "41798",
+          "name": "Nightz",
+          "imagePath": "/static/player/41798.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "427",
+          "name": "ENVY",
+          "shortName": "NV",
+          "imagePath": "/static/team/427.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799451,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1072,
+      "eventPlayer": {
+        "id": 1072,
+        "eventId": 10,
+        "playerId": "37354",
+        "playerRole": 1,
+        "price": 7.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 21,
+          "mapPoints": 4,
+          "bonusPoints": 5,
+          "totalPoints": 30
+        },
+        "teamId": "2406",
+        "player": {
+          "id": "37354",
+          "name": "basic",
+          "imagePath": "/static/player/37354.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "2406",
+          "name": "FURIA",
+          "shortName": "FUR",
+          "imagePath": "/static/team/2406.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799452,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1157,
+      "eventPlayer": {
+        "id": 1157,
+        "eventId": 10,
+        "playerId": "28400",
+        "playerRole": 0,
+        "price": 12.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 15,
+          "mapPoints": 5,
+          "bonusPoints": 3,
+          "totalPoints": 23
+        },
+        "teamId": "8185",
+        "player": {
+          "id": "28400",
+          "name": "HYUNMIN",
+          "imagePath": "/static/player/28400.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "8185",
+          "name": "DRX",
+          "shortName": "DRX",
+          "imagePath": "/static/team/8185.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799453,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1081,
+      "eventPlayer": {
+        "id": 1081,
+        "eventId": 10,
+        "playerId": "4581",
+        "playerRole": 1,
+        "price": 7.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 10,
+          "mapPoints": 10,
+          "bonusPoints": 1,
+          "totalPoints": 21
+        },
+        "teamId": "2",
+        "player": {
+          "id": "4581",
+          "name": "JonahP",
+          "imagePath": "/static/player/4581.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "2",
+          "name": "Sentinels",
+          "shortName": "SEN",
+          "imagePath": "/static/team/2.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    },
+    {
+      "id": 4799454,
+      "isStarter": true,
+      "isWildcard": false,
+      "isIgl": false,
+      "fantasyTeamId": 17162,
+      "eventPlayerId": 1176,
+      "eventPlayer": {
+        "id": 1176,
+        "eventId": 10,
+        "playerId": "9801",
+        "playerRole": 2,
+        "price": 13.5,
+        "currentGameweekPoints": {
+          "killPoints": 0,
+          "mapPoints": 0,
+          "bonusPoints": 0,
+          "totalPoints": 0
+        },
+        "totalEventPoints": {
+          "killPoints": 14,
+          "mapPoints": 13,
+          "bonusPoints": 0,
+          "totalPoints": 27
+        },
+        "teamId": "624",
+        "player": {
+          "id": "9801",
+          "name": "f0rsakeN",
+          "imagePath": "/static/player/9801.png"
+        },
+        "eventPointHistory": [],
+        "team": {
+          "id": "624",
+          "name": "Paper Rex",
+          "shortName": "PRX",
+          "imagePath": "/static/team/624.png",
+          "nextOpponentId": null,
+          "nextOpponent": null
+        },
+        "standInPlayers": []
+      }
+    }
+  ]
+}

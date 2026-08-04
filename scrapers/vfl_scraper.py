@@ -201,13 +201,38 @@ class VFLScraper:
                                 t2 = (m_teams[1].get("team") or {}).get("name")
                                 if t1 and t2:
                                     matchup_pairs.append((t1, t2))
+                        start_times = []
+                        for m in matches:
+                            st = m.get("scheduledStartTime") or m.get("startTime") or m.get("time")
+                            if st:
+                                try:
+                                    start_times.append(int(st))
+                                except (ValueError, TypeError):
+                                    pass
+                        gw_date_info = {}
+                        if start_times:
+                            min_ts = min(start_times)
+                            max_ts = max(start_times)
+                            mid_ts = (min_ts + max_ts) // 2
+                            dt_start = datetime.fromtimestamp(min_ts, tz=timezone.utc)
+                            dt_end = datetime.fromtimestamp(max_ts, tz=timezone.utc)
+                            dt_mid = datetime.fromtimestamp(mid_ts, tz=timezone.utc)
+                            gw_date_info = {
+                                "start_date": dt_start.strftime("%Y-%m-%d"),
+                                "end_date": dt_end.strftime("%Y-%m-%d"),
+                                "start_time_iso": dt_start.isoformat(),
+                                "end_time_iso": dt_end.isoformat(),
+                                "mid_date_iso": dt_mid.strftime("%Y-%m-%d"),
+                                "date_label": f"{dt_start.strftime('%b %d, %Y')} – {dt_end.strftime('%b %d, %Y')}"
+                            }
                         return {
                             "gameweek": gameweek,
                             "event_id": event_id,
                             "matches": matches,
                             "matchup_pairs": matchup_pairs,
                             "active_teams": active_teams,
-                            "teams_info": []
+                            "teams_info": [],
+                            "date_info": gw_date_info
                         }
             except Exception as e:
                 logger.warning(f"Could not load schedule from currentevent cache: {e}")
@@ -268,13 +293,40 @@ class VFLScraper:
                                     "shortName": t_short
                                 })
                 
+                start_times = []
+                for m in matches:
+                    st = m.get("scheduledMatchTime") or m.get("scheduledStartTime") or m.get("startTime") or m.get("time")
+                    if st:
+                        try:
+                            start_times.append(int(st))
+                        except (ValueError, TypeError):
+                            pass
+                
+                gw_date_info = {}
+                if start_times:
+                    min_ts = min(start_times)
+                    max_ts = max(start_times)
+                    mid_ts = (min_ts + max_ts) // 2
+                    dt_start = datetime.fromtimestamp(min_ts, tz=timezone.utc)
+                    dt_end = datetime.fromtimestamp(max_ts, tz=timezone.utc)
+                    dt_mid = datetime.fromtimestamp(mid_ts, tz=timezone.utc)
+                    gw_date_info = {
+                        "start_date": dt_start.strftime("%Y-%m-%d"),
+                        "end_date": dt_end.strftime("%Y-%m-%d"),
+                        "start_time_iso": dt_start.isoformat(),
+                        "end_time_iso": dt_end.isoformat(),
+                        "mid_date_iso": dt_mid.strftime("%Y-%m-%d"),
+                        "date_label": f"{dt_start.strftime('%b %d, %Y')} – {dt_end.strftime('%b %d, %Y')}"
+                    }
+
                 result = {
                     "gameweek": gameweek,
                     "event_id": event_id,
                     "matches": matches,
                     "matchup_pairs": matchup_pairs,
                     "active_teams": sorted(list(active_teams_set)),
-                    "teams_info": teams_info
+                    "teams_info": teams_info,
+                    "date_info": gw_date_info
                 }
                 
                 # Save to cache

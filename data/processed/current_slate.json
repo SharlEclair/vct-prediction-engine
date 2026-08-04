@@ -1,353 +1,353 @@
 [
     {
-        "player_id": "P0_DRX",
-        "name": "free1ng",
-        "team": "DRX",
-        "role": "Sentinel",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P1_TS",
-        "name": "Zeus",
-        "team": "Team Secret",
-        "role": "Duelist",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P2_M8",
+        "player_id": "P0_M8",
         "name": "marteen",
         "team": "Gentle Mates",
         "role": "Duelist",
         "salary": 14.0
     },
     {
-        "player_id": "P3_100T",
-        "name": "Timotino",
-        "team": "100 Thieves",
-        "role": "Duelist",
-        "salary": 11.5
-    },
-    {
-        "player_id": "P4_KC",
-        "name": "LewN",
-        "team": "Karmine Corp",
-        "role": "Duelist",
-        "salary": 10.5
-    },
-    {
-        "player_id": "P5_TH",
+        "player_id": "P1_TH",
         "name": "RieNs",
         "team": "Team Heretics",
         "role": "Initiator",
         "salary": 10.5
     },
     {
-        "player_id": "P6_100T",
+        "player_id": "P2_100T",
         "name": "Asuna",
         "team": "100 Thieves",
         "role": "Initiator",
         "salary": 8.0
     },
     {
-        "player_id": "P7_SEN",
-        "name": "cortezia",
-        "team": "Sentinels",
-        "role": "Sentinel",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P8_T1",
-        "name": "Meteor",
-        "team": "T1",
-        "role": "Sentinel",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P9_FNC",
-        "name": "Cloud",
-        "team": "FNATIC",
-        "role": "Initiator",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P10_FNC",
-        "name": "Alfajer",
-        "team": "FNATIC",
-        "role": "Sentinel",
-        "salary": 14.0
-    },
-    {
-        "player_id": "P11_KC",
-        "name": "Avez",
-        "team": "Karmine Corp",
-        "role": "Initiator",
-        "salary": 6.0
-    },
-    {
-        "player_id": "P12_VL",
-        "name": "Foxy9",
-        "team": "VARREL",
-        "role": "Sentinel",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P13_BBL",
-        "name": "lovers rock",
-        "team": "BBL Esports",
-        "role": "Duelist",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P14_G2",
-        "name": "jawgemo",
-        "team": "G2 Esports",
-        "role": "Duelist",
-        "salary": 12.0
-    },
-    {
-        "player_id": "P15_GEN",
+        "player_id": "P3_GEN",
         "name": "t3xture",
         "team": "Gen.G",
         "role": "Duelist",
         "salary": 12.5
     },
     {
-        "player_id": "P16_NS",
-        "name": "Xross",
-        "team": "Nongshim RedForce",
-        "role": "Duelist",
-        "salary": 9.5
-    },
-    {
-        "player_id": "P17_GE",
-        "name": "Autumn",
-        "team": "Global Esports",
+        "player_id": "P4_VIT",
+        "name": "Chronicle",
+        "team": "Team Vitality",
         "role": "Sentinel",
-        "salary": 9.0
+        "salary": 11.0
     },
     {
-        "player_id": "P18_PRX",
+        "player_id": "P5_PRX",
         "name": "something",
         "team": "Paper Rex",
         "role": "Duelist",
         "salary": 14.5
     },
     {
-        "player_id": "P19_T1",
-        "name": "iZu",
-        "team": "T1",
-        "role": "Initiator",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P20_GX",
-        "name": "ara",
-        "team": "GIANTX",
-        "role": "Duelist",
-        "salary": 10.0
-    },
-    {
-        "player_id": "P21_M8",
-        "name": "Minny",
-        "team": "Gentle Mates",
+        "player_id": "P6_100T",
+        "name": "Timotino",
+        "team": "100 Thieves",
         "role": "Duelist",
         "salary": 11.5
     },
     {
-        "player_id": "P22_KC",
-        "name": "dos9",
-        "team": "Karmine Corp",
-        "role": "Controller",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P23_LEV",
-        "name": "Sato",
-        "team": "LEVIATÁN",
-        "role": "Duelist",
-        "salary": 14.5
-    },
-    {
-        "player_id": "P24_EG",
-        "name": "zerona",
-        "team": "Evil Geniuses",
-        "role": "Duelist",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P25_NRG",
-        "name": "Keiko",
-        "team": "NRG",
-        "role": "Controller",
-        "salary": 13.0
-    },
-    {
-        "player_id": "P26_GEN",
-        "name": "Ash",
-        "team": "Gen.G",
+        "player_id": "P7_VL",
+        "name": "Foxy9",
+        "team": "VARREL",
         "role": "Sentinel",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P27_GEN",
-        "name": "Karon",
-        "team": "Gen.G",
-        "role": "Controller",
-        "salary": 10.0
-    },
-    {
-        "player_id": "P28_DRX",
-        "name": "MaKo",
-        "team": "DRX",
-        "role": "Controller",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P29_GE",
-        "name": "PatMen",
-        "team": "Global Esports",
-        "role": "Controller",
-        "salary": 11.5
-    },
-    {
-        "player_id": "P30_FUT",
-        "name": "sociablEE",
-        "team": "FUT Esports",
-        "role": "Controller",
         "salary": 7.5
     },
     {
-        "player_id": "P31_TL",
-        "name": "trexx",
-        "team": "Team Liquid",
-        "role": "Initiator",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P32_KC",
-        "name": "SUYGETSU",
-        "team": "Karmine Corp",
-        "role": "Sentinel",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P33_KC",
-        "name": "N4RRATE",
-        "team": "Karmine Corp",
-        "role": "Duelist",
-        "salary": 9.5
-    },
-    {
-        "player_id": "P34_VIT",
-        "name": "Sayonara",
-        "team": "Team Vitality",
-        "role": "Initiator",
-        "salary": 11.5
-    },
-    {
-        "player_id": "P35_LEV",
-        "name": "spike",
-        "team": "LEVIATÁN",
-        "role": "Duelist",
-        "salary": 12.0
-    },
-    {
-        "player_id": "P36_SEN",
-        "name": "Reduxx",
-        "team": "Sentinels",
-        "role": "Duelist",
-        "salary": 11.5
-    },
-    {
-        "player_id": "P37_100T",
-        "name": "Cryocells",
-        "team": "100 Thieves",
-        "role": "Sentinel",
-        "salary": 12.0
-    },
-    {
-        "player_id": "P38_NRG",
-        "name": "mada",
-        "team": "NRG",
-        "role": "Duelist",
-        "salary": 13.0
-    },
-    {
-        "player_id": "P39_GE",
-        "name": "xavi8k",
-        "team": "Global Esports",
-        "role": "Controller",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P40_TL",
-        "name": "nAts",
-        "team": "Team Liquid",
-        "role": "Sentinel",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P41_LEV",
-        "name": "Neon",
-        "team": "LEVIATÁN",
-        "role": "Sentinel",
-        "salary": 14.5
-    },
-    {
-        "player_id": "P42_100T",
-        "name": "vora",
-        "team": "100 Thieves",
-        "role": "Initiator",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P43_NS",
+        "player_id": "P8_NS",
         "name": "Rb",
         "team": "Nongshim RedForce",
         "role": "Controller",
         "salary": 8.0
     },
     {
-        "player_id": "P44_PRX",
-        "name": "Jinggg",
-        "team": "Paper Rex",
+        "player_id": "P9_BBL",
+        "name": "lovers rock",
+        "team": "BBL Esports",
         "role": "Duelist",
-        "salary": 14.0
-    },
-    {
-        "player_id": "P45_PRX",
-        "name": "d4v41",
-        "team": "Paper Rex",
-        "role": "Sentinel",
         "salary": 11.0
     },
     {
-        "player_id": "P46_FUT",
-        "name": "xeus",
-        "team": "FUT Esports",
-        "role": "Duelist",
-        "salary": 12.5
-    },
-    {
-        "player_id": "P47_EF",
-        "name": "Favian",
-        "team": "Eternal Fire",
+        "player_id": "P10_TL",
+        "name": "kamo",
+        "team": "Team Liquid",
         "role": "Duelist",
         "salary": 11.5
     },
     {
-        "player_id": "P48_VIT",
+        "player_id": "P11_KC",
+        "name": "N4RRATE",
+        "team": "Karmine Corp",
+        "role": "Duelist",
+        "salary": 9.5
+    },
+    {
+        "player_id": "P12_100T",
+        "name": "Cryocells",
+        "team": "100 Thieves",
+        "role": "Sentinel",
+        "salary": 12.0
+    },
+    {
+        "player_id": "P13_VIT",
         "name": "Derke",
         "team": "Team Vitality",
         "role": "Duelist",
         "salary": 14.0
     },
     {
-        "player_id": "P49_VIT",
-        "name": "Chronicle",
+        "player_id": "P14_LOUD",
+        "name": "lukxo",
+        "team": "LOUD",
+        "role": "Sentinel",
+        "salary": 10.0
+    },
+    {
+        "player_id": "P15_MIBR",
+        "name": "aspas",
+        "team": "MIBR",
+        "role": "Duelist",
+        "salary": 14.0
+    },
+    {
+        "player_id": "P16_GE",
+        "name": "Autumn",
+        "team": "Global Esports",
+        "role": "Sentinel",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P17_NAVI",
+        "name": "hiro",
+        "team": "Natus Vincere",
+        "role": "Sentinel",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P18_KC",
+        "name": "LewN",
+        "team": "Karmine Corp",
+        "role": "Duelist",
+        "salary": 10.5
+    },
+    {
+        "player_id": "P19_TH",
+        "name": "Wo0t",
+        "team": "Team Heretics",
+        "role": "Duelist",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P20_KC",
+        "name": "dos9",
+        "team": "Karmine Corp",
+        "role": "Controller",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P21_VIT",
+        "name": "Sayonara",
         "team": "Team Vitality",
+        "role": "Initiator",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P22_SEN",
+        "name": "cortezia",
+        "team": "Sentinels",
+        "role": "Sentinel",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P23_GEN",
+        "name": "Ash",
+        "team": "Gen.G",
+        "role": "Sentinel",
+        "salary": 7.0
+    },
+    {
+        "player_id": "P24_NS",
+        "name": "Xross",
+        "team": "Nongshim RedForce",
+        "role": "Duelist",
+        "salary": 9.5
+    },
+    {
+        "player_id": "P25_FNC",
+        "name": "Alfajer",
+        "team": "FNATIC",
+        "role": "Sentinel",
+        "salary": 14.0
+    },
+    {
+        "player_id": "P26_DRX",
+        "name": "HYUNMIN",
+        "team": "DRX",
+        "role": "Duelist",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P27_G2",
+        "name": "jawgemo",
+        "team": "G2 Esports",
+        "role": "Duelist",
+        "salary": 12.0
+    },
+    {
+        "player_id": "P28_GEN",
+        "name": "Karon",
+        "team": "Gen.G",
+        "role": "Controller",
+        "salary": 10.0
+    },
+    {
+        "player_id": "P29_ZETA",
+        "name": "eKo",
+        "team": "ZETA DIVISION",
+        "role": "Duelist",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P30_EF",
+        "name": "Favian",
+        "team": "Eternal Fire",
+        "role": "Duelist",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P31_KC",
+        "name": "Avez",
+        "team": "Karmine Corp",
+        "role": "Initiator",
+        "salary": 6.0
+    },
+    {
+        "player_id": "P32_LEV",
+        "name": "kiNgg",
+        "team": "LEVIATÁN",
+        "role": "Controller",
+        "salary": 9.5
+    },
+    {
+        "player_id": "P33_LOUD",
+        "name": "tkzin",
+        "team": "LOUD",
+        "role": "Duelist",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P34_G2",
+        "name": "leaf",
+        "team": "G2 Esports",
+        "role": "Controller",
+        "salary": 12.0
+    },
+    {
+        "player_id": "P35_NRG",
+        "name": "Keiko",
+        "team": "NRG",
+        "role": "Controller",
+        "salary": 13.0
+    },
+    {
+        "player_id": "P36_MIBR",
+        "name": "Verno",
+        "team": "MIBR",
+        "role": "Initiator",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P37_DRX",
+        "name": "free1ng",
+        "team": "DRX",
+        "role": "Sentinel",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P38_GE",
+        "name": "PatMen",
+        "team": "Global Esports",
+        "role": "Controller",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P39_BBL",
+        "name": "Lar0k",
+        "team": "BBL Esports",
+        "role": "Duelist",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P40_LEV",
+        "name": "spike",
+        "team": "LEVIATÁN",
+        "role": "Duelist",
+        "salary": 12.0
+    },
+    {
+        "player_id": "P41_G2",
+        "name": "BABYBAY",
+        "team": "G2 Esports",
         "role": "Sentinel",
         "salary": 11.0
+    },
+    {
+        "player_id": "P42_NS",
+        "name": "Francis",
+        "team": "Nongshim RedForce",
+        "role": "Initiator",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P43_NS",
+        "name": "Ivy",
+        "team": "Nongshim RedForce",
+        "role": "Sentinel",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P44_GE",
+        "name": "UdoTan",
+        "team": "Global Esports",
+        "role": "Duelist",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P45_PRX",
+        "name": "invy",
+        "team": "Paper Rex",
+        "role": "Initiator",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P46_T1",
+        "name": "Meteor",
+        "team": "T1",
+        "role": "Sentinel",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P47_TL",
+        "name": "nAts",
+        "team": "Team Liquid",
+        "role": "Sentinel",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P48_TL",
+        "name": "trexx",
+        "team": "Team Liquid",
+        "role": "Initiator",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P49_M8",
+        "name": "Minny",
+        "team": "Gentle Mates",
+        "role": "Duelist",
+        "salary": 11.5
     },
     {
         "player_id": "P50_BBL",
@@ -357,144 +357,144 @@
         "salary": 7.0
     },
     {
-        "player_id": "P51_SEN",
+        "player_id": "P51_TS",
+        "name": "Zeus",
+        "team": "Team Secret",
+        "role": "Duelist",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P52_FS",
+        "name": "Killua",
+        "team": "FULL SENSE",
+        "role": "Initiator",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P53_LEV",
+        "name": "Neon",
+        "team": "LEVIATÁN",
+        "role": "Sentinel",
+        "salary": 14.5
+    },
+    {
+        "player_id": "P54_VL",
+        "name": "XuNa",
+        "team": "VARREL",
+        "role": "Initiator",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P55_GE",
+        "name": "xavi8k",
+        "team": "Global Esports",
+        "role": "Controller",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P56_T1",
+        "name": "iZu",
+        "team": "T1",
+        "role": "Initiator",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P57_LEV",
+        "name": "Sato",
+        "team": "LEVIATÁN",
+        "role": "Duelist",
+        "salary": 14.5
+    },
+    {
+        "player_id": "P58_FUR",
+        "name": "basic",
+        "team": "FURIA",
+        "role": "Initiator",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P59_SEN",
         "name": "johnqt",
         "team": "Sentinels",
         "role": "Controller",
         "salary": 8.0
     },
     {
-        "player_id": "P52_MIBR",
-        "name": "aspas",
-        "team": "MIBR",
-        "role": "Duelist",
-        "salary": 14.0
-    },
-    {
-        "player_id": "P53_NS",
-        "name": "Francis",
-        "team": "Nongshim RedForce",
-        "role": "Initiator",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P54_GE",
-        "name": "UdoTan",
-        "team": "Global Esports",
-        "role": "Duelist",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P55_PRX",
-        "name": "invy",
-        "team": "Paper Rex",
-        "role": "Initiator",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P56_TL",
-        "name": "kamo",
-        "team": "Team Liquid",
-        "role": "Duelist",
-        "salary": 11.5
-    },
-    {
-        "player_id": "P57_VIT",
-        "name": "PROFEK",
-        "team": "Team Vitality",
-        "role": "Controller",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P58_LEV",
-        "name": "kiNgg",
-        "team": "LEVIATÁN",
-        "role": "Controller",
-        "salary": 9.5
-    },
-    {
-        "player_id": "P59_SEN",
-        "name": "Jerrwin",
-        "team": "Sentinels",
-        "role": "Duelist",
-        "salary": 10.5
-    },
-    {
-        "player_id": "P60_LOUD",
-        "name": "tkzin",
-        "team": "LOUD",
-        "role": "Duelist",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P61_ZETA",
-        "name": "eKo",
-        "team": "ZETA DIVISION",
-        "role": "Duelist",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P62_T1",
-        "name": "BuZz",
-        "team": "T1",
+        "player_id": "P60_NRG",
+        "name": "mada",
+        "team": "NRG",
         "role": "Duelist",
         "salary": 13.0
     },
     {
-        "player_id": "P63_FUT",
-        "name": "KROSTALY",
-        "team": "FUT Esports",
-        "role": "Initiator",
-        "salary": 7.0
+        "player_id": "P61_VL",
+        "name": "Zexy",
+        "team": "VARREL",
+        "role": "Duelist",
+        "salary": 8.5
     },
     {
-        "player_id": "P64_NAVI",
+        "player_id": "P62_NS",
+        "name": "Dambi",
+        "team": "Nongshim RedForce",
+        "role": "Duelist",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P63_RRQ",
+        "name": "Monyet",
+        "team": "Rex Regum Qeon",
+        "role": "Controller",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P64_PRX",
+        "name": "Jinggg",
+        "team": "Paper Rex",
+        "role": "Duelist",
+        "salary": 14.0
+    },
+    {
+        "player_id": "P65_FUT",
+        "name": "sociablEE",
+        "team": "FUT Esports",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P66_NAVI",
         "name": "ExiT",
         "team": "Natus Vincere",
         "role": "Duelist",
         "salary": 10.0
     },
     {
-        "player_id": "P65_NAVI",
-        "name": "hiro",
-        "team": "Natus Vincere",
+        "player_id": "P67_KC",
+        "name": "SUYGETSU",
+        "team": "Karmine Corp",
         "role": "Sentinel",
-        "salary": 11.5
+        "salary": 8.0
     },
     {
-        "player_id": "P66_TH",
-        "name": "Wo0t",
+        "player_id": "P68_VIT",
+        "name": "Jamppi",
+        "team": "Team Vitality",
+        "role": "Initiator",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P69_TH",
+        "name": "Boo",
         "team": "Team Heretics",
-        "role": "Duelist",
-        "salary": 12.5
-    },
-    {
-        "player_id": "P67_BBL",
-        "name": "Lar0k",
-        "team": "BBL Esports",
-        "role": "Duelist",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P68_LOUD",
-        "name": "lukxo",
-        "team": "LOUD",
-        "role": "Sentinel",
-        "salary": 10.0
-    },
-    {
-        "player_id": "P69_G2",
-        "name": "valyn",
-        "team": "G2 Esports",
         "role": "Controller",
-        "salary": 12.5
+        "salary": 7.0
     },
     {
-        "player_id": "P70_G2",
-        "name": "leaf",
-        "team": "G2 Esports",
-        "role": "Controller",
-        "salary": 12.0
+        "player_id": "P70_100T",
+        "name": "vora",
+        "team": "100 Thieves",
+        "role": "Initiator",
+        "salary": 7.0
     },
     {
         "player_id": "P71_NRG",
@@ -505,297 +505,297 @@
     },
     {
         "player_id": "P72_MIBR",
-        "name": "Mazino",
-        "team": "MIBR",
-        "role": "Controller",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P73_VL",
-        "name": "Zexy",
-        "team": "VARREL",
-        "role": "Duelist",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P74_TL",
-        "name": "purp0",
-        "team": "Team Liquid",
-        "role": "Initiator",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P75_TH",
-        "name": "Boo",
-        "team": "Team Heretics",
-        "role": "Controller",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P76_BBL",
-        "name": "Loita",
-        "team": "BBL Esports",
-        "role": "Controller",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P77_GEN",
-        "name": "Raxcal",
-        "team": "Gen.G",
-        "role": "Duelist",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P78_LOUD",
-        "name": "Darker",
-        "team": "LOUD",
-        "role": "Duelist",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P79_100T",
-        "name": "bang",
-        "team": "100 Thieves",
-        "role": "Controller",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P80_NRG",
-        "name": "brawk",
-        "team": "NRG",
-        "role": "Initiator",
-        "salary": 10.5
-    },
-    {
-        "player_id": "P81_MIBR",
         "name": "zekken",
         "team": "MIBR",
         "role": "Duelist",
         "salary": 13.0
     },
     {
-        "player_id": "P82_VL",
-        "name": "XuNa",
-        "team": "VARREL",
-        "role": "Initiator",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P83_FS",
-        "name": "JitBoyS",
-        "team": "FULL SENSE",
-        "role": "Sentinel",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P84_DRX",
-        "name": "BeYN",
-        "team": "DRX",
-        "role": "Initiator",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P85_DFM",
-        "name": "Meiy",
-        "team": "DetonatioN FocusMe",
-        "role": "Duelist",
-        "salary": 12.5
-    },
-    {
-        "player_id": "P86_RRQ",
-        "name": "Monyet",
-        "team": "Rex Regum Qeon",
-        "role": "Controller",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P87_GE",
-        "name": "Kr1stal",
-        "team": "Global Esports",
-        "role": "Initiator",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P88_T1",
-        "name": "Munchkin",
-        "team": "T1",
-        "role": "Controller",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P89_FUT",
-        "name": "s0pp",
-        "team": "FUT Esports",
-        "role": "Duelist",
-        "salary": 13.5
-    },
-    {
-        "player_id": "P90_FUT",
-        "name": "yetujey",
-        "team": "FUT Esports",
-        "role": "Sentinel",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P91_M8",
-        "name": "bipo",
-        "team": "Gentle Mates",
-        "role": "Sentinel",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P92_LEV",
-        "name": "blowz",
-        "team": "LEVIATÁN",
-        "role": "Initiator",
-        "salary": 9.5
-    },
-    {
-        "player_id": "P93_G2",
-        "name": "BABYBAY",
-        "team": "G2 Esports",
-        "role": "Sentinel",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P94_G2",
-        "name": "trent",
-        "team": "G2 Esports",
-        "role": "Initiator",
-        "salary": 10.5
-    },
-    {
-        "player_id": "P95_NRG",
-        "name": "Ethan",
-        "team": "NRG",
-        "role": "Initiator",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P96_MIBR",
-        "name": "Verno",
-        "team": "MIBR",
-        "role": "Initiator",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P97_ZETA",
-        "name": "Absol",
-        "team": "ZETA DIVISION",
-        "role": "Duelist",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P98_PRX",
-        "name": "f0rsakeN",
-        "team": "Paper Rex",
-        "role": "Controller",
-        "salary": 13.5
-    },
-    {
-        "player_id": "P99_FNC",
-        "name": "kaajak",
-        "team": "FNATIC",
-        "role": "Duelist",
-        "salary": 14.0
-    },
-    {
-        "player_id": "P100_M8",
-        "name": "starxo",
-        "team": "Gentle Mates",
-        "role": "Initiator",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P101_VIT",
-        "name": "Jamppi",
-        "team": "Team Vitality",
-        "role": "Initiator",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P102_SEN",
-        "name": "JonahP",
-        "team": "Sentinels",
-        "role": "Initiator",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P103_EG",
-        "name": "Paincakes",
-        "team": "Evil Geniuses",
-        "role": "Initiator",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P104_ZETA",
-        "name": "SyouTa",
-        "team": "ZETA DIVISION",
-        "role": "Sentinel",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P105_FS",
-        "name": "Killua",
-        "team": "FULL SENSE",
-        "role": "Initiator",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P106_NS",
-        "name": "Dambi",
-        "team": "Nongshim RedForce",
-        "role": "Duelist",
-        "salary": 12.5
-    },
-    {
-        "player_id": "P107_DRX",
-        "name": "HYUNMIN",
-        "team": "DRX",
-        "role": "Duelist",
-        "salary": 12.5
-    },
-    {
-        "player_id": "P108_FNC",
-        "name": "crashies",
-        "team": "FNATIC",
-        "role": "Initiator",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P109_GX",
-        "name": "westside",
+        "player_id": "P73_GX",
+        "name": "ara",
         "team": "GIANTX",
         "role": "Duelist",
-        "salary": 9.5
+        "salary": 10.0
     },
     {
-        "player_id": "P110_M8",
-        "name": "Proxh",
-        "team": "Gentle Mates",
+        "player_id": "P74_VIT",
+        "name": "PROFEK",
+        "team": "Team Vitality",
         "role": "Controller",
-        "salary": 7.5
+        "salary": 8.5
     },
     {
-        "player_id": "P111_TH",
+        "player_id": "P75_TH",
         "name": "Koshmaras",
         "team": "Team Heretics",
         "role": "Duelist",
         "salary": 12.0
     },
     {
-        "player_id": "P112_TH",
+        "player_id": "P76_DRX",
+        "name": "MaKo",
+        "team": "DRX",
+        "role": "Controller",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P77_SEN",
+        "name": "Reduxx",
+        "team": "Sentinels",
+        "role": "Duelist",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P78_SEN",
+        "name": "Jerrwin",
+        "team": "Sentinels",
+        "role": "Duelist",
+        "salary": 10.5
+    },
+    {
+        "player_id": "P79_C9",
+        "name": "OXY",
+        "team": "Cloud9",
+        "role": "Duelist",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P80_MIBR",
+        "name": "Mazino",
+        "team": "MIBR",
+        "role": "Controller",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P81_PRX",
+        "name": "d4v41",
+        "team": "Paper Rex",
+        "role": "Sentinel",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P82_FUT",
+        "name": "xeus",
+        "team": "FUT Esports",
+        "role": "Duelist",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P83_TL",
+        "name": "purp0",
+        "team": "Team Liquid",
+        "role": "Initiator",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P84_FNC",
+        "name": "kaajak",
+        "team": "FNATIC",
+        "role": "Duelist",
+        "salary": 14.0
+    },
+    {
+        "player_id": "P85_FNC",
+        "name": "Cloud",
+        "team": "FNATIC",
+        "role": "Initiator",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P86_G2",
+        "name": "valyn",
+        "team": "G2 Esports",
+        "role": "Controller",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P87_FS",
+        "name": "primmie",
+        "team": "FULL SENSE",
+        "role": "Duelist",
+        "salary": 15.0
+    },
+    {
+        "player_id": "P88_FS",
+        "name": "JitBoyS",
+        "team": "FULL SENSE",
+        "role": "Sentinel",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P89_DFM",
+        "name": "Akame",
+        "team": "DetonatioN FocusMe",
+        "role": "Duelist",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P90_PRX",
+        "name": "f0rsakeN",
+        "team": "Paper Rex",
+        "role": "Controller",
+        "salary": 13.5
+    },
+    {
+        "player_id": "P91_BBL",
+        "name": "Loita",
+        "team": "BBL Esports",
+        "role": "Controller",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P92_G2",
+        "name": "trent",
+        "team": "G2 Esports",
+        "role": "Initiator",
+        "salary": 10.5
+    },
+    {
+        "player_id": "P93_NRG",
+        "name": "brawk",
+        "team": "NRG",
+        "role": "Initiator",
+        "salary": 10.5
+    },
+    {
+        "player_id": "P94_ZETA",
+        "name": "SyouTa",
+        "team": "ZETA DIVISION",
+        "role": "Sentinel",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P95_DFM",
+        "name": "Meiy",
+        "team": "DetonatioN FocusMe",
+        "role": "Duelist",
+        "salary": 12.5
+    },
+    {
+        "player_id": "P96_TH",
         "name": "benjyfishy",
         "team": "Team Heretics",
         "role": "Sentinel",
         "salary": 9.0
     },
     {
-        "player_id": "P113_FUR",
-        "name": "basic",
-        "team": "FURIA",
+        "player_id": "P97_C9",
+        "name": "Zellsis",
+        "team": "Cloud9",
+        "role": "Initiator",
+        "salary": 6.0
+    },
+    {
+        "player_id": "P98_100T",
+        "name": "bang",
+        "team": "100 Thieves",
+        "role": "Controller",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P99_NRG",
+        "name": "Ethan",
+        "team": "NRG",
+        "role": "Initiator",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P100_ZETA",
+        "name": "Absol",
+        "team": "ZETA DIVISION",
+        "role": "Duelist",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P101_FUT",
+        "name": "KROSTALY",
+        "team": "FUT Esports",
+        "role": "Initiator",
+        "salary": 7.0
+    },
+    {
+        "player_id": "P102_PCF",
+        "name": "NINJA",
+        "team": "PCIFIC Esports",
+        "role": "Initiator",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P103_GEN",
+        "name": "Raxcal",
+        "team": "Gen.G",
+        "role": "Duelist",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P104_LOUD",
+        "name": "Darker",
+        "team": "LOUD",
+        "role": "Duelist",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P105_VL",
+        "name": "oonzmlp",
+        "team": "VARREL",
+        "role": "Controller",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P106_RRQ",
+        "name": "xffero",
+        "team": "Rex Regum Qeon",
+        "role": "Sentinel",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P107_GE",
+        "name": "Kr1stal",
+        "team": "Global Esports",
         "role": "Initiator",
         "salary": 7.5
+    },
+    {
+        "player_id": "P108_T1",
+        "name": "BuZz",
+        "team": "T1",
+        "role": "Duelist",
+        "salary": 13.0
+    },
+    {
+        "player_id": "P109_TL",
+        "name": "Kicks",
+        "team": "Team Liquid",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P110_EF",
+        "name": "Spear",
+        "team": "Eternal Fire",
+        "role": "Duelist",
+        "salary": 10.0
+    },
+    {
+        "player_id": "P111_EF",
+        "name": "echo",
+        "team": "Eternal Fire",
+        "role": "Sentinel",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P112_M8",
+        "name": "bipo",
+        "team": "Gentle Mates",
+        "role": "Sentinel",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P113_MIBR",
+        "name": "tex",
+        "team": "MIBR",
+        "role": "Sentinel",
+        "salary": 8.0
     },
     {
         "player_id": "P114_VL",
@@ -805,410 +805,410 @@
         "salary": 7.5
     },
     {
-        "player_id": "P115_VL",
-        "name": "oonzmlp",
-        "team": "VARREL",
-        "role": "Controller",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P116_NS",
-        "name": "Ivy",
-        "team": "Nongshim RedForce",
-        "role": "Sentinel",
-        "salary": 9.0
-    },
-    {
-        "player_id": "P117_T1",
-        "name": "DH",
+        "player_id": "P115_T1",
+        "name": "Munchkin",
         "team": "T1",
         "role": "Controller",
-        "salary": 9.5
-    },
-    {
-        "player_id": "P118_PCF",
-        "name": "al0rante",
-        "team": "PCIFIC Esports",
-        "role": "Sentinel",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P119_PCF",
-        "name": "NINJA",
-        "team": "PCIFIC Esports",
-        "role": "Initiator",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P120_GX",
-        "name": "neT",
-        "team": "GIANTX",
-        "role": "Sentinel",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P121_C9",
-        "name": "Zellsis",
-        "team": "Cloud9",
-        "role": "Initiator",
-        "salary": 6.0
-    },
-    {
-        "player_id": "P122_EG",
-        "name": "dgzin",
-        "team": "Evil Geniuses",
-        "role": "Duelist",
-        "salary": 10.0
-    },
-    {
-        "player_id": "P123_DRX",
-        "name": "Flicker",
-        "team": "DRX",
-        "role": "Controller",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P124_DFM",
-        "name": "Akame",
-        "team": "DetonatioN FocusMe",
-        "role": "Duelist",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P125_TL",
-        "name": "Kicks",
-        "team": "Team Liquid",
-        "role": "Controller",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P126_EF",
-        "name": "echo",
-        "team": "Eternal Fire",
-        "role": "Sentinel",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P127_EG",
-        "name": "bao",
-        "team": "Evil Geniuses",
-        "role": "Sentinel",
-        "salary": 5.0
-    },
-    {
-        "player_id": "P128_MIBR",
-        "name": "tex",
-        "team": "MIBR",
-        "role": "Sentinel",
         "salary": 8.0
     },
     {
-        "player_id": "P129_RRQ",
-        "name": "xffero",
-        "team": "Rex Regum Qeon",
-        "role": "Sentinel",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P130_RRQ",
-        "name": "Xan",
-        "team": "Rex Regum Qeon",
+        "player_id": "P116_FUT",
+        "name": "s0pp",
+        "team": "FUT Esports",
         "role": "Duelist",
-        "salary": 13.0
+        "salary": 13.5
     },
     {
-        "player_id": "P131_NAVI",
-        "name": "Ruxic",
-        "team": "Natus Vincere",
-        "role": "Controller",
-        "salary": 11.5
-    },
-    {
-        "player_id": "P132_FNC",
-        "name": "Boaster",
-        "team": "FNATIC",
-        "role": "Controller",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P133_BBL",
-        "name": "Rosé",
-        "team": "BBL Esports",
-        "role": "Initiator",
-        "salary": 6.0
-    },
-    {
-        "player_id": "P134_TS",
-        "name": "Styron",
-        "team": "Team Secret",
-        "role": "Initiator",
-        "salary": 5.0
-    },
-    {
-        "player_id": "P135_FUR",
-        "name": "C0M",
-        "team": "FURIA",
-        "role": "Initiator",
+        "player_id": "P117_FUT",
+        "name": "yetujey",
+        "team": "FUT Esports",
+        "role": "Sentinel",
         "salary": 8.5
     },
     {
-        "player_id": "P136_FUR",
-        "name": "koalanoob",
-        "team": "FURIA",
+        "player_id": "P118_GX",
+        "name": "westside",
+        "team": "GIANTX",
         "role": "Duelist",
-        "salary": 11.5
+        "salary": 9.5
     },
     {
-        "player_id": "P137_ZETA",
-        "name": "Xdll",
-        "team": "ZETA DIVISION",
-        "role": "Initiator",
-        "salary": 5.0
-    },
-    {
-        "player_id": "P138_TS",
-        "name": "Sylvan",
-        "team": "Team Secret",
-        "role": "Controller",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P139_RRQ",
-        "name": "crazyguy",
-        "team": "Rex Regum Qeon",
+        "player_id": "P119_M8",
+        "name": "starxo",
+        "team": "Gentle Mates",
         "role": "Initiator",
         "salary": 7.0
     },
     {
-        "player_id": "P140_NAVI",
-        "name": "CyvOph",
-        "team": "Natus Vincere",
-        "role": "Duelist",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P141_EF",
-        "name": "Spear",
-        "team": "Eternal Fire",
-        "role": "Duelist",
-        "salary": 10.0
-    },
-    {
-        "player_id": "P142_EF",
-        "name": "audaz",
-        "team": "Eternal Fire",
-        "role": "Controller",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P143_C9",
+        "player_id": "P120_C9",
         "name": "v1c",
         "team": "Cloud9",
         "role": "Controller",
         "salary": 8.0
     },
     {
-        "player_id": "P144_GEN",
-        "name": "Efina",
-        "team": "Gen.G",
+        "player_id": "P121_LEV",
+        "name": "blowz",
+        "team": "LEVIATÁN",
         "role": "Initiator",
-        "salary": 6.5
+        "salary": 9.5
     },
     {
-        "player_id": "P145_NAVI",
-        "name": "chloric",
-        "team": "Natus Vincere",
-        "role": "Initiator",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P146_EF",
-        "name": "nekky",
-        "team": "Eternal Fire",
-        "role": "Initiator",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P147_GX",
-        "name": "Flickless",
-        "team": "GIANTX",
-        "role": "Initiator",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P148_PCF",
-        "name": "waddle",
-        "team": "PCIFIC Esports",
-        "role": "Initiator",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P149_GX",
-        "name": "jesse",
-        "team": "GIANTX",
-        "role": "Controller",
-        "salary": 6.0
-    },
-    {
-        "player_id": "P150_C9",
-        "name": "OXY",
-        "team": "Cloud9",
-        "role": "Duelist",
-        "salary": 12.5
-    },
-    {
-        "player_id": "P151_KRÜ",
-        "name": "heat",
-        "team": "KRÜ Esports",
-        "role": "Duelist",
-        "salary": 8.5
-    },
-    {
-        "player_id": "P152_LOUD",
-        "name": "DaviH",
-        "team": "LOUD",
-        "role": "Initiator",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P153_ZETA",
-        "name": "SugarZ3ro",
-        "team": "ZETA DIVISION",
-        "role": "Controller",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P154_TS",
-        "name": "kellyS",
-        "team": "Team Secret",
-        "role": "Duelist",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P155_TS",
-        "name": "natz",
-        "team": "Team Secret",
-        "role": "Sentinel",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P156_DFM",
-        "name": "yatsuka",
-        "team": "DetonatioN FocusMe",
-        "role": "Initiator",
-        "salary": 5.5
-    },
-    {
-        "player_id": "P157_LOUD",
-        "name": "erde",
-        "team": "LOUD",
-        "role": "Controller",
-        "salary": 7.0
-    },
-    {
-        "player_id": "P158_DFM",
-        "name": "Caedye",
-        "team": "DetonatioN FocusMe",
-        "role": "Sentinel",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P159_PCF",
-        "name": "seven",
-        "team": "PCIFIC Esports",
-        "role": "Duelist",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P160_FUR",
-        "name": "Shyy",
-        "team": "FURIA",
-        "role": "Sentinel",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P161_EG",
-        "name": "supamen",
-        "team": "Evil Geniuses",
-        "role": "Controller",
-        "salary": 6.0
-    },
-    {
-        "player_id": "P162_KRÜ",
-        "name": "Dantedeu5",
-        "team": "KRÜ Esports",
-        "role": "Duelist",
-        "salary": 10.5
-    },
-    {
-        "player_id": "P163_FS",
-        "name": "primmie",
-        "team": "FULL SENSE",
-        "role": "Duelist",
-        "salary": 15.0
-    },
-    {
-        "player_id": "P164_FS",
-        "name": "seph1roth",
-        "team": "FULL SENSE",
-        "role": "Controller",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P165_FS",
-        "name": "Crws",
-        "team": "FULL SENSE",
-        "role": "Controller",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P166_RRQ",
-        "name": "Kushy",
-        "team": "Rex Regum Qeon",
-        "role": "Initiator",
-        "salary": 8.0
-    },
-    {
-        "player_id": "P167_PCF",
-        "name": "qpert",
-        "team": "PCIFIC Esports",
-        "role": "Controller",
-        "salary": 5.0
-    },
-    {
-        "player_id": "P168_FUR",
-        "name": "artzin",
-        "team": "FURIA",
-        "role": "Controller",
-        "salary": 7.5
-    },
-    {
-        "player_id": "P169_NV",
+        "player_id": "P122_NV",
         "name": "Nightz",
         "team": "ENVY",
         "role": "Controller",
         "salary": 6.5
     },
     {
-        "player_id": "P170_DFM",
-        "name": "SSeeS",
-        "team": "DetonatioN FocusMe",
+        "player_id": "P123_NAVI",
+        "name": "Ruxic",
+        "team": "Natus Vincere",
         "role": "Controller",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P124_PCF",
+        "name": "al0rante",
+        "team": "PCIFIC Esports",
+        "role": "Sentinel",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P125_BBL",
+        "name": "Rosé",
+        "team": "BBL Esports",
+        "role": "Initiator",
+        "salary": 6.0
+    },
+    {
+        "player_id": "P126_FUR",
+        "name": "C0M",
+        "team": "FURIA",
+        "role": "Initiator",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P127_SEN",
+        "name": "JonahP",
+        "team": "Sentinels",
+        "role": "Initiator",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P128_DRX",
+        "name": "BeYN",
+        "team": "DRX",
+        "role": "Initiator",
         "salary": 7.0
     },
     {
-        "player_id": "P171_C9",
+        "player_id": "P129_DFM",
+        "name": "Caedye",
+        "team": "DetonatioN FocusMe",
+        "role": "Sentinel",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P130_ZETA",
+        "name": "Xdll",
+        "team": "ZETA DIVISION",
+        "role": "Initiator",
+        "salary": 5.0
+    },
+    {
+        "player_id": "P131_DFM",
+        "name": "yatsuka",
+        "team": "DetonatioN FocusMe",
+        "role": "Initiator",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P132_RRQ",
+        "name": "Jemkin",
+        "team": "Rex Regum Qeon",
+        "role": "Duelist",
+        "salary": 13.0
+    },
+    {
+        "player_id": "P133_T1",
+        "name": "DH",
+        "team": "T1",
+        "role": "Controller",
+        "salary": 9.5
+    },
+    {
+        "player_id": "P134_M8",
+        "name": "Proxh",
+        "team": "Gentle Mates",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P135_C9",
         "name": "FireBallOps",
         "team": "Cloud9",
         "role": "Sentinel",
         "salary": 8.0
     },
     {
-        "player_id": "P172_NV",
+        "player_id": "P136_EG",
+        "name": "zerona",
+        "team": "Evil Geniuses",
+        "role": "Duelist",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P137_LOUD",
+        "name": "DaviH",
+        "team": "LOUD",
+        "role": "Initiator",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P138_EF",
+        "name": "audaz",
+        "team": "Eternal Fire",
+        "role": "Controller",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P139_FNC",
+        "name": "crashies",
+        "team": "FNATIC",
+        "role": "Initiator",
+        "salary": 9.0
+    },
+    {
+        "player_id": "P140_KRÜ",
+        "name": "heat",
+        "team": "KRÜ Esports",
+        "role": "Duelist",
+        "salary": 8.5
+    },
+    {
+        "player_id": "P141_DFM",
+        "name": "SSeeS",
+        "team": "DetonatioN FocusMe",
+        "role": "Controller",
+        "salary": 7.0
+    },
+    {
+        "player_id": "P142_RRQ",
+        "name": "crazyguy",
+        "team": "Rex Regum Qeon",
+        "role": "Initiator",
+        "salary": 7.0
+    },
+    {
+        "player_id": "P143_NAVI",
+        "name": "chloric",
+        "team": "Natus Vincere",
+        "role": "Initiator",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P144_NAVI",
+        "name": "CyvOph",
+        "team": "Natus Vincere",
+        "role": "Duelist",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P145_EF",
+        "name": "nekky",
+        "team": "Eternal Fire",
+        "role": "Initiator",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P146_EG",
+        "name": "dgzin",
+        "team": "Evil Geniuses",
+        "role": "Duelist",
+        "salary": 10.0
+    },
+    {
+        "player_id": "P147_ZETA",
+        "name": "SugarZ3ro",
+        "team": "ZETA DIVISION",
+        "role": "Controller",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P148_GX",
+        "name": "neT",
+        "team": "GIANTX",
+        "role": "Sentinel",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P149_C9",
+        "name": "Jackk",
+        "team": "Cloud9",
+        "role": "Initiator",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P150_FS",
+        "name": "seph1roth",
+        "team": "FULL SENSE",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P151_DRX",
+        "name": "Flicker",
+        "team": "DRX",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P152_GX",
+        "name": "jesse",
+        "team": "GIANTX",
+        "role": "Controller",
+        "salary": 6.0
+    },
+    {
+        "player_id": "P153_FUR",
+        "name": "artzin",
+        "team": "FURIA",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P154_FUR",
+        "name": "koalanoob",
+        "team": "FURIA",
+        "role": "Duelist",
+        "salary": 11.5
+    },
+    {
+        "player_id": "P155_NV",
+        "name": "Demon1",
+        "team": "ENVY",
+        "role": "Sentinel",
+        "salary": 9.5
+    },
+    {
+        "player_id": "P156_NV",
         "name": "Rossy",
         "team": "ENVY",
         "role": "Initiator",
         "salary": 7.0
+    },
+    {
+        "player_id": "P157_EG",
+        "name": "bao",
+        "team": "Evil Geniuses",
+        "role": "Sentinel",
+        "salary": 5.0
+    },
+    {
+        "player_id": "P158_LOUD",
+        "name": "erde",
+        "team": "LOUD",
+        "role": "Controller",
+        "salary": 7.0
+    },
+    {
+        "player_id": "P159_TS",
+        "name": "Styron",
+        "team": "Team Secret",
+        "role": "Initiator",
+        "salary": 5.0
+    },
+    {
+        "player_id": "P160_GEN",
+        "name": "Efina",
+        "team": "Gen.G",
+        "role": "Initiator",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P161_FS",
+        "name": "Crws",
+        "team": "FULL SENSE",
+        "role": "Controller",
+        "salary": 6.5
+    },
+    {
+        "player_id": "P162_FNC",
+        "name": "Boaster",
+        "team": "FNATIC",
+        "role": "Controller",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P163_PCF",
+        "name": "waddle",
+        "team": "PCIFIC Esports",
+        "role": "Initiator",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P164_PCF",
+        "name": "qpert",
+        "team": "PCIFIC Esports",
+        "role": "Controller",
+        "salary": 5.0
+    },
+    {
+        "player_id": "P165_FUR",
+        "name": "Shyy",
+        "team": "FURIA",
+        "role": "Sentinel",
+        "salary": 7.5
+    },
+    {
+        "player_id": "P166_TS",
+        "name": "Sylvan",
+        "team": "Team Secret",
+        "role": "Controller",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P167_TS",
+        "name": "skye",
+        "team": "Team Secret",
+        "role": "Sentinel",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P168_NV",
+        "name": "keznit",
+        "team": "ENVY",
+        "role": "Duelist",
+        "salary": 11.0
+    },
+    {
+        "player_id": "P169_EG",
+        "name": "Paincakes",
+        "team": "Evil Geniuses",
+        "role": "Initiator",
+        "salary": 5.5
+    },
+    {
+        "player_id": "P170_RRQ",
+        "name": "Kushy",
+        "team": "Rex Regum Qeon",
+        "role": "Initiator",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P171_GX",
+        "name": "Flickless",
+        "team": "GIANTX",
+        "role": "Initiator",
+        "salary": 7.0
+    },
+    {
+        "player_id": "P172_PCF",
+        "name": "seven",
+        "team": "PCIFIC Esports",
+        "role": "Duelist",
+        "salary": 7.5
     },
     {
         "player_id": "P173_NV",
@@ -1218,39 +1218,39 @@
         "salary": 6.5
     },
     {
-        "player_id": "P174_C9",
-        "name": "Jackk",
-        "team": "Cloud9",
-        "role": "Initiator",
-        "salary": 6.5
-    },
-    {
-        "player_id": "P175_NV",
-        "name": "Demon1",
-        "team": "ENVY",
-        "role": "Sentinel",
-        "salary": 9.5
-    },
-    {
-        "player_id": "P176_NV",
-        "name": "keznit",
-        "team": "ENVY",
-        "role": "Duelist",
-        "salary": 11.0
-    },
-    {
-        "player_id": "P177_KRÜ",
-        "name": "mwzera",
+        "player_id": "P174_KRÜ",
+        "name": "Dantedeu5",
         "team": "KRÜ Esports",
-        "role": "Initiator",
-        "salary": 7.5
+        "role": "Duelist",
+        "salary": 10.5
     },
     {
-        "player_id": "P178_KRÜ",
+        "player_id": "P175_TS",
+        "name": "kellyS",
+        "team": "Team Secret",
+        "role": "Duelist",
+        "salary": 8.0
+    },
+    {
+        "player_id": "P176_KRÜ",
         "name": "Less",
         "team": "KRÜ Esports",
         "role": "Sentinel",
         "salary": 10.0
+    },
+    {
+        "player_id": "P177_EG",
+        "name": "supamen",
+        "team": "Evil Geniuses",
+        "role": "Controller",
+        "salary": 6.0
+    },
+    {
+        "player_id": "P178_KRÜ",
+        "name": "mwzera",
+        "team": "KRÜ Esports",
+        "role": "Initiator",
+        "salary": 7.5
     },
     {
         "player_id": "P179_KRÜ",

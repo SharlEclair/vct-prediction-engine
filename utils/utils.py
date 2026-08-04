@@ -5,6 +5,7 @@ Provides centralized, error-handled loading functions for YAML configuration and
 """
 
 import os
+import re
 import json
 import logging
 from typing import Dict, List, Any
@@ -104,7 +105,8 @@ def get_region_for_team(team_name: str) -> str:
 def filter_slate_by_teams(slate: List[Dict[str, Any]], allowed_teams: set) -> List[Dict[str, Any]]:
     """
     Filters a player slate list to only include players whose team is in allowed_teams.
-    Comparison is case-insensitive, stripped, and supports shortName/substring matching.
+    Comparison is case-insensitive, stripped, and supports shortName/substring matching
+    without falsely matching short abbreviations (e.g., 'TS') inside 'Esports'.
     """
     if not allowed_teams:
         return slate
@@ -117,8 +119,12 @@ def filter_slate_by_teams(slate: List[Dict[str, Any]], allowed_teams: set) -> Li
         if t_norm in allowed_norm:
             return True
         for a in allowed_norm:
-            if a == t_norm or a in t_norm or t_norm in a:
-                return True
+            if len(a) <= 4:
+                if re.search(r'\b' + re.escape(a) + r'\b', t_norm):
+                    return True
+            else:
+                if a in t_norm:
+                    return True
         return False
 
     return [p for p in slate if matches_team(p.get("team", ""))]

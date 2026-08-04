@@ -188,11 +188,12 @@ class VCTFantasyEngine:
 
     def get_rating_scaling_bonus(self, avg_rating: float) -> int:
         """VLR Rating absolute scaling modifiers: +1 for 1.5+, +2 for 1.75+, +3 for 2.0+."""
-        if avg_rating >= 2.0:
+        r = round(float(avg_rating), 2)
+        if r >= 2.0:
             return 3
-        elif avg_rating >= 1.75:
+        elif r >= 1.75:
             return 2
-        elif avg_rating >= 1.5:
+        elif r >= 1.5:
             return 1
         return 0
 

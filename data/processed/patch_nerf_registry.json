@@ -15,16 +15,16 @@
     },
     "10.03": {
         "Vyse": 0.8592,
-        "Skye": 0.5
+        "Harbor": 0.5
     },
     "10.04": {
         "Clove": 0.9996,
         "Deadlock": 1.0,
         "Iso": 1.0,
         "Tejo": 1.0,
-        "Neon": 0.9977,
+        "Neon": 0.9978,
         "Yoru": 1.0,
-        "Reyna": 0.9895
+        "Reyna": 0.9922
     },
     "10.05": {
         "Raze": 0.5,
@@ -35,7 +35,7 @@
     },
     "10.06": {
         "KAY/O": 1.0,
-        "Yoru": 0.9927,
+        "Yoru": 0.9915,
         "Vyse": 1.0
     },
     "10.07": {
@@ -54,17 +54,17 @@
         "Iso": 1.0,
         "Yoru": 0.8592,
         "Harbor": 0.5,
-        "Deadlock": 0.7782,
+        "Deadlock": 0.7735,
         "Vyse": 0.9996,
         "Skye": 0.5,
         "Gekko": 0.5,
-        "Tejo": 0.9925,
+        "Tejo": 0.9922,
         "Reyna": 0.5
     },
     "10.09": {
         "Tejo": 1.0,
-        "Breach": 0.8947,
-        "Killjoy": 0.5946,
+        "Breach": 0.897,
+        "Killjoy": 0.6012,
         "Viper": 1.0
     },
     "10.10": {
@@ -82,13 +82,13 @@
         "Reyna": 0.5,
         "Clove": 0.5,
         "Chamber": 0.5,
-        "Breach": 0.3205
+        "Breach": 0.3114
     },
     "11.00": {
-        "Reyna": 0.9727,
+        "Phoenix": 0.8592,
         "Breach": 0.9727,
+        "Reyna": 0.8592,
         "Neon": 0.5,
-        "Phoenix": 0.5,
         "Sova": 1.0,
         "Clove": 0.8592,
         "Killjoy": 0.9727,
@@ -110,21 +110,22 @@
         "Harbor": 1.0
     },
     "11.06": {
-        "Reyna": 0.5
+        "Yoru": 0.5
     },
     "11.07": {
         "Cypher": 1.0
     },
     "11.08": {
         "Sage": 1.0,
-        "Reyna": 1.0,
+        "Skye": 0.5,
         "Breach": 1.0,
+        "KAY/O": 1.0,
         "Fade": 1.0,
         "Gekko": 0.9961,
-        "KAY/O": 1.0,
         "Sova": 0.5,
         "Iso": 0.5,
         "Neon": 0.9727,
+        "Reyna": 1.0,
         "Yoru": 1.0,
         "Raze": 0.8592,
         "Astra": 0.9996,
@@ -143,18 +144,17 @@
     },
     "11.09": {
         "Deadlock": 0.5,
-        "Omen": 0.9727,
+        "Yoru": 0.9961,
         "Raze": 0.5,
         "Astra": 0.8592,
-        "Gekko": 0.8592,
-        "Killjoy": 0.5,
+        "Gekko": 0.9727,
         "Iso": 0.8592,
+        "Omen": 0.8592,
         "Reyna": 0.8592,
         "Skye": 0.8592,
         "Sage": 0.8592,
         "Viper": 0.9727,
         "Vyse": 0.8592,
-        "Yoru": 0.9727,
         "Brimstone": 0.5
     },
     "11.10": {
@@ -171,15 +171,16 @@
     },
     "11.11": {
         "Chamber": 0.5,
-        "Clove": 1.0,
+        "Clove": 0.9996,
         "Cypher": 0.9961,
         "Jett": 0.8592,
         "Harbor": 0.9996,
-        "Iso": 0.5,
-        "Reyna": 0.9961,
-        "Phoenix": 0.9727,
+        "Yoru": 0.5,
+        "Iso": 0.9727,
+        "Phoenix": 0.8592,
+        "Reyna": 0.9727,
         "Skye": 0.8592,
-        "Tejo": 0.7782,
+        "Tejo": 0.7735,
         "Vyse": 0.5,
         "Sova": 0.5
     },
@@ -189,10 +190,9 @@
         "Sage": 0.8592,
         "Tejo": 0.9996,
         "Vyse": 1.0,
-        "Reyna": 0.5,
+        "Cypher": 0.8592,
         "Astra": 0.8592,
         "Clove": 0.5,
-        "Cypher": 0.5,
         "Deadlock": 0.8592,
         "Gekko": 0.5,
         "Sova": 0.5,
@@ -208,7 +208,7 @@
         "Killjoy": 0.8592,
         "Sage": 0.8592,
         "Phoenix": 0.9727,
-        "Yoru": 0.952,
+        "Yoru": 0.9507,
         "Reyna": 0.5
     },
     "12.02": {
@@ -244,14 +244,14 @@
         "Cypher": 0.5,
         "Omen": 0.5,
         "Phoenix": 0.5,
-        "Yoru": 0.5,
+        "Yoru": 0.8592,
         "Iso": 0.5,
         "Sage": 0.5,
         "Raze": 0.5,
-        "Vyse": 0.8592,
+        "Vyse": 0.5,
         "KAY/O": 0.8592,
         "Breach": 0.5,
-        "Neon": 0.1852,
+        "Neon": 0.1953,
         "Tejo": 0.8592,
         "Gekko": 0.5,
         "Viper": 0.8592
@@ -271,12 +271,12 @@
         "Raze": 0.8592,
         "Sage": 0.8592,
         "Viper": 0.8592,
-        "Judge": 0.8676,
+        "Judge": 0.8681,
         "Cypher": 0.5
     },
     "13.00": {
         "Breach": 0.5,
-        "Cypher": 0.5,
+        "Cypher": 0.8592,
         "Deadlock": 0.5,
         "Fade": 0.5,
         "Gekko": 0.5,
@@ -287,14 +287,14 @@
         "Sage": 1.0,
         "Skye": 0.8592,
         "Sova": 0.9961,
-        "Viper": 1.0
+        "Viper": 0.9996
     },
     "13.01": {
         "Iso": 0.8592,
         "Yoru": 0.9727,
         "Astra": 0.5,
         "Clove": 0.5,
-        "Cypher": 0.9881,
+        "Cypher": 0.9883,
         "Deadlock": 0.5,
         "Gekko": 0.5,
         "Jett": 0.8592,
@@ -306,13 +306,28 @@
         "Viper": 1.0,
         "Outlaw": 1.0
     },
-    "9.0": {
+    "13.02": {
+        "Phoenix": 0.5,
+        "Chamber": 0.8592,
+        "Cypher": 0.8592,
+        "Deadlock": 0.5,
+        "Gekko": 0.8592,
+        "Jett": 0.5,
+        "Kayo": 0.9727,
+        "Omen": 0.5,
+        "Raze": 0.5,
         "Reyna": 0.5,
+        "Vyse": 0.8592,
+        "Yoru": 1.0,
+        "Marshal": 0.5
+    },
+    "9.0": {
+        "Yoru": 0.5,
         "Iso": 0.8592,
         "Sova": 1.0
     },
     "9.01": {
-        "Neon": 0.3205,
+        "Neon": 0.3114,
         "Cypher": 0.8592,
         "Clove": 0.5,
         "Viper": 0.5,
@@ -329,43 +344,42 @@
     "9.03": {
         "Cypher": 0.5,
         "Viper": 0.5,
-        "Clove": 0.5,
+        "Omen": 0.5,
         "Sage": 1.0,
         "Harbor": 0.5
     },
     "9.04": {
         "Vyse": 1.0,
         "Skye": 0.8592,
-        "Neon": 0.9292,
+        "Neon": 0.9312,
         "KAY/O": 1.0,
         "Sova": 1.0,
         "Astra": 1.0
     },
     "9.05": {
         "Chamber": 0.8592,
-        "Astra": 0.8776,
+        "Astra": 0.8789,
         "Ares": 1.0,
         "Vyse": 1.0,
-        "Omen": 0.7782,
+        "Omen": 0.7735,
         "KAY/O": 0.5
     },
     "9.06": {
         "Phoenix": 0.5,
         "Harbor": 0.5,
-        "Killjoy": 0.5,
+        "Cypher": 0.8592,
         "Brimstone": 0.9727,
         "Deadlock": 0.5,
-        "Cypher": 0.5,
         "Gekko": 0.5,
-        "Vyse": 0.9998,
+        "Yoru": 0.5,
         "Breach": 0.5,
-        "Raze": 0.5,
+        "Vyse": 0.9998,
         "Sage": 0.5,
-        "Clove": 0.5
+        "Omen": 0.5
     },
     "9.07": {
         "Astra": 0.5,
-        "Sage": 0.5,
+        "Cypher": 0.5,
         "Neon": 1.0
     },
     "9.08": {
@@ -381,15 +395,15 @@
         "Yoru": 1.0
     },
     "9.10": {
-        "Cypher": 0.9774,
-        "Sage": 0.9954,
+        "Cypher": 0.9769,
+        "Sage": 0.9955,
         "Deadlock": 0.5,
         "Omen": 0.8592,
         "Clove": 1.0,
         "Phoenix": 1.0,
         "Jett": 1.0,
         "Ghost": 0.9999,
-        "Frenzy": 0.5294,
+        "Frenzy": 0.5314,
         "Phantom": 1.0,
         "Killjoy": 0.5
     },

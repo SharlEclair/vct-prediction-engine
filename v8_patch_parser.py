@@ -20,7 +20,7 @@ import logging
 import hashlib
 from typing import Optional, Union, List, Dict, Any
 import httpx
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 # Configure Module Logger
 logger = logging.getLogger("v8_patch_parser")
@@ -38,8 +38,18 @@ class PatchChangeItem(BaseModel):
     """
     agent: str = Field(
         ...,
-        description="Target Valorant agent or subject (e.g., 'Neon', 'Jett', 'Cypher', 'Global', 'Vandal')."
+        description="Target Valorant agent or subject (e.g., 'Neon', 'Jett', 'Cypher', 'KAY/O', 'Global', 'Vandal')."
     )
+
+    @field_validator("agent", mode="before")
+    @classmethod
+    def normalize_agent_name(cls, v: Any) -> Any:
+        if isinstance(v, str):
+            v_clean = v.strip()
+            if v_clean.lower().replace("/", "").replace("-", "").replace(" ", "") == "kayo":
+                return "KAY/O"
+            return v_clean
+        return v
     ability: str = Field(
         ...,
         description="Target ability or weapon section (e.g., 'High Gear', 'Tailwind', 'General', 'Primary Fire')."
@@ -96,6 +106,7 @@ Your task is to convert raw MediaWiki patch notes wikitext into a structured JSO
 ### CATEGORIZATION RULES & BUG FIX PARADIGM:
 1. **Agent & Ability Extraction**:
    - Extract the character/subject ('agent') and specific ability/system ('ability').
+   - ALWAYS standardize agent name for KAY/O as 'KAY/O' (never use 'Kayo', 'kayo', or 'KAYO').
    - For general weapon or map changes, use the weapon/map name as 'agent' (e.g. 'Vandal', 'Ascent') and the sub-category as 'ability'.
 
 2. **Numeric & Stat Extraction**:
@@ -360,11 +371,11 @@ class V8PatchParser:
 
         KNOWN_AGENTS = {
             "Astra", "Breach", "Brimstone", "Chamber", "Clove", "Cypher", "Deadlock", "Fade",
-            "Gekko", "Harbor", "Iso", "Jett", "KAY/O", "Kayo", "Killjoy", "Neon", "Omen",
+            "Gekko", "Harbor", "Iso", "Jett", "KAY/O", "Killjoy", "Neon", "Omen",
             "Phoenix", "Raze", "Reyna", "Sage", "Skye", "Sova", "Tejo", "Viper", "Vyse", "Yoru"
         }
         KNOWN_WEAPONS = {
-            "Ares", "Bucky", "Bulldog", "Classic", "Frenzy", "Ghost", "Guardian", "Judge",
+            "Ares", "Bandit", "Bucky", "Bulldog", "Classic", "Frenzy", "Ghost", "Guardian", "Judge",
             "Marshal", "Operator", "Outlaw", "Phantom", "Sheriff", "Shorty", "Spectre", "Stinger", "Vandal"
         }
         KNOWN_SUBJECTS = KNOWN_AGENTS | KNOWN_WEAPONS
@@ -386,15 +397,21 @@ class V8PatchParser:
             if not line_str:
                 continue
 
+            def _find_subject(text_to_check: str) -> Optional[str]:
+                norm_text = text_to_check.lower().replace("/", "").replace("-", "").replace(" ", "")
+                if "kayo" in norm_text:
+                    return "KAY/O"
+                for subj in KNOWN_SUBJECTS:
+                    norm_subj = subj.lower().replace("/", "").replace("-", "").replace(" ", "")
+                    if norm_subj and norm_subj in norm_text:
+                        return subj
+                return None
+
             # Heading detection (=== Agent/Weapon Name ===)
             heading_match = re.match(r'^(==+)\s*(.+?)\s*(==+)$', line_str)
             if heading_match:
                 title = heading_match.group(2).strip()
-                matched_subj = None
-                for subj in KNOWN_SUBJECTS:
-                    if subj.lower() in title.lower():
-                        matched_subj = subj
-                        break
+                matched_subj = _find_subject(title)
                 if matched_subj:
                     current_agent = matched_subj
                     current_ability = "General"
@@ -413,11 +430,7 @@ class V8PatchParser:
                     continue
 
                 # Check if bullet depth 1 is an Agent/Weapon name
-                matched_subj = None
-                for subj in KNOWN_SUBJECTS:
-                    if subj.lower() == bullet_text.lower() or bullet_text.lower().startswith(subj.lower()):
-                        matched_subj = subj
-                        break
+                matched_subj = _find_subject(bullet_text)
 
                 if depth == 1 and matched_subj:
                     current_agent = matched_subj
@@ -431,10 +444,7 @@ class V8PatchParser:
                 # If current_agent is not set, attempt to infer agent from bullet_text
                 target_agent = current_agent
                 if not target_agent or target_agent not in KNOWN_SUBJECTS:
-                    for ag in KNOWN_AGENTS:
-                        if ag.lower() in bullet_text.lower():
-                            target_agent = ag
-                            break
+                    target_agent = _find_subject(bullet_text)
 
                 # Skip general non-agent non-gameplay bullets
                 if not target_agent:
