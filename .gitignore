@@ -26,4 +26,5 @@ scratch/
 # Data Directories (Exclude everything inside)
 data/raw/
 data/processed/
+!data/sample/
 vct_match_ids.json
