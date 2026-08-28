@@ -1,0 +1,193 @@
+$(document).on('click', '.js-matrix-filter div', function(event) {
+
+	var type = $(this).data('matrix');
+
+	$('.js-matrix-filter div').removeClass('mod-active');
+	$(this).toggleClass('mod-active');
+
+	$('.wf-table-inset.mod-matrix').hide();
+	$('.wf-table-inset.mod-matrix.mod-' + type).show();
+});
+
+$(document).on('click', '.js-side-filter div', function(event) {
+
+	var type = $(this).data('side');
+	var game_id = $(this).parents('.vm-stats-game').data('game-id');
+
+	// alert(game_id);
+
+	$('.vm-stats-game[data-game-id=' + game_id + '] .js-side-filter div').removeClass('mod-active');
+	$(this).toggleClass('mod-active');
+
+	$('.vm-stats-game[data-game-id=' + game_id + '] .stats-sq .side').hide();
+	$('.vm-stats-game[data-game-id=' + game_id + '] .stats-sq .side.mod-' + type).show();
+});
+
+$(document).on('click', '.js-ovw-sort', function() {
+
+	var col = $(this).data('col');
+	var pane = $(this).closest('.vm-stats-game');
+	var side = pane.find('.js-side-filter .mod-active').data('side') || 'both';
+	var desc = !$(this).hasClass('mod-desc');
+
+	pane.find('.js-ovw-sort').removeClass('mod-asc mod-desc');
+	pane.find('.js-ovw-sort[data-col="' + col + '"]').addClass(desc ? 'mod-desc' : 'mod-asc');
+
+	pane.find('.ovw-table').each(function() {
+
+		var table = $(this);
+		var rows = table.children('.ovw-row').not('.mod-head').get();
+
+		rows.sort(function(a, b) {
+
+			var av = parseFloat($(a).find('[data-col="' + col + '"] .side.mod-' + side).first().text());
+			var bv = parseFloat($(b).find('[data-col="' + col + '"] .side.mod-' + side).first().text());
+
+			if (isNaN(av)) av = -Infinity;
+			if (isNaN(bv)) bv = -Infinity;
+
+			return desc ? bv - av : av - bv;
+		});
+
+		table.append(rows);
+	});
+});
+
+$(document).ready(function(){
+
+	$('.h2h-expand').click(function() {
+		$('.wf-module-item.mod-h2h.mod-hidden').css('display', 'flex');
+		$(this).hide();
+	});
+
+
+	$('.js-tab-switch').click(function() {
+		
+		$('.js-tab-switch').removeClass('mod-active');
+		$(this).addClass('mod-active');	
+
+		var target = $('.vm-stats-container');
+		var tab = $(this).data('tab');
+		$('.vm-stats').data('tab', tab);
+
+		var game_id = $('.vm-stats').data('game-id');
+		var match_id = $('.vm-stats').data('match-id');
+
+		var data = {};
+		data.game_id = game_id;
+		data.match_id = match_id;
+
+		url = '/match/tab/' + tab;
+
+		//target.html('');
+
+		$('.vm-stats-loading').show();
+
+		$.ajax({
+			url: url,
+			type: "GET",
+			data: data,
+			dataType : "html",
+			success: function( html ) {
+				$('.vm-stats-loading').hide();
+				//preview.show();
+				target.html(html);
+
+				if (window.dragScroll)
+					dragScroll.init(target[0]);
+			},
+		});
+
+		var params = [{name: 'game', value: game_id}, {name: 'tab', value: tab}];
+		var query_str = $.param(params);
+		
+		var href = $('.vm-stats').data('url') + '?' + query_str;
+		var title = $(document).find("title").text();
+		window.history.replaceState({}, title, href);
+
+		return false;
+	});
+
+	$('.js-map-switch').click(function() {
+
+		var disabled = $(this).data('disabled');
+
+		if (disabled)
+			return false;
+
+		var game_id = $(this).data('game-id');
+
+		$('.js-map-switch').removeClass('mod-active');
+		$(this).addClass('mod-active');
+
+		$('.vm-stats-game').hide();
+		$('.vm-stats-game[data-game-id="' + game_id + '"]').show();
+
+		if (window.dragScroll)
+			dragScroll.refresh();
+
+		var tab = $('.vm-stats').data('tab');
+
+		$('.vm-stats').data('game-id', game_id);
+
+
+		var params = [{name: 'game', value: game_id}, {name: 'tab', value: tab}];
+		var query_str = $.param(params);
+		
+		var href = $('.vm-stats').data('url') + '?' + query_str;
+		var title = $(document).find("title").text();
+
+		window.history.replaceState({}, title, href);
+		
+		return false;
+	});
+
+	$('.js-stream-embed-btn').click(function() {
+		
+		var twitch_id = $(this).data('site-id');
+		var host_domain = $('.js-stream-embed-target').data('host-domain');
+		var target = $('.js-stream-embed-target');
+
+		
+
+		if ($(this).hasClass('mod-active')) {
+			var hide_self = true;
+		} else {
+			var hide_self = false;
+		}
+
+		$('.js-stream-embed-btn').removeClass('mod-active');
+		$('.match-streams-btn.mod-embed').addClass('mod-dark');
+		
+		if (hide_self) {
+
+			target.html('');
+			target.removeClass('mod-active');
+		} else {
+			
+			var blob = `<iframe
+						    src="https://player.twitch.tv/?channel=` + twitch_id + `&parent=` + host_domain + `"
+						    height="100%"
+						    width="100%"
+						    frameborder="0"
+						    scrolling="no"
+						    allowfullscreen="true">
+						</iframe>`;
+			target.html(blob);
+			target.addClass('mod-active');
+			$(this).addClass('mod-active');
+			$(this).parent('.match-streams-btn').removeClass('mod-dark');
+		}
+	});
+
+	$('.match-streams-btn.mod-expand').click(function() {
+		$(this).hide();
+		$('.match-streams-btn.mod-hidden').removeClass('mod-hidden');
+	});
+
+	$('.match-vods-vod').click(function() {
+		
+		$(this).find('.text').hide();
+		$(this).find('.text-toggle').show();
+	});
+});

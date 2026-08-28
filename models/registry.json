@@ -1,0 +1,25 @@
+{
+  "models": {
+    "match_winner_v1": {
+      "model_name": "match_winner_v1",
+      "version": "10.0.0",
+      "status": "champion",
+      "metrics": {
+        "accuracy": 0.5948275862068966,
+        "precision": 0.5616438356164384,
+        "recall": 0.7321428571428571,
+        "f1": 0.6356589147286822,
+        "roc_auc": 0.6288690476190476,
+        "log_loss": 0.6807609741447948,
+        "brier_score": 0.24282833263386566,
+        "ece": 0.0842591739450457,
+        "mce": 0.19593480777815714
+      },
+      "dataset_date": "2026-08-27",
+      "registered_at": "2026-08-27T13:26:44.361355",
+      "bundle_path": "models\\production\\champion\\match_winner_v1.pkl"
+    }
+  },
+  "champion": "match_winner_v1",
+  "last_updated": "2026-08-27T13:26:44.380422"
+}

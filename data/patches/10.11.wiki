@@ -1,0 +1,63 @@
+{{PatchNav|previous=10.10|next=11.00}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.11.jpg
+|date    = June 10th, 2025
+|act     = [[Season 2025: Act 3]]
+|changes = '''All Platforms:'''
+*''Minor patch
+'''PC-only:'''
+*[[Premier]]
+|bundle  = *{{collection|VALORANT GO! Vol. 3}}
+*{{capsule|VALORANT GO!}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-11/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.11.
+
+<i>HAPPY 5TH ANNIVERSARY TO VALORANT! Whether you’ve been here since beta or just started recently, we hope you’ve had a fantastic time playing the game and making new memories. It’s Ash here and while my win rate is down, the vibes are up. Let’s talk patch 10.11.
+
+We’ve added a Finisher Cam that will trigger for skinline finishers to help combat visual clutter and Icebox will remain disabled in Deathmatch and Escalation to address some issues.
+
+We heard you like the new anniversary video so the career page menu music has been updated to a remix of Ego by Qing Madi.
+
+And last but certainly not least, it’s time to tell your 5-stack to start grinding again because there’s updates to Premier! In addition to the gun buddy and title, the winners will also receive a lovely new player card effect that’ll certainly instill fear in your enemies when they see it in the loading screen.
+
+Here’s to another 5 years of wins and whiffs!</i>
+
+==All Platforms==
+===General Updates===
+*Added a Finisher Cam, which will trigger for deaths by guns with finishers and function the same way the Spike Cam currently does. We hope this will help combat visual clutter and related photosensitivity concerns for those sensitive to flashing lights, as well as performance issues associated with how your view would sometimes behave during finishers in the past.
+
+===Client Updates===
+*Career page menu music has been updated to a remix of Ego by Qing Madi.
+
+===Social Updates===
+*Adjusted the appearance of in-game voice indicators to improve clarity
+
+===Bug Fixes===
+*[[Agents]]
+**{{ui|Bugfix}} Fixed an issue where the visual indicator for {{abi text|Nightfall}} wouldn’t disappear for spectators if {{ai|Fade}} dies with the ability equips.
+**{{ui|Bugfix}} Fixed an issue where area names on {{abi text|Guided Salvo}} ability maps were too large and overlapping due to decreased cast range. We’ve removed area names from {{ai|Tejo}}’s Guided Salvo and {{abi text|Armageddon}} ability maps for consistency.
+**{{ui|Bugfix}} Fixed an issue where {{ai|Reyna}}’s Targeting visual for {{abi text|Leer}} wouldn’t properly display for spectators, allies, and observer perspectives.
+**{{ui|Bugfix}} Fixed an issue where {{ai|Waylay}}’s targeting indicator for {{abi text|Convergent Paths}} wouldn’t display properly for spectators, allies, and observer perspectives.
+**{{ui|Bugfix}} Fixed an issue where {{ai|Clove}}’s {{abi text|Pick-me-up}} audio wouldn’t play properly for all players.
+**{{ui|Bugfix}} Fixed an issue where {{ai|Chamber}}’s {{abi text|Trademark}} didn’t have team coloring applied on the minimap for observers.
+**{{ui|Bugfix}} Fixed an issue where {{ai|Breach}}’s {{abi text|Fault Line}} area of effect VFX was not matching collision volume depending on charge duration.
+
+==PC Only==
+===[[Premier]] Updates===
+*In addition to a gun [[buddy]] and [[title]], the winners of V25A3 playoffs will receive the new player card effect at the start of V25A4!
+**Rewards are granted to all players on the roster at the time of the playoff win that played at least two Weekly matches or one Playoff match on the team this Stage.
+***This means you should NOT leave the team until after playoffs complete if you want to receive your rewards.
+**Gun buddy and title are granted the next time you log in ~24 hr after playoffs.
+**The new player card effect will show up when Stage V25A4 starts.
+
+Check out our [https://youtu.be/_oYnSaw9A-c?si=Z_D0Bb5sF6rLkbBk&t=349 recent dev video] for more info on what's coming in Premier next Stage!
+
+==Console Only==
+===Competitive Updates===
+*We’ve added the Performance view as part of the End of Game and Match Details screens where you can review how you matched up against each opponent.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.11]]

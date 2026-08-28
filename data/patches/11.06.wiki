@@ -1,0 +1,49 @@
+{{PatchNav|previous=11.05|next=11.07}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 11.06.png
+|date    = September 16th, 2025
+|act     = [[Season 2025: Act 5]]
+|changes = '''All Platforms:'''
+*''Minor patch
+'''PC Only:'''
+*[[Replays]] release
+|bundle  = 
+*{{collection|Prelude to Chaos}} (V25)
+*{{collection|FRGMT X WNGMN}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-06/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v11.06.
+----
+<i>Hi folks, it's Ash and I have two important things to say to you.
+
+First, we banned 40,000 bots over the last 6 months so we hope you see less of them in your games!
+
+Second, yeah it's happening. The Replay System is out for Competitive, Unrated, Swiftplay, and Premier. And we highly recommend checking out the FAQ to learn about it's capabilities!</i>
+
+==All Platforms==
+===Competitive Updates===
+*Our last banwave hit 40,000 bots over the last 6 months! 
+
+===Bug Fixes===
+*Agents 
+**{{ui|Bugfix Buff}} We have fixed a rare bug where in a very very specific set of circumstances, {{ai|Yoru}} (via {{abi text|Dimensional Drift}}) and {{ai|Reyna}} (via {{abi text|Dismiss}} thru {{abi text|Empress}}), after turning invisible, would reappear in their original location after the invisibility ended. 
+***''Wiki editor note: This fix was also mentioned in {{patchv|11.05}}
+
+==PC Only==
+===General Updates===
+*[[Replays]]
+**Replays are now available for your [[Competitive]], [[Unrated]], [[Swiftplay]] and [[Premier]] games. Jump over [https://playvalorant.com/en-us/news/dev/replays-everything-you-need-to-know here] for more details!
+
+===Performance Updates===
+*The RawInputBuffer setting has been removed and is no longer configurable. The setting will be enabled at all times for players because it is more performant. 
+
+==Console Only==
+===Known Issues===
+*The highlight behavior for dropped weapons and the Spike is incorrect and will highlight when players are merely nearby rather than when directly looking at them. This will be resolved in Patch 11.07! 
+
+===Bug Fixes===
+*Fixed an issue with how New Player Tips were displayed on console.
+[[Category:Patch Notes]]
+
+[[de:Patchnotes/11.06]]

@@ -1,0 +1,190 @@
+{{PatchNav|previous=12.04|next=12.06}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.05.jpg
+|date    = March 17th, 2026
+|act     = [[Season 2026: Act 2]]
+|changes = '''All Platforms:'''
+*'''[[Miks]] release
+*'''[[Knockout]] release
+*[[Agents]]
+*[[Maps]]
+*[[Maps#Map rotations|Map rotation update]]
+*[[Game Modes]]
+'''PC only:'''
+*[[Premier]]
+*[[Competitive]]
+|bundle  = {{collection|Blackthorn}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-05/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.05'''.
+----
+{{Quote1|Hi, friends! Kenny, here. 
+
+We’ve got a bunch of pretty sweet updates to share today with the start of Act 2, including welcoming VALORANT’s newest Agent from Croatia, Miks!
+
+Also, the Live Balance team wanted to drop a bit of extra context around some of the changes, so be sure to read the italicized sections for more info from the Dev team! Here’s what’s changing:
+
+TL;DR:
+*Assist Banners have been added to the HUD to celebrate when you get an assist.
+*Your Killfeed has also been updated to more clearly illustrate assists and assisting abilities.
+*Status Effect Tags on the HUD have been updated for clarity.
+*Bok, Miks! Say hello VALORANT’s newest Controller!
+*Ally targeting UX/UI has been updated on Sage to match Miks’s targeting experience.
+*Sage also got a model update to reflect her current state in VALORANT’s story.
+*Yoru, Clove, and Skye have all received balance updates. Breach got new voice lines.
+*The Competitive Map Pool has been updated, and Lotus received some changes to A-site.
+*Knockout is the new Limited Time Mode. AROS and Skirmish: 2v2 are leaving the queue.
+
+GL HF GGs, gamers.}}
+
+==All Platforms==
+===General Updates===
+For 12.05, we’ll be putting our focus on supporting coordinated teamplay and increasing pick diversity across the board. While we do think individual skill really shines when it comes to your gunplay and execution, we still think strategy is best formed as a team and using Agents to work together. 
+
+So the Agent updates below are intended to take a little bit of power away from a couple Agents who are a bit too selfish and strong on their own (like Clove and Yoru). Plus, we’re adding Miks to the roster, who’s basically the ultimate wingman for his team. Well, aside from Wingman of course. 
+
+We’re also making some QoL updates to the killfeed to better show assisting abilities and Agents involved in kills, adding assist banners to the bottom of your screen so you can more easily tell when you secured an assist, and improving ally targeting for abilities like Sage’s Healing Orb and Miks’s Harmonize. All for the sake of recognizing and encouraging good examples of teamplay.
+
+===Agent Updates===
+===={{ai|Miks}}====
+Straight from Croatia, Miks takes the stage channeling pure sound energy. With his infectious passion and sonic powers, he rallies his squad to move as one as they set the tempo on the battlefield together. Our newest Controller will start rolling out to all regions at 10:00AM PST on 3/18.
+
+*Abilities:
+**{{abi text|Harmonize}}
+***EQUIP Harmonize. Target an ally and FIRE to activate a Combat Stim on yourself and the ally that refreshes with each kill. ALT-FIRE to grant Combat Stim to yourself.
+**{{abi text|M-pulse}}
+***EQUIP M-pulse. ALT-FIRE to toggle between Concuss and Healing outputs. FIRE to throw the device. Upon landing, M-pulse sends out sound waves, either Concussing or Healing players.
+**{{abi text|Waveform}}
+***EQUIP a Map Targeter. FIRE to set locations. ALT-FIRE to spawn Smokes at selected locations.
+**{{abi text|Bassquake}}
+***EQUIP Bassquake. FIRE to build up and unleash Sonic Radiance forward, knocking back, Deafening, and Slowing players.
+You can also learn more about Miks on his Agent page, as well as his gameplay trailer and [https://www.youtube.com/watch?v=--w5dKba3uI Dev Diary] on our YouTube channel.
+
+===={{ai|Sage}}====
+*{{abi text|Healing Orb}} - Ally Targeting
+**{{ui|Adjustment}} With the release of Miks, we have updated our Ally Targeting UI/UX and brought those updates to Sage. You’ll see a new widget above the targeted allies head, and an additional highlight around the agent's model.
+*Crystal Model Update
+**{{ui|Adjustment}} We’ve added crystal growths to Sage’s model and key art to show the price she is paying for repeatedly pushing the limits of her power.
+
+===={{ai|Skye}}====
+With the change to initiator utility cooldowns at the end of last year, we started reevaluating the removal of Guiding’s Light recharge. At 45s, there was little downside to using this ability right at round start for soft scouting - and we wanted her to be more intentional and deliberate in utility usage. At 60s, this tradeoff became much sharper.
+
+*{{abi text|Guiding Light}}
+**{{ui|Added}} Added 60s Cooldown
+
+===={{ai|Yoru}}====
+Yoru is crowding out the viability of flash Initiators and sometimes even Sentinels, especially in higher ranks and Pro play. He has the strongest map-wide rotation ability on the roster, can take forward space extremely well, and has one of the strongest general use flashes in the game. In general, we think Yoru is too strong and is starting to bleed into other roles at the cost of comp diversity. So we’re adjusting his strongest abilities, Gatecrash and Blindside, so that Yoru has to make more meaningful tradeoffs when he decides to use them.
+
+*{{abi text|Gatecrash}}
+**{{ui|Nerf}} Duration beacon is active reduced 30s >> 15s
+*{{abi text|Blindside}}
+**{{ui|Nerf}} Charges reduced from 2 >> 1.
+
+===={{ai|Clove}}====
+Clove has been an ever-present pick in ranked since launch and also has much higher winrate than other agents. Our hope is that with some adjustments of their power and the addition of Miks that there will be more options in the Controller space.
+
+These changes specifically target Clove’s outsized ability to help their team win even after death.
+
+*{{abi text|Ruse}}
+**{{ui|Nerf}} Smoke duration 14s >> 6s (when casted while dead)
+*{{abi text|Meddle}}
+**{{ui|Nerf}} Area of effect reduced 6m >> 4m
+
+===={{ai|Breach}}====
+Added new [[Breach/Quotes|voice lines]].
+
+===Gameplay Systems Updates===
+''For the before/after visuals, see the patch notes on VALORANT's website.
+*Assist Banners
+**Assists have always been a huge part of winning rounds, but they've never gotten the recognition they deserve. Now they do!
+***When your utility or damage contributes to a teammate's kill, you'll see an assist banner on the bottom of your screen 
+****The banner shows your specific contribution to the elimination and is accompanied by an audio cue
+*Killfeed Updates 
+**Your team's killfeed now displays the assisting player's agent icon and the ability or damage that set up the kill
+***This info is visible to your team only
+*Status Effect Tags
+**We’ve updated how and where status effects appear on your HUD to improve clarity and consistency. When multiple effects are active, you can quickly see what’s affecting you and how long it lasts in predictable areas of the screen, with buffs on the left and debuffs on the right for cleaner organization during combat.
+*Observers and spectators can now see Ability Map Targeters like Clove’s Ruse, Brim’s Sky Smoke, Tejo’s Guided Salvo, etc. Ability Map Targeters will also show up in Replays.
+
+===Map Updates===
+====Map Pool Updates====
+*[[Lotus]] and [[Fracture]] are IN the Competitive and Deathmatch queues.
+*[[Abyss]] and [[Corrode]] are OUT of Competitive and Deathmatch queues.
+
+====[[Lotus]]====
+''For the before/after visuals, see the patch notes on VALORANT's website.
+Overall we are happy where Lotus is at as a map in the pool. But as part of our effort across all maps to reduce weapon spam when the barrier drops, we have changed some walls on A side of the map. We also have been seeing consistent ability usage towards the A-lobby choke when barriers go down. We don't want to stop this completely, but feel moving the jump up to vines will give attackers a better chance to fight for rubble.
+
+*Attacker lobby wall thickened to remove wall penetration off barrier drop
+*Jump up to Vines moved to help attackers get out of Lobby and avoid utility dump.
+*Wall outside of Tree room has been reinforced to remove wall penetration.
+*Extra room added outside of A-site stairs to help hold A-site and let defenders play further back from rubble
+*A-site plant zone has changed so you can no longer plant for breakable/link
+
+===Modes Updates===
+====[[Knockout]]====
+*New Limited Time Mode
+**Introducing Knockout, a round-based tactical elimination mode where every kill resurrects a fallen teammate. Teams stage at a center-line and coordinate pushes into enemy territory across escalating weapon stages to wipe each other out. Stick with your team, trade for each other, and ride the momentum swings as your squad rebuilds kill after kill.
+***Mode Details
+****Resurrection System
+*****Eliminating an enemy brings back a fallen teammate
+*****Resurrection delay scales with round length, from near-instant early in the round to several seconds later on
+***Team Territories
+****A center-line barrier divides the map into team territories
+****Capture orbs to shift the line toward the enemy, expanding your territory and compressing theirs
+*****Orbs also heal you and grant you an ultimate charge
+****Crossing into enemy territory applies a debuff, forcing the pushing team to coordinate their timing
+*****"Threat Detected" notification alerts the enemy team when a player crosses into your territory
+*****Crossing into enemy territory also obfuscates your minimap, reducing your ability to track enemy positions while in their territory
+***Loadouts
+****No economy - select your loadout each round
+*****Weapon offerings escalate through stages as the match progresses
+***Round Structure
+****5v5 on TDM maps
+****Rounds last 3 minutes
+*****Overtime respawns and healing are disabled and damage over time forces a final fight
+****Eliminate all enemies to win the round
+****First team to 4 rounds wins the match
+***Agents & Abilities
+****Standard agent select with TDM ability recharge rates
+****Earn your ultimate with kills or orb captures
+****Ultimate charge resets on death and at the start of each round
+***Match Length
+****8-15 minutes
+
+====[[All Random One Site]] and [[Skirmish]]: 2v2====
+All Random One Site and Skirmish: 2v2 are heading out. Thanks for playing!
+
+===Bug Fixes===
+*Agents
+**{{ui|Bugfix}} Fixed a bug where a floating gun may briefly appear when a suppression effect interrupts {{ai|Gekko}}'s {{abi text|Thrash}}, {{ai|Sova}}'s {{abi text|Owl Drone}}, or {{ai|Astra}}'s {{abi text|Astral Form}}.
+**{{ui|Bugfix Nerf}} Fixed a bug where {{ai|Veto}}’s {{abi text|Interceptor}} would detect a stealthed {{ai|Cypher}} {{abi text|Spycam}}.
+**{{ui|Bugfix}} Fixed a bug where {{ai|Harbor}}’s relic was not glowing when equipping {{abi text|Storm Surge}} in Left Handed Mode.
+**{{ui|Bugfix Buff}} Fixed a bug where picking up a dead player’s weapon would cause you to auto-equip it when they were [[Resurrection|resurrected]].
+**{{ui|Bugfix}} Fixed a bug where {{ai|Brimstone}}’s {{abi text|Sky Smoke}} equip pose was displaying unintended VFX when viewed far away.
+**{{ui|Bugfix Nerf}} Fixed a bug where {{ai|Deadlock}}’s {{abi text|Barrier Mesh}} could be used to float into the air by completely blocking the ziplines at Attacker spawn on [[Fracture]]
+*General
+**Fixed multiple localization issues on the End of Game (EOG) Scoreboard screen.
+**Fixed an issue where a friend’s most recent match was not always updating in the Career view.
+**Fixed an issue where the progression bar could overlap with the top tabs in the EOG Progression tab.
+**Fixed an issue where the focus highlight could be delayed on the EOG Timeline screen.
+
+==PC Only==
+===Premier Updates===
+*Welcome to Stage V26A2! Matches start on March 18.
+**{{ui|Adjustment}} This Stage will run for six weeks of matches instead of the usual seven.
+**Teams with a Premier Score of at least 500 qualify for Playoffs on April 26.
+***In Contender and Invite, qualification is still based on your placement - check out the standings page for more info
+**Your awards hub will temporarily display that you haven't unlocked any rewards. This will be fixed in patch 12.06.
+
+===Competitive Updates===
+*We're adjusting the Ranked Rating thresholds to hit Immortal 2, 3 and Radiant to bring parity to leaderboard requirements across all of our regions.
+**We're not adjusting any of the underlying MMR systems, so we expect the same players to show up on the leaderboard.
+*We made a QoL update to the new Rank summary screen that we implemented in patch 12.04.
+**You can now access the Social Panel and select Play Now directly from that screen.
+
+===Bug Fixes===
+*[[Battle Pass]]
+**Fixed a bug that caused the scroll wheel to not work when navigating between the tiers on the battlepass and/or event pass.
+[[Category:Patch Notes]]

@@ -1,0 +1,92 @@
+{{PatchNav|previous=11.04|next=11.06}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 11.05.jpg
+|date    = September 3rd, 2025
+|act     = [[Season 2025: Act 5]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Competitive]]
+*[[Pick'Ems]]
+|bundle  = {{collection|Champions 2025}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-05/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v11.05. The patch notes were announced on September 2nd 2025, but the patch itself was delayed by a day due to a holiday in United States.  
+----
+<i>HELLO everyone, it’s JOY! 11.05 is the patch that Champions is played on, so we’re keeping this light so our pros can be as prepared as possible. Also, our patch rollout is delayed a day due to a holiday. We’re sending out these notes so you know what’s coming soon, but be prepared for the new patch to come a day later than you’re used to (if it’s usually on Tuesdays for you, it will be Wednesday. If you usually have a new patch on Wednesday, it will be Thursday this time).
+
+TLDR;
+
+*Agents
+**Made some visual effect adjustments for clarity on Harbor.
+**General bug fixes
+*Esports
+**Pick’Ems are back in time for Champs- this time with new Factions to join!
+*Game
+**Remake abusers beware- increased penalties are coming your way.</i>
+
+==All Platforms==
+===Agent Updates===
+===={{ai|Harbor}}====
+Visual effects updated for clarity. Hold your horses 🏇– these aren’t the larger updates we’ve been talking about. But you will hear more about those at Champs, so stay tuned. For the moment, we’re updating the visual clarity of his abilities.
+*{{abi text|Reckoning}}
+**{{ui|Adjustment}} Reduced visual noise. Updated ground indicator to more clearly show its impact range. The yellow wisp is now closer to the Agent being hit, so it’s easier to see where someone is hiding before the concuss comes down. Shortened water splash on the ground for visibility.
+*{{abi text|Cove}}
+**{{ui|Adjustment}} Improved visual clarity of shield health states. The health state is now more reflected in the visual water animation.
+
+===Esports Feature Updates===
+It’s time to make a choice—[[Pick'Ems]] have returned in time for Champions Paris! Starting on September 4th, you will have access to the Group Stage in-client and on the web. Predict the advancing teams for points, earning extra points for correctly guessing the exact placement. You’ll be able to earn rewards for participating.
+
+This year, we’re adding something extra to up the ante—you can align yourself with your favorite creator’s Faction! Choose carefully, as you can only join one faction. Each group offers a unique in-game reward.
+
+If you do well, the points you earn in Groups and Playoffs stage will contribute to the Faction leader’s score. See if your Faction wins it all!
+
+===Player Behavior Updates===
+*We have adjusted our behavior system to address Remake Abuse and Gameplay Participation.
+**Penalties will increase for those who repeatedly AFK and dodge queues. This affects those who consistently abuse and disrupt our systems so don’t worry, we won’t be unfairly penalizing players who are genuinely trying to play.
+
+===Bug Fixes===
+*General
+**Improved the backend technology around detection abilities (i.e. {{abi text|Prowler}}, {{abi text|Wingman}}, {{abi text|Dizzy}}, etc) so they can more reliably detect opponents within their field of view.
+**Added audio cleanup logic to make sure unexpected audio events don't continue playing across round transitions.
+*Agents
+**{{ai|Astra}}
+***{{ui|Bugfix Buff}} Fixed an issue where bullet tracers pass through Astra's {{abi text|Cosmic Divide}}. 
+****{{ui|Bugfix Nerf}} This fix does reintroduce an audio bug where there is a slight audio hitch when passing through Astra wall.
+**{{ai|Chamber}}
+***{{ui|Bugfix}} Fixed an issue where Chamber's {{abi text|Trademark}} in-world icon would not change color when aimed at.
+**{{ai|Clove}}
+***{{ui|Bugfix Nerf}} Fixed an issue where Clove's {{abi text|Pick-me-up}} cast sound was silent for enemies.
+**{{ai|Cypher}}
+***{{ui|Bugfix Buff}} Fixed an issue where Cypher's {{abi text|Trapwire}} was more difficult to place than intended.
+**{{ai|Deadlock}}
+***{{ui|Bugfix Buff}} Fixed an issue where Deadlock's {{abi text|Sonic Sensor}} was more difficult to place than intended.
+***{{ui|Bugfix}} Fixed a Spectator bug with Deadlock's {{abi text|Annihilation}} deafen where audio processing was not cleaning up as expected after a spectated player was impacted by the ability.
+***{{ui|Bugfix Nerf}} Fixed issue where use of Deadlock's Annihilation on [[Yoru]]'s [[Fakeout]] clone would apply audio effects to the real Yoru.
+**{{ai|Gekko}}
+***{{ui|Bugfix}} Fixed a bug where "Spike Down" VO would play if {{abi text|Wingman}} was destroyed right after planting the Spike.
+**{{ai|Jett}}
+***{{ui|Bugfix}} Fixed a bug where Jett’s {{abi text|Tailwind}} audio would continue into the next round.
+**{{ai|Sova}}
+***{{ui|Bugfix Nerf}} Fixed audio issue where the “being watched” sonic feedback of Sova’s {{abi text|Owl Drone}} wouldn't trigger if the drone had line-of-sight to the player when the drone spawned.
+**{{ai|Vyse}}
+***{{ui|Bugfix}} Fixed issue where Vyse’s {{abi text|Steel Garden}} audio could trigger twice after Observers swap targets.
+***{{ui|Bugfix}} Fixed a bug where Vyse's {{abi text|Razorvine}} would leave circles on the minimap for observers when Vyse died.
+**{{ai|Waylay}}
+***{{ui|Bugfix Nerf}} Fixed a bug where Waylay's {{abi text|Saturate}} could affect enemies after they left the range of the area of effect.
+**{{ai|Yoru}}
+***{{ui|Bugfix}} Fixed an issue where Yoru's {{abi text|Gatecrash}} in-world icon would not change color when aimed at.
+**{{ui|Bugfix Buff}} Fixed a bug where in some cases after turning invisible, Yoru (via {{abi text|Dimensional Drift}} and {{ai|Reyna}} (via {{abi text|Dismiss}} thru {{abi text|Empress}}) would reappear in their original location when the invisibility ends.
+
+==PC Only==
+===Bug Fixes===
+*[[Premier]]
+**{{ui|Bugfix}} Fixed an issue on the Awards tab where long names were not displayed correctly in some languages.
+
+==Console Only==
+===Competitive Updates===
+*{{ui|Added}} Updated leaderboards to display Immortal+ ranked rating thresholds
+
+===Bug Fixes===
+*New Player Tips have been switched off while we fix an issue where they are being displayed for a much shorter time than intended to new players. We are actively investigating having the feature switched back on as soon as possible.
+[[Category:Patch Notes]]

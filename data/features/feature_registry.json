@@ -1,0 +1,132 @@
+{
+  "version": "10.0.0",
+  "last_updated": "2026-08-07",
+  "features": {
+    "matches_played": {
+      "source": "historical_matches",
+      "formula": "count(matches_prior_to_date)",
+      "category": "team_form",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "win_rate": {
+      "source": "historical_matches",
+      "formula": "wins / total_matches",
+      "category": "team_form",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "full_buy_win_rate": {
+      "source": "match_economy",
+      "formula": "full_buy_wins / total_full_buy_rounds",
+      "category": "economy",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "semi_buy_win_rate": {
+      "source": "match_economy",
+      "formula": "semi_buy_wins / total_semi_buy_rounds",
+      "category": "economy",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "eco_conversion": {
+      "source": "match_economy",
+      "formula": "eco_wins / total_eco_rounds",
+      "category": "economy",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "pistol_win_rate": {
+      "source": "match_economy",
+      "formula": "pistol_wins / total_pistol_rounds",
+      "category": "economy",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "attack_round_win_rate": {
+      "source": "round_history",
+      "formula": "attack_round_wins / total_attack_rounds",
+      "category": "team_form",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "defense_round_win_rate": {
+      "source": "round_history",
+      "formula": "defense_round_wins / total_defense_rounds",
+      "category": "team_form",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "first_half_win_rate": {
+      "source": "round_history",
+      "formula": "rounds_1_to_12_wins / total_first_half_rounds",
+      "category": "team_form",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "comeback_rate": {
+      "source": "round_history",
+      "formula": "comeback_wins / total_matches",
+      "category": "team_form",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "ACS_EMA": {
+      "source": "player_history",
+      "formula": "exponential_moving_average(average_combat_score, alpha=0.2)",
+      "category": "combat_performance",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "rating_EMA": {
+      "source": "player_history",
+      "formula": "exponential_moving_average(vlr_rating, alpha=0.2)",
+      "category": "combat_performance",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "KAST_EMA": {
+      "source": "player_history",
+      "formula": "exponential_moving_average(kast_percentage, alpha=0.2)",
+      "category": "combat_performance",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "ADR_EMA": {
+      "source": "player_history",
+      "formula": "exponential_moving_average(average_damage_per_round, alpha=0.2)",
+      "category": "combat_performance",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "ECON_EMA": {
+      "source": "player_history",
+      "formula": "exponential_moving_average(econ_rating, alpha=0.2)",
+      "category": "economy",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "FK_rate": {
+      "source": "player_history",
+      "formula": "first_kills / total_observations",
+      "category": "entry",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "FD_rate": {
+      "source": "player_history",
+      "formula": "first_deaths / total_observations",
+      "category": "entry",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    },
+    "first_duel_success": {
+      "source": "player_history",
+      "formula": "first_kills / (first_kills + first_deaths)",
+      "category": "entry",
+      "leakage_safe": true,
+      "introduced_version": "10.0.0"
+    }
+  }
+}

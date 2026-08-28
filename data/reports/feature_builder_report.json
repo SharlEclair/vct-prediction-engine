@@ -1,0 +1,60 @@
+{
+    "summary": {
+        "total_extracted_features": 122,
+        "numeric_features": 41,
+        "text_only_features": 81,
+        "ignored_changes": 259,
+        "extraction_failures": 0
+    },
+    "versions": {
+        "9.0": {
+            "total_extracted": 4,
+            "numeric_features": 1,
+            "text_only_features": 3,
+            "ignored_changes": 42,
+            "failures": 0
+        },
+        "9.01": {
+            "total_extracted": 10,
+            "numeric_features": 1,
+            "text_only_features": 9,
+            "ignored_changes": 55,
+            "failures": 0
+        },
+        "9.02": {
+            "total_extracted": 13,
+            "numeric_features": 0,
+            "text_only_features": 13,
+            "ignored_changes": 50,
+            "failures": 0
+        },
+        "9.03": {
+            "total_extracted": 5,
+            "numeric_features": 0,
+            "text_only_features": 5,
+            "ignored_changes": 23,
+            "failures": 0
+        },
+        "9.04": {
+            "total_extracted": 9,
+            "numeric_features": 0,
+            "text_only_features": 9,
+            "ignored_changes": 53,
+            "failures": 0
+        },
+        "10.04": {
+            "total_extracted": 48,
+            "numeric_features": 16,
+            "text_only_features": 32,
+            "ignored_changes": 9,
+            "failures": 0
+        },
+        "12.09": {
+            "total_extracted": 33,
+            "numeric_features": 23,
+            "text_only_features": 10,
+            "ignored_changes": 27,
+            "failures": 0
+        }
+    }
+}

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Banner 190x160</title>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./css2" rel="stylesheet">
+</head>
+
+<body class="valorant">
+    <a href="https://www.vlr.gg/img/pr/tp/bn.html#" class="banner_link" target="_blank">
+        <div class="banner">
+            <svg xmlns="http://www.w3.org/2000/svg" class="logo" width="100%" fill="none" viewBox="0 0 168 23">
+                <path fill="#fff" d="m117.36 10.88 4.21-.03L130.38.03h-14.86l-3.75 15.22h4.53l1.06-4.37Zm2.2-8.9h4.73l-6.8 8.35 2.07-8.35Zm-12.01 6.18L114.2.03H99.3l-3.7 15.22h4.54l3.27-13.28h4.66l-5.02 6.16 2.7 7.12h4.53l-2.73-7.1ZM167.01.03h-4.54L156.3 7l1.75-6.96h-4.54l-3.75 15.22h4.53l1.65-6.64 3.89 6.64h4.54l-4.34-7.45L167 .03ZM81.8 0 68.36.03l-3.91 15.22h6.02l12.6-13.14L81.8 0ZM70.08 10.85l2.3-8.87h6.15v.06l-8.45 8.81Zm-13.18.75L55.09.02h-5.7l-3.8 15.22h4.54l2.63-10.5 1.39 10.5h6.35L64.25.03h-4.53L56.9 11.6ZM21.99 6.83h-4.34l1.72-6.8h-4.54l-3.79 15.22h4.54L17 9.42h4.34l-1.45 5.83h4.53L28.24.03H23.7L22 6.83ZM13.21.03H.5L0 1.65h4.44L1.1 15.25h4.53l3.34-13.6h3.76L13.2.03ZM144.34 2.3h5.57l.55-2.27h-10.1l-3.73 15.23h10.1l.5-1.95h-5.58l2.69-11ZM37.6 12.66h-3.9L36.85.03h-4.53L29.1 12.9l1.4 2.3.12.06h10.85v-.06L45.31.03h-4.54L37.6 12.66ZM136.28.03h-4.6V0a1223.9 1223.9 0 0 0-3.73 15.25h4.54L136.28.03Z"></path>
+                <path fill="#16BDF9" d="m94.37 8.8.36-1.38h-7.97L96.57.03h-5.9L79.1 9.81l.2.4 7.35-.04L78 14.83l.16.33 7.35.03-12.4 7.42.23.39 19.56-8.23.62-2.43h-5.64l6.5-3.53Z"></path>
+            </svg>
+            <div class="home">
+                <div class="imgContainer">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+                </div>
+                <div class="team">
+                    <h2></h2>
+                    <div class="odds"></div>
+                </div>
+            </div>
+            <div class="away">
+                <div class="imgContainer">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+                </div>
+                <div class="team">
+                    <h2></h2>
+                    <div class="odds"></div>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <script>
+        const API = "https://api-affiliate.oddin.gg/795b8a71-9fb4-430a-a090-e96d3c6e85c7/matches.json"
+
+        fetch(API)
+            .then((response) => response.json())
+            .then(getMatches)
+            .then(renderMatches)
+            .catch((err) => console.error('Failed to fetch', err))
+
+        function getMatches(data) {
+            try {
+                const activeSport = 'Valorant'
+
+                return data.matches.filter((match) => match.sport === activeSport)
+            } catch (e) {
+                console.error('Failed to get matches', data)
+            }
+        }
+
+        function getFallbackIcon() {
+            switch (document.body.className) {
+                case "valorant":
+                    return "data:image/svg+xml;base64,PHN2ZyBjbGFzcz0idmFsb3JhbnQiIGZpbGw9IiM2MTc3OTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyO2hlaWdodDoxOHB4O3dpZHRoOjE4cHg7IiB2aWV3Qm94PSIwIDAgMzIgMzIiCiAgICAgICAgICAgICAgICAgICAgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkPSJNMTkuOCwyNi4xaC0wLjJjLTIuNCwwLTQuOCwwLTcuMiwwYy0wLjMsMC0wLjUtMC4xLTAuNi0wLjNjLTIuNS0zLjItNS4xLTYuMy03LjYtOS41QzQuMSwxNi4xLDQsMTYsNCwxNS44ICAgYzAtMy4xLDAtNi4xLDAtOS4yYzAtMC4xLDAtMC4yLDAuMS0wLjJoMC4xYzUuMiw2LjUsMTAuNCwxMywxNS41LDE5LjVjMCwwLDAsMC4xLDAuMSwwLjFMMTkuOCwyNi4xTDE5LjgsMjYuMXoiIC8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkPSJNMjcuOCwxNi4zYy0wLjcsMC45LTEuNSwxLjgtMi4yLDIuOGMtMC4yLDAuMi0wLjQsMC4zLTAuNiwwLjNjLTIuNCwwLTQuOCwwLTcuMSwwYzAsMC0wLjEsMC0wLjEsMGMtMC4xLDAtMC4yLTAuMS0wLjEtMC4yICAgYzAsMCwwLTAuMSwwLjEtMC4xYzIuNC0zLDQuNy01LjksNy4xLTguOWMxLTEuMiwyLTIuNSwyLjktMy43YzAtMC4xLDAuMS0wLjEsMC4yLTAuMWMwLDAsMC4xLDAsMC4xLDBjMCwwLjEsMCwwLjEsMCwwLjIgICBjMCwzLDAsNi4xLDAsOS4xQzI4LDE2LDI3LjksMTYuMiwyNy44LDE2LjNMMjcuOCwxNi4zeiIgLz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L3N2Zz4="
+                default:
+                    return "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+            }
+        }
+
+        function renderMatch(match) {
+
+            document.querySelector('.banner_link').href = match.link
+
+            document.querySelector('.home .team h2').innerHTML = match.home.name
+            document.querySelector('.home .team .odds').innerHTML = formatOddsToString(match.home.odds)
+            document.querySelector('.home img').src = match.home.icon ?? getFallbackIcon()
+
+            document.querySelector('.away .team h2').innerHTML = match.away.name
+            document.querySelector('.away .team .odds').innerHTML = formatOddsToString(match.away.odds)
+            document.querySelector('.away img').src = match.away.icon ?? getFallbackIcon()
+        }
+
+        function preloadNextMatch(match) {
+            if (match) {
+                if (match.home.icon) {
+                    (new Image()).src = match.home.icon;
+                }
+                if (match.away.icon) {
+                    (new Image()).src = match.away.icon;
+                }
+            }
+        }
+
+        function formatOddsToString(odds, decimalPlaces = 2) {
+            if (odds == null) {
+                return '-'
+            }
+
+            const separator = (1.1).toString().substring(1, 2)
+            const [number, decimal = ''] = odds.toString().split(separator)
+
+            return `${number}${separator}${decimal.padEnd(decimalPlaces, '0')}`
+        }
+
+        function renderMatches(matches) {
+            if (matches) {
+                const validMatches = []
+
+                for (const match of matches) {
+                    try {
+                        const matchWinner = match.markets.find(market => market.type === "MatchWinner")
+
+                        if (matchWinner) {
+                            const homeSelection = matchWinner.selections.find((selection) => selection.type === "home")
+                            const awaySelection = matchWinner.selections.find((selection) => selection.type === "away")
+
+                            if (homeSelection && awaySelection) {
+                                validMatches.push({
+                                    link: match.matchURL,
+                                    home: {
+                                        name: match.homeTeam.name,
+                                        icon: match.homeTeam.iconPath,
+                                        odds: homeSelection.value
+                                    },
+                                    away: {
+                                        name: match.awayTeam.name,
+                                        icon: match.awayTeam.iconPath,
+                                        odds: awaySelection.value
+                                    }
+                                })
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Failed to process match', match)
+                    }
+                }
+
+                if (validMatches.length) {
+                    let currentIdx = 0
+
+                    renderMatch(validMatches[currentIdx])
+
+                    setInterval(() => {
+                        currentIdx += 1
+
+                        if (currentIdx > validMatches.length - 1) {
+                            currentIdx = 0
+                        }
+
+                        renderMatch(validMatches[currentIdx])
+                        preloadNextMatch(validMatches[currentIdx + 1])
+                    }, 5_000)
+                } else {
+                    console.error('No valid matches', matches)
+                }
+            } else {
+                console.error('No matches found')
+            }
+        }
+    </script>
+
+    <style>
+        .valorant {
+            --primary: white;
+            --secondary: #1c7393;
+        }
+
+        *,
+        *::before,
+        *::after {
+            -webkit-text-decoration: none !important;
+            text-decoration: none !important;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #c3c4c4;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+
+
+        }
+
+        a {
+            color: #fff;
+        }
+
+        h2 {
+            margin: 4px 8px 4px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            width: 190px;
+            height: 160px;
+            cursor: pointer;
+            background: #0A0E18;
+            overflow: hidden;
+        }
+
+        .logo {
+            padding-top: 12px;
+            padding-bottom: 4px;
+            width: 160px;
+            height: auto;
+        }
+
+        .sport>* {
+            display: none;
+        }
+
+        .valorant .sport .valorant {
+            display: block;
+            width: 32px;
+            height: 32px;
+        }
+
+        .home,
+        .away {
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 52px;
+            border-radius: 8px;
+            border: 1px solid var(--secondary);
+        }
+
+        .imgContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        .team {
+            display: flex;
+            flex: 2;
+            max-width: 114px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            h2 {
+                max-width: 100%;
+            }
+        }
+
+        .home img,
+        .away img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .odds {
+            width: 90%;
+            background-color: var(--secondary);
+            border-radius: 8px;
+            font-size: 16px;
+            border: 1px solid #1eb9eb;
+            color: var(--primary);
+        }
+    </style>
+
+
+</body></html>

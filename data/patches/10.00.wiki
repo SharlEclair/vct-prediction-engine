@@ -1,0 +1,122 @@
+{{PatchNav|previous=9.11|next=10.01}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.00.jpg
+|date    = January 7th, 2025
+|act     = [[Season 2025: Act 1]]
+|changes = '''All Platforms:'''
+*[[Tejo]] release
+*[[Flex]] release
+*[[Agents]]
+*[[Maps#Map rotations|Map rotation update]]
+'''PC-only:'''
+*[[Premier]]
+|bundle  = {{collection|EX.O}}<br>[[VCT25 Team Capsules]]
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-00/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.00.
+
+<i>
+Happy New Year, gamers! Welcome to Season 2025. It’s Kenny here, and I’m beyond stoked to share the first set of patch notes for the year. Patch 10.00 is now live.
+
+With 10.00, Tejo explodes his way onto the battlefield with guided ballistics and superior swagger. Anybody know where I can get those glasses?
+
+Anyway, Fracture and Lotus are back in the Competitive map pool, the new FLEX cosmetic is in your Collections page, Automatic Remake Voting is here, and The Esports Hub is returning soon for the new VCT season. Oh, and we fixed a few bugs.
+
+If you haven’t seen it, check out the Tejo Agent Reveal Trailer below in the patch notes. GL HF in the new year, everyone!
+</i>
+==General Updates==
+===All Platforms===
+*Starting in 2025, VALORANT will no longer be using Episodes. This year we’ll be introducing a year-long calendar called [[Seasons and Episodes|Season]] 2025.
+**Each Season will last the whole year and is broken down into 6 [[Acts]] so we can celebrate a year-long journey with you.
+**Ranks will be resetting at the beginning of Season 2025, and will also reset again at an upcoming midseason moment.
+*Gameplay logic around ability effects themed as explosions has been updated
+**[[Raze]], [[Sova]], and [[Gekko]]’s explosions should behave more consistently in how they deal damage.
+**Most notably, this should affect instances where Raze’s {{abi text|Showstopper}} (X) fails to deal damage in situations where it clips into level geometry.
+
+==Agent Updates==
+===All Platforms===
+Tejo is en route. Our newest Initiator from Colombia will be released in a staggered rollout to all regions starting at 9:00 AM PT on January 8th.
+
+===={{ai|Tejo}}====
+*{{abi text|Special Delivery}}
+**EQUIP a sticky grenade. FIRE to launch. The grenade sticks to the first surface it hits and explodes, Concussing any targets caught in the blast. ALT FIRE to launch the grenade with a single bounce instead.
+*{{abi text|Stealth Drone}}
+**EQUIP a stealth drone. FIRE to throw the drone forward, assuming direct control of its movement. FIRE again to trigger a pulse that Suppresses and Reveals enemies hit.
+*{{abi text|Guided Salvo}}
+**EQUIP an AR targeting system. FIRE to select up to two target locations on the map. ALT FIRE to launch missiles that autonomously navigate to target locations, detonating on arrival.
+**CONSOLE ONLY: EQUIP an AR targeting system. ALT FIRE to select up to two target locations on the map. FIRE to launch missiles that autonomously navigate to target locations, detonating on arrival.
+*{{abi text|Armageddon}}
+**EQUIP a tactical strike targeting map. FIRE to select the origin point of the strike. FIRE again to set the end point and launch the attack, unleashing a wave of explosions along the strike path. ALT FIRE during map targeting to cancel the origin point.
+**CONSOLE ONLY: EQUIP a tactical strike targeting map. ALT FIRE to select the origin point of the strike. FIRE to set the end point and launch the attack, unleashing a wave of explosions along the strike path. ALT FIRE during map targeting to cancel the origin point.
+
+===={{ai|Brimstone}}====
+*{{abi text|Stim Beacon}}
+**''Normal equip times are rare and usually reserved for abilities with higher counterplay needs. This is a light quality of life change for Brimstone.
+**Equip time after casting adjusted from Normal >>> Fast
+
+==Cosmetics Updates==
+===All Platforms===
+You can now access the [[Flex|FLEX]] cosmetic customization menu in Collections. Everyone will have a default FLEX, STAT-COM, added to their inventory. You can equip a FLEX by assigning them to your Spray Wheel, which from now on will be referred to as the Expressions Wheel.
+
+==Esports Features==
+===PC Only===
+*The Esports Hub is back for VCT25!
+**Check out our new overview page that provides a concise snapshot of where we are on the year long VCT journey!
+**See where everyone landed after roster-mania and get familiar with our four new guest teams!
+**Dive into the brackets for the International League Kickoff starting on January 11!
+
+==Gameplay Systems Updates==
+===All Platforms===
+*Automatic Remake Voting
+**When a player AFKs in the first round, a remake vote now automatically starts and requires only a majority vote of the remaining players to pass.
+***Example: Previously if one player was AFK, this vote required all four players to vote yes. Now it only requires three out of the remaining four players to vote yes to be successful.
+*Ping System
+**A “show map pings in world” cheat has been added to Custom game modes to support labbing lineups and practice.
+**When enabled, this cheat reverts the map pinging behavior to pre-patch 9.11 behavior.
+
+==Map Updates==
+===All Platforms===
+*Map Rotations
+**Starting with patch 10.00, maps will rotate every Act. We'll provide updates about which maps are rotating on a per-Act basis, announcing the next Act's map pool shortly after the current Act starts.
+*10.00 Map Rotation:
+**[[Fracture]] and [[Lotus]] are back IN the [[Competitive|COMPETITIVE]] and [[Deathmatch|DEATHMATCH]] queues.
+**[[Ascent]] and [[Sunset]] are OUT of the COMPETITIVE and DEATHMATCH queues.
+
+==Premier Updates==
+===PC Only===
+*Welcome to Stage V25A1!
+*Matches start on January 15
+*If your team was in the Invite Division in Stage E9A3 and did not finish the Stage in the top 16 teams, your team has been demoted. You’ll see your new Provisional Division in the Premier hub.
+*Demoted teams seeded into the zone they originally promoted from. Your Team Owner can change your team’s zone in the Team Settings dropdown anytime before your team plays a match.
+*If your team cannot be placed into a zone, your Team Owner will be prompted to select a zone.
+
+==Bug Fixes==
+*Agents
+**ALL PLATFORMS
+***Fixed a bug causing some abilities to display as the wrong team color for observers.
+**{{ai|Clove}}
+***Fixed an issue where {{abi text|Not Dead Yet}} could fail to cast when pressed in the last few frames of the activation window
+**{{ai|Skye}}
+***Fixed a bug where {{abi text|Guiding Light}}’s flash duration was not scaling properly
+***Fixed a bug where Guiding Light’s hit confirm sound and VO would not play when hitting Yoru’s {{abi text|Fakeout}} Clone
+**{{ai|Cypher}} and {{ai|Viper}}
+***Fixed an issue where shooting through Cypher’s {{abi text|Cyber Cage}} or Viper’s {{abi text|Poison Cloud}} could cheat wall penetration if they were placed too close to level geometry
+**{{ai|Phoenix}}
+***Fixed an issue where {{abi text|Blaze}} referenced a [[Harbor]] projectile asset for a few frames
+***Fixed an issue where Blaze’s visual effects could be slightly offset
+**Improved the performance around {{ai|Brimstone}}’s {{abi text|Sky Smoke}} dissipation effect
+**Fixed an issue where specific flashbang projectile visuals would stick around for Observers
+**Fixed an issue where players taking damage with [[Armor and Shield|Regen Shields]] would play hit-confirm sounds regardless of player visibility
+*Weapons
+**ALL PLATFORMS
+***Fixed a bug where if you were in Aim Down Sights (ADS), weapons would occasionally exit and re-enter ADS without any input.
+
+==Known Issues==
+*Cosmetics
+**ALL PLATFORMS
+***When in a custom game with cheats enabled, if the player changes Agents after using the Restart Game cheat, the Expressions Wheel (where you find Sprays and Flex choices) may appear blank. We’re looking to fix this in coming patches.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.00]]

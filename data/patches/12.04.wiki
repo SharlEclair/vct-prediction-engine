@@ -1,0 +1,84 @@
+{{PatchNav|previous=12.03|next=12.05}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.04.jpg
+|date    = March 3rd, 2026
+|act     = [[Season 2026: Act 1]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+'''PC only:'''
+*[[Premier]]
+|bundle  = {{collection|SilkLeaf}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-04/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.04'''.
+----
+{{Quote1|GOOD DAY everyone! Joy here, bringing you the latest with patch 12.04!
+
+It’s a short one this time, but if you need a TL;DR:
+*Quality of life updates for KJ’s Turret
+*Updates to the Progression Hub, End of Game, and Career pages
+*A handful of Agent and Map bug fixes}}
+
+==All Platforms==
+===Agent Updates===
+===={{ai|Killjoy}}====
+We are adding quality of life updates to Turret placement that match the cast paradigm of [[Sage]]’s [[Barrier Orb]]. This will help Killjoy players to angle their Turrets more precisely, without needing to position themselves at specific angles to cover the area they want. 
+*{{abi text|Turret}}
+**{{ui|Buff}} Can now be rotated while holding down ALT-FIRE. ACTIVATE now swaps Turret direction. 
+
+===={{ai|Sova}}====
+Added new [[Sova/Quotes|voicelines]] for Sova.
+
+===Bug Fixes===
+*[[Agent]]
+**{{ai|Killjoy}}
+***{{ui|Bugfix Nerf}} Fixed a bug where an enemy’s {{abi text|Nanoswarm}} could remain invisible if you moved too quickly in and out of its detection range. 
+***{{ui|Bugfix Nerf}} Fixed a bug where an enemy’s Nanoswarm could remain invisible to you after Killjoy is suppressed. 
+***{{ui|Bugfix Nerf}} Fixed a bug where an enemy’s Nanoswarm would not reveal to you if you are in an Intangible state, like during [[Yoru]]’s [[Dimensional Drift]] or [[Reyna]]’s [[Dismiss]] 
+***{{ui|Bugfix Nerf}} Fixed a bug where Nanoswarm’s disabled effects sometimes wouldn’t play when Killjoy is suppressed. 
+***{{ui|Bugfix}} Fixed a bug where {{abi text|Turret}}’s vision cone would disappear from the minimap if the player right-clicks. 
+**{{ai|Jett}} 
+***{{ui|Bugfix Buff}} Fixed a bug where {{abi text|Drift}}’s passive gliding SFX was audible from the other side of [[Astra]]’s [[Cosmic Divide]]. 
+**{{ai|Harbor}}
+***{{ui|Bugfix}} Fixed a bug where {{abi text|Storm Surge}} could briefly persist into the next round when cast right before a round ends. 
+**{{ai|Fade}}
+***{{ui|Bugfix}} Fixed a bug where {{abi text|Nightfall}}’s minimap indicator was slightly smaller than the actual ability. 
+**{{ai|Chamber}}
+***{{ui|Bugfix}} Fixed a bug where {{abi text|Trademark}} would play its reactivation SFX twice if Chamber had Suppress expiring on him. 
+**{{ai|Skye}}
+***{{ui|Bugfix}} Fixed an observer bug where {{abi text|Seekers}} would not show on the minimap when Skye is an attacker. 
+*[[Battle Pass]]
+**Fixed an issue where hitting ESC will cause the Battlepass elements to disappear/reappear instead of taking you back a page. 
+*[[Maps]]
+**[[Breeze]]
+***{{ui|Bugfix Buff}} Various collision improvements to allow [[Vyse]]’s [[Arc Rose]] and [[Cypher]]’s [[Spycam]] to be placed on the walls. 
+***{{ui|Bugfix}} Fixed multiple minor art bugs around the map. 
+**General Updates
+***{{ui|Bugfix}} Minor adjustments to the geometry in a few high traffic gameplay spots to eliminate unintended gaps on the map. 
+*[[Store]]
+**Fixed an issue where the background for the accessories store was missing. 
+**Fixed an issue where the {{collection|Reaver}} [[Bandit]] shows up incorrectly as a limited edition item
+
+===Known Issues===
+*Battle Pass
+**The scroll wheel currently will not work when navigating between the tiers on the battlepass or event pass. This will be fixed in patch 12.05. 
+*Performance 
+**Since the release of patch 12.03, some players have been experiencing significant stuttering. We have deployed a hotfix that partially fixes the stutters and are working on a more robust fix for Patch 12.04.
+
+==PC Only==
+===General Updates===
+*The End of Game and Career screens have been revamped 
+**The Progression, Summary, and Timeline tabs now have an updated layout. 
+**After Competitive matches, a new Rank summary screen displays details about your RR gains or losses. 
+**The Career and Friends’ Career pages have been updated with a new UI.
+
+===Premier Updates===
+*Take a breather and get your team ready –- the next [[Premier]] Stage starts at the beginning of Act 2 in 12.05! 
+**{{ui|Adjustment}} Stage V26A2 will run for six weeks of matches instead of the usual seven 
+**Teams with a Premier Score of at least 500 qualify for Playoffs on April 16 
+**Matches start on Wednesday, March 18, so make sure your team is ready to go! 
+
+===Progression Updates===
+*Replaced the Battlepass tab in the top navigation bar with a Progression tab. Clicking in will bring you to a Progression Hub, which provides an at-a-glance view of your overall progression. This can include the Battlepass, weekly missions, active event passes and other progress opportunities as relevant.
+[[Category:Patch Notes]]

@@ -1,0 +1,43 @@
+{{PatchNav|previous=10.01|next=10.03}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.02.jpg
+|date    = February 4th, 2025
+|act     = [[Season 2025: Act 1]]
+|changes = '''All Platforms:'''
+*''Minor patch
+|bundle  = {{collection|VCT 2025 Season}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-02/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.02.
+
+<i>Hi there, it’s Ash! Hope everyone’s competitive grind is going strong since the [[Competitive#Rank Rating (RR)|Rank Shields]] were released.
+
+Small patch this time but with important bug fixes, of course!</i>
+
+==All Platforms==
+===Bug Fixes===
+*'''General
+**Fixed an issue where certain types of damage could leave players with Regen Shields at 1 HP when the damage should have been lethal.
+***This also fixed issues where {{ai|Clove}} could tank lethal damage specifically when [[Armor and Shield|Regen Shield]] and {{abi text|Pick-me-up}} were active at the same time.
+*'''[[Agents]]
+**{{ai|Vyse}}
+***Fixed an issue where {{abi text|Arc Rose}} and {{abi text|Razorvine}} were visible when placed on specific water surfaces.
+**{{ai|Tejo}}
+***Fixed an issue where players could rarely survive running straight through the full duration of {{abi text|Armageddon}}.
+**{{ai|Killjoy}}
+***Fixed an issue where Killjoy’s recall minimap indicator could get stuck in a state where it was invisible.
+***{{abi text|Alarmbot}} logic has been updated to be more intelligent.
+****In niche circumstances, the Alarmbot will now path towards players if they are on ledges and explode on them if they would be hit by the size of the explosion rather than trying to run extremely long paths around the map.
+*'''Gameplay Systems
+**Fixed a bug where Observers were seeing inconsistent player team outline colors.
+
+==PC Only==
+===Bug Fixes===
+*'''[[Premier]]
+**Fixed an issue where long team names could overlap each other on the playoff bracket screen.
+**Fixed an issue where dropdowns on the standings sometimes cut off text.
+**Fixed an issue where the division name text was not always correctly aligned on the match history screen.
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.02]]

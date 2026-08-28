@@ -1,0 +1,129 @@
+{{PatchNav|previous=8.11|next=9.01}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 0.jpg
+|date    = June 25th, 2024
+|act     = [[Episode 09: COLLISION: Act 1|EP 09 Act 1]]
+|changes = '''All Platforms:'''
+*[[Agents]] (including PC-only and Console-only changes)
+'''PC-only:'''
+*[[Premier]]
+|bundle  = {{collection|Evori Dreamwings}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-0/ Patch Notes]
+}}
+
+The following is a list with all the changes made in patch v9.0.
+
+<i>Hey, friends. Jo-Ellen, here. 
+
+Say hello to Episode 9 and its very first patch. There's a lot.
+
+You'll see an update to Iso's Double Tap as well as Abyss entering Ranked on PC.</i>
+
+==Agent Updates==
+===All Platforms===
+*We've added new conversation voice lines between Agents that includes: [[Phoenix/Quotes|Phoenix]], [[Harbor/Quotes|Harbor]], [[Brimstone/Quotes|Brimstone]], [[Yoru/Quotes|Yoru]], [[Raze/Quotes|Raze]], [[Iso/Quotes|Iso]], [[Sage/Quotes|Sage]], [[Neon/Quotes|Neon]], [[Gekko/Quotes|Gekko]], [[Skye/Quotes|Skye]], [[Deadlock/Quotes|Deadlock]], [[Omen/Quotes|Omen]], [[KAYO/Quotes|KAY/O]], and [[Reyna/Quotes|Reyna]].
+
+===PC===
+===={{ai|Iso}}====
+We're happy that Iso has been more comfortable entry-ing towards the front of his team but want to increase thoughtfulness and context around when Iso activates his Double Tap. This should make the counterplay around breaking his shield or denying the Double Tap orbs more successful.
+
+So we're decreasing the duration of his Double Tap buff while also removing the refresh that comes with securing two kills. Iso can now only extend Double Tap by shooting the orbs that spawn while the buff is active.
+
+*{{abi text|Double Tap}} (E): 
+**Duration: 20s >>> 12s 
+**Signature kill reset removed 
+
+===Console=== 
+*{{ai|Sova}}'s {{abi text|Owl Drone}}'s HP is now 100, up from 60.
+
+==[[Competitive]] Updates==
+===PC===
+*[[Abyss]] added to the Ranked map pool.
+
+===Console===
+*Competitive Mode is coming to Console this patch! Queue up and see if you can climb the ranks and make it onto the Immortal Leaderboards. Good luck on your first race to Radiant!
+*Our Competitive Mode map pool will start with Abyss, [[Ascent]], [[Bind]], [[Haven]], and [[Sunset]] with new maps slowly being added in the next few patches.
+
+==Gameplay Systems Updates==
+===Console===
+*Added a new "Controls Preset" selection screen upon first boot-up prior to loading into the tutorial 
+**You can now choose between our VALORANT-specific controls preset or a more familiar, TRADITIONAL console FPS preset as your starting controls scheme. 
+**You can easily change your preset and customize controls at any point once in-game through the Settings menu.
+*Polished sound transitions between Focus and ADS to better reflect the aim state you're transitioning into.
+*Crosshair presets have been updated to reflect a better variety of usable crosshairs.
+*Updated the Fighter controls preset so that Crouch is a Hold action instead of a Toggle action.
+*Added holistic Aim Sensitivity slider.
+*Added the ability to enter precision mode while in controls settings to adjust sensitivity sliders by .1 increments.
+
+==Player Behavior Updates==
+===PC=== 
+*In addition to removing zero tolerance terms from text chat, people who repeatedly engage in this behavior will see increased penalties on their transgressions.
+
+==[[Premier]] Updates==
+===PC=== 
+'''Welcome to the Path to Pro! 
+*Teams in Contender that earned a promotion in Stage E8A3 are in the new Invite Division, where finishing the Stage at a high enough rank will earn you an opportunity to make it into a Challengers League.
+*Contender and Invite Divisions play a little differently:
+**Strict rematch protection in weekly matches prevents you from ever matching against the same team more than once in a Stage.
+**If we can't find you an appropriate match during the queue window, you'll be given a Bye. Byes award a match win and 100 points.
+**Losses award 0 points.
+**Finals in playoffs are Best of 3 matchups.
+**There are some extra roster restrictions for Contender and Invite Division teams.
+*For all the details on new rules in Contender and Invite, check out our [https://playvalorant.com/en-sg/news/game-updates/everything-you-need-to-know-about-premier/ updated Everything You Need to Know About Premier article.]
+
+==Social Updates==
+===PC=== 
+*When you add a friend, you can now paste or type a full Riot ID (including tagline) into the "Riot ID" field and it will automatically split the data into the "Riot ID" and "tagline" fields.
+
+===Console=== 
+*We've updated the communications menu so it's easier to manage team and party voice on the fly.
+*We've added Voice Chat to the Settings page. Now you can tailor your mic behavior and voice settings to suit your setup.
+
+==Bug Fixes==
+===Agent===
+====PC====
+*Fixed an issue where {{ai|Iso}}'s [[Double Tap|shield]] hitbox could be misaligned.
+
+====Console==== 
+*Fixed an issue with {{ai|Jett}}'s {{abi text|Tailwind}}
+
+===Competitive Systems===
+====Console====
+*Fixed an issue in [[Team Deathmatch]] where you would incorrectly see DRAW as a final result in EOG screens
+*Added specific scoreboard screens for Team Deathmatch and [[Deathmatch]] (diagonal dash) that was reducing the dash length.
+
+===Gameplay Systems===
+====All platforms====
+*Fixed a particle issue when using ADS on the Level 3 and 4 [[Mystbloom Collection]].
+*Fixed an issue when exiting {{ai|Cypher}}'s {{abi text|Spycam}} that caused Cypher's hands to stutter for Spectators.
+
+====Console====
+*Fixed issue where both Focus and ADS sounds would play during transitions.
+*Fixed Leave Game menu persisting through AFK idling.
+*Fixed animation bug with Leave Game Menu.
+
+===[[Maps]]===
+*[[Abyss]]
+**Fixed several unintended boost positions.
+**Fixed bugs allowing players to get under the map.
+**A Site cover should now properly appear in Omen and Astra smoke targeting world.
+***Fixed an Omen exploit allowing him to get between the spawn barriers. 
+
+===Social===
+====Console==== 
+*Fixed an issue where the friends list would sometimes display inaccurate platform information for friends.
+
+==Known Issues==
+===General===
+====Console====
+*When navigating Surrender menus, there's a chance your controls can become locked for an entire round. Due to this, we've elected to disable the Surrender and Remake menus until we can properly fix the issue. Draw will remain functional.
+
+===Premier=== 
+====PC==== 
+*When changing the Stage in the dropdown on the standings page, the content doesn't refresh. To see accurate standings for past Stages, change the Stage, then change division or zone and the content will update.
+*The standings page sometimes fails to update, and you may see fewer teams than expected. Click on another tab in the Premier Hub and then return to standings to fix the issue.
+*If you are in Contender or Invite and are awarded a Bye during Weekly matches, you will not see that match recorded in their Premier Match History tab. You will be awarded a win and 100 Premier Score as expected, and that is reflected correctly on the standings.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.0]]

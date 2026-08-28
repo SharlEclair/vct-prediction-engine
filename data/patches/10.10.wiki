@@ -1,0 +1,95 @@
+{{PatchNav|previous=10.09|next=10.11}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.10.jpg
+|date    = May 28th, 2025
+|act     = [[Season 2025: Act 3]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Cosmetics]]
+*[[Competitive]]
+*[[Game Modes]] ({{patchv|10.09}})
+|bundle  = {{collection|5 Years Beta Remastered|5 Years // Beta Remastered}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-10-10/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.10.
+
+<i>Hey folks! Ash here with the next round of patch notes.
+
+First and foremost, we have some upcoming changes to the client throughout the year, starting with the [[Collection]] for patch 10.10. Our goal is to unify the player interfaces for PC and console which means we can reduce the time spent supporting them separately and focus on delivering cool new things more quickly. Sometimes you’ll see nice QOL changes, and other times you might think they’re negligible–either way, it’ll be better for everyone in the long run!
+
+Separately, we updated [[Raze]]’s explosion VFX to her [[Boom Bot]] and [[Paint Shells]] and for [[Tejo]], his ult, [[Armageddon]], will start at 3 points instead of 2 in [[Swiftplay]] (this was already live in patch {{patch|10.09}} but we missed it in patch notes)!
+
+Other hot news: for players under [[Competitive|Radiant]], we increased the cap of refunded RR you can receive within an Act. [[Icebox]] is still disabled for [[Deathmatch]] & [[Escalation]] to address issues.
+
+Okay enough chit-chat, hop on.</i>
+
+==All Platforms==
+===Agent Updates===
+===={{ai|Raze}}====
+*{{ui|Adjustment}} Raze’s explosion VFX has been updated to more accurately indicate hitboxes for her {{abi text|Boom Bot}} and {{abi text|Paint Shells}}. Additionally, the visual effects will exist in world for a shorter period of time for more gameplay clarity.
+
+===Client Updates===
+====[[Collection]] updates====
+To help streamline development between the PC and console versions of VALORANT, we’ll be making some changes to the player interfaces to create a more consistent experience across platforms. Unifying these systems means we can reduce the time spent supporting them separately and work toward delivering new features more quickly. The changes will vary in scope, and some may seem insignificant, but they will save us time and energy in the long run. To kick things off, we’re making some early changes to the Collection landing page:
+*Console changes:
+**{{ui|Removed}} Page for navigating to specific content types removed
+**{{ui|Adjustment}} All content types (including Player Card and Sprays/Flex) now available on the Collection page, matching PC layout
+**{{ui|Adjustment}} Gamepad navigation system for the Collection page improved
+*PC changes:
+**{{ui|Removed}} Level + Chroma indicators in weapon tiles removed
+**{{ui|Adjustment}} Minor layout updates
+
+===[[Competitive]] Updates===
+*Rank Rollback Adjustments:
+**{{ui|Buff}} For players below Radiant, we increased the cap of refunded RR you can receive within an Act. We are continuing to monitor edge cases around experiences with refunds.
+
+===Mode Updates===
+*[[Swiftplay]]
+**{{ai|Tejo}}
+***{{ui|Buff}} {{abi text|Armageddon}} starting points 2 >>> 3
+****This change was already live in {{patch|10.09}} but missed in our patch notes. Ultimates at 9 points in the future will be automatically updated to scale.
+*{{ui|Removed}} [[Icebox]] will remain disabled in Deathmatch and Escalation game modes while we address spawn-related issues that emerged in patch 10.09.
+
+===Bug Fixes===
+*{{ai|Omen}}
+**{{ui|Bugfix Nerf}} Reverted a bugfix that was released in {{patch|10.07}}, which should fix the issue where dead allies spectating Omen could see through [[nearsight]]s (most notably [[Viper's Pit|Viper’s ult]]) if Omen is using {{abi text|Dark Cover}}
+***{{ui|Bugfix Nerf}} Reintroduced (and still investigating) the issue where Omen could not see properly when casting Dark Cover if he was overlapping another dense smoke (smokes that obscure vision inside, e.g. Jett Cloudburst, Brimstone Sky Smoke, etc.).
+***''Wiki editor note: Official note states 10.08, but is in 10.07 notes instead.
+*{{ai|Vyse}}
+**{{ui|Bugfix Buff}} Fixed an issue where Vyse’s {{abi text|Arc Rose}} hit confirm would play when affecting non-players 
+**{{ui|Bugfix Buff}} Fixed an issue where Vyse could no longer use Arc Rose for the remainder of the round if it was placed too close to the spike
+*{{ai|Deadlock}}
+**{{ui|Bugfix Buff}} Fixed a bug where jumping could inconsistently dodge Deadlock’s [[GravNet|net]] toss despite players being inside the affected area
+*{{ai|Tejo}}
+**{{ui|Bugfix Buff}} Fixed an issue where [[Nova Pulse|Astra’s concuss]] always affected Tejo’s {{abi text|Stealth Drone}} as long as the drone had line of sight to the concuss 
+**{{ui|Bugfix Buff}} Fixed an issue where Tejo’s [[Guided Salvo|rockets]] could get hindered by [[Waylay]]’s [[Saturate]] and [[Convergent Paths]]
+*{{ai|Yoru}}
+**{{ui|Bugfix}} Fixed an issue where [[Blindside|Yoru’s flash]] visual decals would linger on walls they bounced off of 
+*{{ai|Brimstone}}
+**{{ui|Bugfix}} Fixed an issue where [[Orbital Strike|Brimstone’s ultimate]] visuals drew underneath the map
+
+===Known Issues===
+*[[Icebox]] will remain disabled in Deathmatch and Escalation game modes while we address spawn-related issues that emerged in patch 10.09.
+
+==PC Only==
+===Esports Features===
+*Pick’Ems return in style for Masters Toronto! Starting on May 28th, you will be able to make your picks for the Swiss Stage in-client and on the web.
+*For Swiss stage, you will be tasked with trying to predict who will advance from the 8 Team Swiss Groups. For extra bonus points, try to predict a team who will make it out flawlessly with a 2-0.
+*Earn an exclusive title just for playing, but snag extra prizes for finishing in the Top 50% and Top 20% of all players. 
+*See how you stack up against other experts and creators on the VAL Community Leaderboard 
+*Finally, prepare for the Playoffs Stage where you’ll fill out the full double elimination bracket, earning more points for correct teams in the later rounds!
+
+==Console Only==
+===General Updates===
+*{{ui|Added}} Added a description for Fast Melee Equip in Settings > Controls > Advanced
+
+===Gameplay Systems Updates===
+We've been collecting your feedback around settings customization since releasing VALORANT on Console and one area of focused feedback surrounded a desire to push movement settings to their extremes.
+*Walk / Run Threshold in Settings > Controls > Movement updated to allow for a wider range. This has actually been in since 10.09.
+**Min value 0.5 > 0.001 
+*Movement Deadzone in Settings > Controls > Movement updated to allow for a wider range. This has actually been in since 10.09
+**Max value 0.5 > 1.0
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.10]]

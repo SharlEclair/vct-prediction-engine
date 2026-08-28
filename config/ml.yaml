@@ -1,0 +1,19 @@
+version: "10.0.0"
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  features_dir: "data/features"
+  reports_dir: "data/reports"
+
+split:
+  train_cutoff: "2025-12-31"
+  val_cutoff: "2026-04-30"
+
+training:
+  random_seed: 42
+  optuna_trials: 20
+  models:
+    - "logistic_regression"
+    - "lightgbm"
+    - "xgboost"

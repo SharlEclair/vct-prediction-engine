@@ -1,0 +1,29 @@
+# Python & Caches
+venv/
+env/
+.conda/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.gemini/
+
+# Project Specific
+*.cbm
+catboost_info/
+scratch/
+*.log
+.ipynb_checkpoints/
+
+# Data Directories (Exclude everything inside)
+data/raw/
+data/processed/
+vct_match_ids.json

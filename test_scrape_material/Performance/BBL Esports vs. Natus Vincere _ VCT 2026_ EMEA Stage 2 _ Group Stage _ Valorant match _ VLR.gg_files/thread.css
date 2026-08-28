@@ -1,0 +1,12 @@
+.col.mod-1 {
+  flex: 0 0 190px;
+  margin-right: 22px;
+  order: 1; }
+
+.col.mod-2 {
+  flex: 0 0 190px;
+  margin-left: 22px;
+  order: 3; }
+
+.col.mod-3 {
+  order: 2; }

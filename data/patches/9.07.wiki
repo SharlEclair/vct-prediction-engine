@@ -1,0 +1,97 @@
+{{PatchNav|previous=9.06|next=9.08}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 07.jpg
+|date    = October 8th, 2024
+|act     = [[Episode 09: COLLISION: Act 2|EP 09 Act 2]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*Progression
+'''PC-only:'''
+*[[Premier]]
+'''Console-only:'''
+*[[Competitive]]
+|bundle  = {{collection|Troublemaker}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-07/ Patch Notes]
+}}
+
+The following is a list with all the changes made in patch v9.07.
+
+<i>Hi folks! It’s Ashley and I’m back to talk about Patch 9.07.
+
+We’ve made a few updates to Astra’s Cosmic Divide and Cypher’s Spycam, fixed various bugs, and added new text and visual descriptions for Aim Curve settings options to Console.
+
+Good luck in your comp games and I’ll see you next time!</i>
+
+==All Platforms==
+===Agent Updates===
+*Agent ability projectiles, walls, and AOEs have been updated to have more consistent audio presentation when clipping/passing through {{ai|Astra}}'s {{abi text|Cosmic Divide}}
+*Placeable abilities like Cypher’s Spycam can no longer be placed in the space above a rising {{ai|Sage}} {{abi text|Barrier Orb}}
+
+===Progression Updates===
+*[[Basic Training Event]] Milestone 3 objectives have been changed.
+**Before:
+***PRACTICE: Practice in The Range
+***PRACTICE: Complete a Shooting Test
+**After:
+***STRATEGY: Defuse 5 Spikes as a Team
+***STRATEGY: Plant 5 Spikes as a Team
+**Rewards & [[XP]] gain amount unchanged
+
+===Bug Fixes===
+====[[Agents]]====
+*{{ai|Neon}}
+**Fixed a bug where Neon utilizing backwards [[High Gear|slide]] inputs could slide while standing
+====[[Maps]]====
+*[[Abyss]]
+**The wall collision has been updated to prevent Agents from accessing an out of bounds area on top of A Site.
+**The Spawn Barriers have been updated to prevent Cypher’s Cyber Cage from landing on top of the barrier.
+*[[Bind]]
+**{{ai|Vyse}}’s {{abi text|Arc Rose}} ability can no longer flash through foliage in Attacker Side Cave.
+*[[Lotus]]
+**Fixed a bug where you can avoid taking damage by standing behind the hanging foliage on A Site.
+*[[Pearl]], [[Fracture]]
+**Fixed a bug where Ground effects from Agent abilities would not appear on glass floors.
+*[[Team Deathmatch#Maps|Piazza]]
+**Wall mounted Agent abilities can now be placed on the Crown Coffee building.
+
+==PC==
+===Premier Updates===
+*We’ve updated Best of 1 playoff brackets and match history with a new visual style!
+*In Contender and Invite divisions, match history now groups games in a Best of 3 matchup together under one heading.
+
+===Bug Fixes===
+====Competitive Updates====
+*Fixed an issue where Match History would show duplicate modes in the filter dropdown.
+
+====Premier Updates====
+*Fixed an issue in Contender and Invite divisions where your team’s rank on your roster list would incorrectly display as 275 until you played a match.
+*Fixed an issue where the schedule had overlapping text in some languages.
+
+====Social Updates====
+*Fixed an issue with the Block Player feature where you could block players while in match and bypass the Hide My Riot ID Setting.
+
+====Known Issues====
+=====Premier Updates=====
+*Best of 1 playoff matchups incorrectly display Best of 3 as their match type in Premier match history.
+
+==Console==
+===General Updates===
+*Added new text and visual descriptions for "aim curve" settings options.
+*Combined similar Smooth and Standard aim curves - if you had the Smooth curve selected, you will now have the Standard curve instead.
+
+===Competitive Updates===
+*You can now enable and disable your previous act rank triangle in the Act Rank page.
+
+===Bug Fixes===
+====Competitive Updates====
+*Fixed an issue where the MVP screen was displayed after a Deathmatch game.
+*Fixed a visual issue where players would sometimes see an incorrect rank when joining a party queued up for Competitive.
+*Fixed an issue you would see the option to enable and disable your own act rank when viewing a friend’s career
+
+====Known Issues====
+=====Player Behavior Updates=====
+*When you report and select to also mute that player, sometimes the player remains unmuted until you try to mute again.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.07]]

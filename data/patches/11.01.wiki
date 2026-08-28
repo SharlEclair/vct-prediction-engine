@@ -1,0 +1,20 @@
+{{PatchNav|previous=11.00|next=11.02}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 11.01.jpg
+|date    = July 14th, 2025
+|act     = [[Season 2025: Act 4]]
+|changes = ''No changes; no patch update.''
+|bundle  = ''See {{patchv|11.00}}.''
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-01/ Patch Notes]
+}}
+
+Patch v11.01 is a supposedly skipped patch number and there are no changes. Instead, it is an announcement for ''VALORANT'''s upcoming engine upgrade scheduled for patch v11.02 and hence no patch update is available for this "patch". 
+
+<i>Hey, all. Kenny, here.
+
+Yes, today is when we’d normally put out a new patch. But in order to prepare for the upcoming {{w|Unreal Engine 5|UE5}} upgrade, we’re skipping Patch 11.01 and making any changes scheduled for this patch with 11.02, coming July 29. Just wanted to let you all know.
+
+Soooo, that’s it. Those are the “patch notes.” See you in a couple weeks!</i>
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/11.01]]

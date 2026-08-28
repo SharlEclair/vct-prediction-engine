@@ -1,0 +1,92 @@
+{{PatchNav|previous=12.02|next=12.04}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.03.jpg
+|date    = February 18th, 2026
+|act     = [[Season 2026: Act 1]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Game Modes]]
+*[[Competitive]]
+*[[Pick'Ems]]
+|bundle  = *{{capsule|Hatchbudz: Quacked Series}}
+*{{capsule|VCT 2026 Season}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-03/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.03'''. The patch notes were announced on February 17th 2026, but the patch itself was delayed by a day due to a holiday in United States.
+----
+{{Quote1|HELLO everyone! It’s Joy, bringing you the latest with patch 12.03.
+
+This is a short one, but if you need a TL;DR:
+*Skirmish arrives as a queuable 2v2 mode
+*Pick’Ems are ready for Masters Santiago!
+*MFA is rolling out in APAC 
+*We’ve changed up Loadouts in All Random One Site}}
+
+==All Platforms==
+===Agent Updates===
+====General====
+Added new voice lines for {{ai|Viper}}, including conversation lines with {{ai|Omen}} and {{ai|Vyse}}
+
+===={{ai|Gekko}}====
+Since patch 11.08, we’ve heard the feedback that Gekko has felt substantially weaker in comparison to other Initiators with less of an opportunity to play around his Reclaim. These changes aim to unify the ruleset for how all of Gekko’s abilities work, give him more flexibility in reclaiming his Globules, and provide a slight power buff overall.
+*[[Globules]]
+**{{ui|Buff}} Reclaim timer increased 15s >> 20s 
+*{{abi text|Mosh Pit}}
+**{{ui|Added}} Is now reclaimable
+
+===General Updates===
+*Audio occlusion now responds to map doorways being opened, closed, or destroyed. 
+*When watching [[Replays]], you now have a setting to skip spectating dead players.
+
+===Competitive Updates===
+*In APAC, accounts flagged for sharing and all Ascendant+ players must enable Riot Mobile multi-factor authentication (MFA) to access [[Competitive]] queue. Other modes remain unaffected. 
+*You can check out [https://playvalorant.com/en-us/news/game-updates/riot-mobile-verification-beta/ this article] for more information on why we're making this change, or get yourself set up with MFA now using [https://support-valorant.riotgames.com/hc/en-us/articles/4415709691667-Multi-Factor-Authentication-How-to-FAQ this how-to guide].
+
+===Esports Features===
+*Masters Santiago [[Pick'Ems]] 
+**Pick'Ems return in style for Masters Santiago! Starting February 19 (PT), you can make your picks for the Swiss Stage in-client and on the web. 
+**For the Swiss Stage, you’ll be tasked with trying to predict who will advance from the 8-Team Swiss Groups. For extra bonus points, try to predict a team who will make it out flawlessly with a 2-0 record. 
+**Earn an exclusive title just for playing, but win additional prizes depending on how you fare against other players.
+*VCT Player Stats 
+**Player stats are now available on the Esports Hub Teams page. Take a look and see how you compare. 
+
+===Modes Updates===
+====[[Skirmish]]: 2v2====
+*{{ui|Added}} NEW LIMITED TIME [[Game Modes|MODE]] 
+**Skirmish comes to matchmaking as a 2v2 queue for a limited time. Compact maps, no abilities—gunplay only. Grab a partner and put your mechanics to the test. 
+***Mode Details 
+****2v2 Matchmaking Queue 
+*****Solo queue or bring a partner 
+***First to 10 rounds wins 
+***Gameplay 
+****Abilities disabled 
+****Full weapon selection each round (no economy) 
+****No agent select–hop in and go next fast 
+***Available Maps 
+****Skirmish A, Skirmish B, Skirmish C
+****Map randomly selected each match
+
+====[[All Random One Site]]====
+*Loadouts 
+**{{ui|Adjustment}} We've taken a pass on Stages and Loadouts. All Random One Site is chaotic by design, but your loadout should still give you some agency. We've added weapons to a few stages and buffed some of the more niche options—hop in and see what's new. 
+
+===Bug Fixes===
+*Modes 
+**All Random One Site 
+***{{ui|Bugfix Nerf}} Fixed an issue where {{ai|Vyse}} could continuously place infinite {{abi text|Razorvine}}s during Buy phase. 
+
+===Known Issues===
+*[[Battle Pass]] 
+**Hitting ESC will cause the Battlepass elements to disappear/reappear instead of taking you back a page. This will be resolved in patch 12.04. 
+**Scroll wheel currently will not work when navigating between the tiers on the battlepass or event pass. This will be fixed soon.
+*[[Store]] 
+**The background for the accessories store is currently missing. This will be resolved in patch 12.04. 
+**The {{collection|Reaver}} [[Bandit]] is showing up incorrectly as a limited edition item. This is not limited edition and will be resolved in patch 12.04.
+
+==PC Only==
+===Progression Updates===
+*Refreshed Event Pass & Battlepass 
+**Updated layout and button visuals. You can navigate through tiers using mouse or arrow keys.
+ 
+[[Category:Patch Notes]]

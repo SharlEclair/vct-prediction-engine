@@ -1,0 +1,118 @@
+{{PatchNav|previous=12.08|next=12.10}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.09.jpg
+|date    = May 12th, 2026
+|act     = [[Season 2026: Act 3]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Weapons]] (including PC-only changes)
+|bundle  = *{{capsule|Duo's Day // Duckling Duo}}
+*{{capsule|Duo's Day // Odd Egg}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-09/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.09'''.
+----
+
+{{Quote1|HELLO ALL! Drum roll please…🥁🥁🥁 it’s the moment you’ve been waiting for. Neon and shotgun nerfs have arrived. We’re making changes to her mobility in the air and giving her a greater resource tradeoff on High Gear. We’ve also made all shotguns less accurate while moving and shooting. Read on below for more!}}
+==All Platforms==
+===Agent Updates===
+===={{ai|Neon}}====
+Neon has been on our radar for a while now, and we’ve been working through changes to address the amount of impact she can have in games. This is related to a more complex pacing and strategy problem with multiple elements to solve (strong Duelists and shotguns, weak Sentinels, higher Initiator signature cooldowns), but for the time being we are going to release Neon and shotgun changes first to more quickly correct the balance of combat. 
+
+Her current role in breaking timings and creating pressure is correct, but her movement and evasiveness are pushing too far into combat space. We want to encourage Neon players to be intentional and make more meaningful decisions while playing her, so we’re making changes to her mobility in the air and giving her a greater resource tradeoff on High Gear. This should also allow opponents to have more opportunities for counterplay, as well as shave some additionally generously-tuned snowballing potential. 
+
+For a deeper dive on all the upcoming changes and why, you can read more about it [https://x.com/penguinVALORANT/status/2052441871889371353 here].
+
+*{{abi text|High Gear}}
+**{{ui|Nerf}} Jumping with High Gear active no longer provides any speed bonus while Neon is airborne. Instead, Neon’s air speed while sprinting will match [[melee]] speed.
+**{{ui|Adjustment}} Improved VFX to more clearly communicate the direction and origin of her slide
+*[[Passive Effects#Energy|Energy]]
+**{{ui|Nerf}} Fuel will only regenerate with a kill when Neon's ultimate is active
+***Fuel will still regenerate passively
+
+===Competitive Updates===
+*We’re testing MMR changes for modes other than [[Competitive]], [[Unrated]], and [[Swiftplay]]. These changes should result in better, more consistent matches. We’ll use what we learn to improve Competitive, Unrated, and Swiftplay in the future.
+
+===Bug Fixes===
+*[[Agents]]
+**{{ai|Chamber}}
+***{{ui|Bugfix Buff}} Fixed a bug where ADS-ing while firing Chamber’s {{abi text|Headhunter}} created an animation that covers too much of the screen
+**{{ai|Jett}}
+***{{ui|Bugfix}} Fixed a visual bug where Jett's {{abi text|Tailwind}} was not playing the intended first-person animations when left-handed setting is enabled
+***{{ui|Bugfix}} Fixed a bug where using Jett's {{abi text|Drift}} caused performance drops ''(wiki editor note: notes say "Glide", but no such ability exists for Jett, so it is assumed to be Drift based on its description of changes.)''
+**{{ai|Miks}}
+***{{ui|Bugfix}} Updated tooltip description of {{abi text|Harmonize}}.
+***{{ui|Bugfix Buff}} Fixed bug where the preview cone for [[Bassquake|his ultimate]] would not show unless the ability was fully equipped
+**{{ai|Sage}}
+***{{ui|Bugfix Buff}} Fixed an issue where a full health Sage could use {{abi text|Healing Orb}} on herself while affected by Decay, because she is not actually losing any health. This would consume the ability needlessly, since her health returns to normal once Decay wears off.
+**{{ai|Tejo}}
+***{{ui|Bugfix}} Fixed issue where the {{abi text|Guided Salvo}}’s equip idle sound kept playing long after cast.
+**{{ai|Viper}}
+***{{ui|Bugfix Buff}} Fixed a bug where [[Sova]]'s [[Recon Bolt]] and [[Chamber]]'s [[Trademark]] were not affected by nearsightedness in {{abi text|Viper's Pit}}
+**{{ai|Vyse}}
+***{{ui|Bugfix Buff}} Fixed a bug where possessable drones ([[Sova]]'s [[Owl Drone]], [[Skye]]'s [[Trailblazer]], [[Tejo]]'s [[Stealth Drone]]) would trigger the arming audio of Vyse's [[Shear|wall]]
+
+===Player Behavior Updates===
+We've improved our Riot Text Evaluation system to better detect and apply penalties for text comms abuse in the following languages: Arabic, German, English, Spanish, French, Italian, Japanese, Polish, Portuguese, Russian, Turkish, Chinese.
+
+===Weapon Updates===
+Alongside the Neon changes above, we are also changing the effectiveness of shotguns when moving and jumping to encourage players to use them defensively. Shotguns are intended to be most effective for holding tight angles and clearing close range spaces, but right now they’re a bit too effective in high-mobility situations. To reinforce their ideal usage, we are reducing shotgun accuracy while moving. This should make them more impactful when used deliberately and defensively, versus being aggressive on the move.
+
+====All shotguns====
+*All shotguns are now less accurate when moving
+**Run, walk, crouch-walk, and jump accuracy has been standardized across all shotguns
+**Crouching now provides a 15% accuracy multiplier for shotguns, matching rifles
+***Bucky: crouch accuracy modifier increased from 10 >>> 15%
+***Judge/Shorty: crouch accuracy modifier decreased from 25 >>> 15%
+**Shotgun accuracy reduced while on a rope
+***{{ui|Nerf}} Stationary: Accuracy multiplier decreased from .075 >>> .75
+***{{ui|Nerf}} Walking: Accuracy multiplier decreased from .09 >>> 1.5
+***{{ui|Nerf}} Running: Accuracy multiplier decreased from .1 >>> 3.0
+
+===={{wi|Bucky}} [[Bucky]]====
+*Bucky pellet damage in the 0-8m range decreased
+**{{ui|Nerf}} Head 40 >>> 34
+**{{ui|Nerf}} Body 20 >>> 17
+**{{ui|Nerf}} Legs 17 >>> 14
+*{{ui|Nerf}} Minimum spread increased from 2.6 >>> 3.0
+*{{ui|Nerf}} Walking spread increased from 0.075 >>> 1
+*{{ui|Nerf}} Running spread increased from .1 >>> 2
+*{{ui|Nerf}} Crouch-walk spread increased from .05 >>> .5
+*{{ui|Nerf}} Jump spread increased from 1.25 >>> 4
+
+===={{wi|Judge}} [[Judge]]====
+*{{ui|Nerf}} Minimum spread increased from 2.25 >>> 2.5
+**Note: this will only apply to PC for now- this spread change will apply to console in Patch 12.11
+*{{ui|Nerf}} Walking spread increased from .075 >>> 1
+*{{ui|Nerf}} Running spread increased from 0.75 >>> 2
+*{{ui|Nerf}} Crouch-walk spread increased from .05 >>> .5
+*{{ui|Nerf}} Jump spread increased from 2.25 >>> 4
+
+===={{wi|Shorty}} [[Shorty]]====
+*{{ui|Nerf}} Fire rate decreased from 3.33 >>> 3.0
+*{{ui|Nerf}} Walking spread increased from .075 >>> 1
+*{{ui|Nerf}} Running spread increased from 0.1 >>> 2
+*{{ui|Nerf}} Crouch-walk spread increased from .05 >>> .5
+*{{ui|Nerf}} Jump spread increased from 1.25 >>> 4
+
+==PC Only==
+===Performance Updates===
+*Added support for AMD Anti-Lag 2, which reduces input latency in certain GPU-bound scenarios. In order to use AMD Anti-Lag 2, you need compatible hardware, with updated drivers from March 9th, 2026 or later.
+
+===Bug Fixes===
+*Progression
+**Fixed issue where [[dailies]] shown while hovering over the icon did not match the dailies in the End of Game screen.
+
+==Console Only==
+===Known Issues===
+*Agents
+**{{ai|Phoenix}}
+***{{ui|Bugfix}} Updated tooltip description of {{abi text|Curveball}}.
+
+===Known Issues===
+*Modes
+**[[Skirmish/Ascension|Skirmish]] 2v2: Ascension and Skirmish 1v1: Ascension - Timer is stuck at 00.50 sec in Overtime phase
+**Skirmish 2v2: Ascension and Skirmish 1v1: Ascension - Agent abilities do not show up on the Combat Report in the following round after affecting enemies
+
+[[Category:Patch Notes]]

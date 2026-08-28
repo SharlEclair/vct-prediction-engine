@@ -1,0 +1,41 @@
+{
+  "version": "10.1",
+  "schema_version": "1.0",
+  "generated_at": "2026-08-27T13:26:22.375994",
+  "features": {
+    "team": [
+      "matches_played",
+      "win_rate",
+      "full_buy_win_rate",
+      "semi_buy_win_rate",
+      "eco_conversion",
+      "pistol_win_rate",
+      "attack_round_win_rate",
+      "defense_round_win_rate",
+      "first_half_win_rate",
+      "comeback_rate"
+    ],
+    "player": [
+      "ACS_EMA",
+      "rating_EMA",
+      "KAST_EMA",
+      "ADR_EMA",
+      "ECON_EMA",
+      "FK_rate",
+      "FD_rate",
+      "first_duel_success",
+      "1v1_success",
+      "1v2_success",
+      "2K_rate",
+      "3K_rate",
+      "4K_rate",
+      "5K_rate"
+    ],
+    "map": [
+      "map_name",
+      "total_played",
+      "avg_rounds",
+      "t1_win_ratio"
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+{{PatchNav|previous=10.06|next=10.08}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 10.07.jpg
+|date    = April 15th, 2025
+|act     = [[Season 2025: Act 2]]
+|changes = '''All Platforms:'''
+*''Minor patch
+|bundle  = {{collection|Minima}} (V25)
+|pages   = [https://playvalorant.com/en-us/news/valorant-patch-notes-10-07/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v10.07.
+
+<i>Rise and shine, gamers, another patch has dropped!
+
+Lots of bug fixes for PC and console—fixes for nine Agents and some UI improvements here and there. For console, you can now see the Timeline view as part of the End of Game and Match Details screens where you can review the events of the match round by round (for Competitive, Swiftplay, and Unrated).
+
+Hope everyone has been keeping up with VCT because there’s only 1 month left before we know who’s moving on to Masters Toronto. What team are you rooting for?
+
+Have a good one!
+
+-Ash</i>
+
+==All Platforms==
+===Bug Fixes===
+====[[Agents]]====
+====={{ai|Reyna}}=====
+*Fixed an issue where Reyna’s [[Empress|ultimate]] visuals could show through nearsights.
+
+====={{ai|Waylay}}=====
+*Fixed an issue so Waylay will teleport properly back if she activates her {{abi text|Refract}} while picking up an ult [[orb]].
+*Fixed an issue where Waylay could activate Refract outside of the playable space on [[Abyss]].
+*Fixed an issue so Waylay should no longer end looking straight up in the air when she triggers Refract return when she's directly above the teleport point.
+
+====={{ai|KAY/O}}=====
+*Fixed an issue where KAY/O’s revive SFX would persist after being killed while being resurrected by an ally during {{abi text|NULL/cmd}}.
+
+====={{ai|Vyse}}=====
+*Fixed an issue where enemies could get stuck inside Vyse’s [[Shear|wall]] if the wall was overlapping with a smoke ability at specific times.
+*Fixed an issue where enemies could get stuck in Vyse’s Shear if they jumped when it was triggered.
+*Fixed an issue where Vyse’s Shear’s SFX could get stuck playing for enemies after moving out of range or if Vyse dies.
+
+====={{ai|Clove}}=====
+*Fixed an issue where Clove’s {{abi text|Ruse}} battlefield view could be seen from underneath elevated locations while they have it equipped.
+*Fixed an issue where Clove’s {{abi text|Pick-me-up}} duration was incorrect for observer/spectator clients.
+
+====={{ai|Cypher}}=====
+*Fixed an issue where opponents who teleported out of the {{abi text|Trapwire}} after being hit could run through the same reactivated wire without getting tethered.
+
+====={{ai|Tejo}}=====
+*Fixed an issue where {{abi text|Armageddon}}’s floor indicator persisted across rounds.
+
+====={{ai|Omen}}=====
+*Fixed an issue where Omen could not see properly when casting {{abi text|Dark Cover}} if he was overlapping another dense smoke (smokes that obscure vision inside, e.g. Jett Cloudburst, Brimstone Sky Smoke, etc.).
+
+====={{ai|Deadlock}}=====
+*Fixed an issue where Deadlock’s [[GravNet|netted]] VFX could show through thin walls.
+
+====={{ai|Sova}}=====
+*Fixed an issue where Sova’s arm and [[Owl Drone|Drone]] overlapped each other in Agent Select.
+
+====={{ai|Chamber}}=====
+*Fixed an issue where Chamber’s watch and glasses could be seen while [[nearsighted]].
+
+==PC Only==
+===Bug Fixes===
+====[[Competitive]] Updates====
+*Fixed an issue in Match History and End of Game screens where hover text was missing from the Rank Shield icon if you had no Rank Shields remaining.
+
+====Player Behavior====
+*Fixed an issue where Riot IDs written in certain languages were displayed with a cutoff in the Social Panel.
+
+====[[Premier]]====
+*Fixed an issue where text sometimes did not fit in dropdowns on the Standings page.
+
+==Console Only==
+===Competitive Updates===
+*We’ve added the Timeline view as part of the End of Game and Match Details screens where you can review the events of the match round by round.
+**This view is only available for [[Competitive]], [[Swiftplay]], and [[Unrated]] matches.
+
+===Bug Fixes===
+====Agents====
+====={{ai|Omen}}=====
+*Fixed an issue where Omen’s {{abi text|Dark Cover}} targeting sensitivity could get stuck at a lower value until his next smoke cast if he died while attempting to cast Dark Cover.
+
+=====Competitive Updates=====
+*Fixed an issue on the leaderboard page where repeatedly switching between the filters and scrolling through entries on the page could cause you to lose the ability to select a different entry.
+
+=====Player Behavior=====
+*Fixed an issue where players with long usernames overlapped with console logos in the Social Panel.
+*Fixed an issue where sending a party invite to an Invalid Riot ID would lock the invite window until it was closed and reopened.
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/10.07]]

@@ -1,0 +1,31 @@
+# Centralized Engine Configuration for Hybrid Valorant DFS Micro Engine (v6)
+
+ROLE_ALPHA_WEIGHTS:
+  Duelist: 3.5
+  Initiator: 2.5
+  Controller: 2.0
+  Sentinel: 2.0
+  Flex: 2.0
+
+COMPETITIVE_MAP_POOL:
+  - "Ascent"
+  - "Breeze"
+  - "Fracture"
+  - "Haven"
+  - "Lotus"
+  - "Pearl"
+  - "Split"
+BENCHMARKS:
+  spec_naive_baseline_mae: 4.37
+
+DFS_CONSTRAINTS:
+  salary_cap: 50.0
+  lineup_size: 6
+  max_players_per_team: 2
+  igl_multiplier: 2.0
+  role_counts:
+    Duelist: 1
+    Initiator: 1
+    Controller: 1
+    Sentinel: 1
+    Flex: 2

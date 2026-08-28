@@ -1,0 +1,224 @@
+{
+  "generated_at": "2026-08-27T13:26:12.972266",
+  "total_matches_processed": 1064,
+  "duplicates": {
+    "duplicate_matches": 0,
+    "duplicate_player_observations": 51134
+  },
+  "class_balance": {
+    "team1_wins": 577,
+    "team2_wins": 487,
+    "team1_win_ratio": 0.5422932330827067
+  },
+  "missing_values": {
+    "match_dataset": {
+      "match_id": 0,
+      "date": 0,
+      "team1": 0,
+      "team2": 0,
+      "target": 0,
+      "t1_matches_played": 0,
+      "t2_matches_played": 0,
+      "diff_matches_played": 0,
+      "t1_win_rate": 0,
+      "t2_win_rate": 0,
+      "diff_win_rate": 0,
+      "t1_full_buy_win_rate": 0,
+      "t2_full_buy_win_rate": 0,
+      "diff_full_buy_win_rate": 0,
+      "t1_semi_buy_win_rate": 0,
+      "t2_semi_buy_win_rate": 0,
+      "diff_semi_buy_win_rate": 0,
+      "t1_eco_conversion": 0,
+      "t2_eco_conversion": 0,
+      "diff_eco_conversion": 0,
+      "t1_pistol_win_rate": 0,
+      "t2_pistol_win_rate": 0,
+      "diff_pistol_win_rate": 0,
+      "t1_attack_round_win_rate": 0,
+      "t2_attack_round_win_rate": 0,
+      "diff_attack_round_win_rate": 0,
+      "t1_defense_round_win_rate": 0,
+      "t2_defense_round_win_rate": 0,
+      "diff_defense_round_win_rate": 0,
+      "t1_first_half_win_rate": 0,
+      "t2_first_half_win_rate": 0,
+      "diff_first_half_win_rate": 0,
+      "t1_comeback_rate": 0,
+      "t2_comeback_rate": 0,
+      "diff_comeback_rate": 0
+    },
+    "player_features": {
+      "match_id": 0,
+      "date": 0,
+      "player": 0,
+      "observations": 0,
+      "ACS_EMA": 0,
+      "rating_EMA": 0,
+      "KAST_EMA": 25496,
+      "ADR_EMA": 0,
+      "ECON_EMA": 0,
+      "FK_rate": 0,
+      "FD_rate": 0,
+      "first_duel_success": 0,
+      "2K_rate": 0,
+      "3K_rate": 0,
+      "4K_rate": 0,
+      "5K_rate": 0,
+      "1v1_success": 0,
+      "1v2_success": 0
+    }
+  },
+  "feature_drift_analysis": {
+    "t1_matches_played": {
+      "ks_statistic": 0.5487323210822572,
+      "p_value": 1.5649023529758961e-28,
+      "drift_detected": true
+    },
+    "t2_matches_played": {
+      "ks_statistic": 0.6580814531006101,
+      "p_value": 2.6018908786353215e-42,
+      "drift_detected": true
+    },
+    "diff_matches_played": {
+      "ks_statistic": 0.25449363795468516,
+      "p_value": 3.350516256373336e-06,
+      "drift_detected": true
+    },
+    "t1_win_rate": {
+      "ks_statistic": 0.15873184806773577,
+      "p_value": 0.01131202808620972,
+      "drift_detected": true
+    },
+    "t2_win_rate": {
+      "ks_statistic": 0.12875455276476988,
+      "p_value": 0.06560474376951483,
+      "drift_detected": false
+    },
+    "diff_win_rate": {
+      "ks_statistic": 0.12622392507449987,
+      "p_value": 0.07488542747370264,
+      "drift_detected": false
+    },
+    "t1_full_buy_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t2_full_buy_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "diff_full_buy_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t1_semi_buy_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t2_semi_buy_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "diff_semi_buy_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t1_eco_conversion": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t2_eco_conversion": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "diff_eco_conversion": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t1_pistol_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t2_pistol_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "diff_pistol_win_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t1_attack_round_win_rate": {
+      "ks_statistic": 0.47413793103448276,
+      "p_value": 4.7481392682348675e-21,
+      "drift_detected": true
+    },
+    "t2_attack_round_win_rate": {
+      "ks_statistic": 0.5086206896551724,
+      "p_value": 2.435325812106972e-24,
+      "drift_detected": true
+    },
+    "diff_attack_round_win_rate": {
+      "ks_statistic": 0.49039780521262005,
+      "p_value": 1.4483259549047244e-22,
+      "drift_detected": true
+    },
+    "t1_defense_round_win_rate": {
+      "ks_statistic": 0.4913793103448276,
+      "p_value": 1.1682512283262127e-22,
+      "drift_detected": true
+    },
+    "t2_defense_round_win_rate": {
+      "ks_statistic": 0.4568965517241379,
+      "p_value": 1.6421795984701003e-19,
+      "drift_detected": true
+    },
+    "diff_defense_round_win_rate": {
+      "ks_statistic": 0.4490563360295161,
+      "p_value": 7.802358296961468e-19,
+      "drift_detected": true
+    },
+    "t1_first_half_win_rate": {
+      "ks_statistic": 0.47413793103448276,
+      "p_value": 4.7481392682348675e-21,
+      "drift_detected": true
+    },
+    "t2_first_half_win_rate": {
+      "ks_statistic": 0.5086206896551724,
+      "p_value": 2.435325812106972e-24,
+      "drift_detected": true
+    },
+    "diff_first_half_win_rate": {
+      "ks_statistic": 0.49039780521262005,
+      "p_value": 1.4483259549047244e-22,
+      "drift_detected": true
+    },
+    "t1_comeback_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "t2_comeback_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "diff_comeback_rate": {
+      "ks_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    }
+  }
+}

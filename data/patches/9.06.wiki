@@ -1,0 +1,98 @@
+{{PatchNav|previous=9.05|next=9.07}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 06.jpg
+|date    = September 24th, 2024
+|act     = [[Episode 09: COLLISION: Act 2|EP 09 Act 2]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Maps]]
+*[[Weapons]]
+*[[Night.Market]] appearance
+|bundle  = {{collection|Singularity|Singularity (EP 9)}}<br>{{collection|Run It Back|Run It Back: Singularity}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-906/ Patch Notes]
+}}
+
+The following is a list with all the changes made in patch v9.06.
+
+<i>Hi, everyone. Jo-Ellen here. We’ve got a bunch of updates in Patch 9.06.
+
+In particular, you’ll now be able to see if you’re picking up a Reaver vandal or Forsaken vandal, new VALORANT PC players will now get tips on how to play, and the voting system will now no longer count AFK players in the draw vote.
+
+As always, let us know what you think of the updates. We’re always looking for feedback.</i>
+
+==All Platforms==
+===Agent Updates===
+*Agent abilities involving walls have had their interaction with the glass window on [[Ascent]] changed.
+**{{ai|Phoenix}}’s {{abi text|Blaze}} and {{ai|Neon}}’s {{abi text|Fast Lane}} will break the window if their initial cast center point would hit the window, but the walls themselves will not interact with the window.
+**{{ai|Harbor}}’s {{abi text|High Tide}} will no longer break the glass window since it does not hit walls.
+**{{ai|Chamber}}’s {{abi text|Trademark}}, {{ai|Cypher}}’s {{abi text|Trapwire}}, and {{ai|Killjoy}}’s {{abi text|Lockdown}} will no longer break windows when placed too close.
+*Brimstone’s Orbital Strike and Vyse’s Steel Garden
+**{{ai|Brimstone}}’s {{abi text|Orbital Strike}} AOE windup/activation and {{ai|Vyse}}’s {{abi text|Steel Garden}} AOE windup audio integration have been updated from being positioned directly on the Agent when in the AOE to being slightly directional toward the origin of the AOE to allow you to know which direction to travel in, in order to escape.
+
+===Gameplay Systems Updates===
+*Updated voting systems so that draw votes no longer take into account AFK players.
+
+===Map Updates===
+*[[Haven]]
+**There are several quality of life improvements to help with placing {{ai|Vyse}}’s {{abi text|Arc Rose}} and {{ai|Cypher}}’s {{abi text|Trapwire}} on crates on Haven.
+
+===Player Behavior Updates===
+*We have adjusted our comms abuse penalties to create a better comms experience in VALORANT. People who engage in repeat comms abuse behavior will receive increased penalties.
+*In order to create a healthier comms experience in VALORANT, we will be issuing comms abuse penalties to people who have received a manual behavioral evaluation due to their repeated pattern of comms abuse.
+
+===Social Updates===
+*We made an update to our voice chat system. You should now more reliably reconnect to voice chat after unexpected disconnects.
+
+===Weapon Updates===
+*We are adding [[Weapon Skins|Weapon Skin]] names to the in-game Weapon Switcher. We hope this will make it easier to determine what skin you are using when you pick up or switch to a weapon. You can see this change on your in-game HUD.
+
+===Bug Fixes===
+*[[Agents]]
+**Fixed an issue where {{ai|Deadlock}}’s {{abi text|Sonic Sensor}}s could stay active if placed as Deadlock was killed.
+**Fixed an issue where {{ai|Cypher}}’s {{abi text|Trapwire}} did not take damage from certain abilities.
+**Fixed an issue where {{ai|Gekko}}’s {{abi text|Wingman}} could get stuck in a loop while attempting to chase an unreachable target.
+**Fixed an issue where {{ai|Yoru}}’s {{abi text|Fakeout}} did not trigger {{ai|Vyse}}’s {{abi text|Shear}}.
+**Fixed an issue where {{ai|Breach}} was unable to cast abilities through Vyse’s Shear.
+**Fixed an issue where {{ai|Sova}}’s {{abi text|Recon Bolt}} was destroyed by Vyse’s Shear.
+**Fixed an issue where Gekko’s {{abi text|Thrash}} and {{ai|Raze}}’s {{abi text|Showstopper}} could hit people on the other side of Vyse’s Shear.
+**Fixed an issue where Vyse’s {{abi text|Arc Rose}} could be placed on invalid objects.
+**Fixed various collision issues with Vyse’s Shear, that blocked bullets and people while despawning.
+**Fixed rare instances of people’s bodies being clipped inside Vyse’s Shear.
+**Fixed an issue where Vyse’s {{abi text|Razorvine}} and Shear had lingering VFX when canceling early.
+*[[Cosmetics]]
+**Fixed the third person animation for the {{collection|Nocturnum}} [[Melee|Scythe]] so it will no longer appear higher than the Agent model when you equip your melee. [https://www.youtube.com/shorts/57ZKOy6Mj3U Thanks to Kanga for this report]!
+*Gameplay Systems
+**Fixed an issue where the Combat Report did not display “killed” text when you kill an ally.
+**Fixed an issue where the Combat Report “killed by” text would have incorrect text alignment in Arabic.
+*[[Maps]]
+**[[Breeze]]
+***Fixed an issue with the mechanical door at A Switch where bullets were not able to go through even though the door was open.
+
+==PC==
+===Gameplay Systems Updates===
+*New Player Tips (defaulted on for new accounts only)
+**As you join our community, complete the tutorial, and start sharpening your skills on the battlefield, we want to make sure you are armed with the right information in order to succeed and secure that clutch! So, we’ve implemented a "New Player Tip" system that will display useful in-game information based on the actions you take during the match. These tips will provide critical information for gameplay fundamentals, potential focuses for skill improvements, and suggestions for advanced strategies.
+**'''NOTE''': If you’re an existing player, New Player Tips won't show up unless turned on in Settings.
+**Our New Player Tips have been built from the ground up to give you more opportunities to skill-up and learn VALORANT faster via: tips that “listen” to your in-match actions and behaviors, and tips that level up with you as you learn the fundamentals of VALORANT gameplay, from beginner to advanced strategies.
+**Tips can be switched On or Off in your Settings.
+
+===Social Updates===
+*You can now block communications with other players. When you block someone, you will no longer see or hear any direct communications from them, including:
+**Messages in text chat
+**Voice comms
+**Party invites and requests
+**Friend requests
+
+==Console==
+===Gameplay Systems Updates===
+*Updates to megamap cursor sensitivity settings:
+**Added a new setting to allow you to select an input curve for megamap cursor controls.
+**Added Agent-specific cursor curve settings for abilities that utilize the megamap: {{ai|Brimstone}}’s {{abi text|Sky Smoke}} and {{abi text|Orbital Strike}}, {{ai|Clove}}’s {{abi text|Ruse}}, and {{ai|Omen}}’s {{abi text|From the Shadows}} map ability controls.
+*Removed aim assist from some abilities that aren’t intended to target opposing players.
+
+===Maps Updates===
+*[[Fracture]] enters Unrated and Swift Play queues. This is the final legacy map being added to console mode queues. Console players now have the entire catalog of current VALORANT maps.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.06]]

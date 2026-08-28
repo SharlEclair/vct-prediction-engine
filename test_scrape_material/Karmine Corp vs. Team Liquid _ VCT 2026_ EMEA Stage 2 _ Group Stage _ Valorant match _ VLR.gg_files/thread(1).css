@@ -1,0 +1,9 @@
+@media (max-width: 1060px) {
+  .col.mod-1 {
+    display: none; } }
+@media (max-width: 440px) {
+  .comments-label {
+    display: none; }
+
+  .pmt-btn {
+    margin-left: -25px; } }

@@ -1,0 +1,41 @@
+{
+  "experiment_id": "experiment_010",
+  "timestamp": "2026-08-27T10:43:17.211950",
+  "git_commit": "10ef4b4e0ea7c328a78f45129d5e82a95fba9e67",
+  "dataset_version": "10.0.0",
+  "feature_version": "10.1",
+  "model_type": "lightgbm_main_model",
+  "hyperparameters": {
+    "boosting_type": "gbdt",
+    "class_weight": null,
+    "colsample_bytree": 0.6804326106245425,
+    "importance_type": "split",
+    "learning_rate": 0.010701514110466392,
+    "max_depth": 6,
+    "min_child_samples": 20,
+    "min_child_weight": 0.001,
+    "min_split_gain": 0.0,
+    "n_estimators": 73,
+    "n_jobs": null,
+    "num_leaves": 30,
+    "objective": "binary",
+    "random_state": 42,
+    "reg_alpha": 0.0,
+    "reg_lambda": 0.0,
+    "subsample": 0.7269370320576352,
+    "subsample_for_bin": 200000,
+    "subsample_freq": 0,
+    "verbosity": -1
+  },
+  "metrics": {
+    "accuracy": 0.603448275862069,
+    "precision": 0.5555555555555556,
+    "recall": 0.8928571428571429,
+    "f1": 0.684931506849315,
+    "roc_auc": 0.6218750000000001,
+    "log_loss": 0.6794156521217003,
+    "brier_score": 0.24297199441444323,
+    "ece": 0.07773704317280318,
+    "mce": 0.25005731635503403
+  }
+}

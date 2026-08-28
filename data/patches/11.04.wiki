@@ -1,0 +1,87 @@
+{{PatchNav|previous=11.02|next=11.05}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 11.04.jpg
+|date    = August 19th, 2025
+|act     = [[Season 2025: Act 5]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Maps#Map rotations|Map rotation update]]
+*[[Gifting]]
+*Pings
+*Servers
+|bundle  = {{collection|Bubblegum Deathwish}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-04/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v11.04.
+
+<i>HELLOOO everyone! It’s JOY and it’s my first time joining the patch notes gang. 👋 This one is short and simple, but here’s a TLDR in case you still need it.
+
+TLDR;
+
+*Agents
+**Agent abilities adjusted = Chamber, Sage
+*Maps
+**Abyss is BACK, Icebox is OUT
+*Gameplay systems
+**Ping audio made less harsh
+*AOE ultimate indicator colors adjusted for clarity
+*Gifting for the esports store is available</i>
+
+==All Platforms==
+===General Updates===
+*[[Gifting]] for the esports store is live!
+**Want your friends to rep your favorite VCT team? Head over to the esports tab in the in-game store to share your support.
+
+*PHILIPPINES SERVER MENTIONED RAHHHHHHH 🦅🦅🦅
+**A new server is opening up in Manila. This will be the sixth server available for selection in the Asia Pacific Shard, bringing better connectivity and game experience to our players.
+===Agent Updates===
+*We've updated Phoenix's voice lines and added interaction lines with Vyse. Enemies and allies beware!
+*{{ai|Chamber}}
+**{{abi text|Trademark}}
+***Range restriction has been removed. We’re giving a little bit more strategic & positional flexibility for Chamber as his trap hasn’t felt like it warrants a range restriction in modern VALORANT. This went live accidentally in patch 11.02 and we didn’t want to revert a buff that was planned for 11.04 anyways.
+*{{ai|Sage}}
+**We’re leaning into Sage’s identity as a Controller-leaning Sentinel hybrid by allowing her to control space from further safety.
+***{{ui|Buff}} {{abi text|Barrier Orb}}: Sage wall cast range has increased from 10m >>> 15m
+***{{ui|Buff}} {{abi text|Resurrection}}: Sage resurrection range has increased from 6m >>> 12m
+*{{ai|Sova}}
+**{{ui|Adjustment}} Visual effects around {{abi text|Hunter's Fury}} have been adjusted to resolve more quickly and take up less gameplay space
+
+===Gameplay Systems Update===
+*Pings that are placed on the minimap have had their audio adjusted to be less harsh.
+*AOE Ultimate indicator colors on the minimap have been updated to reflect if they were cast by an ally or enemy.
+**All ally zones will now appear a consistent teal and enemy zones should now be consistently yellow. Ability icons will now only appear in the minimap zone if the ultimate is destructible.
+
+===Map Updates===
+*Map Pool Updates
+**[[Abyss]] is back IN the [[Competitive]] and [[Deathmatch]] queues.
+**[[Icebox]] is OUT of the [[Competitive]] and [[Deathmatch]] queues
+
+===Bug Fixes===
+*General
+**Fixed an issue where a Concussed player's crosshair would stop swaying while debuffed if they quickly entered and exited a pilotable ability like Cypher cam or Sova drone.
+*Agents
+**{{ai|Chamber}}
+***{{ui|Bugfix}} Fixed an issue where the minimap would still show the deactivation range of Chamber's {{abi text|Trademark}} while the ability was equipped.
+**{{ai|KAY/O}}
+***{{ui|Bugfix Nerf}} Fixed a bug where KAY/O’s {{abi text|ZERO/point}} revealed exact opponent locations with an audio cue. (This was fixed in 11.02 but we’re letting you know now 😀)
+**{{ai|Astra}} & {{ai|Harbor}}:
+***{{ui|Bugfix}} Fixed an issue where bullet tracers could be seen passing through Astra's {{abi text|Cosmic Divide}} and Harbor's {{abi text|Cove}}.
+**{{ai|Phoenix}} & {{ai|Tejo}}
+***{{ui|Bugfix}} Fixed a bug where the wrong voiceline played during round-start when Phoenix & Tejo are both present.
+**{{ai|Neon}}
+***{{ui|Bugfix Nerf}} Fixed a bug where Neon could skip her unequip delay by binding {{abi text|High Gear}} to multiple keys.
+*Maps
+**[[Split]]
+***{{ui|Bugfix Buff}} Fixed an issue where molotov abilities did not properly spread up stairs after hitting the ground.
+
+===Known Issues===
+*There is a known issue where player resolution and display settings reset the first time people play after patching to UE5. We will not issue a fix, but make sure to adjust your resolution and display settings to your preferred settings after patching the game.
+
+==PC Only==
+===Bug Fixes===
+*Competitive Updates
+**{{ui|Bugfix}} Fixed an issue for end of game screens where characters were cut off in some languages.
+*Premier Updates
+**{{ui|Bugfix}} Fixed an issue on the Awards tab where characters were cut off in some languages.
+[[Category:Patch Notes]]

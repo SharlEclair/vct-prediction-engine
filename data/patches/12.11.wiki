@@ -1,0 +1,91 @@
+{{PatchNav|previous=12.10|next=13.01}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.11.jpg
+|date    = June 9th, 2026
+|act     = [[Season 2026: Act 3]]
+|changes = '''All Platforms:'''
+*Bug Fixes
+'''PC Only:'''
+*Premier
+|bundle  = 
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-11/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.11'''.
+----
+
+{{Quote1|
+Hi, friends! Kenny, here.
+This week’s patch is just a lil guy! TL;DR, we’re launching the My VALORANT Card site today, fixing some bugs, and making some Premier changes. 
+This is the last patch of Act 3. Act 4 starts in two weeks with a bunch of exciting stuff coming. So stay tuned!
+GL HF GGs, gamers.
+}}
+==All Platforms==
+
+=== General Updates ===
+
+* '''My VALORANT Card is now live!'''
+** Flex your skill, highlight your personality, and connect with other players using a personalized VALORANT card. You can use My VALORANT Card to find the perfect new addition to your squad based on what matters most to you—rank, roles to fill, or purely vibes.
+** Check out [https://mycard.playvalorant.com mycard.playvalorant.com] to create your card, share on socials, and find new friends to add to your stack.
+
+=== Bug Fixes ===
+
+* Agents
+** {{ai|Clove}}
+*** {{ui|Bugfix}} Fixed a bug where Clove’s '''{{abi text|Not Dead Yet}}''' first person and third person SFX were not playing when the ability was available and when the ability timed out.
+** {{ai|Gekko}}
+*** {{ui|Bugfix Buff}} Fixed an issue where Gekko’s reclaimable ability globules would disappear after using '''{{abi text|Thrash}}'''.
+** {{ai|Miks}}
+*** {{ui|Bugfix}} Fixed a bug where Miks was getting assists for healing uninjured allies with '''{{abi text|M-pulse}}'''.
+*** {{ui|Bugfix Buff}} Fixed a bug where Miks’ '''{{abi text|M-pulse}}''' could not be toggled after quickly swapping between abilities.
+** {{ai|Raze}}
+*** {{ui|Bugfix Buff}} Fixed an issue where Raze's'''{{abi text|Blast Pack}}''' wasn't dealing damage to destructible enemy abilities.
+** {{ai|Sage}}
+*** {{ui|Bugfix Buff}} Fixed a bug where Sage’s '''{{abi text|Healing Orb}}''' was not usable during the buy phase.
+** {{ai|Viper}}
+*** {{ui|Bugfix Buff}} Fixed a bug where '''{{abi text|Viper's Pit}}''' was getting stuck unable to expand in a few specific spots.
+* Maps
+** [[Breeze]]
+*** {{ui|Bugfix}} Fixed a bug on Breeze that allowed multiple Agent abilities to lock onto enemies who were out of sight behind the large boxes on A Main.
+* Store
+** {{ui|Bugfix}} Fixed an overlap issue on buy button prompts in Arabic while previewing bundles. 
+
+=== Known Issues ===
+
+* Agents
+** {{ai|Waylay}}
+*** We’re aware of the issue with Waylay where she can place her Refract on a roof on Ascent.
+* Maps
+** [[Lotus]]
+*** We’re aware of the issue on Lotus where the doors sometimes don’t open.
+
+==PC Only==
+
+=== Premier Updates ===
+
+* '''V26A3 Contender and Invite Division schedule changes:'''
+** Playoffs now take place across multiple days.
+*** The first round of playoffs will be on June 20
+*** Teams that advance from the first round return on June 21 for their next matchup
+*** Make sure to check the schedule in client for round start times for your zone!
+
+=== Bug Fixes ===
+
+* Premier
+** {{ui|Bugfix}} Fixed a bug where Premier team tags would not show up in the Buy menu during pre-round phase.
+** {{ui|Bugfix}} Added clearer error messaging during the ‘Create Team’ flow when a name and tag is already taken.
+
+==Console Only==
+
+=== Weapon Updates ===
+
+* {{wi|Judge}} '''[[Judge]]'''
+** Minimum spread increased from 2.25 >>> 2.5
+*** This change was made in [[Patch Notes/12.09|Patch 12.09]] for PC and is now being implemented for Console as we previously mentioned in the [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-09/ Patch 12.09 Patch Notes.]
+
+=== Bug Fixes ===
+
+* {{ai|Cypher}}
+** {{ui|Bugfix Buff}} Fixed an issue where you couldn't see the Cypher camera model when placing the ability.
+
+[[Category:Patch Notes]]

@@ -1,0 +1,132 @@
+{{PatchNav|previous=9.07|next=9.09}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 08.jpg
+|date    = October 22nd, 2024
+|act     = [[Episode 09: COLLISION: Act 3|EP 09 Act 3]]
+|changes = '''All Platforms:'''
+*[[Maps#Team Deathmatch|Glitch]] release
+*[[Agents]]
+*[[Maps]]
+*[[Maps#Map rotations|Map rotation update]]
+'''PC-only:'''
+*[[Premier]]
+|bundle  = {{collection|Doombringer}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-08/ Patch Notes]
+}}
+
+The following is a list with all the changes made in patch v9.08.
+
+<i>Welcome to the start of Episode 9 Act III. Let’s get into it. 
+
+The previously announced Sunset changes are now playable. Also playable is our newest Team Deathmatch map called “Glitch.” 
+
+Other updates in this patch include: a map rotation change, Yoru’s Fakeout now interacting differently with certain Agent abilities, updates to Gekko’s abilities aka globules aka radivores aka Gekko’s besties, and more.</i>
+==All Platforms==
+===Agent Updates===
+===={{ai|Gekko}}====
+As you have mastered Gekko’s utility since his last buff in patch {{patch|7.12}}, we’ve noticed that his core play pattern of using and reclaiming his buddies has little to no downside. These changes to his globules put pressure on Gekko to more quickly reclaim them, and also allow for more counterplay for Gekko’s opponents to punish him if he’s too reckless.
+
+Dizzy and Wingman are each getting improvements to their overall reliability to reduce cases where you hear or see them target and debuff an enemy, only to find that enemy is unaffected. These changes are targeted at addressing inconsistent behavior rather than a direct power increase for Gekko.
+
+Dizzy is in a healthy state in terms of how often you successfully engage in its shooting counterplay, but we feel that Dizzy holds space and angles for too long. Additionally, given Gekko’s overall number of plants and defuses with Wingman, Thrash is available too frequently for its impact.
+
+We hope these changes don’t wildly affect Gekko’s place in the ecosystem, but instead put him in a healthier long term place.
+*[[Passive Effects#Globules|Globules]]
+**Reduced time in world 20s >>> 15s
+**Reclaim time increased 1s >>> 1.5s
+*{{abi text|Dizzy}}
+**Time active after being thrown and forming is reduced 1.5s >>> 1s.
+**Dizzy’s targeting algorithm has been updated to be more reliable.
+**Dizzy’s goop flash now also blinds the minimap of affected players.
+*{{abi text|Wingman}}
+**Increased the angle of the cone concuss area 45 degrees >>> 65 degrees.
+**When Wingman turns into a globule after planting the Spike there are unique visuals.
+*{{abi text|Thrash}}
+**Ultimate points increased 7 >>> 8
+
+===={{ai|Yoru}}====
+Various abilities were not showing effects on Yoru’s Fakeout clone, which made it too easy to discern it from the real Yoru. We are going through abilities in the game and making sure they interact properly with Yoru’s {{abi text|Fakeout}}.
+*Blind abilities like Gekko’s Dizzy and {{ai|Vyse}}’s {{abi text|Arc Rose}} will now display the blind effect on Yoru’s Fakeout clone as if he was a real Agent.
+*Vyse will play her Successful Blind celebration lines when blinding Yoru’s Fakeout clone.
+*{{ai|Cypher}}’s {{abi text|Neural Theft}} will show the Yoru’s Fakeout clone.
+*{{ai|Clove}}’s {{abi text|Meddle}} will now show the decay effect on Yoru’s Fakeout clone.
+
+===={{ai|Skye}} and {{ai|Jett}}====
+*Jett’s {{abi text|Tailwind}} and Skye’s {{abi text|Trailblazer}} will no longer stop at the window in [[Ascent]]. Instead, they will burst through and continue movement onto the other side.
+
+===Cosmetic Updates===
+We’ve made some updates to several scope reticles to make them more clean and less distracting. Here is the list of updated skins: {{collection|Araxys}} [[Operator]], {{collection|Valiant Hero}} Operator, {{collection|Reaver}} Operator, {{collection|Ruin}} [[Marshal]]*. Thanks to Derke for the feedback!
+*''*Wiki editor note: The official patch notes state Gothic Marshal, which is the codename for Ruin Collection.
+
+===Map Updates===
+====Glitch====
+'''Introducing “Glitch”, VALORANT’s Newest [[Team Deathmatch]] [[Maps#Team Deathmatch|Map]]'''
+*A 5v5 map that puts you in a dual-themed arena. This is the 5th TDM map and takes place in a “glitched out” Maxbot arena.
+*Glitch is playable via the “Team Deathmatch” game mode queue.
+
+====Map Rotations====
+*[[Pearl]] and [[Split]] are BACK in the COMPETITIVE QUEUE
+*[[Icebox]] and [[Lotus]] are OUT of the COMPETITIVE QUEUE
+
+====[[Sunset]]====
+We’re updating Sunset’s B Site to address defensibility, post plant, and provide more ways to play on site. The B Main pivot box was adding a ton of pressure during post plant so we’ve opted to simplify the cover here. You can still play B Main during post plant, but it should now be easier to manage for retakers. A particular Cypher trip has also been removed with these changes.
+*B Main
+<gallery widths="500" position="center" type="slideshow">
+Sunset 908 B Main Before.png|Before
+Sunset 908 B Main After.png|After
+</gallery>
+*B Main Exterior
+<gallery widths="500" position="center" type="slideshow">
+Sunset 908 B Main Exterior Before.png|Before
+Sunset 908 B Main Exterior After.png|After
+</gallery>
+*B Site
+<gallery widths="500" position="center" type="slideshow">
+Sunset 908 B Site Before.png|Before
+Sunset 908 B Site After.png|After
+</gallery>
+*B Site Back
+<gallery widths="500" position="center" type="slideshow">
+Sunset 908 B Site Back Before.png|Before
+Sunset 908 B Site Back After.png|After
+</gallery>
+*B Boba
+<gallery widths="500" position="center" type="slideshow">
+Sunset 908 B Boba Before.png|Before
+Sunset 908 B Boba After.png|After
+</gallery>
+*Mid Courtyard
+<gallery widths="500" position="center" type="slideshow">
+Sunset 908 Mid Courtyard Before.png|Before
+Sunset 908 Mid Courtyard After.png|After
+</gallery>
+
+===Bug Fixes===
+*[[Maps]]
+**[[Abyss]]
+***The [[Spike]] will now spawn correctly at B Danger if it falls off the map.
+
+==PC==
+===[[Premier]] Updates===
+'''Welcome to Stage E9A3!'''
+*At the end of this Stage, the top 16 teams in Invite will remain in Invite. All other Invite teams will be demoted at the start of the next Stage. These rules are listed on the Standings tab.
+**Demoted teams will seed into the zone they originally promoted from. Next Stage, Team Owners can change their zone in the Team Settings dropdown anytime before the team plays a match.
+**If your team cannot be placed into a zone at the start of the next Stage, your Team Owner will be prompted to select a zone.
+**Divisions other than Invite will not have demotion, and teams will still be promoted or be seeded into a division as normal at the start of next Stage.
+*Contender Eligibility updates
+**If you have five Contender Eligible players on your team, you are guaranteed to place into Contender Division.
+**Contender Eligibility for 2024 expires at the end of Stage E9A3.
+**To be Contender Eligible in 2025, you and your team must perform a qualifying action in Stage E9A3 or at any point in 2025.
+**Qualifying actions include:
+***Play a Weekly or Playoff match on a team in Contender or Invite Division.
+***Reach Immortal 3 or higher peak rank in Competitive.
+***Play in a Playoff match in Elite 5.
+**Contender Eligibility for 2025 expires at the end of the last Stage in 2025.
+
+===Bug Fixes===
+[[Premier]] 
+*Fixed an issue where you would see a Competitor Crest after playing a Practice match on a brand new team, despite not having earned any points
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.08]]

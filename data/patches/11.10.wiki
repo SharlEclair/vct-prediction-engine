@@ -1,0 +1,166 @@
+{{PatchNav|previous=11.09|next=11.11}}
+{{Infobox patch
+|image   = Patch Notes Highlights 11.10.jpg
+|date    = November 11th, 2025
+|act     = [[Season 2025: Act 6]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Harbor]] rework
+*[[Competitive]]
+*[[Pick'Ems]]
+'''PC-only:'''
+*[[Premier]]
+'''Console-only:'''
+*[[Replays]] release
+|bundle  = {{collection|ORA by OneTap}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-11-10/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v11.10'''.
+----
+
+{{Quote1|Sup, gamers? Kenny, here.
+
+Soooo…who’s ready for that Raja Rework?
+
+That’s right THE HARBOR REWORK IS HERE!
+
+Read below for full details on the Harbor rework as well as a bunch of other stuff including:
+*The Team HUD is getting some Healing visibility Improvements
+*New UI layouts are in the Collections pages
+*Balance updates to Clove
+*Pick’Ems is coming to GameChangers on November 13!
+*The Replay System is ready for Consoles!
+*And a bunch of bug fixes.
+
+Check these notes, then hop in-game and make some waves! GL HF GGs.}}
+
+==All Platforms==
+===General Updates===
+*Team HUD Health Improvements 
+**Healing Indicator: The top HUD health bar now shows when you or an ally are healing. During recovery, the bar turns teal and fills to reflect healing progress. Once recovered, the bar returns to its normal white color. 
+*We've enhanced the Collections experience for both PC & Console, bringing you improvements such as: 
+**A grid layout is in, and carousel is out for PC Weapons & Buddies 
+**New dedicated page for equipping and viewing titles on PC. 
+**Custom skinline backgrounds across more Collections screens; letting your favorite weapon skins shine 
+*''Note: the above changes will be delayed for our players in Korea until 11.11 following some player flow changes''
+
+===Agent Updates===
+===={{ai|Harbor}}==== 
+The Harbor Rework is finally here! We’ve overhauled Harbor’s abilities to move him into a more aggressive Controller, with a ''splash'' of Initiator. High Tide was an iconic part of his kit and we wanted players to be able to carry over their mastery and creativity from High Tide casts in the past. We’ve moved Cove into the signature slot with a few changes to make it easier to place with precision. This should help Harbor find more ways to block vision for his allies from afar or Shield them depending on the situation. Harbor will be gaining a new ability to help with aggressively taking gun fights, Storm Surge! Reckoning also received a massive update, making it easier to set up his allies to flood into enemy territory.
+
+Read the updated Ability Tooltips below, and check out our social channels for more content breaking down Harbor’s reworked abilities. We’re very excited for you to all ''dive'' in! 
+
+*{{abi text|Cove}}
+**{{ui|Adjustment}} Changed to the signature ability slot. (''wiki editor note: Because it is a 1 charge ability, cost: 350 credits >>> Free)
+**EQUIP Cove. ACTIVATE to form a water Smoke in the select location. HOLD FIRE while targeting to move the marker further away and HOLD ALT FIRE to move it closer. RELOAD to toggle targeting view. REACTIVATE to Shield the water Smoke, blocking any bullets that hit it. The Shielded water Smoke can be destroyed. 
+*{{abi text|High Tide}}
+**{{ui|Adjustment}} Changed to a non-signature ability
+**{{ui|Nerf}} Cost 300 credits
+*{{abi text|Storm Surge}} (New) - {{ui|Added}}
+**EQUIP Storm Surge. FIRE to throw, creating an explosive whirlpool that Nearsights and Slows enemies within it after a short duration. 
+*{{abi text|Reckoning}} 
+**EQUIP Reckoning. FIRE to unleash the full power of your artifact, releasing a surge of water that barrels forward to Nearsight and Slow enemies that are hit. 
+*We've also updated [[Harbor/Quotes|Harbor’s voice lines]] to reflect his updated abilities. We added conversation voice lines with [[Tejo/Quotes|Tejo]] and [[Waylay/Quotes|Waylay]] and have new lines at the start of the match on [[Abyss]] and [[Corrode]].
+
+===={{ai|Clove}}====
+Clove is dominating competitive queue pick rates and preventing other controllers from being picked. These changes are aimed at shaving off Clove’s snowballing power. When Clove’s team gets ahead in advantageous states, they very easily outperform other controllers. 
+
+*{{abi text|Ruse}} 
+**{{ui|Nerf}} Ruse charges are now restricted to 1 maximum when Clove is dead 
+*{{abi text|Pick-me-up}} 
+**{{ui|Nerf}} Overheal amount, while Pick Me Up is active, has been reduced from 100 HP → 50 HP 
+
+===={{ai|Omen}}====
+*{{ui|Adjustment}} Spectators can now see Omen’s perspective in Dark Cover when he is placing his smokes. 
+
+===Competitive Updates===
+*{{ui|Nerf}} Starting in 11.10, all Ascendant+ players in NA, LATAM, BR, and KR, must enable Riot Mobile multi-factor authentication (MFA) to access [[Competitive]] queue. Other modes will remain unaffected. 
+**Why Ascendant+? Our highest ranked players are capable of inflicting the greatest harm when smurfing and are at risk of more competitive integrity violations as an outcome to sharing accounts – i.e. win trading. 
+**You can check out [https://playvalorant.com/en-us/news/game-updates/riot-mobile-verification-beta/ this article] for more information on why we’re making this change, or get yourself set up with MFA now using [https://support-valorant.riotgames.com/hc/en-us/articles/4415709691667-Multi-Factor-Authentication-How-to-FAQ this how-to guide]. 
+
+===Esports Updates===
+We’re bringing [[Pick'Ems]] to GameChangers!
+
+Starting on November 13, the tournament will open in-client and on the web. Predict the full 10 team double elimination bracket winners for points and earn unique rewards for participating.
+
+===Gameplay Systems Updates===
+A followup to the last patch’s updates on how the “Use Object” button functions (“F” on PC and Square/X on Console by default). 
+*To simplify layered debuff states, all persistent attached debuffs will be removed at once by holding the “Use Object” button. 
+**For example, [[Cypher]]'s [[Spycam]] Dart and [[Deadlock]]'s [[GravNet]] will both be removed if they happen to be stacked on you at the same time.
+
+===Bug Fixes===
+*General 
+**{{ui|Bugfix Nerf}} Fixed a bug where players could plant the [[spike]] outside or float partially above the site's designated area. The spike will now stay within the outlined site area no matter where you are facing in game. 
+**{{ui|Bugfix}} Fixed a bug where bots in The [[Range]] would not show flash VFX when hit by screen blind effects. 
+**{{ui|Bugfix}} Fixed a bug that caused certain abilities to apply status effects to dead players and show in the Combat Report. 
+*[[Agents]] 
+**General Agents 
+***{{ui|Bugfix Nerf}} Abilities that cause vulnerable will not grant assists after the vulnerable effect has ended. 
+***{{ui|Bugfix}} Fixed an issue on the Kill effects at the sides of the screen where they'd look misaligned when playing in left-handed mode 
+*{{ai|Clove}} 
+**{{ui|Bugfix}} Fixed a bug where Clove would sometimes revive in unexpected locations when casting {{abi text|Not Dead Yet}}
+**{{ui|Bugfix Nerf}} Fixed a bug that allowed Clove to use Not Dead Yet after falling off the edge of [[Abyss]] 
+**{{ui|Bugfix Buff}} Fixed a bug that incorrectly teleported Clove to spawn when teleporting back from [[Iso]]’s [[Kill Contract]] 
+**{{ui|Bugfix Buff}} Fixed a bug where Clove would be moved into a wall if their body was intersecting [[Sage]]’s [[Barrier Orb]]
+*{{ai|Cypher}}
+**{{ui|Bugfix Buff}} Fixed a bug where Cypher's {{abi text|Neural Theft}} would sometimes display a blank icon on the minimap
+*{{ai|Harbor}} 
+**{{ui|Bugfix}} Harbor’s {{abi text|Cove}} now grants assists for players killed while affected by it. 
+**{{ui|Bugfix Nerf}} [[Viper]]’s [[Snake Bite]], [[Brimstone]]’s [[Incendiary]], [[Sova]]’s [[Hunter's Fury]], and [[Killjoy]]’s [[Nanoswarm]] should properly damage Harbor’s Cove
+*{{ai|KAY/O}} 
+**{{ui|Bugfix}} Fixed a bug where the killfeed wasn’t showing the proper headshot icon if KAY/O was the last player to die while {{abi text|NULL/cmd}} was active. 
+*{{ai|Killjoy}} 
+**{{ui|Bugfix Buff}} Fixed a bug where the minimap icons for {{abi text|Alarmbot}} and {{abi text|Turret}} would occasionally disappear when deactivated outside their active ranges. 
+**{{ui|Bugfix Nerf}} Fixed inaccurate hit detection on Killjoy's Alarmbot while it is jumping
+*{{ai|Omen}}
+**{{ui|Bugfix}} Fixed {{abi text|Dark Cover}}’s minimap to match the darkness of other dome smokes. 
+**{{ui|Bugfix}} Fixed minimap icon size for Omen’s Paranoia
+*{{ai|Reyna}}
+**{{ui|Bugfix Buff}} Fixed a bug where Reyna’s {{abi text|Leer}} projectile would animate forward in the incorrect direction while jumping and rapidly changing her aim location.
+*{{ai|Sage}}
+**{{ui|Bugfix}} Fixed an issue where Sage’s {{abi text|Resurrection}} indicator was snapping to allies out of Sage’s POV. 
+**{{ui|Bugfix}} Fixed a bug that caused Sage’s hands to flicker briefly when using {{abi text|Healing Orb}} on an ally. 
+**{{ui|Bugfix}} Fixed a bug where Sage’s {{abi text|Slow Orb}} was making a popping sound when intersecting [[Cosmic Divide]]. 
+*{{ai|Veto}} 
+**{{ui|Bugfix}} {{abi text|Crosscut}} targeting should be more consistent now to other targetable usables. 
+**{{ui|Bugfix}} Fixed a bug with Veto’s animation while recalling {{abi text|Interceptor}}. 
+**{{ui|Bugfix Buff}} Fixed a bug where Crosscut was invisible or non-functional when used in Buy Phase with high ping or packet loss. 
+*{{ai|Vyse}}
+**{{ui|Bugfix Buff}} Fixed a bug with {{abi text|Razorvine}}'s decals being able to be seen under certain platforms. 
+**{{ui|Bugfix Buff}} Fixed a bug with Razorvine’s projectile where it wouldn’t disappear upon landing. 
+*{{ai|Yoru}}
+**{{ui|Bugfix Buff}} Yoru’s {{abi text|Fakeout}} clone will now properly show suppression VFX when affected by suppression. 
+**{{ui|Bugfix}} Observers are now able to see Yoru’s {{abi text|Blindside}} immediately instead of after it bounces.
+**{{ui|Bugfix}} Yoru’s Blindside will display the correct color VFX when there are two Yoru’s in the same match. 
+**{{ui|Bugfix Buff}} Fixed bug where Blindside’s audio was audible by enemies while stealthed.
+
+==Console Only==
+===General Updates===
+*[[Replays]]
+**Replays are now live for consoles! Check out the Replays FAQ [https://playvalorant.com/en-us/news/dev/replays-everything-you-need-to-know/ here] for detailed information and answers to commonly asked questions about the feature.
+
+===Client Updates===
+We’ve updated the Lobby on consoles to make it easier to navigate to other pages while in queue. 
+*You can now tab over to the Lobby like any other page, or use the shortcut button. 
+*Custom game lobbies have been moved into the ‘Select a Queue’ page.
+*The layouts of the ‘Select a Queue’ and ‘Map’ pages have been updated.
+*When in queue, the active queue timer will now appear in the top left corner of the Main Menu HUD
+
+===Known Issues===
+*Client 
+**The queue timer sometimes doesn’t reset when disconnecting and reconnecting with the timer active. 
+**Disconnecting and reconnecting then queuing can make it impossible to cancel the queue. 
+***Restarting the game fixes this issue. 
+**Custom Lobby 
+***The lobby type changes back to Matchmaking when finishing a Custom Lobby Match.
+***Party members cannot view custom game options or changes made by the party leader. 
+**“Choose a Mode” is currently displayed instead of “Choose a Queue” on the queue select screen. 
+
+==PC Only==
+===Premier Updates===
+*{{ui|Added}} You can now view Premier team information from standings, invites, and your social panel. 
+*View a team’s Roster, Zone, Division, and current Premier Score by:
+**Right clicking on any team on the Premier standings and choosing ‘View Team’ 
+**Right clicking on a friend on the social panel and choosing ‘View Team’ **Clicking ‘View Team’ on a Premier invite you’ve received
+[[Category:Patch Notes]]

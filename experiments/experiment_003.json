@@ -1,0 +1,22 @@
+{
+  "experiment_id": "experiment_003",
+  "timestamp": "2026-08-06T17:48:25.057449",
+  "git_commit": "c29ecdf177b0f76e7b308e13fb1a1a60c129c38d",
+  "dataset_version": "10.0.0",
+  "feature_version": "10.1",
+  "model_type": "baseline_logistic_regression",
+  "hyperparameters": {
+    "solver": "lbfgs"
+  },
+  "metrics": {
+    "accuracy": 0.5721925133689839,
+    "precision": 0.6666666666666666,
+    "recall": 0.07228915662650602,
+    "f1": 0.13043478260869565,
+    "roc_auc": 0.5340593141797961,
+    "log_loss": 5.16537488032815,
+    "brier_score": 0.41416515455972386,
+    "ece": 0.4219554057285685,
+    "mce": 0.6812598468388269
+  }
+}

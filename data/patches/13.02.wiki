@@ -1,0 +1,113 @@
+{{PatchNav|previous=13.01|next=13.03}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 13.02.jpg
+|date    = July 28th, 2026
+|act     = [[Season 2026: Act 4]]
+|changes = '''All Platforms:'''
+*[[Agents]]
+*[[Game Modes]]
+|bundle  = *{{collection|Neo Frontier}} (V26)
+*[[Run It Back Collection#Neo Frontier|Run It Back: Neo Frontier]]
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-13-02/ Patch Notes]
+}}
+
+The following is a list of patch v13.02's changes and updates to ''VALORANT''.
+
+Full context and other dev notes about the updates may be found in the [[Patch Notes/13.02/Archive|official notes]].
+
+==Agent Updates==
+==={{ai|Phoenix}}===
+*{{abi text|Run it Back}}
+**{{ui|Nerf}} Cost increased 6 points >>> 7 points
+==={{ai|Chamber}}===
+*{{abi text|Rendezvous}}
+**{{ui|Bugfix Buff}} Bugfix: Failing to teleport Chamber back to the anchor
+*{{abi text|Tour De Force}}
+**'''CONSOLE-ONLY''': {{ui|Bugfix Buff}} Bugfix: Missing haptic feedback when equipped and fired
+==={{ai|Cypher}}===
+*{{abi text|Cyber Cage}}
+**{{ui|Bugfix}} Bugfix: Displaying incorrect VFX when cast
+*{{abi text|Neural Theft}}
+**{{ui|Bugfix Buff}} Bugfix: Casting causing disconnects
+==={{ai|Deadlock}}===
+*{{abi text|Annihilation}}
+**{{ui|Bugfix Nerf}} Bugfix: Incorrectly capturing [[Omen]] while using {{abi text|From the Shadows}}, unintentionally dealing 900100 damage
+==={{ai|Gekko}}===
+*{{abi text|Wingman}}
+**{{ui|Bugfix}} Bugfix: Incorrect VO playing when Wingman planted the [[Spike]]
+**{{ui|Bugfix Buff}} Bugfix: Unexpectedly dying while planting or defusing the Spike under very low frame rate conditions
+==={{ai|Jett}}===
+*{{abi text|Cloudburst}}
+**{{ui|Bugfix Buff}} Bugfix: Cast causing {{abi text|Updraft}} and {{abi text|Tailwind}} cast afterwards to experience unintended delays 
+==={{ai|KAYO}}===
+*{{abi text|NULL/cmd}}
+**{{ui|Bugfix}} Bugfix: Visual and death SFX not playing when downed timer expires
+**{{ui|Bugfix}} Bugfix: Death animation playing incorrectly after being revived
+==={{ai|Miks}}===
+*{{abi text|M-pulse}}
+**{{ui|Bugfix}} Bugfix: Ability icon and tooltip in incorrect place or missing on certain screens
+==={{ai|Omen}}===
+*{{abi text|Shrouded Step}}
+**{{ui|Bugfix Buff}} Bugfix: Placement indicator disappearing while targeting invalid placement
+==={{ai|Raze}}===
+*{{abi text|Boom Bot}}
+**{{ui|Bugfix Nerf}} Bugfix: Briefly traveling through solid geometry while locking onto airborne enemies
+==={{ai|Reyna}}===
+*{{abi text|Dismiss}}
+**{{ui|Bugfix}} Bugfix: Icon remaining grayed out after eliminating an enemy
+==={{ai|Vyse}}===
+*{{abi text|Razorvine}}
+**{{ui|Bugfix Nerf}} Bugfix: Being indestructible if deployed at the same moment Vyse was [[suppressed]]
+==={{ai|Waylay}}===
+*{{abi text|Lightspeed}}
+**'''CONSOLE-ONLY''': {{ui|Bugfix Nerf}} Bugfix: Immediately equipping the [[Spike]] or [[Flex]] after cast granting unintended dash speed and distance
+==={{ai|Yoru}}===
+*{{abi text|Fakeout}}
+**'''CONSOLE-ONLY''': {{ui|Bugfix Buff}} Bugfix: Missing aim assistance functionality
+
+==Modes Updates==
+===[[Retake]]===
+*{{ui|Added}} [[Corrode]], [[Lotus]], and [[Split]] added to Retake map pool
+===AROS: Replication===
+*Previously confirmed as a v13.02 release in a [https://x.com/VALORANT/status/2054192369323606195/photo/ V26 roadmap], the release of AROS: Replication is delayed to a future patch
+
+==Map Updates==
+===[[Icebox]]===
+*{{ui|Bugfix Nerf}} Bugfix: [[Waylay]]'s {{abi text|Lightspeed}} and {{abi text|Refract}} allowing Waylay to clip into the walls of B Tube
+===[[Summit]]===
+*{{ui|Bugfix Buff}} Bugfix: Agent utility being crushed by droppable wall even after having dropped
+*{{ui|Bugfix Nerf}} Bugfix: [[Waylay]] clipping into the walls above droppable walls and shooting through geometry
+
+==Cosmetic Updates==
+==={{collection|Neo Frontier}}===
+<!--[[File:Bundle.png|thumb| skins]]-->
+New V26 bundle:
+*{{ci|Exclusive}} Exclusive edition Gun skins:
+**[[Shorty]]
+**[[Vandal]]
+*Lasso [[melee]]
+<!--*Accessories: 1 [[player card]], 1 [[gunbuddy]], 1 [[spray]]-->
+
+Run It Back bundle:
+*[[Shorty]]
+*[[Sheriff]]
+*[[Phantom]]
+*[[Vandal]]
+*[[Marshal]]
+*Lasso [[melee]]
+<!--*Accessories: 1 [[player card]], 1 [[gunbuddy]], 1 [[spray]]-->
+
+{{clear}}
+
+<!--==Lore Updates==
+===[[Range/Lore/V26|V26 Range Lore Elements]]===
+*New {{ai|}} email in Brimstone's office
+*New {{ai|}} voicemail in Brimstone's office
+*New [[Legion]] audio log featuring {{Omega||icon=true}} in Cypher's office
+===[[Summit/Lore|Summit Lore Elements]]===
+*New messages between {{ai|Sage}} and [[Yuan Xiuyi]].-->
+
+==Other Updates==
+===General===
+*'''CONSOLE-ONLY''': {{ui|Bugfix}} Fixed an issue in game modes with no abilities where selecting Agent Info from the Settings menu could close the menu instead of displaying ability information.
+[[Category:Patch Notes]]

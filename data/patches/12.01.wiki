@@ -1,0 +1,73 @@
+{{PatchNav|previous=12.00|next=12.02}}
+{{Infobox patch
+|image   = Patch Notes Highlights 12.01.jpg
+|date    = January 21st, 2026
+|act     = [[Season 2026: Act 1]]
+|changes = '''All Platforms:'''
+*''Minor patch
+|bundle  = *{{collection|Reaver}} (V26)
+*{{collection|Run It Back|Run It Back: Reaver}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-12-01/ Patch Notes]
+}}
+{{TOCright}}
+The following is a list of changes made in '''patch v12.01'''. The patch notes were announced on January 20th 2026, but the patch itself was delayed by a day due to a holiday in United States.
+----
+
+{{Quote1|Happy 2026, everyone! It’s Ash and we got a short and sweet one for you in patch 12.01.
+
+TLDR;
+
+*For those in EU, Ascendant+ players and those detected for account sharing will need to enable MFA to play in Comp.
+*The Esports hub is back for VCT26.
+If you haven’t heard already, we did a lore panel in the VALORANT Lore Discord where we chatted through the Why We Fight Back music video and may or may not have elaborated on Viper and Chamber’s relationship. 👀Check out their [https://discord.com/invite/valorantloreart Discord] to see the recording!}}
+
+==All Platforms==
+===Competitive Updates===
+*Starting in 12.01 in EU, accounts detected for sharing and all Ascendant+ players must enable Riot Mobile multi-factor authentication (MFA) to access [[Competitive]] queue. Other modes will remain unaffected. (''wiki editor note: this was already in effect since {{patchv|12.00}}.'')
+**You can check out [https://playvalorant.com/en-us/news/game-updates/riot-mobile-verification-beta/ this article] for more information on why we're making this change, or get yourself set up with MFA now using this [https://playvalorant.com/en-us/news/game-updates/riot-mobile-verification-beta/ how-to guide]. 
+[[Category:Patch Notes]]
+
+===Esports Features===
+The Esports Hub is back for VCT 2026! Meet the teams on the Path to Champions and follow their journey through the International League Kickoffs. 
+
+===Bug Fixes===
+*[[Agents]]
+**General 
+***{{ui|Bugfix}} Fixed a bug where ability icons would not update if a player was debuffed repeatedly with the same type of debuff by the same agent.
+**{{ai|Harbor}}
+***{{ui|Bugfix}} Fixed a bug where Harbor’s {{abi text|Reckoning}} overworld range indicator was not lining up with the actual ability.
+***{{ui|Bugfix}} Fixed a bug where Harbor’s {{abi text|Cove}} was missing an ability icon when viewing it on the placement minimap.
+**{{ai|Fade}}
+***{{ui|Bugfix}} Fixed a bug where Fade’s {{abi text|Prowler}} was missing a VFX asset when viewed in Left Handed Mode. 
+**{{ai|Gekko}}
+***{{ui|Bugfix Buff}} Fixed a rare bug where Gekko's {{abi text|Dizzy}} would sometimes aim at detected players incorrectly (and miss).
+***{{ui|Bugfix}} Fixed a bug where Gekko’s [[globules]] were sometimes visible on the enemy minimap even when out of sight. 
+**{{ai|Viper}} 
+***{{ui|Bugfix}} Fixed a bug where Viper’s {{abi text|Viper's Pit}} was only showing inconsistent VFX when an observer was on freecam within it. 
+**{{ai|Chamber}} / {{ai|Veto}}
+***{{ui|Bugfix}} Fixed a bug where Chamber’s {{abi text|Rendezvous}} and Veto’s {{abi text|Crosscut}} indicators would overlap on agents and make them difficult to see. 
+**{{ai|Killjoy}}
+***{{ui|Bugfix}} Fixed a bug where Killjoy’s neck and hair clip would shift inconsistently while moving with an [[Odin]] equipped.
+**{{ai|Sage}}
+***{{ui|Bugfix}} Fixed a bug where Sage’s {{abi text|Healing Orb}} targeting UI was still visible on allies who broke Sage’s line of sight. 
+**{{ai|Phoenix}}
+***{{ui|Bugfix Buff}} Fixed a bug where Phoenix would remain nearsighted from certain abilities after respawning from {{abi text|Run it Back}}. 
+***{{ui|Bugfix Buff}} Fixed a bug where Phoenix’s {{abi text|Hot Hands}} VFX trail would sometimes emerge from an inaccurate location when thrown from B Window on [[Bind]]. 
+**{{ai|Yoru}}
+***{{ui|Bugfix}} Fixed a rare bug where Yoru could use and instantly cancel {{abi text|Dimensional Drift}} by casting {{abi text|Gatecrash}} right as the buy phase barrier dropped. 
+***{{ui|Bugfix Buff}} Fixed a bug where Yoru’s {{abi text|Fakeout}} clone could be pushed away by Veto’s {{abi text|Chokehold}} if Chokehold was on an elevated surface.
+*[[Game Modes|Modes]]
+**[[All Random One Site]]
+***{{ui|Bugfix Nerf}} Fixed an issue where Agents with continuous Ultimates (e.g. [[Reyna]]) drop an Ultimate Orb on death.
+***{{ui|Bugfix}} Fixed a text overrun that could occur in certain localizations on console within the Next Random Agent widget.
+***{{ui|Bugfix}} Fixed a glass breaking audio event on Ascent when A site is out of bounds.
+***{{ui|Bugfix}} Fixed an issue where Loadouts would occasionally reset to default selections.
+*Gameplay Systems 
+**{{ui|Bugfix}} Fixed an issue where bullet tracers sometimes wouldn't appear after shooting through a wall.
+
+==PC Only== 
+===Bug Fixes===
+*[[Premier]]
+**{{ui|Bugfix}} Fixed an issue where Premier team tags were sometimes not displayed in the custom game lobby and other social modals. 
+**{{ui|Bugfix}} Fixed an issue where long Premier team names and tags were sometimes overlapping.
+[[Category:Patch Notes]]

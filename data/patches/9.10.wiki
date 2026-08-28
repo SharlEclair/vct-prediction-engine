@@ -1,0 +1,214 @@
+{{PatchNav|previous=9.09|next=9.11}}
+{{Infobox_patch
+|image   = Patch Notes Highlights 9 10.jpg
+|date    = November 19th, 2024
+|act     = [[Episode 09: COLLISION: Act 3|EP 09 Act 3]]
+|changes = '''All Platforms:'''
+*[[Shields]]
+*[[Agents]]
+*[[Maps]]
+*[[Weapons]]
+'''PC-only:'''
+*[[Premier]]
+|bundle  = {{collection|Combat Crafts}}<br>{{capsule|Tacti-Force}}
+|pages   = [https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-9-10/ Patch Notes]
+}}
+
+The following is a list of changes made in patch v9.10.
+
+<i>Morning, gamers. It’s Ash. Let’s talk about Patch 9.10.
+
+Continuing the spirit of year-end patches, we took a closer look at Controllers, Sentinels, and our boy Phoenix. There are quite a few changes to our gameplay systems and armory, including a rework to how the Combat Report works, adding the new Regen Shield, and tuning adjustments to weapons that will surely change the tides of future pistol rounds. Let’s just say, I’ll be buying Frenzy more often.
+
+Buckle up, this one’s hot.</i>
+
+==All Platforms==
+===New [[Shields|Armor]]===
+*'''Regen Shield
+**We want to expand the strategic and tactical possibilities within the VALORANT competitive sandbox by introducing a new defensive option.Regen Shield has been added to the shop.
+***Cost: 650 [[Credits]]
+***Damage Absorption: 25 HP
+***Regeneration Pool: 50 HP
+***Absorbs 100% of incoming damage taken before damage to health occurs. 
+***After a brief delay, the shield regenerates by draining any remaining points left in the Regeneration Pool.
+
+===Agent Updates===
+===={{ai|Cypher}}====
+<i>
+*Cypher has been a dominant force with his map-wide information gathering and powerful kill setups. Because Cypher’s map-wide info is intended to be his unique strength, we want to target the efficacy of his kill potential.
+*We’re adjusting the Trap Wire to increase the counterplay time window after hitting it, so that there is more of a balance between a well-crafted setup and enemies deliberately trying to break trap wires. Additionally, this will help team compositions who don’t have as much utility to deal with unbreakable traps.
+*Cypher’s ultimate has been extra powerful after adding the second reveal and the removal of time restriction on enemy corpses in patch 5.10, so we’re bumping up the cost to put it more in-line with other comparable ultimates.
+</i>
+*{{abi text|Trapwire}}
+**Now has a .5 second windup before the full wallhack reveal applies and fades in.
+**Trapwire now has updated minimap icon treatment to better display what the trap wire is connected to.
+*{{abi text|Neural Theft}}
+**Ult Cost 6 >>> 7
+
+===={{ai|Sage}}====
+<i>
+*Sage has been feeling weak with relatively low pick rate in high-level play. We want to continue to hone in her ability to stall and slow down attackers when pushing into areas her team controls.
+*With the added dash speed reduction on Slowing Orb, well-timed, proactive casts of her Slowing Orb should feel rewarding and make slows a more meaningful debuff against duelists with dashes.
+</i>
+*{{abi text|Healing Orb}}
+**Self Heal 30HP >>> 50HP
+**Heal time matched to ally heal at around 5 seconds
+*{{abi text|Slow Orb}}
+**Now will additionally reduce the dash speed of enemies caught inside the slowing zone by 50% similar to the Concuss changes in the Gameplay Systems Updates later in the patch notes.
+*{{abi text|Resurrection}}
+**Ult Cost 8 >>> 7
+
+===={{ai|Deadlock}}====
+*{{abi text|Annihilation}}
+**Deadlock’s ultimate will now always kill the target when the timer expires and they are not freed from the nanowire cocoon. Previously, captured targets only died if they reached the end location before the timer expired.
+*Deadlock’s visuals for health on the Annihilation Cocoon and {{abi text|Barrier Mesh}} have been updated to make their health states more clear.
+
+===={{ai|Omen}}====
+<i>
+*Omen has been a mainstay controller in high-level play for a long time. He particularly shines in his ability to create ambiguity throughout a round with the low cooldowns on his smokes. However, Omen’s ability to place one-way smokes inside level geometry provides significant defensive power with low counterplay. We’ll be keeping an eye out here for how these changes affect the overall controller ecosystem.
+</i>
+*{{abi text|Dark Cover}}
+**Dark Cover will now always fall to level geometry where players can stand similar to other spherical smokes like {{ai|Brimstone}}’s {{abi text|Sky Smoke}}, {{ai|Clove}}’s {{abi text|Ruse}}, etc.
+**This should prevent Omen from placing one-way smokes on small ornamental pieces of Geometry, like the fuse boxes in the main of [[Split]] B and only allow him to place smokes where players can stand.
+
+===={{ai|Clove}}====
+*{{abi text|Ruse}}
+**Ally vs enemy clarity around Ruse casts for both alive and dead casts of smokes have been improved.
+***Enemy smokes updated to appear more red than ally smokes
+*{{abi text|Not Dead Yet}}
+**Time to get a kill: 12s >>> 10s
+***This change had been made accidentally in Patch {{patch|8.11}} when fixing another bug, but the ultimate has been performing well at this tuning.
+
+===={{ai|Phoenix}}====
+<i>
+*Following up from our updates to Duelist in 8.11, we’re taking an opportunity to let Phoenix shine brighter as the bold and confident duelist he is. His updates encourage him to get back to the fight quickly, break into sites with his Curve Ball and reward him for succeeding on entry.
+</i>
+*[[Passive Effects#Heating Up|Heating Up]]
+**Phoenix now applies a Heal over time to himself whenever he touches his flames which persists even if he leaves the fire. This allows him to dip into his flames and then continue to press the offense.
+*{{abi text|Curveball}}
+**Changed to the signature ability slot
+***Grants a free charge on round start
+***2 kill reset to generate an additional charge
+*{{abi text|Hot Hands}}
+**Changed to a non-signature ability
+**Cost 200 [[credits]]
+*{{abi text|Blaze}}
+**We want to support Phoenix’s hybrid “jack of all trades” utility value by allowing him to cast Blaze from safety for his teammates similar to other vision-blocking utility.
+**Initial projectile goes through walls, allowing Blaze to function similarly to {{ai|Harbor}}’s {{abi text|High Tide}}.
+
+===={{ai|Jett}}====
+*[[Passive Effects#Drift|Drift]] (Passive)
+**Balance-impacting bug fix: Jett can no longer float while [[suppressed]] or [[detained]].
+
+===Map Updates===
+*[[Sunset]]
+**We updated global lighting for the entire map. Players should see an improvement in lighting quality and general visibility in previously darker portions of the map.
+
+===Gameplay Systems Updates===
+The changes to the gameplay systems in this patch are to better support VALORANT’s tactical gameplay. The combat report is intended to share in-game information easily. We’re always paying attention to how these systems are playing out, including ways that those systems can be used to create advantages that are counter to their intended use cases.
+
+*Combat Report
+**While the combat report should be a tool to provide gameplay context for what your impact was within a round of VALORANT, it has the occasional downside of leaking information to you that you otherwise would have had no way of knowing.
+**This happens most often with utility, such as {{ai|Breach}}’s {{abi text|Flashpoint}} or {{ai|Skye}}’s {{abi text|Guiding Light}}: You use your utility and get killed, but inadvertently also discover you blinded players you never saw or engaged with.
+**With these kinds of cases in mind, we’re making a change to the Combat Report:
+***Your utility usage statistics now appear once the round has resolved rather than immediately upon death.
+***In its place, you will see an animated hourglass. Once the round ends, utility usage statistics will become available and persist through pre-round of the next round.
+*[[Concuss (disambiguation)|Concusses]]
+**Well-placed concusses should be just as consequential for our movement-oriented Duelists as other agents.
+**We also think this strengthens defensive teleports compared to dashes as more flexible repositioning options to compensate for their weakness in entry capabilities.
+***Concusses now slow enemy dashes by 50%
+****This affects {{ai|Jett}}’s {{abi text|Tailwind}} and {{ai|Neon}}’s [[High Gear|Slide]].
+*Overheal UI Visual Update
+**We’ve updated the way we show overheal shields in the bottom HUD to improve legibility.
+***This affects how we show bonus HP after using {{ai|Reyna}}’s {{abi text|Devour}} and {{ai|Clove}}’s {{abi text|Pick-me-up}}.
+*Smoke Visual Update
+**Visual cues have been added to the inside of the smoke to let you know when they are about to disappear to better support decision making. These cues match up with the ones that exist on the outside of the smoke.
+**The following Agents’ smokes have been affected:
+***{{ai|Astra}}'s {{abi text|Nebula/Dissipate}}
+***{{ai|Brimstone}}'s {{abi text|Sky Smoke}}
+***{{ai|Omen}}'s {{abi text|Dark Cover}}
+***{{ai|Clove}}'s {{abi text|Ruse}}
+
+===Weapons Updates===
+We’re making some tuning adjustments to weapons.
+
+*As VALORANT has grown and evolved, you all have learned how to take advantage of different methods of swinging and peeking. Because of the way bullet tagging in VALORANT works (slowing down when shots land on you), shot players are often tagged and then slowed down into the walking state and as a result their weapons become quickly more accurate.
+*We want to maintain this intuitive relationship between player movement speed and accuracy, so we’re opting to increase all moving state accuracy penalties (AKA “movement error”) and encourage intentionality in movement when shooting.
+**The Sheriff and the Frenzy already have different movement error inaccuracies compared to the other pistols, which are valuable to maintain for the sake of their identities.
+**SMGs are unaffected, as we believe that their mobile accuracy is a core part of how the weapons are unique within the arsenal. 
+*The Ghost having more bullets than the Frenzy didn’t make intuitive sense given their unique strength and weakness profiles amongst the pistols.
+
+====Pistol Inaccuracy Changes====
+*All Pistols (except the [[Shorty]])
+**Moving while crouching Inaccuracy: .1 >>> .5
+
+===={{wi|Classic}} [[Classic]]====
+*Right Click Running Inaccuracy: 1.3 >>> 1.5
+*Right Click Burst Jumping Inaccuracy: 2.1 >>> 2.25
+*Walking Inaccuracy: 0.84 >>> 1.1
+*Run Inaccuracy: 2 >>> 2.3
+===={{wi|Ghost}} [[Ghost]]====
+*Walking Inaccuracy: 0.84 >>> 1.1
+*Run Inaccuracy: 2 >>> 2.3
+====Rifles====
+*All Rifles
+**Walk Inaccuracy: 2 >>> 3
+**Run Inaccuracy: 5 >> 6
+====Machine Guns====
+*All Machine Guns
+**Walk Inaccuracy: 2.4 >>> 3
+**Run Inaccuracy: 6 >>> 6.5 
+====Pistol Bullet Count Changes====
+*[[Frenzy]]
+**Bullet Count Increased 13 >>> 15
+*[[Ghost]]
+**Bullet Count Reduced 15 >>> 13
+====[[Phantom]]====
+*<i>There have been fewer Phantom purchases over time with new maps being released and higher proficiency in shooting. The Phantom and Vandal’s current differences are intended to keep their identities unique while still being relatively competitive with each other. These changes are intended to make the Phantom feel better to use primarily and reduce frustrating instances of headshots doing less damage than expected at different distances. These breakpoints will remove some instances of 140 headshots and all instances of 124 in 1 headshots (excluding wall penetration).</i>
+**Damage fall-off changed:
+***Previously:
+****39 damage per bullet (0 - 15m)
+****35 damage per bullet (15 - 30m)
+****31 damage per bullet (30m+)
+***Now:
+****39 damage per bullet (0 - 20m)
+****35 damage per bullet (20m+)
+
+===Bug Fixes===
+'''Agents
+*{{ai|Killjoy}}
+**Fixed a bug with {{abi text|Alarmbot}} where it did not play the proper reactivation ceremony and would instantly reactivate when Killjoy reentered its range.
+*{{ai|Clove}}
+**Fixed a bug where {{abi text|Meddle}} was hitting through level geometry.
+
+'''Maps
+*Fixed an issue where ambient audio elements were not playing pre-round for [[Pearl]], [[Breeze]], and [[Sunset]].
+
+==PC==
+===[[Premier]] Updates===
+*Added a visual divider on Invite Division standings that shows the cutoff for demotion at the end of Stage E9A3. Teams below the divider after standings finalize will be demoted at the start of the next Stage.
+*Added a message that notifies you if your team has qualified for playoffs. The first time you return to the Premier hub after your team has met the qualification requirements, you’ll see the message.
+*Added a Contender Eligibility expiration date on the Premier tab of the Career page. Contender Eligibility for 2024 expires at the end of Stage E9A3.
+**To be Contender Eligible in 2025, you and your team must perform a qualifying action in Stage E9A3 or at any point in 2025. Qualifying actions include:
+***Play a Weekly or Playoff match on a team in Contender or Invite Division.
+***Reach Immortal 3 or higher peak rank in [[Competitive]].
+***Play in a Playoff match in Elite 5.
+
+===Client Updates===
+*Added QR Code Login feature for Riot Client using Riot Mobile App
+**If you log in to VALORANT through the Riot Client, you can now scan a QR Code and log in through the Riot Mobile App.
+**No more typing in your Riot ID and password - open Riot Mobile, scan the code, and you're in.
+**Learn more about Riot Mobile [https://www.leagueoflegends.com/en-us/news/riot-games/hello-riot-mobile-farewell-league/ here].
+
+===Bug Fixes===
+'''[[Premier]]
+*Fixed an issue where games in a best of 3 match were all listed as finals in Premier match history. Games are now correctly listed as Game 1, Game 2, or Game 3.
+
+==Console==
+===Bug Fixes===
+'''Agents
+*Fixed an issue where sensitivity is severely reduced when using {{ai|Jett}} and {{ai|Raze}} [[Abilities#Ultimate|ultimate abilities]] until engaging Focus.
+
+[[Category:Patch Notes]]
+
+[[tr:Yama Notları/9.10]]
